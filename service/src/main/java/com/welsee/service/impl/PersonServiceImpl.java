@@ -2,21 +2,14 @@ package com.welsee.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.welsee.dto.user.*;
-import com.welsee.entity.Class;
 import com.welsee.entity.*;
 import com.welsee.exception.ProgramException;
 import com.welsee.extentity.*;
 import com.welsee.mapper.PersonMapper;
-import com.welsee.mapper.SemesterMapper;
-import com.welsee.mapper.UserSubjectClassMapper;
 import com.welsee.service.IOrgService;
 import com.welsee.service.IPersonService;
-import com.welsee.tools.DateTimeUtil;
 import com.welsee.tools.DictConstants;
-import com.welsee.tools.PageData;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.map.LinkedMap;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -26,9 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * <p>

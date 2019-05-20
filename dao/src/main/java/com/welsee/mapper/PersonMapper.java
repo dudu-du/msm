@@ -1,10 +1,8 @@
 package com.welsee.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.welsee.dto.user.*;
-import com.welsee.entity.*;
-import com.welsee.entity.Class;
-import com.welsee.extentity.ExtAddressList;
+import com.welsee.dto.user.TeacherParams;
+import com.welsee.entity.Person;
 import com.welsee.extentity.ExtPerson;
 import com.welsee.extentity.ExtPersonDepartment;
 import org.apache.ibatis.annotations.Param;
@@ -25,76 +23,6 @@ import java.util.Map;
 public interface PersonMapper extends BaseMapper<Person> {
 
     ExtPerson getPersonByLoginId(String loginId);
-
-    /**
-     * 教师列表
-     *
-     * @param teacherParams
-     * @return
-     */
-    int getTeacherCount(TeacherParams teacherParams);
-
-    List<Teacher> getTeacherList(TeacherParams teacherParams);
-
-    /**
-     * 获取教师(对外，包含校管理员)
-     *
-     * @param teacherParams
-     * @return
-     */
-    List<Teacher> getTeacherAndAdminList(TeacherParams teacherParams);
-
-    /**
-     * 学生列表
-     *
-     * @param studentParams
-     * @return
-     */
-    int getStudentCount(StudentParams studentParams);
-
-    List<Student> getStudentList(StudentParams studentParams);
-
-    /**
-     * 局管理员列表
-     *
-     * @param officeAdminParams
-     * @return
-     */
-    int getOfficeAdminCount(OfficeAdminParams officeAdminParams);
-
-    List<OfficeAdmin> getOfficeAdminList(OfficeAdminParams officeAdminParams);
-
-    /**
-     * 校管理员列表
-     *
-     * @param schoolAdminParams
-     * @return
-     */
-    int getSchoolAdminCount(SchoolAdminParams schoolAdminParams);
-
-    List<OfficeAdmin> getSchoolAdminList(SchoolAdminParams schoolAdminParams);
-
-
-    /**
-     * 家长列表
-     *
-     * @param patriarchParams
-     * @return
-     */
-    int getPatriarchCount(PatriarchParams patriarchParams);
-
-    List<Patriarch> getPatriarchList(PatriarchParams patriarchParams);
-
-    /**
-     * 班主任列表
-     *
-     * @param masterParams
-     * @return
-     */
-    int getMasterCount(MasterParams masterParams);
-
-    List<Master> getMasterList(MasterParams masterParams);
-
 
     /**
      * 获取用户角色集合
@@ -355,10 +283,8 @@ public interface PersonMapper extends BaseMapper<Person> {
      */
     Map<String, Object> getUserInfo(@Param("userId") String userId);
 
-    Map<String,Object> getUserInfoHasPassword(@Param("loginName")String loginName);
+    Map<String,Object> getUserInfoHasPassword(@Param("loginName") String loginName);
 
-    Map<String,Object> getUserInfoByName(@Param("loginName")String loginName);
-
-    List<ExtAddressList> getStudentParentAddressList(Map<String, Object> map);
+    Map<String,Object> getUserInfoByName(@Param("loginName") String loginName);
 
 }
