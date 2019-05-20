@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.WxInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.WxInfo">
+        <id column="id" property="id" />
+        <result column="org_id" property="orgId" />
+        <result column="word" property="word" />
+        <result column="biz" property="biz" />
+        <result column="remarks" property="remarks" />
+        <result column="newslist" property="newslist" />
+        <result column="del" property="del" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <resultMap id="ExtWxInfo" type="com.welsee.extentity.ExtWxInfo">
+        <result column="orgName" property="orgName"/>
+        <result column="school_img" property="schoolImg"/>
+    </resultMap>
+    <update id="delwxInfo">
+        update wx_info set del=1,modifydatetime = #{time} where id in
+        <foreach item="wxInfo" index="index" collection="wxInfos.split(',')"  open="(" separator="," close=")">
+            '${wxInfo}'
+        </foreach>
+    </update>
+    <select id="getWxInfo" resultMap="BaseResultMap" parameterType="string">
+      SELECT * FROM wx_info where del=0 and org_id = #{orgId} LIMIT 1
+    </select>
+    <select id="getWxInfoListBypage" resultMap="ExtWxInfo" parameterType="map">
+      SELECT
+	    w.id,w.org_id,w.word,w.remarks,w.biz, o.`name` AS orgName
+      FROM
+	    wx_info w
+      LEFT JOIN org o ON w.org_id = o.id
+      WHERE
+	    w.del = 0
+      ORDER BY  w.createdatetime
+        limit #{start} , #{pageSize}
+    </select>
+    <select id="wxInfoCount" resultType="java.lang.Integer">
+        SELECT
+	      COUNT(*)
+        FROM
+	      wx_info w
+        LEFT JOIN org o ON w.org_id = o.id
+        WHERE
+	      w.del = 0
+        ORDER BY  w.createdatetime
+    </select>
+    <select id="getWxInfoById" resultMap="BaseResultMap" parameterType="string">
+        SELECT id,org_id,word,biz,remarks FROM wx_info where del=0 and id = #{wxInfoId}
+    </select>
+    <select id="getWxInfoByOrgId" resultType="com.welsee.entity.WxInfo">
+        SELECT id,org_id,word,biz,remarks FROM wx_info where del=0 and org_id = #{orgId} ORDER BY createdatetime LIMIT 1
+    </select>
+    <select id="getExtWxInfo" resultMap="ExtWxInfo">
+      SELECT
+	    w.id,w.org_id,w.word,w.newslist,s.school_icon as school_img,w.remarks,w.biz, o.`name` AS orgName
+      FROM
+	    wx_info w
+      LEFT JOIN org o ON w.org_id = o.id AND o.del=0
+      LEFT JOIN school s ON s.org_id = w.org_id AND s.del=0
+      WHERE
+	    w.del = 0 and w.org_id = #{orgId}
+      ORDER BY  w.createdatetime LIMIT 1
+    </select>
+
+</mapper>

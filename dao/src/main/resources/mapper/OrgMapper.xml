@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.OrgMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.Org">
+        <id column="id" property="id" />
+        <result column="org_type" property="orgType" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="simple_name" property="simpleName" />
+        <result column="first_py" property="firstPy" />
+        <result column="full_py" property="fullPy" />
+        <result column="parent_id" property="parentId" />
+        <result column="org_ids" property="orgIds" />
+        <result column="department_id" property="departmentId" />
+        <result column="remarks_type" property="remarksType" />
+        <result column="domain_name" property="domainName"/>
+        <result column="sort" property="sort" />
+        <result column="del" property="del" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+
+    <select id="getOrg" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT  * FROM  org  WHERE del = 0
+        <if test="orgType != null">
+            and org_type = #{orgType}
+        </if>
+
+        <if test="name != null">
+            and name = #{name}
+        </if>
+
+        <if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
+
+        <if test="code != null">
+            and code = #{code}
+        </if>
+        ORDER BY sort
+    </select>
+
+
+    <resultMap id="ExtOrgMap" type="com.welsee.extentity.ExtOrg" extends="BaseResultMap">
+        <!-- 递归查询 -->
+        <collection property="children" ofType="com.welsee.extentity.ExtOrg"
+        column="id" select="findChildrenOrg"></collection>
+    </resultMap>
+    <select id="findChildrenOrg" resultMap="ExtOrgMap" parameterType="java.util.Map">
+        select * from org where parent_id = #{arg0} and del='0' and org_type &lt;&gt; 'OT_DEPARTMENT' ORDER BY sort
+    </select>
+
+    <resultMap id="ExtDepartmentMap" type="com.welsee.extentity.ExtOrg" extends="BaseResultMap">
+        <!-- 递归查询 -->
+        <collection property="children" ofType="com.welsee.extentity.ExtOrg"
+                    column="id" select="findChildrenDepartment"></collection>
+    </resultMap>
+    <select id="findChildrenDepartment" resultMap="ExtDepartmentMap" parameterType="java.util.Map">
+        select * from org where parent_id = #{arg0} and del='0' and org_type = 'OT_DEPARTMENT' ORDER BY sort
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM org WHERE del = 0
+        <if test="orgType != null">
+            and org_type = #{orgType}
+        </if>
+        <if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
+    </select>
+    <select id="getOrgListByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+      SELECT  * FROM  org  WHERE del = 0
+        <if test="orgType != null">
+            and org_type = #{orgType}
+        </if>
+
+        <if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
+
+        <if test="code != null">
+            and code = #{code}
+        </if>
+            ORDER BY  sort
+        <if test="start != null">
+            limit #{start} , #{pageSize}
+        </if>
+    </select>
+    <select id="getOrgListByStr" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT  * FROM  org  WHERE del = 0 and org_type = #{orgType} and name like concat(concat('%',#{str}),'%') ORDER BY sort
+    </select>
+    <select id="getOrgList" resultMap="ExtOrgMap" parameterType="java.util.Map">
+        SELECT  * FROM  org  WHERE del = 0 and parent_id = #{parentId} and org_type &lt;&gt; 'OT_DEPARTMENT' ORDER BY sort
+    </select>
+    <select id="getDepartmentList" resultMap="ExtDepartmentMap" parameterType="java.util.Map">
+        SELECT  * FROM  org  WHERE del = 0 and parent_id = #{parentId} and org_type = 'OT_DEPARTMENT' ORDER BY sort
+    </select>
+    <select id="getOrgListByType" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT  * FROM  org  WHERE del = 0 and org_type = #{type} ORDER BY sort
+    </select>
+    <update id="deleteById" parameterType="java.util.Map">
+        update org set del = '1', modifydatetime = #{time} where id = #{orgId}
+    </update>
+    <resultMap id="ExtOrg" type="com.welsee.extentity.ExtOrg" extends="BaseResultMap">
+    </resultMap>
+    <select id="getExtOrgList" resultMap="ExtOrg" parameterType="java.util.Map">
+        select * from org where id = #{orgId} and del='0' ORDER BY sort
+    </select>
+    <select id="getOrgRow" resultMap="BaseResultMap" resultType="string">
+        SELECT  * FROM  org  WHERE del = 0 and org_type = 'OT_DEPARTMENT' and org_ids like concat(concat('%',#{parentId}),'%') ORDER BY sort
+    </select>
+    <select id="getOrgChildList" resultMap="BaseResultMap" resultType="string">
+        SELECT  * FROM  org  WHERE del = 0 and org_type = 'OT_DEPARTMENT' and org_ids like concat(concat('%',#{parentId}),'%') ORDER BY sort
+    </select>
+</mapper>

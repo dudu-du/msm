@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.LoginMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.Login">
+        <id column="id" property="id" />
+        <result column="loginName1" property="loginName1" />
+        <result column="loginName2" property="loginName2" />
+        <result column="loginName3" property="loginName3" />
+        <result column="loginName4" property="loginName4" />
+        <result column="password" property="password" />
+        <result column="realname" property="realname" />
+        <result column="tel" property="tel" />
+        <result column="email" property="email" />
+        <result column="del" property="del" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <insert id="saveOrUpdateEntityBatch">
+        INSERT INTO
+        login (
+            id,
+            loginName1,
+            loginName2,
+            loginName3,
+            loginName4,
+            password,
+            realname,
+            tel,
+            email,
+            del,
+            createdatetime,
+            modifydatetime
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id},
+                #{item.loginName1},
+                #{item.loginName2},
+                #{item.loginName3},
+                #{item.loginName4},
+                #{item.password},
+                #{item.realname},
+                #{item.tel},
+                #{item.email},
+                #{item.del},
+                #{item.createdatetime},
+                #{item.modifydatetime}
+            )
+        </foreach>  ON DUPLICATE KEY UPDATE
+        loginName1 = VALUES(loginName1),
+        loginName2 = VALUES(loginName2),
+        loginName3 = VALUES(loginName3),
+        loginName4 = VALUES(loginName4),
+        password = VALUES(password),
+        realname = VALUES(realname),
+        tel = VALUES(tel),
+        email = VALUES(email),
+        del = VALUES(del),
+        createdatetime = VALUES(createdatetime),
+        modifydatetime = VALUES(modifydatetime)
+    </insert>
+    <select id="getLoginInfoByloginName" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+          t1.*
+        FROM login t1 LEFT JOIN person t2 on t1.id = t2.login_id and t2.del = 0
+        WHERE t2.id is not null
+        and (t1.loginName1=#{arg0} OR t1.loginName2 = #{arg0} OR t1.loginName3 = #{arg0} OR t1.loginName4 = #{arg0})
+        and t1.del = 0  LIMIT 1
+    </select>
+    <update id="enableUserById" parameterType="java.lang.String">
+        update login set del = 0 ,modifydatetime = #{modifydatetime}
+        where
+        <choose>
+            <when test="id.split(',').length==1">
+                id = #{id}
+            </when>
+            <otherwise>
+                id in ${id}
+            </otherwise>
+        </choose>
+    </update>
+
+    <delete id="removeEntityById" parameterType="java.lang.String">
+        update login set del = 1  ,modifydatetime = #{modifydatetime}
+        where
+        <choose>
+            <when test="id.split(',').length==1">
+                id = #{id}
+            </when>
+            <otherwise>
+                id in ${id}
+            </otherwise>
+        </choose>
+    </delete>
+
+    <update id="resetPasswords" parameterType="java.util.Map">
+        update login set password = #{password} ,modifydatetime = #{modifydatetime}
+        where
+        <choose>
+            <when test="id.split(',').length==1">
+                id = #{id}
+            </when>
+            <otherwise>
+                id in ${id}
+            </otherwise>
+        </choose>
+    </update>
+    
+    <select id="getLoginByLoginName" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select * from login
+        where del = 0 and (
+            <trim prefixOverrides="or">
+                <if test="loginName1 != null and loginName1.length()>0">
+                    <choose>
+                        <when test="loginName1.split(',').length==1">
+                             loginName1 = #{loginName1}
+                        </when>
+                        <otherwise>
+                             loginName1 in ${loginName1}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="loginName2 != null and loginName2.length()>0">
+                    <choose>
+                        <when test="loginName2.split(',').length==1">
+                          or loginName2 = #{loginName2}
+                        </when>
+                        <otherwise>
+                           or loginName2 in ${loginName2}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="loginName3 != null and loginName3.length()>0">
+                    <choose>
+                        <when test="loginName3.split(',').length==1">
+                            or loginName3 = #{loginName3}
+                        </when>
+                        <otherwise>
+                            or loginName3 in ${loginName3}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="loginName4 != null and loginName4.length()>0">
+                    <choose>
+                        <when test="loginName4.split(',').length==1">
+                            or loginName4 = #{loginName4}
+                        </when>
+                        <otherwise>
+                            or loginName4 in ${loginName4}
+                        </otherwise>
+                    </choose>
+                </if>
+            </trim>
+        )
+    </select>
+    <select id="getUser" resultType="java.util.Map">
+        SELECT
+            t2.id as userId,t2.realname,t2.person_type as userType,t2.org_id as orgId,t2.sex
+        FROM
+            login t1
+        LEFT JOIN person t2 ON t1.id = t2.login_id and t1.del=0 and t2.del=0
+        WHERE
+            (
+                t1.loginName1 = #{loginName}
+                OR t1.loginName2 = #{loginName}
+                OR t1.loginName3 = #{loginName}
+                OR t1.loginName4 = #{loginName}
+            )
+        AND t1.PASSWORD = #{password}
+        and t2.id is not null
+        LIMIT 1
+    </select>
+</mapper>

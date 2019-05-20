@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.DictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.Dict">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <result column="del" property="del"/>
+        <result column="type" property="type"/>
+        <result column="createdatetime" property="createdatetime"/>
+        <result column="modifydatetime" property="modifydatetime"/>
+    </resultMap>
+
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and">
+                <if test="id != null and id != ''">id = #{id}</if>
+                <if test="parentId!= null and parentId!= ''">and parent_id = #{parentId}</if>
+                <if test="code!= null and code!= ''">and code = #{code}</if>
+                <if test="name!= null and name!= ''">and name = #{name}</if>
+                <if test="del!= null ">and del = #{del}</if>
+            </trim>
+        </where>
+    </sql>
+
+    <select id="getDictList" parameterType="map" resultType="com.welsee.entity.Dict">
+        SELECT *
+        FROM dict
+        WHERE del = 0
+        <if test="parentId!= null and parentId!= ''">
+            and parent_id = #{parentId}
+        </if>
+        ORDER BY sort
+    </select>
+
+    <select id="getDictListPageByParentCode" parameterType="map" resultType="com.welsee.entity.Dict">
+        SELECT *
+        FROM dict
+        WHERE del = 0
+        and parent_id = #{parentCode}
+        <if test="name!= null and name!= ''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+        ORDER BY sort
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="getDictListByParentCode" parameterType="java.lang.String" resultType="com.welsee.entity.Dict">
+        SELECT *
+        FROM dict
+        WHERE del = 0
+            and parent_id = #{parentCode}
+        ORDER BY sort
+    </select>
+
+    <select id="getDictListCountByParentCode" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(1)
+        FROM dict
+        WHERE del = 0
+        and parent_id = #{parentCode}
+        <if test="name!= null and name!= ''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+    <update id="updateDict" parameterType="com.welsee.entity.Dict">
+        UPDATE dict
+        SET
+        <if test="code!= null and code!= ''">code = #{code},</if>
+        <if test="name!= null and name!= ''">name = #{name},</if>
+        <if test="del!= null ">and del = #{del},</if>
+        modifydatetime=NOW()
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insert" parameterType="com.welsee.entity.Dict">
+        INSERT INTO dict (id,parent_id,code,name,sort,del,type,createdatetime,modifydatetime)
+        VALUE (#{id},#{parentId},#{code},#{name},#{sort},0,#{type},NOW(),NOw())
+    </insert>
+
+    <select id="getDict" resultType="com.welsee.entity.Dict" parameterType="com.welsee.entity.Dict">
+        SELECT *
+        FROM dict
+        <include refid="Base_Where_Clause"></include>
+    </select>
+
+    <select id="getPermissionListByRole" parameterType="java.lang.String" resultType="com.welsee.entity.Dict">
+        SELECT DISTINCT
+            p.*
+        FROM
+            dict p ,
+            role_permission rp
+        WHERE
+            p.del = 0
+        and
+        p.id = rp.permission_id
+        AND rp.role_id = #{roleId}
+        ORDER BY sort
+    </select>
+
+    <select id="getAllPermissionListByRole" parameterType="java.lang.String" resultType="com.welsee.entity.Dict">
+        SELECT
+            d.id,d.parent_id,d.`code`,d.`name`,case when p1.id is null then 0 else 1 end as type
+        FROM
+            dict d
+        LEFT JOIN(
+            SELECT
+                *
+            FROM
+                dict P
+            INNER JOIN role_permission rp ON P.id = rp.permission_id
+            AND rp.role_id = #{roleId}
+        ) AS p1 ON d.id = p1.id
+        WHERE
+            d.del = 0 and d.parent_id = 'we_permission'
+        ORDER BY d.sort
+    </select>
+
+    <select id="getSectionDictByOrgId" resultMap="BaseResultMap">
+        SELECT  d.*,o.remarks_type
+        FROM org o LEFT JOIN school_section ss ON o.remarks_type = ss.school_dict
+        LEFT JOIN dict d ON ss.section_dict = d.`code`
+        WHERE o.id = #{arg0} AND o.del = 0 ORDER BY sort
+    </select>
+
+    <select id="getGradeDictBySectionCode" resultMap="BaseResultMap">
+        SELECT d.* FROM section_grade sg
+        LEFT JOIN dict d ON sg.grade_dict = d.`code`
+        WHERE sg.section_dict = #{arg0} AND del = 0
+        ORDER BY d.sort
+    </select>
+    <select id="getDictByCode" resultType="com.welsee.entity.Dict">
+        select
+        *
+        from dict
+        where del = 0
+        <choose>
+            <when test="code.split(',').length==1">
+                and code = #{code}
+            </when>
+            <otherwise>
+                and code in
+                <foreach item="item" index="index" collection="code.split(',')"  open="(" separator="," close=")">
+                    '${item}'
+                </foreach>
+            </otherwise>
+        </choose>
+    </select>
+
+    <delete id="deletePermissionByRole" parameterType="string">
+        delete from role_permission where role_id = #{roleId}
+        AND pr_id NOT IN(
+          select a.id from (
+            SELECT
+                id
+            FROM
+                role_permission rp,
+                menu m
+            WHERE
+                rp.permission_id = m.id
+                ) as a
+        )
+    </delete>
+
+    <insert id="addPermissionByRole" parameterType="java.util.Map">
+        insert role_permission(role_id,permission_id)
+        values
+        <foreach collection="permissions" item="permission" index="index" separator=",">
+            (
+            #{role},#{permission}
+            )
+        </foreach>
+    </insert>
+</mapper>

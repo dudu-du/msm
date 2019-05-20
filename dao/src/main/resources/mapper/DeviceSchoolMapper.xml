@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.DeviceSchoolMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.DeviceSchool">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="org_id" property="orgId"/>
+    </resultMap>
+    <delete id="deleteSchoolPlateMapByUserId">
+        DELETE FROM device_school WHERE user_id = #{userId}
+    </delete>
+    <delete id="deleteSchoolPlateMapByUserIds">
+        DELETE FROM device_school WHERE user_id IN (${userIdsDel})
+    </delete>
+    <select id="getSchoolPlateMapListCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM (SELECT ds.user_id ,p.realname user_name,GROUP_CONCAT(ds.device_id ORDER BY ds.device_id) device_ids, GROUP_CONCAT(di.device_name ORDER BY device_name) device_names
+        FROM device_school ds
+        LEFT JOIN device_info di ON ds.device_id = di.device_id AND di.del_state = 0 AND di.device_type = 0
+        LEFT JOIN person p ON ds.user_id = p.id AND p.del = 0
+        WHERE ds.org_id =#{orgId}  GROUP BY ds.user_id) res
+    </select>
+    <select id="getSchoolPlateMapListInfo" resultType="com.welsee.extentity.ExtDeviceSchool">
+        SELECT ds.user_id ,p.realname user_name,GROUP_CONCAT(ds.device_id ORDER BY ds.device_id) device_ids, GROUP_CONCAT(di.device_name ORDER BY device_name) device_names
+        FROM device_school ds
+        LEFT JOIN device_info di ON ds.device_id = di.device_id AND di.del_state = 0 AND di.device_type = 0
+        LEFT JOIN person p ON ds.user_id = p.id AND p.del = 0
+        WHERE ds.org_id =#{orgId}  GROUP BY ds.user_id LIMIT #{start},#{pageSize}
+    </select>
+    <select id="getDeviceSchoolInfo" resultMap="BaseResultMap">
+        SELECT * FROM  device_school WHERE user_id = #{userId} AND device_id=#{deviceId}
+    </select>
+
+</mapper>

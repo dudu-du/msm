@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.DeviceClassMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.DeviceClass">
+        <id column="id" property="id"/>
+        <result column="class_id" property="classId"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="del" property="del"/>
+        <result column="createdatetime" property="createdatetime"/>
+        <result column="modifydatetime" property="modifydatetime"/>
+    </resultMap>
+
+    <resultMap id="extDeviceClass" type="com.welsee.extentity.ExtDeviceClass">
+        <result column="device_id" property="deviceId"/>
+        <result column="device_class_id" property="deviceClassId"/>
+        <result column="device_name" property="deviceName"/>
+    </resultMap>
+    <update id="delWisdomPlateMapByIds">
+        UPDATE device_class SET del = 1,modifydatetime = #{updateTime} WHERE id IN (${updateIds})
+    </update>
+    <delete id="delWisdomPlateMapByDeviceId">
+        UPDATE device_class SET del = 1,modifydatetime = #{updateTime} WHERE device_id = #{deviceId}
+    </delete>
+    <select id="isDistributionDevice" resultMap="BaseResultMap">
+        SELECT * FROM device_class WHERE device_id = #{classId} AND class_id !=#{classId} AND del = 0
+    </select>
+
+    <select id="selectDeviceClassCountByOrgIdAndSchoolYear" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM class c
+        LEFT JOIN section_grade sg on c.dict_code = sg.section_dict AND #{schoolYear}-c.start_year = sg.sort
+        LEFT JOIN dict d on sg.grade_dict  = d.`code`
+        LEFT JOIN device_class dc ON c.id = dc.class_id AND dc.del = 0
+        LEFT JOIN device_info di ON dc.device_id = di.device_id AND di.del_state = 0
+        WHERE c.org_id = #{orgId}
+        AND c.del = 0
+        AND ((c.dict_code = 'XD_XIAOXUE' and #{schoolYear}-c.start_year &lt; 6)
+        OR (c.dict_code = 'XD_CHUZHONG' and #{schoolYear}-c.start_year &lt; 3)
+        OR (c.dict_code = 'XD_YOUERYUAN' and #{schoolYear}-c.start_year &lt; 3)
+        OR (c.dict_code = 'XD_GAOZHONG' and #{schoolYear}-c.start_year &lt; 3))
+    </select>
+    <select id="getDeviceClassListByOrgIdAndPageAndSchoolYear" resultMap="extDeviceClass">
+        SELECT cc.* ,dd.name as section from (SELECT IFNULL(dc.id,"") device_class_id,IFNULL(di.device_id,"") device_id,IFNULL(di.device_name,"") device_name,c.id,c.org_id,c.start_year,c.dict_code,c.class_nickname,c.class_number,
+        c.del,c.createdatetime,c.modifydatetime,CONCAT(SUBSTRING(c.class_number,6,2) ,'班') as class_name,d.name AS grade
+        FROM class c
+        LEFT JOIN section_grade sg on c.dict_code = sg.section_dict AND #{schoolYear}-c.start_year = sg.sort
+        LEFT JOIN dict d on sg.grade_dict  = d.`code`
+        LEFT JOIN device_class dc ON c.id = dc.class_id AND dc.del = 0
+        LEFT JOIN device_info di ON dc.device_id = di.device_id AND di.del_state = 0
+        WHERE c.org_id = #{orgId}
+        AND c.del = 0
+        AND ((c.dict_code = 'XD_XIAOXUE' and #{schoolYear}-c.start_year &lt; 6)
+        OR (c.dict_code = 'XD_CHUZHONG' and #{schoolYear}-c.start_year &lt; 3)
+        OR (c.dict_code = 'XD_YOUERYUAN' and #{schoolYear}-c.start_year &lt; 3)
+        OR (c.dict_code = 'XD_GAOZHONG' and #{schoolYear}-c.start_year &lt; 3))) as cc
+        LEFT JOIN dict dd ON cc.dict_code = dd.`code` ORDER BY sort,section,start_year desc,class_number asc
+        limit #{start},#{pageSize}
+    </select>
+    <select id="getClassInfoByDeviceId" resultType="com.welsee.entity.Class">
+        SELECT c.* FROM device_class dc
+        LEFT JOIN class c ON dc.class_id = c.id AND c.del = 0
+        WHERE dc.del = 0 AND dc.device_id=#{deviceId}
+    </select>
+    <select id="getWisdomPlateMapByIdAndDeviceId" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            device_class
+        WHERE
+            id = #{id}
+        AND device_id = #{deviceId}
+        AND class_id = #{classId}
+        AND del = 0
+    </select>
+
+</mapper>

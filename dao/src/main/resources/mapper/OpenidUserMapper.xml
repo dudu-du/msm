@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.OpenidUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.OpenidUser">
+        <id column="id" property="id" />
+        <result column="openid" property="openid" />
+        <result column="user_id" property="userId" />
+        <result column="del" property="del" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <resultMap id="ExtOpenidUserResultMap" type="com.welsee.extentity.ExtOpenidUser" extends="BaseResultMap">
+        <result column="org_id" property="orgId" />
+        <result column="class_number" property="classNumber" />
+        <result column="user_type" property="userType" />
+        <result column="child_id" property="childId" />
+        <result column="family_relation" property="familyRelation" />
+    </resultMap>
+
+
+    <resultMap id="ExtPersonResultMap" type="com.welsee.extentity.ExtPerson">
+        <id column="id" property="id" />
+        <result column="login_id" property="loginId" />
+        <result column="person_type" property="personType" />
+        <result column="org_id" property="orgId" />
+        <result column="tel" property="tel" />
+        <result column="birthday" property="birthday" />
+        <result column="number" property="number" />
+        <result column="email" property="email" />
+        <result column="identity_no" property="identityNo" />
+        <result column="pic" property="pic" />
+        <result column="del" property="del" />
+        <result column="openid" property="openid" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <update id="updateBindStatus">
+        update
+            openid_user
+        set del = #{isDel}
+        where openid=#{openid}
+        <if test="userId!=null and userId.length()>0">
+          and user_id =#{userId}
+        </if>
+    </update>
+    <update id="updateBindStatusPatriarch">
+        UPDATE openid_user t1
+        LEFT JOIN person t2 ON t2.id = t1.user_id
+        AND t2.person_type = 'PT_PATRIARCH'
+        set t1.del = #{isDel} ,t1.modifydatetime = #{modifydatetime}
+        WHERE
+            t1.openid = #{openid}
+            and t2.id is not null
+    </update>
+
+    <delete id="unboundStudent" parameterType="java.util.Map">
+        update
+          openid_user t1
+        LEFT JOIN patriarch_child t2 ON t1.user_id = t2.user_id
+        AND t2.del = 0
+        set t2.del = 1 ,t2.modifydatetime = #{modifydatetime}
+        WHERE
+        t1.openid = #{openid}
+        AND t1.del = 0
+        AND t2.id IS NOT NULL
+        <if test="studentId!=null and studentId.length()>0">
+            <choose>
+                <when test="studentId.split(',').length==1">
+                    and t2.child_id = #{studentId}
+                </when>
+                <otherwise>
+                    and t2.child_id in
+                    <foreach item="item" index="index" collection="studentId.split(',')"  open="(" separator="," close=")">
+                        '#{item}'
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+    </delete>
+    <delete id="unBoundConventional"  parameterType="java.util.Map">
+        update
+            openid_user t1
+        LEFT JOIN person t2 ON t1.user_id = t2.id
+        AND t2.del = 0
+        AND t2.person_type = #{userType}
+        set t1.del = 1 ,t1.modifydatetime = #{modifydatetime}
+        WHERE
+            t1.openid = #{openid}
+        and t1.del = 0
+        and t2.id is not null
+    </delete>
+    <select id="checkBinding" resultType="java.lang.Boolean" parameterType="java.util.Map">
+        SELECT
+        count(1)
+        FROM
+        openid_user t1
+        <if test="userType!=null and userType == 'PT_PATRIARCH'">
+        LEFT JOIN patriarch_child t2 ON t1.user_id = t2.user_id
+        AND t2.child_id = #{childId}
+        AND t2.del = 0
+        </if>
+        WHERE
+        t1.del = 0
+        AND t1.openid = #{openid}
+        AND t1.user_id = #{userId}
+        <if test="userType!=null and userType == 'PT_PATRIARCH'">
+          and t2.id is not null
+        </if>
+    </select>
+    <select id="getUserIdByOpenid" resultType="java.lang.String">
+        SELECT
+            user_id
+        FROM
+            openid_user
+        WHERE
+            del = 0
+        AND openid = #{openid}
+        LIMIT 1
+    </select>
+    <select id="getPariarchOpenidInfo" resultType="java.util.Map">
+        select
+                IFNULL(t2.realname, '') AS realname,
+                IFNULL(t2.sex, '') AS sex,
+                IFNULL(t2.pic, '') AS pic,
+                IFNULL(t2.tel, '') AS tel,
+                IFNULL(t2.email, '') AS email,
+                t2.person_type as userType
+        from openid_user t1 left join person t2 on t1.user_id = t2.id
+        and t2.del = 0 and t2.person_type = 'PT_PATRIARCH'
+        where t1.openid = #{openid} and t1.del = 0 and t2.id is not null
+        limit 1
+    </select>
+    <select id="getSimpleOpenidInfo" resultType="java.util.Map">
+        SELECT
+            t1.openid,
+            t2.id AS userId,
+            IFNULL(t2.sex,'')as sex,
+            IFNULL(t2.person_type,'') AS userType,
+            IFNULL(t3.id,'') AS orgId,
+            IFNULL(t3. NAME,'') AS orgName
+        FROM
+          openid_user t1
+        LEFT JOIN person t2 ON t1.user_id = t2.id
+        and t1.del=0 AND t2.del = 0
+        LEFT JOIN org t3 ON t2.org_id = t3.id
+        AND t3.del = 0
+        WHERE
+        t2.id IS NOT NULL
+        and t3.id IS NOT NULL
+        and t1.openid = #{openid}
+        AND t2.person_type &lt;&gt; 'PT_PATRIARCH'
+    </select>
+    <select id="getStudentByOpenid" resultType="com.welsee.extentity.ExtOpenidChild">
+        select
+                t1.openid,
+                t2.person_type AS userType,
+                t8. NAME AS relationName,
+                t4.child_id AS childId,
+                t5.realname AS childName,
+                CONCAT(
+                        t7. NAME,
+                        CONCAT(
+                                SUBSTRING(t3.class_number, 6, 2),
+                                '班'
+                        )
+                ) AS childClassName,
+                t5.class_number as classNumber,
+	            t5.org_id as orgId,
+                t5.sex AS childSex,
+                t5.birthday AS childBirthday,
+                t5.pic AS childPic
+        from openid_user t1
+        left join person t2 on t1.user_id = t2.id
+        and t2.del = 0
+        and t2.person_type = 'PT_PATRIARCH'
+        left join patriarch_child t4 on t4.user_id = t2.id
+        and t4.del = 0
+        left join person t5 on t4.child_id = t5.id and t5.del = 0
+        LEFT JOIN class t3 ON t5.org_id = t3.org_id
+        AND t5.class_number = t3.class_number
+        AND t3.del = 0
+        LEFT JOIN section_grade t6 ON t3.dict_code = t6.section_dict
+        AND #{schoolYear} - t3.start_year = t6.sort
+        LEFT JOIN dict t7 ON t6.grade_dict = t7. CODE
+        LEFT JOIN dict t8 ON t4.family_relation = t8. CODE
+        WHERE
+                t1.del = 0
+        AND t1.openid = #{openid}
+        AND t2.id IS NOT NULL
+        and t4.id is not null
+    </select>
+    <select id="getPatriarchByStudentId" resultType="com.welsee.extentity.ExtOpenidPatriarch">
+        select
+                t2.realname,
+                t3.NAME as relationName,
+                IFNULL(t2.tel, '') tel
+        from patriarch_child t1
+        left join person t2 on t1.user_id = t2.id
+        and t2.del =0
+        left join dict t3 on t1.family_relation = t3. CODE
+        and t3.code is not null
+        where
+            t1.del = 0
+            and t1.child_id = #{studentId}
+            and t2.id is not null
+    </select>
+
+    <select id="getPersonByOpenid" resultMap="ExtPersonResultMap">
+        SELECT
+            t1.id as openid,
+            t2.id,
+            t2.login_id,
+            t2.realname,
+            t2.sex,
+            t2.person_type,
+            t2.org_id,
+            t2.tel,
+            t2.number,
+            t2.email,
+            t2.identity_no,
+            t2.card_no,
+            t2.birthday,
+            t2.student_id,
+            t2.class_number,
+            t2.start_year,
+            t2.pic,
+            t2.openid,
+            t2.del,
+            t2.createdatetime,
+            t2.modifydatetime
+        FROM
+            openid_user t1
+        LEFT JOIN person t2 ON t1.user_id = t2.id
+        and t2.del = 0
+        AND t2.person_type = #{userType}
+        where t1.openid=#{openid}
+        and t2.id is not null
+        LIMIT 1
+    </select>
+    <select id="getOpenidPerson" resultType="java.util.Map">
+        SELECT
+            t1.user_id as userId,
+            t2.person_type as userType,
+            t1.del as del
+        FROM
+            openid_user t1
+        LEFT JOIN person t2 ON t1.user_id = t2.id
+        AND t2.del = 0
+        WHERE
+            t1.openid = #{openid}
+            and t2.id is not null
+            and t1.del = 0
+        LIMIT 1
+    </select>
+    <select id="getTeacherOpenidInfo" resultType="java.util.Map">
+        SELECT
+                t1.openid,
+                t2.id AS userId,
+                IFNULL(t2.realname, '') AS realname,
+                IFNULL(t2.sex,'')as sex,
+                IFNULL(t2.person_type,'') AS userType,
+                IFNULL(t3.id,'') AS orgId,
+                IFNULL(t3. NAME,'') AS orgName
+        FROM
+            openid_user t1
+        LEFT JOIN person t2 ON t1.user_id = t2.id and t2.person_type = 'PT_TEACHER'
+        AND t2.del = 0
+        LEFT JOIN org t3 ON t2.org_id = t3.id
+        AND t3.del = 0
+        WHERE
+        t2.id IS NOT NULL
+        and t3.id IS NOT NULL
+        and t1.openid = #{openid}
+    </select>
+    <select id="getPkId" resultType="java.lang.String">
+        SELECT
+            t1.id
+        FROM
+            openid_user t1
+        LEFT JOIN person t2 ON t1.user_id = t2.id
+        AND t2.person_type = #{userType}
+        AND t2.del = 0
+        WHERE
+            t1.openid = #{openid}
+        AND t1.user_id = #{userId}
+    </select>
+</mapper>

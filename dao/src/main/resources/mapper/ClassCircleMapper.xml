@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.ClassCircleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.ClassCircle">
+        <id column="id" property="id"/>
+        <result column="open_id" property="openId"/>
+        <result column="class_number" property="classNumber"/>
+        <result column="org_id" property="orgId"/>
+        <result column="content" property="content"/>
+        <result column="picture" property="picture"/>
+        <result column="user_type" property="userType"/>
+        <result column="user_id" property="userId"/>
+        <result column="sort" property="sort"/>
+        <result column="del" property="del"/>
+        <result column="createdatetime" property="createdatetime"/>
+        <result column="modifydatetime" property="modifydatetime"/>
+    </resultMap>
+    <resultMap id="extClassCircleMap" type="com.welsee.extentity.ExtClassCircle" extends="BaseResultMap">
+        <result column="user_name" property="userName"/>
+        <collection property="commentList" column="comment_list" ofType="com.welsee.entity.ClassCircleComment"
+                    select="findClassCircleCommentList"/>
+        <collection property="praiseList" column="praise_list" ofType="com.welsee.entity.ClassCirclePraise"
+                    select="findClassCirclePraise"/>
+    </resultMap>
+
+    <select id="findClassCircleCommentList" resultType="com.welsee.extentity.ExtClassCircleComment">
+        SELECT ccc.* ,p.realname user_name
+        FROM class_circle_comment ccc
+        LEFT JOIN person p ON ccc.user_id = p.id AND p.del = 0
+        WHERE ccc.class_circle_id = #{arg0} and ccc.del = 0
+    </select>
+
+    <select id="findClassCirclePraise" resultType="com.welsee.entity.ClassCirclePraise">
+        SELECT * FROM class_circle_praise WHERE class_circle_id = #{arg0}
+    </select>
+
+    <select id="getClassCircleListInfo" resultMap="extClassCircleMap">
+        SELECT c.*,p.realname user_name,c.id comment_list,c.id praise_list
+        FROM class_circle c
+        LEFT JOIN  person p ON c.user_id = p.id AND p.del = 0
+        WHERE c.class_number = #{classNumber} AND c.org_id = #{orgId} AND c.del = 0 ORDER BY c.sort DESC,c.createdatetime DESC
+    </select>
+
+    <delete id="delClassCircle">
+        UPDATE class_circle SET del = 1 ,modifydatetime = #{modifydatetime} WHERE id = #{id} AND user_id = #{userId}
+    </delete>
+    <select id="getClassCircleListCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM class_circle WHERE class_number = #{classNumber} AND org_id = #{orgId} AND del = 0
+    </select>
+    <select id="getClassCircleByIdAndUserId" resultMap="BaseResultMap">
+        SELECT * FROM class_circle WHERE id = #{id} AND user_id = #{userId} AND del = 0
+    </select>
+</mapper>

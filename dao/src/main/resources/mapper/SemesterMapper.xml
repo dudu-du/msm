@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.SemesterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.Semester">
+        <id column="id" property="id" />
+        <result column="school_year" property="schoolYear" />
+        <result column="semester_number" property="semesterNumber" />
+        <result column="dict_code" property="dictCode" />
+        <result column="semester_range" property="semesterRange" />
+        <result column="semester_name" property="semesterName" />
+        <result column="del" property="del" />
+        <result column="is_current_semester" property="isCurrentSemester" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <delete id="deleteByIds">
+        UPDATE semester SET del = 1,modifydatetime = #{updateTime} WHERE id IN (${updateIds})
+    </delete>
+
+    <select id="getSchoolYearByCurrentSemester" resultType="com.welsee.entity.Semester">
+        SELECT * FROM semester WHERE is_current_semester = 1 AND del = 0
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM  semester WHERE del = 0
+    </select>
+
+    <select id="getSemesterListByPage" resultType="com.welsee.entity.Semester">
+        SELECT * FROM semester WHERE  del = 0 ORDER BY semester_number desc limit #{start},#{pageSize}
+    </select>
+
+    <update id="updateIsCurrentSemester">
+      UPDATE semester set is_current_semester = 0 WHERE id != #{arg0} and del = 0
+    </update>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM semester WHERE id = #{arg0}
+    </select>
+    <select id="isCurrentSemester" resultType="java.lang.Boolean">
+        SELECT count(*) FROM semester WHERE id = #{id} AND del = 0 AND is_current_semester = 1
+    </select>
+    <select id="isExistSemester" resultType="integer">
+        SELECT count(*) FROM semester WHERE semester_number = #{semesterNumber} AND del = 0
+        <if test="id != null">
+        AND id != #{id}
+        </if>
+    </select>
+    <select id="getSemesterCurrent" resultMap="BaseResultMap">
+        SELECT * FROM semester WHERE is_current_semester = 1  AND del = 0
+    </select>
+
+
+</mapper>

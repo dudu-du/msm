@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.PersonTempMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.PersonTemp">
+        <id column="uuid" property="uuid" />
+        <result column="id" property="id" />
+        <result column="login_id" property="loginId" />
+        <result column="login_name" property="loginName" />
+        <result column="password" property="password" />
+        <result column="realname" property="realname" />
+        <result column="sex" property="sex" />
+        <result column="person_type" property="personType" />
+        <result column="org_id" property="orgId" />
+        <result column="tel" property="tel" />
+        <result column="number" property="number" />
+        <result column="birthday" property="birthday" />
+        <result column="email" property="email" />
+        <result column="identity_no" property="identityNo" />
+        <result column="card_no" property="cardNo" />
+        <result column="student_id" property="studentId" />
+        <result column="class_number" property="classNumber" />
+        <result column="start_year" property="startYear" />
+        <result column="pic" property="pic" />
+        <result column="del" property="del" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <select id="getVerifyRecord" resultType="com.welsee.extentity.ExtReuseRoutine" parameterType="java.lang.String">
+        SELECT
+            t1.login_name loginName,
+            t1.realname,
+            IF (t2.id IS NOT NULL, '1', '0') AS telReuse,
+            IF (
+            t2.id IS NOT NULL,
+            t2.realname,
+            ''
+            ) AS reuseTel,
+            IF (t3.id IS NOT NULL, '1', '0') AS emailReuse,
+            IF (
+            t3.id IS NOT NULL,
+            t2.realname,
+            ''
+            ) AS reuseEmail,
+            IF (t4.id IS NOT NULL, '1', '0') AS identityNoReuse,
+            IF (
+            t4.id IS NOT NULL,
+            t2.realname,
+            ''
+            ) AS reuseIdentityNo
+        FROM
+        person_temp t1
+        LEFT JOIN login t2 ON t1.tel = t2.loginName2
+        AND t1.login_name &lt;&gt; t2.loginName1 and t2.del = 0
+        LEFT JOIN login t3 ON t1.email = t3.loginName3
+        AND t1.login_name &lt;&gt; t3.loginName1  and t3.del = 0
+        LEFT JOIN login t4 ON t1.identity_no = t4.loginName4
+        AND t1.login_name &lt;&gt; t4.loginName1  and t4.del = 0
+        where t1.uuid = #{uuid}
+    </select>
+    <select id="getCompleteData" resultType="com.welsee.extentity.ExtPerson" parameterType="java.lang.String">
+        SELECT
+            IFNULL(t3.id,t1.id) id,
+            IFNULL(t3.login_id,t1.login_id) login_id,
+            IFNULL(t2.loginName1,t1.login_name) login_name,
+            IFNULL(t2.password,t1.password) password,
+            IFNULL(t1.realname,t3.realname) realname,
+            IFNULL(t1.sex,t3.sex) sex,
+            t1.person_type,
+            t1.org_id,
+            IFNULL(t1.tel,t3.tel) tel,
+            IFNULL(t1.number,t3.number) number,
+            IFNULL(t1.birthday,t3.birthday) birthday,
+            IFNULL(t1.email,t3.email) email,
+            IFNULL(t1.identity_no,t3.identity_no) identity_no,
+            IFNULL(t1.card_no,t3.card_no) card_no,
+            IFNULL(t1.student_id,t3.student_id) student_id,
+            IFNULL(t1.class_number,t3.class_number) class_number,
+            IFNULL(t1.start_year,t3.start_year) start_year,
+            IFNULL(t1.pic,t3.pic) pic,
+            0 del,
+            IFNULL(t3.createdatetime,t1.createdatetime) createdatetime,
+            IFNULL(t1.modifydatetime,t3.modifydatetime) modifydatetime
+        FROM
+            person_temp t1
+        LEFT JOIN login t2 ON t1.login_name = t2.loginName1
+        AND t2.del = 0
+        LEFT JOIN person t3 ON t3.login_id = t2.id
+        AND t2.id IS NOT NULL
+        AND t3.del = 0
+        where t1.uuid = #{uuid}
+    </select>
+    <select id="getVerifyStudentRecord" resultType="com.welsee.extentity.ExtReuseStudent" parameterType="java.lang.String">
+        SELECT
+                t1.login_name loginName,
+                t1.realname,
+                IF (t2.id IS NOT NULL, '1', '0') AS cardNoReuse,
+                IF (
+                t2.id IS NOT NULL,
+                t2.realname,
+                ''
+                ) AS reuseCardNo,
+                IF (t3.id IS NOT NULL, '1', '0') AS numberReuse,
+                IF (
+                t3.id IS NOT NULL,
+                t2.realname,
+                ''
+                ) AS reuseNumber,
+                IF (t4.id IS NOT NULL, '1', '0') AS identityNoReuse,
+                IF (
+                t4.id IS NOT NULL,
+                t2.realname,
+                ''
+                ) AS reuseIdentityNo
+        FROM
+        person_temp t1
+        LEFT JOIN login t2 ON t1.card_no = t2.loginName2
+        AND t1.login_name &lt;&gt; t2.loginName1 and t2.del = 0
+        LEFT JOIN login t3 ON t1.number = t3.loginName3
+        AND t1.login_name &lt;&gt; t3.loginName1  and t3.del = 0
+        LEFT JOIN login t4 ON t1.identity_no = t4.loginName4
+        AND t1.login_name &lt;&gt; t4.loginName1  and t4.del = 0
+        where t1.uuid = #{uuid}
+    </select>
+
+</mapper>

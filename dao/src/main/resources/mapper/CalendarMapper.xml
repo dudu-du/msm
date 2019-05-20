@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.CalendarMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.Calendar">
+        <id column="id" property="id" />
+        <result column="abbreviation" property="abbreviation" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="semester_name" property="semesterName" />
+        <result column="is_vacation" property="isVacation" />
+        <result column="remark" property="remark" />
+        <result column="sort" property="sort" />
+        <result column="org_id" property="orgId" />
+        <result column="del" property="del" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+    </resultMap>
+    <delete id="deleteCalenderByIds">
+        UPDATE calendar SET modifydatetime = #{modifydatetime},del = 1 WHERE
+        <choose>
+            <when test="ids.split(',').length == 1" >
+                id = #{ids}
+            </when>
+            <otherwise>
+                id IN
+                <foreach collection="ids.split(',')" item="id" index="index" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </otherwise>
+        </choose>
+    </delete>
+    <select id="getCalendarListCount" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            calendar
+        WHERE
+            del = 0
+        AND org_id = #{orgId}
+    </select>
+    <select id="getCalendarListInfo" resultType="com.welsee.entity.Calendar">
+        SELECT
+            *
+        FROM
+            calendar
+        WHERE
+            del = 0
+        AND org_id = #{orgId}
+        ORDER BY
+            sort DESC ,
+            createdatetime DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+    <select id="getCalendarVacationListByOrgId" resultMap="BaseResultMap">
+        SELECT * FROM calendar WHERE del = 0 AND is_vacation = 1 AND org_id = #{orgId}
+    </select>
+    <select id="getCalendarVacationListByOrgIdTime" resultMap="BaseResultMap">
+        SELECT *
+        FROM calendar
+        WHERE del = 0 AND is_vacation = 1
+        AND org_id = #{orgId}
+        AND #{time} between start_time and end_time
+    </select>
+</mapper>

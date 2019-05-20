@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welsee.mapper.AccessTokenMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.welsee.entity.AccessToken">
+        <id column="id" property="id" />
+        <result column="client_id" property="clientId" />
+        <result column="user_id" property="userId" />
+        <result column="access_token" property="accessToken" />
+        <result column="expiresin" property="expiresin" />
+        <result column="createdatetime" property="createdatetime" />
+        <result column="modifydatetime" property="modifydatetime" />
+        <result column="token_type" property="tokenType" />
+    </resultMap>
+
+    <select id="getAccessTokenByToken" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select id,client_id,user_id,access_token,expiresin,createdatetime,modifydatetime,token_type from access_token where access_token = #{accessToken} and token_type = #{tokenType}
+    </select>
+    <select id="getAccessToken" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select id,client_id,user_id,access_token,expiresin,createdatetime,modifydatetime,token_type from access_token where access_token = #{accessToken}
+    </select>
+    <delete id="delTimeOutToken">
+        delete from access_token where #{expiresin} &gt; expiresin
+    </delete>
+</mapper>
