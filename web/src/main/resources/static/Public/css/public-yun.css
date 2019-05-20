@@ -17,11 +17,11 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     color: rgb(0, 0, 0) !important;
 }
 /*内容区域*/
-.welsee-content-body{
+.safety-content-body{
     padding:15px;
     background-color: #F2F2F2;
 }
-.welsee-content-body-nopadding{
+.safety-content-body-nopadding{
     background-color: #F2F2F2;
 }
 /*页面布局*/
@@ -173,21 +173,21 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     right:15px;
     position:absolute;
 }
-.welsee-card-header{
+.safety-card-header{
     height:56px;
     position: relative;
     line-height:56px;
 }
-.welsee-card-btn{
+.safety-card-btn{
     padding: 0 16px;
     border-radius:2px;
 }
-.welsee-btn-danger{
+.safety-btn-danger{
     color:#FF5722;
     border: 1px solid #FF5722;
     background-color: #fff;
 }
-.welsee-btn-danger:hover{
+.safety-btn-danger:hover{
     color:#FF5722;
     border: 1px solid #FF5722;
     background-color: #fff;
@@ -195,14 +195,14 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 .layui-btn-group .layui-btn-primary:hover{
     color:#1E9FFF;
 }
-.welsee-card-header2{height:51px;line-height: 51px;}
-.welsee-card-header2 a{
+.safety-card-header2{height:51px;line-height: 51px;}
+.safety-card-header2 a{
     right:15px;
     width:18px;
     height:18px;
     position: absolute;
 }
-.welsee-card-header2 a i{
+.safety-card-header2 a i{
     font-size:18px;
 }
 button[name="department"]{
@@ -242,10 +242,10 @@ a[name="hidden"],button[name="hidden"]{
     width:16px;
     position:absolute;
 }
-.lay-auth-tree-box .icon-tree-welsee{
+.lay-auth-tree-box .icon-tree-safety{
     color:#F5D22C;
 }
-.lay-auth-tree-box .icon-tree-welsee-orange{
+.lay-auth-tree-box .icon-tree-safety-orange{
     color:#f5a172;
 }
 .lay-auth-tree-box .layui-atree li i{
@@ -279,15 +279,15 @@ a[name="hidden"],button[name="hidden"]{
 .layui-form-label{ width:auto;}
 .layui-input-block{ margin-left:91px;}
 .layui-layer-page .layui-layer-content{ overflow: visible !important;}
-.welsee-num-parents{position:relative}
-.welsee-num-parents .welsee-num-btns{
+.safety-num-parents{position:relative}
+.safety-num-parents .safety-num-btns{
     top:0px;
     right:0px;
     width:42px;
     position: absolute;
     border-left:1px solid #dadada;
 }
-.welsee-num-parents .welsee-num-btns span{
+.safety-num-parents .safety-num-btns span{
     height:18px;
     line-height: 18px;
     color:#B3B3B3;
@@ -295,8 +295,8 @@ a[name="hidden"],button[name="hidden"]{
     cursor:pointer;
     text-align: center;
 }
-.welsee-num-parents .welsee-num-btns span:active{background-color:#E6E6E6}
-.welsee-num-parents .welsee-num-btns .add{
+.safety-num-parents .safety-num-btns span:active{background-color:#E6E6E6}
+.safety-num-parents .safety-num-btns .add{
     border-bottom:1px solid #DADADA;
 }
 .mask-checkeds .layui-layer-content{height:374px !important;}
@@ -305,8 +305,8 @@ a[name="hidden"],button[name="hidden"]{
 .layui-mask-check .layui-form-checkbox span{width:85px;text-align: center}
 .layui-mask-check .layui-form-item .layui-form-checkbox{margin:10px 0 0 15px;}
 .layui-mask-check .layui-form-item{margin-bottom:0px;}
-.welsee-mask-iamge-box .layui-layer-content{overflow: hidden !important;}
-.welsee-mask-iamge{width:100%;}
+.safety-mask-iamge-box .layui-layer-content{overflow: hidden !important;}
+.safety-mask-iamge{width:100%;}
 /*表格*/
 .layui-table-click{
     background-color: #fff !important;
@@ -322,42 +322,42 @@ a[name="hidden"],button[name="hidden"]{
 .layui-col-space15 .xiajibumen{
     padding:0 0 0 7.5px;
 }
-.layui-col-space15 .welsee-table{
+.layui-col-space15 .safety-table{
     box-sizing: border-box;
     padding: 0 10px 10px;
     background-color:#fff;
     overflow: auto;
 }
-.layui-col-space15 .welsee-table-onlynew{
+.layui-col-space15 .safety-table-onlynew{
     box-sizing: border-box;
     background-color:transparent;
     overflow: hidden;
     padding: 0;
 }
-.layui-col-space15 .welsee-table-child{
+.layui-col-space15 .safety-table-child{
     padding: 0 10px 10px;
     background-color:#fff;
     height:100%;
     overflow: auto;
 }
-.layui-col-space15 .welsee-userinfo{
+.layui-col-space15 .safety-userinfo{
     padding:0px;
 }
-.welsee-table .layui-table-view{
+.safety-table .layui-table-view{
     margin:0px;
     border:none;
 }
-.welsee-table .layui-table-page{
+.safety-table .layui-table-page{
     border-color:#e6e6e6;
     border-style:solid;
     border-width:0;
 }
-.welsee-table .layui-table-box{
+.safety-table .layui-table-box{
     border-color:#e6e6e6;
     border-style:solid;
     border-width:0 1px 1px;
 }
-.welsee-table .layui-card{
+.safety-table .layui-card{
     box-shadow:none;
 }
 .table-btns-num{ display: none}
@@ -405,10 +405,10 @@ a[name="hidden"],button[name="hidden"]{
     display: inline-block;
     margin-left: 10px;
 }
-.welsee-table-onlynew.layui-col-md9{padding-right:272px !important;width: 100% !important;}
-.welsee-screen .layui-form-label,.welsee-screen .layui-form-item .layui-input-inline{ float: inherit;}
-.welsee-screen .layui-form-item .layui-input-inline{ width:100%;margin-right:0px;}
-.welsee-screen .layui-form-label{ padding: 9px 0;text-align: left;}
+.safety-table-onlynew.layui-col-md9{padding-right:272px !important;width: 100% !important;}
+.safety-screen .layui-form-label,.safety-screen .layui-form-item .layui-input-inline{ float: inherit;}
+.safety-screen .layui-form-item .layui-input-inline{ width:100%;margin-right:0px;}
+.safety-screen .layui-form-label{ padding: 9px 0;text-align: left;}
 .table-btns-right2{
     top:10px;
     right:15px;
@@ -425,7 +425,7 @@ a[name="hidden"],button[name="hidden"]{
     margin-left: 17px;
     margin-right: 0px;
 }
-.layui-col-space15 .welsee-screen{
+.layui-col-space15 .safety-screen{
     padding: 0 0 0 15px;
     display: none;
     right:0px;
@@ -439,7 +439,7 @@ a[name="hidden"],button[name="hidden"]{
     background-color: #F2F2F2;
 }
 .table-badge-box .layui-badge-dot{margin-right:6px;vertical-align: middle;margin-bottom: 3px;}
-.welsee-table-bar-tool button{margin-bottom:0px !important;}
+.safety-table-bar-tool button{margin-bottom:0px !important;}
 /*表格内表单*/
 #maskTableBox .layui-form-radio{
     line-height: 28px;
@@ -502,7 +502,7 @@ a[name="hidden"],button[name="hidden"]{
 .wel-list-a{
 	display: block;
 }
-.welsee-img-box{
+.safety-img-box{
 	width: 100%;
 	position: relative;
 	overflow: hidden;
@@ -556,7 +556,7 @@ a[name="hidden"],button[name="hidden"]{
 .col-box .coverImg{
 	width: 100%;
 }
-.welsee-img-right{
+.safety-img-right{
 	position: absolute;
 	background: red;
 	color: #fff;

@@ -17,10 +17,10 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md4 jiaoyujigou">
             <div class="layui-card parent-position">
-                <div class="layui-card-header welsee-card-header">
+                <div class="layui-card-header safety-card-header">
                     <span>学校部门</span>
                     <div class="mechanismBtn">
-                        <#--<button name="mechanismsort" class="layui-btn welsee-btn-primary layui-btn-sm welsee-card-btn"><i class="iconfont icon-yijijigou"></i>排序</button>-->
+                        <#--<button name="mechanismsort" class="layui-btn safety-btn-primary layui-btn-sm safety-card-btn"><i class="iconfont icon-yijijigou"></i>排序</button>-->
                     </div>
                 </div>
                 <div class="layui-card-body tree-body position-child top-57">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="layui-col-md8 departUserList">
-            <div class="welsee-table layui-col-md12">
+            <div class="safety-table layui-col-md12">
                 <div class="layui-card">
                     <table class="layui-hide" id="test" lay-filter="test"></table>
                     <script type="text/html" id="toolbarDemo">
@@ -50,7 +50,7 @@
                                 {{# if(butType == 'OT_SCHOOL'){ }}
                                 <button class="layui-btn layui-btn-sm" lay-event="addToDepart"><i class="iconfont icon-shanchu1"></i>添加到部门</button>
                                 {{# }else{ }}
-                                <button class="layui-btn layui-btn-sm welsee-btn-danger" lay-event="removeUser"><i class="iconfont icon-shanchu1"></i>移除人员</button>
+                                <button class="layui-btn layui-btn-sm safety-btn-danger" lay-event="removeUser"><i class="iconfont icon-shanchu1"></i>移除人员</button>
                                 {{# } }}
                             </div>
                         </div>

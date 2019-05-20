@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.welsee.mapper.PersonMapper">
+<mapper namespace="com.safety.mapper.PersonMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.welsee.entity.Person">
+    <resultMap id="BaseResultMap" type="com.safety.entity.Person">
         <id column="id" property="id" />
         <result column="login_id" property="loginId" />
         <result column="person_type" property="personType" />
@@ -19,7 +19,7 @@
         <result column="modifydatetime" property="modifydatetime" />
     </resultMap>
 
-    <resultMap id="ExtPersonResultMap" type="com.welsee.extentity.ExtPerson" extends="BaseResultMap">
+    <resultMap id="ExtPersonResultMap" type="com.safety.extentity.ExtPerson" extends="BaseResultMap">
 
     </resultMap>
 
@@ -133,7 +133,7 @@
                 GROUP BY t2.id
         )t1
     </select>
-    <select id="getDepartmentUserList" resultType="com.welsee.extentity.ExtPersonDepartment"
+    <select id="getDepartmentUserList" resultType="com.safety.extentity.ExtPersonDepartment"
             parameterType="java.util.Map">
         SELECT
             GROUP_CONCAT(t3.name) departmentName,GROUP_CONCAT(t3.id) departmentId,
@@ -263,7 +263,7 @@
             AND uid = t1.id
         )
     </select>
-    <select id="getUserWithDepartment" resultType="com.welsee.extentity.ExtPersonDepartment">
+    <select id="getUserWithDepartment" resultType="com.safety.extentity.ExtPersonDepartment">
         SELECT
             t1.*, IFNULL(t2.del, 1) AS DISABLE,
             t3.loginName1 AS loginName,
@@ -317,7 +317,7 @@
         AND realname = #{studentName}
         AND card_no = #{cardNumber}
     </select>
-    <select id="getStudentListByClassNoPage" resultType="com.welsee.extentity.ExtPerson">
+    <select id="getStudentListByClassNoPage" resultType="com.safety.extentity.ExtPerson">
         SELECT
             t1.*, t2.loginName1 AS loginName
         FROM
@@ -346,7 +346,7 @@
             t2.id IS NOT NULL
     </select>
 
-    <select id="getMasterByUserId" resultType="com.welsee.extentity.ExtPerson">
+    <select id="getMasterByUserId" resultType="com.safety.extentity.ExtPerson">
         SELECT
             DISTINCT t2.id,t2.realname
         FROM

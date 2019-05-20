@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.welsee.mapper.DictMapper">
+<mapper namespace="com.safety.mapper.DictMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.welsee.entity.Dict">
+    <resultMap id="BaseResultMap" type="com.safety.entity.Dict">
         <id column="id" property="id"/>
         <result column="parent_id" property="parentId"/>
         <result column="code" property="code"/>
@@ -27,7 +27,7 @@
         </where>
     </sql>
 
-    <select id="getDictList" parameterType="map" resultType="com.welsee.entity.Dict">
+    <select id="getDictList" parameterType="map" resultType="com.safety.entity.Dict">
         SELECT *
         FROM dict
         WHERE del = 0
@@ -37,7 +37,7 @@
         ORDER BY sort
     </select>
 
-    <select id="getDictListPageByParentCode" parameterType="map" resultType="com.welsee.entity.Dict">
+    <select id="getDictListPageByParentCode" parameterType="map" resultType="com.safety.entity.Dict">
         SELECT *
         FROM dict
         WHERE del = 0
@@ -49,7 +49,7 @@
         LIMIT #{start},#{pageSize}
     </select>
 
-    <select id="getDictListByParentCode" parameterType="java.lang.String" resultType="com.welsee.entity.Dict">
+    <select id="getDictListByParentCode" parameterType="java.lang.String" resultType="com.safety.entity.Dict">
         SELECT *
         FROM dict
         WHERE del = 0
@@ -67,7 +67,7 @@
         </if>
     </select>
 
-    <update id="updateDict" parameterType="com.welsee.entity.Dict">
+    <update id="updateDict" parameterType="com.safety.entity.Dict">
         UPDATE dict
         SET
         <if test="code!= null and code!= ''">code = #{code},</if>
@@ -77,18 +77,18 @@
         WHERE id = #{id}
     </update>
 
-    <insert id="insert" parameterType="com.welsee.entity.Dict">
+    <insert id="insert" parameterType="com.safety.entity.Dict">
         INSERT INTO dict (id,parent_id,code,name,sort,del,type,createdatetime,modifydatetime)
         VALUE (#{id},#{parentId},#{code},#{name},#{sort},0,#{type},NOW(),NOw())
     </insert>
 
-    <select id="getDict" resultType="com.welsee.entity.Dict" parameterType="com.welsee.entity.Dict">
+    <select id="getDict" resultType="com.safety.entity.Dict" parameterType="com.safety.entity.Dict">
         SELECT *
         FROM dict
         <include refid="Base_Where_Clause"></include>
     </select>
 
-    <select id="getPermissionListByRole" parameterType="java.lang.String" resultType="com.welsee.entity.Dict">
+    <select id="getPermissionListByRole" parameterType="java.lang.String" resultType="com.safety.entity.Dict">
         SELECT DISTINCT
             p.*
         FROM
@@ -102,7 +102,7 @@
         ORDER BY sort
     </select>
 
-    <select id="getAllPermissionListByRole" parameterType="java.lang.String" resultType="com.welsee.entity.Dict">
+    <select id="getAllPermissionListByRole" parameterType="java.lang.String" resultType="com.safety.entity.Dict">
         SELECT
             d.id,d.parent_id,d.`code`,d.`name`,case when p1.id is null then 0 else 1 end as type
         FROM
@@ -133,7 +133,7 @@
         WHERE sg.section_dict = #{arg0} AND del = 0
         ORDER BY d.sort
     </select>
-    <select id="getDictByCode" resultType="com.welsee.entity.Dict">
+    <select id="getDictByCode" resultType="com.safety.entity.Dict">
         select
         *
         from dict

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.welsee.mapper.OrgMapper">
+<mapper namespace="com.safety.mapper.OrgMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.welsee.entity.Org">
+    <resultMap id="BaseResultMap" type="com.safety.entity.Org">
         <id column="id" property="id" />
         <result column="org_type" property="orgType" />
         <result column="code" property="code" />
@@ -43,18 +43,18 @@
     </select>
 
 
-    <resultMap id="ExtOrgMap" type="com.welsee.extentity.ExtOrg" extends="BaseResultMap">
+    <resultMap id="ExtOrgMap" type="com.safety.extentity.ExtOrg" extends="BaseResultMap">
         <!-- 递归查询 -->
-        <collection property="children" ofType="com.welsee.extentity.ExtOrg"
+        <collection property="children" ofType="com.safety.extentity.ExtOrg"
         column="id" select="findChildrenOrg"></collection>
     </resultMap>
     <select id="findChildrenOrg" resultMap="ExtOrgMap" parameterType="java.util.Map">
         select * from org where parent_id = #{arg0} and del='0' and org_type &lt;&gt; 'OT_DEPARTMENT' ORDER BY sort
     </select>
 
-    <resultMap id="ExtDepartmentMap" type="com.welsee.extentity.ExtOrg" extends="BaseResultMap">
+    <resultMap id="ExtDepartmentMap" type="com.safety.extentity.ExtOrg" extends="BaseResultMap">
         <!-- 递归查询 -->
-        <collection property="children" ofType="com.welsee.extentity.ExtOrg"
+        <collection property="children" ofType="com.safety.extentity.ExtOrg"
                     column="id" select="findChildrenDepartment"></collection>
     </resultMap>
     <select id="findChildrenDepartment" resultMap="ExtDepartmentMap" parameterType="java.util.Map">
@@ -103,7 +103,7 @@
     <update id="deleteById" parameterType="java.util.Map">
         update org set del = '1', modifydatetime = #{time} where id = #{orgId}
     </update>
-    <resultMap id="ExtOrg" type="com.welsee.extentity.ExtOrg" extends="BaseResultMap">
+    <resultMap id="ExtOrg" type="com.safety.extentity.ExtOrg" extends="BaseResultMap">
     </resultMap>
     <select id="getExtOrgList" resultMap="ExtOrg" parameterType="java.util.Map">
         select * from org where id = #{orgId} and del='0' ORDER BY sort

@@ -13,7 +13,7 @@
 <!-- 内容主体区域 -->
 <div class="layui-body-main main-p-75">
     <div class="layui-row layui-col-space15">
-        <div class="welsee-table layui-col-md12">
+        <div class="safety-table layui-col-md12">
             <div class="layui-card">
                 <table class="layui-hide" id="test" lay-filter="test"></table>
                 <script type="text/html" id="toolbarDemo">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="table-btns-num">
                             <span class="table-cho-num"></span>
-                            <button class="layui-btn layui-btn-sm welsee-btn-danger" lay-event="del"><i class="iconfont icon-shanchu1"></i>删除</button>
+                            <button class="layui-btn layui-btn-sm safety-btn-danger" lay-event="del"><i class="iconfont icon-shanchu1"></i>删除</button>
                         </div>
                         <div class="table-btns-right">
                             <div class="table-search-box clearfix">

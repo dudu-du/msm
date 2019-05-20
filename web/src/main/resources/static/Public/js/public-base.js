@@ -10,7 +10,7 @@
 var origin = window.location.origin;
 var hostname = window.location.hostname;
 var websocketurl = "wss://"+hostname+"/ws";
-// var pictureOssUrl = "https://welsee-edu.oss-cn-beijing.aliyuncs.com/";
+// var pictureOssUrl = "https://safety-edu.oss-cn-beijing.aliyuncs.com/";
 var pictureOssUrl = "";
 // var pictureOssUrl = "https://oss-pics-huabei5.oss-cn-huhehaote.aliyuncs.com/";
 var orgId = $('input[name="orgId"]').val(),loginId = $('input[name="loginId"]').val();

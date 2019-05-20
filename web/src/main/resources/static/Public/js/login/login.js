@@ -41,5 +41,5 @@ layui.use(['form','layer'], function(){
 function codeC(){
     $('input[name="vercode"]').val('');
     var codeIMG = $('input[name="picture_uuid"]').val();
-    $('.code-box img').attr('src','https://edu.welsee.cn/captcha?uuid='+codeIMG);
+    $('.code-box img').attr('src','http://localhost/captcha?uuid='+codeIMG);
 };

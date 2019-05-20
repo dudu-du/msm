@@ -1,9 +1,9 @@
-.welsee-btn-primary{
+.safety-btn-primary{
     border: 1px solid #4596EC;
     background-color: #fff;
     color: #4596EC;
 }
-.welsee-btn-primary:hover {
+.safety-btn-primary:hover {
     border-color: #4596EC;
     color: #4596EC;
 }
@@ -34,36 +34,36 @@
 .layui-bg-fresh-green{background-color:#33CC33}
 .table-badge-box-off{color:#C1C2C3}
 /*按钮*/
-.welsee-btn-gray{
+.safety-btn-gray{
     border: 1px solid #b3b3b3;
     background-color: #fff;
     color: #999;
 }
-.welsee-btn-gray:hover{
+.safety-btn-gray:hover{
     border: 1px solid #4596EC;
     color: #4596EC;
 }
-.welsee-btn-primary{
+.safety-btn-primary{
     border: 1px solid #4596EC;
     background-color: #fff;
     color: #4596EC;
 }
-.layui-btn-group .welsee-btn-primary:first-child{
+.layui-btn-group .safety-btn-primary:first-child{
     border: 1px solid #4596EC;
 }
-.welsee-btn-primary:hover {
+.safety-btn-primary:hover {
     border-color: #4596EC;
     color: #4596EC;
 }
-.welsee-btn-danger{
+.safety-btn-danger{
     color:#FF5722;
     border: 1px solid #FF5722;
     background-color: #fff;
 }
-.layui-btn-group .welsee-btn-danger:first-child{
+.layui-btn-group .safety-btn-danger:first-child{
     border: 1px solid #FF5722;
 }
-.welsee-btn-danger:hover{
+.safety-btn-danger:hover{
     color:#FF5722;
     border: 1px solid #FF5722;
     background-color: #fff;

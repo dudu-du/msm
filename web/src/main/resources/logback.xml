@@ -74,7 +74,7 @@
     <root level="INFO">
         <appender-ref ref="consoleLog"/>
     </root>
-    <logger name="com.welsee" level="INFO">
+    <logger name="com.safety" level="INFO">
         <appender-ref ref="fileInfoLog"/>
         <appender-ref ref="fileErrorLog"/>
     </logger>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.welsee.mapper.LoginMapper">
+<mapper namespace="com.safety.mapper.LoginMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.welsee.entity.Login">
+    <resultMap id="BaseResultMap" type="com.safety.entity.Login">
         <id column="id" property="id" />
         <result column="loginName1" property="loginName1" />
         <result column="loginName2" property="loginName2" />

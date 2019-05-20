@@ -65,7 +65,7 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
     }
     var layui_card = $('.layui-card');
     //机构add
-    layui_card.on('click','.welsee-card-btn',function(){
+    layui_card.on('click','.safety-card-btn',function(){
         var thisName = $(this).attr('name');
         if(thisName == 'mechanism'){
             addMaskJG('add','','btn','');  //机构add

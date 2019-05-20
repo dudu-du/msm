@@ -13,8 +13,8 @@
 <!-- 内容主体区域 -->
 <div class="layui-body-main main-p-75">
     <div class="layui-row layui-col-space15">
-        <div class="welsee-table welsee-table-onlynew layui-col-md12">
-            <div class="welsee-table-child">
+        <div class="safety-table safety-table-onlynew layui-col-md12">
+            <div class="safety-table-child">
                 <div class="layui-card">
                     <table class="layui-hide" id="test" lay-filter="test"></table>
                     <script type="text/html" id="toolbarDemo">
@@ -29,7 +29,7 @@
                             </div>
                             <div class="table-btns-num">
                                 <span class="table-cho-num"></span>
-                                <button class="layui-btn layui-btn-sm welsee-btn-danger" lay-event="del"><i class="iconfont icon-shanchu1"></i>删除</button>
+                                <button class="layui-btn layui-btn-sm safety-btn-danger" lay-event="del"><i class="iconfont icon-shanchu1"></i>删除</button>
                             </div>
                             <div class="table-btns-right2">
                                 <div class="table-search-box clearfix">
@@ -50,9 +50,9 @@
                 </div>
             </div>
         </div>
-        <div class="welsee-screen layui-col-md3">
+        <div class="safety-screen layui-col-md3">
             <div class="layui-card">
-                <div class="layui-card-header welsee-card-header2">
+                <div class="layui-card-header safety-card-header2">
                     <span>筛查项目列表</span>
                     <a href="javascript:;" lay-submit="" lay-filter="cancel"><i class="layui-icon layui-icon-close"></i></a>
                 </div>

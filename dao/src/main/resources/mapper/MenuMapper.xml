@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.welsee.mapper.MenuMapper">
+<mapper namespace="com.safety.mapper.MenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.welsee.entity.Menu">
+    <resultMap id="BaseResultMap" type="com.safety.entity.Menu">
         <id column="id" property="id" />
         <result column="menu_code" property="menuCode" />
         <result column="parent_id" property="parentId" />
@@ -30,7 +30,7 @@
         </where>
     </sql>
 
-    <select id="getMenuByUser" parameterType="string" resultType="com.welsee.entity.Menu">
+    <select id="getMenuByUser" parameterType="string" resultType="com.safety.entity.Menu">
         select distinct m.*
         from menu m,role_permission rp,dict r,user_role ur
         where m.id = rp.permission_id
@@ -40,7 +40,7 @@
         order by m.parent_id,m.sort
     </select>
 
-    <select id="getMenu" parameterType="com.welsee.entity.Menu" resultType="com.welsee.entity.Menu">
+    <select id="getMenu" parameterType="com.safety.entity.Menu" resultType="com.safety.entity.Menu">
         select *
         from menu
         <include refid="Base_Where_Clause"/>

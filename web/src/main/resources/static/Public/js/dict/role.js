@@ -239,7 +239,7 @@ layui.use(['element','table','layer','form'], function(){
         '<div class="layui-form-item">'+
         '<label class="layui-form-label">角色名称</label>'+
         '<div class="layui-input-block layui-input-noLine">'+
-        '<input type="text" name="rolename" lay-verify="rolename" autocomplete="off"  class="layui-input welsee-input-line" disabled>'+
+        '<input type="text" name="rolename" lay-verify="rolename" autocomplete="off"  class="layui-input safety-input-line" disabled>'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+

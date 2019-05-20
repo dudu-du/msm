@@ -13,7 +13,7 @@
 <!-- 内容主体区域 -->
 <div class="layui-body-main main-p-75">
     <div class="layui-row layui-col-space15">
-        <div class="welsee-table layui-col-md12 welsee-tree-only">
+        <div class="safety-table layui-col-md12 safety-tree-only">
             <div class="layui-card">
                 <table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
                 <script type="text/html" id="toolbarDemo">

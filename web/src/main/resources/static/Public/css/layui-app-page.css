@@ -9,7 +9,7 @@
     line-height: 1;
     margin-bottom:15px;
 }
-.welsee-app-icon{
+.safety-app-icon{
     width:64px;
     height:64px;
     left:0px;
@@ -17,7 +17,7 @@
     overflow: hidden;
     margin:20px 25px 48px 15px
 }
-.welsee-app-info{
+.safety-app-info{
     width:100%;
     color:#808080;
     font-size:14px;
@@ -35,16 +35,16 @@
     min-height:152px;
     position: relative;
 }
-.welsee-app-card:hover .choseLine{
+.safety-app-card:hover .choseLine{
     display: block;
 }
-.welsee-app-card .layui-card-header{
+.safety-app-card .layui-card-header{
     font-size:16px !important;
 }
-.welsee-app-card a{
+.safety-app-card a{
     display: block;
 }
-.welsee-app-icon img{
+.safety-app-icon img{
     max-height: 100%;
     max-width: 100%;
 }

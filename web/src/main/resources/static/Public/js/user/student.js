@@ -318,8 +318,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 }else{
                     getSection(org_id);
                 }
-                $('.welsee-table').removeClass('layui-col-md12').addClass('layui-col-md9');
-                $('.welsee-screen').show();
+                $('.safety-table').removeClass('layui-col-md12').addClass('layui-col-md9');
+                $('.safety-screen').show();
                 $(this).attr('lay-event','screenOFF');
                 table.resize('table');
                 break;
@@ -345,7 +345,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             var options = '<option value=""></option>';
             $(options).appendTo('select[name="orgId"]');
         }else{
-            $('.welsee-screen select[name="orgId"] option').remove();
+            $('.safety-screen select[name="orgId"] option').remove();
             var options = '<option value=""></option>';
             $(options).appendTo('select[name="orgId"]');
         }
@@ -364,7 +364,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                             if(selcTag=='add'){
                                 $(options).appendTo('.layui-layer select[name="orgId"]');
                             }else{
-                                $(options).appendTo('.welsee-screen select[name="orgId"]');
+                                $(options).appendTo('.safety-screen select[name="orgId"]');
                             }
                         })
                     }
@@ -385,9 +385,9 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             var options = '<option value=""></option>';
             $(options).appendTo('.layui-layer select[name="section"]');
         }else{
-            $('.welsee-screen select[name="section"] option').remove();
+            $('.safety-screen select[name="section"] option').remove();
             var options = '<option value=""></option>';
-            $(options).appendTo('.welsee-screen select[name="section"]');
+            $(options).appendTo('.safety-screen select[name="section"]');
         }
         $.get(origin + '/View/section', {orgId: orgId}, function (data) {
             if (data.success) {
@@ -397,7 +397,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     if(selcTag == 'add'){
                         $(options).appendTo('.layui-layer select[name="section"]');
                     }else{
-                        $(options).appendTo('.welsee-screen select[name="section"]');
+                        $(options).appendTo('.safety-screen select[name="section"]');
                     }
                 });
                 form.render();
@@ -421,9 +421,9 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             var options = '<option value=""></option>';
             $(options).appendTo('.layui-layer select[name="grade"]');
         }else{
-            $('.welsee-screen select[name="grade"] option').remove();
+            $('.safety-screen select[name="grade"] option').remove();
             var options = '<option value=""></option>';
-            $(options).appendTo('.welsee-screen select[name="grade"]');
+            $(options).appendTo('.safety-screen select[name="grade"]');
         }
         $.get(origin + '/View/grade', {sectionCode: codeId}, function (data) {
             console.log(data);
@@ -434,7 +434,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     if(selcTag == 'add'){
                         $(options).appendTo('.layui-layer select[name="grade"]');
                     }else{
-                        $(options).appendTo('.welsee-screen select[name="grade"]');
+                        $(options).appendTo('.safety-screen select[name="grade"]');
                     }
                 }
                 form.render();
@@ -456,9 +456,9 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             var options = '<option value=""></option>';
             $(options).appendTo('.layui-layer select[name="class"]');
         }else{
-            $('.welsee-screen select[name="class"] option').remove();
+            $('.safety-screen select[name="class"] option').remove();
             var options = '<option value=""></option>';
-            $(options).appendTo('.welsee-screen select[name="class"]');
+            $(options).appendTo('.safety-screen select[name="class"]');
         }
         $.get(origin + '/View/listClassLikeNoPage', {orgId: orgId,sectionCode:sectionCode,gradeCode:gradeCode},
             function (data) {
@@ -469,7 +469,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     if(selcTag == 'add'){
                         $(options).appendTo('.layui-layer select[name="class"]');
                     }else{
-                        $(options).appendTo('.welsee-screen select[name="class"]');
+                        $(options).appendTo('.safety-screen select[name="class"]');
                     }
                 }
                 form.render();
@@ -579,7 +579,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     });
     //筛选
     form.on('submit(screen)',function(){
-        var selOrgid = $('.welsee-screen select[name="orgId"]').val();
+        var selOrgid = $('.safety-screen select[name="orgId"]').val();
         var classNumber = $('#classNumber').val();
         var sex = $('#student_sex').val();
         var getData = {orgId: selOrgid,classNumber:classNumber,sex:sex};
@@ -595,8 +595,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     });
     //取消
     form.on('submit(cancel)',function(){
-        $('.welsee-table').removeClass('layui-col-md9').addClass('layui-col-md12');
-        $('.welsee-screen').hide();
+        $('.safety-table').removeClass('layui-col-md9').addClass('layui-col-md12');
+        $('.safety-screen').hide();
         $('.layui-inline[lay-event="screenOFF"]').attr('lay-event','screenON');
         table.resize('table');
     })

@@ -14,7 +14,7 @@
 <!-- 内容主体区域 -->
 <div class="layui-body-main main-p-75">
     <div class="layui-row layui-col-space15">
-        <div class="welsee-userinfo layui-col-md12">
+        <div class="safety-userinfo layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">修改密码</div>
                 <div class="layui-tab layui-tab-brief" lay-filter="devTab">

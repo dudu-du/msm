@@ -11,7 +11,7 @@
     border:1px solid #e6e6e6;
 }
 /*departTree*/
-.departree .layui-atree-menu,.departree .icon-tree-welsee{
+.departree .layui-atree-menu,.departree .icon-tree-safety{
     display: none !important;
 }
 .departree .layui-atree li ul{
@@ -37,7 +37,7 @@
 .departUserList{
     padding:0px;
 }
-.departUserList .layui-card,.departUserList .welsee-table{
+.departUserList .layui-card,.departUserList .safety-table{
     height:100%;
 }
 .chooseDepart{
@@ -62,6 +62,6 @@
 .layui-atree li .layui-atree-null{
     width:12px;
 }
-.welsee-tree-only tr[data-index="0"]{
+.safety-tree-only tr[data-index="0"]{
     display: none;
 }

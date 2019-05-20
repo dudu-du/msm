@@ -15,7 +15,7 @@
     <div class="layui-header">
         <div class="layui-logo"><span>
             <#--<#if org_name=="">-->
-                WELSEE为石
+                safety为石
             <#--<#else >
                 ${org_name}
             </#if>-->

@@ -1,5 +1,5 @@
 <div class="layui-header">
-    <div class="layui-logo">WELSEE为石</div>
+    <div class="layui-logo">safety为石</div>
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">

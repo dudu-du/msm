@@ -1,4 +1,4 @@
-.welsee-userinfo .layui-form-label {
+.safety-userinfo .layui-form-label {
     float: left;
     display: block;
     padding: 9px 15px;
@@ -7,16 +7,16 @@
     line-height: 20px;
     text-align: right;
 }
-.welsee-userinfo .layui-input-block {
+.safety-userinfo .layui-input-block {
     margin-left: 110px;
     min-height: 36px;
 }
-.welsee-userinfo .layui-input-inline a{
+.safety-userinfo .layui-input-inline a{
     width:170px;
     height:170px;
     display: block;
 }
-.welsee-userinfo .layui-input-inline img{
+.safety-userinfo .layui-input-inline img{
     width:170px;
     height:170px;
     border:1px solid #e6e6e6;

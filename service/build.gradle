@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-group 'com.welsee'
+group 'com.safety'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8

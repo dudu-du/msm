@@ -67,8 +67,8 @@ layui.use(['element','table','layer','form'], function(){
                 layer.msg('搜索'+searchVal);
                 break;
             case 'screenON':
-                $('.welsee-table').removeClass('layui-col-md12').addClass('layui-col-md9');
-                $('.welsee-screen').show();
+                $('.safety-table').removeClass('layui-col-md12').addClass('layui-col-md9');
+                $('.safety-screen').show();
                 $(this).attr('lay-event','screenOFF');
                 break;
         };
@@ -116,8 +116,8 @@ layui.use(['element','table','layer','form'], function(){
     });
     //取消
     form.on('submit(cancel)',function(){
-        $('.welsee-table').removeClass('layui-col-md9').addClass('layui-col-md12');
-        $('.welsee-screen').hide();
+        $('.safety-table').removeClass('layui-col-md9').addClass('layui-col-md12');
+        $('.safety-screen').hide();
         $('.layui-inline[lay-event="screenOFF"]').attr('lay-event','screenON');
     })
 
