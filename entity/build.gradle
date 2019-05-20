@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'com.welsee'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    compile project(":common")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // mybatis plus
+    compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.0.3'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.8'
+
+
+}

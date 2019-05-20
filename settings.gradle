@@ -1,0 +1,12 @@
+rootProject.name = 'msm'
+
+include 'service'
+include 'entity'
+include 'common'
+include 'web'
+include 'dao'
+include 'exception'
+include 'shiro'
+include 'poi'
+include 'interceptor'
+
