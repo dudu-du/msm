@@ -1,0 +1,99 @@
+/*----------------------------------------学校登录-------------------------------------*/
+.sLogin-top{
+	height: 60vh;
+	min-height: 440px;
+	padding-top: 10px;
+	box-sizing: border-box;
+	background: url('/fe/Public/image/school.jpg') no-repeat center center;
+	background-size: cover;
+	position: relative;
+}
+.sLogin-top .layui-container{
+	height: 100%;
+}
+.sLogo-box{
+	height: 65px;
+	position: relative;
+}
+.sLogo{
+	height: 65px;
+	width: 65px;
+	float: left;
+}
+.schoolName{
+	text-align: center;
+	color: #fff;
+	position: absolute;
+	top: 50%;
+	left: 70px;
+	transform: translate(0,-50%);
+}
+.schoolName .ch{
+	font-size: 33px;
+	font-family: '楷体';
+}
+.schoolName .en{
+	font-size: 20px;
+	text-transform: uppercase;
+}
+.sLogin-box{
+	height: 288px;
+	width: 382px;
+	background: #fff;
+	padding: 30px;
+	box-sizing: border-box;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translate(0,-50%);
+}
+.sLogin-box h3{
+	font-size: 16px;
+	color: #808080;
+	margin-bottom: 35px;
+}
+.sLoginName{
+	margin-bottom: 20px;
+}
+.sLoginPassword{
+	margin-bottom: 25px;
+}
+.sLoginBtn{
+	width: 100%;
+}
+.sLogin-bottom{
+	margin-top: 50px;
+	padding: 0 75px;
+	box-sizing: border-box;
+}
+.sLogin-bottom .layui-col-md4{
+	height: 100%;
+}
+.schoolData{
+	border: solid 1px #ccc;
+	padding:40px 25px;
+	box-sizing: border-box;
+	height: 220px;
+}
+.schoolData .layui-field-title{
+	margin-bottom: 17px;
+	margin-top: 0;
+	border-color: #ccc;
+}
+.schoolData legend{
+	margin: 0 auto;
+	font-size: 18px;
+	color: #464646;
+}
+.schoolData p{
+	font-size: 14px;
+	color: #808080;
+	line-height: 1.8em;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	line-clamp: 4;
+	-webkit-box-orient: vertical;
+}

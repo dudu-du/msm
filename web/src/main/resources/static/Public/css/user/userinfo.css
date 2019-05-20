@@ -1,0 +1,84 @@
+.welsee-userinfo .layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+.welsee-userinfo .layui-input-block {
+    margin-left: 110px;
+    min-height: 36px;
+}
+.welsee-userinfo .layui-input-inline a{
+    width:170px;
+    height:170px;
+    display: block;
+}
+.welsee-userinfo .layui-input-inline img{
+    width:170px;
+    height:170px;
+    border:1px solid #e6e6e6;
+}
+.lay-user-screen{
+    padding:20px;
+}
+.lay-user-screen .layui-btn + .layui-btn{
+    margin-left:10px;
+}
+.ScreenLeft{
+    float:left;
+    width:620px;
+    height:364px;
+    overflow: hidden;
+    margin-right:20px;
+    box-sizing: border-box;
+    border:1px solid #e6e6e6;
+}
+.ScreenLeft img{
+    max-width:100%;
+    max-height:100%;
+}
+.ScreenRight{
+    float:left;
+    color:#808080;
+    font-size:12px;
+}
+.imgScreen{
+    margin-top:20px;
+}
+.ScreenRight .previewBox{
+    overflow: hidden;
+    border-radius:2px;
+}
+.ScreenRight .previewBox img{
+    width:100%;
+}
+.ScreenRight .img144{
+    width:144px;
+    height:144px;
+}
+.ScreenRight .img83{
+    width:83px;
+    height:83px;
+}
+.ScreenRight .img30{
+    width:30px;
+    height:30px;
+}
+.ScreenRight span{
+    margin-top:10px;
+    margin-bottom:20px;
+    display: block;
+    line-height: 1;
+}
+.ScreenRight .preview:last-child span{
+    margin-bottom:0px;
+}
+#upload{
+    margin-right:10px;
+}
+.userDevs li{
+    cursor:default;
+}

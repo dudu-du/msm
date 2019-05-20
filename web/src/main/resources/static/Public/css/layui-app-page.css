@@ -1,0 +1,59 @@
+.layui-app-main{
+    width:85%;
+    margin:40px auto 0;
+}
+.userInfoHeader{
+    color:#464646;
+    font-weight: bold;
+    font-size:16px;
+    line-height: 1;
+    margin-bottom:15px;
+}
+.welsee-app-icon{
+    width:64px;
+    height:64px;
+    left:0px;
+    position:absolute;
+    overflow: hidden;
+    margin:20px 25px 48px 15px
+}
+.welsee-app-info{
+    width:100%;
+    color:#808080;
+    font-size:14px;
+    margin-top:20px;
+    padding-left: 104px;
+    word-wrap:break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+.layui-card-body{
+    min-height:152px;
+    position: relative;
+}
+.welsee-app-card:hover .choseLine{
+    display: block;
+}
+.welsee-app-card .layui-card-header{
+    font-size:16px !important;
+}
+.welsee-app-card a{
+    display: block;
+}
+.welsee-app-icon img{
+    max-height: 100%;
+    max-width: 100%;
+}
+.choseLine{
+    height:5px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    display: none;
+    position: absolute;
+    background-color:#1E9FFF;
+}

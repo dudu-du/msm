@@ -1,0 +1,67 @@
+.layui-atree-node[data="1"]{
+    background-color:#f2f2f2;
+}
+/*.layui-atree-node[data="1"] cite{
+    color:#fff;
+}*/
+.departree{
+    height:232px;
+    overflow: auto;
+    border-radius:2px;
+    border:1px solid #e6e6e6;
+}
+/*departTree*/
+.departree .layui-atree-menu,.departree .icon-tree-welsee{
+    display: none !important;
+}
+.departree .layui-atree li ul{
+    margin-left:18px;
+}
+.layui-atree li a{
+    width:100%;
+}
+.layui-atree li ul li>div{
+    /*padding-left:34px;*/
+}
+.departree .layui-atree-node:hover{
+    /*background-color:#1E9FFF;*/
+    background-color:#f2f2f2;
+}
+/*.departree .layui-atree-node:hover cite{
+    color:#fff;
+}*/
+/*部门人员*/
+.depart-tree-box .layui-atree-menu,#ADD-tree-depart .layui-atree-menu{
+    display: none !important;
+}
+.departUserList{
+    padding:0px;
+}
+.departUserList .layui-card,.departUserList .welsee-table{
+    height:100%;
+}
+.chooseDepart{
+    width:406px;
+    height:324px;
+    overflow:auto;
+    border-radius:2px;
+    border:1px solid #e6e6e6;
+}
+.treeSort{
+    width:400px;
+    height:324px;
+}
+#orgcontent{
+    font-size: 14px;
+}
+#orgcontent em{
+    padding-right:20px;
+    font-style:normal;
+}
+/*树结构图标*/
+.layui-atree li .layui-atree-null{
+    width:12px;
+}
+.welsee-tree-only tr[data-index="0"]{
+    display: none;
+}
