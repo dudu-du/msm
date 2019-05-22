@@ -1,7 +1,10 @@
 package com.safety.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.dto.user.OfficeAdminParams;
+import com.safety.dto.user.SchoolAdminParams;
 import com.safety.dto.user.TeacherParams;
+import com.safety.entity.OfficeAdmin;
 import com.safety.entity.Person;
 import com.safety.extentity.ExtPerson;
 import com.safety.extentity.ExtPersonDepartment;
@@ -287,4 +290,23 @@ public interface PersonMapper extends BaseMapper<Person> {
 
     Map<String,Object> getUserInfoByName(@Param("loginName") String loginName);
 
+    /**
+     * 局管理员列表
+     *
+     * @param officeAdminParams
+     * @return
+     */
+    int getOfficeAdminCount(OfficeAdminParams officeAdminParams);
+
+    List<OfficeAdmin> getOfficeAdminList(OfficeAdminParams officeAdminParams);
+
+    /**
+     * 校管理员列表
+     *
+     * @param schoolAdminParams
+     * @return
+     */
+    int getSchoolAdminCount(SchoolAdminParams schoolAdminParams);
+
+    List<OfficeAdmin> getSchoolAdminList(SchoolAdminParams schoolAdminParams);
 }

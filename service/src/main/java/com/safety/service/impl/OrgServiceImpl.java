@@ -75,8 +75,6 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
         return clientList;
     }
 
-
-    @Cacheable(value = "getAllOrgList", key = "#parentId")
     @Override
     public List getAllOrgList(String parentId) throws Exception {
         if (parentId == null || "".equals(parentId)) {

@@ -2,6 +2,8 @@ package com.safety.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.safety.dto.user.OfficeAdminParams;
+import com.safety.dto.user.SchoolAdminParams;
 import com.safety.entity.*;
 import com.safety.exception.ProgramException;
 import com.safety.extentity.*;
@@ -9,6 +11,7 @@ import com.safety.mapper.PersonMapper;
 import com.safety.service.IOrgService;
 import com.safety.service.IPersonService;
 import com.safety.tools.DictConstants;
+import com.safety.tools.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,5 +134,37 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         }
         baseMapper.deleteRoleByUser(userId);
         return true;
+    }
+
+    @Override
+    public PageData getOfficeAdminListByScope(OfficeAdminParams officeAdminParams) throws ProgramException {
+        Integer page = officeAdminParams.getPage();
+        Integer pageSize = officeAdminParams.getPageSize();
+        if (page == null || pageSize == null) {
+            throw new ProgramException("分页参数异常:page[" + page
+                    + "],pageSize[" + pageSize + "]");
+        }
+        int count = baseMapper.getOfficeAdminCount(officeAdminParams);
+        //从第几个开始
+        int start = PageData.calcFirstItemIndexOfPage(page, pageSize, count);
+        officeAdminParams.setStart(start);
+        List<OfficeAdmin> list = baseMapper.getOfficeAdminList(officeAdminParams);
+        return new PageData(page, count, pageSize, list);
+    }
+
+    @Override
+    public PageData getSchoolAdminListByScope(SchoolAdminParams schoolAdminParams) throws ProgramException {
+        Integer page = schoolAdminParams.getPage();
+        Integer pageSize = schoolAdminParams.getPageSize();
+        if (page == null || pageSize == null) {
+            throw new ProgramException("分页参数异常:page[" + page
+                    + "],pageSize[" + pageSize + "]");
+        }
+        int count = baseMapper.getSchoolAdminCount(schoolAdminParams);
+        //从第几个开始
+        int start = PageData.calcFirstItemIndexOfPage(page, pageSize, count);
+        schoolAdminParams.setStart(start);
+        List<OfficeAdmin> list = baseMapper.getSchoolAdminList(schoolAdminParams);
+        return new PageData(page, count, pageSize, list);
     }
 }

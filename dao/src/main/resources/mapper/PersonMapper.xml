@@ -23,6 +23,20 @@
 
     </resultMap>
 
+    <!--局管理员列表结果集-->
+    <resultMap id="OfficeAdminResultMap" type="com.safety.entity.OfficeAdmin" extends="BaseResultMap">
+        <result column="orgName" property="orgName"/>
+        <result column="disable" property="disable" />
+        <result column="loginName" property="loginName"/>
+    </resultMap>
+
+    <!--校管理员列表结果集-->
+    <resultMap id="SchoolAdminResultMap" type="com.safety.entity.SchoolAdmin" extends="BaseResultMap">
+        <result column="orgName" property="orgName"/>
+        <result column="disable" property="disable" />
+        <result column="loginName" property="loginName"/>
+    </resultMap>
+
     <select id="getPersonByLoginId" resultMap="ExtPersonResultMap" parameterType="java.util.Map">
         SELECT
             t1.*,
@@ -628,4 +642,144 @@
         </choose>
     </delete>
 
+    <select id="getOfficeAdminCount" resultType="java.lang.Integer" parameterType="com.safety.dto.user.OfficeAdminParams">
+        select
+        count(1)
+        from person t1 inner join org t3
+        on t1.org_id = t3.id and t1.del = 0
+        <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
+        <if test="orgId != null and orgId.length()>0"> AND t1.org_id=#{orgId}</if>
+        <if test="userType != null and userType.length()>0"> AND t1.person_type=#{userType}</if>
+        <if test="sex != null and sex.length()>0"> AND t1.sex=#{sex}</if>
+        <if test="realName != null and realName.length()>0">AND t1.realname like CONCAT('%',#{realName},'%')</if>
+        <if test="orgIds !=null and orgIds.size()>0">
+            AND t1.org_id IN
+            <foreach item="item" index="index" collection="orgIds"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        left join login t2 on t1.login_id = t2.id
+        <if test="loginName !=null and loginName.length()>0">
+            and (t2.loginName1=#{loginName} or t2.loginName2=#{loginName} or t2.loginName3=#{loginName} or t2.loginName4 =#{loginName})
+        </if>
+        <if test="loginName !=null and loginName.length()>0">
+            where
+            t2.id is not null
+        </if>
+
+    </select>
+
+    <select id="getOfficeAdminList" resultMap="OfficeAdminResultMap" parameterType="com.safety.dto.user.OfficeAdminParams">
+        select
+        t1.*,
+        IFNULL(t2.del,1) as disable,
+        t2.loginName1 as loginName,
+        t3.name as orgName
+        from person t1 inner join org t3
+        on t1.org_id = t3.id and t1.del = 0
+        <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
+        <if test="orgId != null and orgId.length()>0"> AND t1.org_id=#{orgId}</if>
+        <if test="userType != null and userType.length()>0"> AND t1.person_type=#{userType}</if>
+        <if test="sex != null and sex.length()>0"> AND t1.sex=#{sex}</if>
+        <if test="realName != null and realName.length()>0">AND t1.realname like CONCAT('%',#{realName},'%')</if>
+        <if test="orgIds !=null and orgIds.size()>0">
+            AND t1.org_id IN
+            <foreach item="item" index="index" collection="orgIds"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        left join login t2 on t1.login_id = t2.id
+        <if test="loginName !=null and loginName.length()>0">
+            and (t2.loginName1=#{loginName} or t2.loginName2=#{loginName} or t2.loginName3=#{loginName} or t2.loginName4 =#{loginName})
+        </if>
+        <if test="loginName !=null and loginName.length()>0">
+            where
+            t2.id is not null
+        </if>
+        <if test="start !=null and pageSize !=null">
+            limit #{start} , #{pageSize}
+        </if>
+    </select>
+
+    <select id="getSchoolAdminCount" resultType="java.lang.Integer" parameterType="com.safety.dto.user.SchoolAdminParams">
+        select
+        count(1)
+        from person t1 inner join org t3
+        on t1.org_id = t3.id and t1.del = 0
+        <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
+        <if test="orgId != null and orgId.length()>0"> AND t1.org_id=#{orgId}</if>
+        <if test="userType != null and userType.length()>0"> AND t1.person_type=#{userType}</if>
+        <if test="sex != null and sex.length()>0"> AND t1.sex=#{sex}</if>
+        <if test="realName != null and realName.length()>0">AND t1.realname like CONCAT('%',#{realName},'%')</if>
+        <if test="orgIds !=null and orgIds.size()>0">
+            AND t1.org_id IN
+            <foreach item="item" index="index" collection="orgIds"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        left join login t2 on t1.login_id = t2.id
+        <if test="loginName !=null and loginName.length()>0">
+            and (t2.loginName1=#{loginName} or t2.loginName2=#{loginName} or t2.loginName3=#{loginName} or t2.loginName4 =#{loginName})
+        </if>
+        WHERE
+        EXISTS (
+        SELECT
+        t1.uid
+        FROM
+        user_role t1
+        LEFT JOIN dict t2 ON t1.role_id = t2.id
+        WHERE
+        t2.CODE = 'ROLE_SHCOOLADMIN'
+        AND uid = t1.id
+        )
+        <if test="loginName !=null and loginName.length()>0">
+            and t2.id is not null
+        </if>
+    </select>
+
+    <select id="getSchoolAdminList" resultMap="SchoolAdminResultMap" parameterType="com.safety.dto.user.SchoolAdminParams">
+        select
+        t1.*,
+        IFNULL(t2.del,1) as disable,
+        t2.loginName1 as loginName,
+        t3.name as orgName
+        from person t1 inner join org t3
+        on t1.org_id = t3.id and t1.del = 0
+        <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
+        <if test="orgId != null and orgId.length()>0"> AND t1.org_id=#{orgId}</if>
+        <if test="userType != null and userType.length()>0"> AND t1.person_type=#{userType}</if>
+        <if test="sex != null and sex.length()>0"> AND t1.sex=#{sex}</if>
+        <if test="realName != null and realName.length()>0">AND t1.realname like CONCAT('%',#{realName},'%')</if>
+        <if test="orgIds !=null and orgIds.size()>0">
+            AND t1.org_id IN
+            <foreach item="item" index="index" collection="orgIds"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        left join login t2 on t1.login_id = t2.id
+        <if test="loginName !=null and loginName.length()>0">
+            and (t2.loginName1=#{loginName} or t2.loginName2=#{loginName} or t2.loginName3=#{loginName} or t2.loginName4 =#{loginName})
+        </if>
+        WHERE
+        EXISTS (
+        SELECT
+        t1.uid
+        FROM
+        user_role t1
+        LEFT JOIN dict t2 ON t1.role_id = t2.id
+        WHERE
+        t2.CODE = 'ROLE_SHCOOLADMIN'
+        AND uid = t1.id
+        )
+        <if test="loginName !=null and loginName.length()>0">
+            and t2.id is not null
+        </if>
+        <if test="start !=null and pageSize !=null">
+            limit #{start} , #{pageSize}
+        </if>
+    </select>
 </mapper>
