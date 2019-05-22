@@ -23,26 +23,26 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    private static String host;
-
-    @Value("${spring.redis.host}")
-    public void setHost(String value) {
-        this.host = value;
-    }
-
-    private static int port;
-
-    @Value("${spring.redis.port}")
-    public void setPort(int value) {
-        this.port = value;
-    }
-
-    private static String password;
-
-    @Value("${spring.redis.password}")
-    public void setPassword(String value) {
-        this.password = value;
-    }
+//    private static String host;
+//
+//    @Value("${spring.redis.host}")
+//    public void setHost(String value) {
+//        this.host = value;
+//    }
+//
+//    private static int port;
+//
+//    @Value("${spring.redis.port}")
+//    public void setPort(int value) {
+//        this.port = value;
+//    }
+//
+//    private static String password;
+//
+//    @Value("${spring.redis.password}")
+//    public void setPassword(String value) {
+//        this.password = value;
+//    }
 
     // 下面两个方法对 注解权限起作用有很大的关系，请把这两个方法，放在配置的最上面
     @Bean(name = "lifecycleBeanPostProcessor")
@@ -119,7 +119,7 @@ public class ShiroConfig {
         // 设置realm.
         securityManager.setRealm(realm());
         // 自定义缓存实现 使用redis
-        securityManager.setCacheManager(cacheManagerShiro());
+//        securityManager.setCacheManager(cacheManagerShiro());
 //        // 自定义session管理 使用redis
 //        securityManager.setSessionManager(SessionManager());
         return securityManager;
@@ -138,38 +138,38 @@ public class ShiroConfig {
     @ConditionalOnMissingBean
     public Realm realm(){
         AuthRealm authRealm = new AuthRealm();
-        // 根据情况使用缓存器
-        authRealm.setCacheManager(cacheManagerShiro());
+//        // 根据情况使用缓存器
+//        authRealm.setCacheManager(cacheManagerShiro());
         return authRealm;
     }
 
 
-    /**
-     * shiro缓存管理器;
-     * 需要添加到securityManager中
-     * @return
-     */
-    @Bean
-    public RedisCacheManager cacheManagerShiro(){
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        //redis中针对不同用户缓存
-        redisCacheManager.setPrincipalIdFieldName("id");
-        //用户权限信息缓存时间
-        redisCacheManager.setExpire(200000);
-        return redisCacheManager;
-    }
-
-    @Bean
-    public RedisManager redisManager() {
-
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host+":"+port);
-        if(!StringUtils.isEmpty(password)) {
-            redisManager.setPassword(password);
-        }
-        return redisManager;
-    }
+//    /**
+//     * shiro缓存管理器;
+//     * 需要添加到securityManager中
+//     * @return
+//     */
+//    @Bean
+//    public RedisCacheManager cacheManagerShiro(){
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        redisCacheManager.setRedisManager(redisManager());
+//        //redis中针对不同用户缓存
+//        redisCacheManager.setPrincipalIdFieldName("id");
+//        //用户权限信息缓存时间
+//        redisCacheManager.setExpire(200000);
+//        return redisCacheManager;
+//    }
+//
+//    @Bean
+//    public RedisManager redisManager() {
+//
+//        RedisManager redisManager = new RedisManager();
+//        redisManager.setHost(host+":"+port);
+//        if(!StringUtils.isEmpty(password)) {
+//            redisManager.setPassword(password);
+//        }
+//        return redisManager;
+//    }
 
     /**
      * 让某个实例的某个方法的返回值注入为Bean的实例

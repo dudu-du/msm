@@ -166,7 +166,6 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
         return org;
     }
 
-    @Caching(evict = {@CacheEvict(value = "getAllOrgList", allEntries = true), @CacheEvict(value = "getOrgListBystr", allEntries = true)})
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean addOrg(String orgType, String code, String name, String simpleName, String parentId,
@@ -224,7 +223,6 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
         return insert > 0;
     }
 
-    @Caching(evict = {@CacheEvict(value = "getSchoolMap", key = "#orgId"), @CacheEvict(value = "getSchoolMapBydomainName", allEntries = true), @CacheEvict(value = "getAllOrgList", allEntries = true), @CacheEvict(value = "getOrgListBystr", allEntries = true)})
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean updateOrg(String orgId, String orgType, String code, String name, String simpleName, String parentId,
@@ -293,7 +291,6 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
     }
 
 
-    @Caching(evict = {@CacheEvict(value = "getSchoolMap", key = "#orgId"), @CacheEvict(value = "getSchoolMapBydomainName", allEntries = true), @CacheEvict(value = "getAllOrgList", allEntries = true), @CacheEvict(value = "getOrgListBystr", allEntries = true)})
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean delOrg(String orgId) throws Exception {
@@ -317,7 +314,6 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
         return i > 0;
     }
 
-    @Cacheable(value = "getOrgListBystr")
     @Override
     public List<Org> getOrgListBystr(String orgType, String str) throws Exception {
         if (orgType == null || str == null) {

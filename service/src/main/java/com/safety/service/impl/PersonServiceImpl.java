@@ -49,7 +49,6 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         return person;
     }
 
-    @Cacheable(value = "getRoleListByUId", key = "#userId")
     @Override
     public List<String> getRoleListByUId(String userId) throws Exception {
         List<String> roleList = baseMapper.getRoleListByUId(userId);
@@ -106,7 +105,6 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         return baseMapper.getLoginIdByPersonId(personId);
     }
 
-    @CacheEvict(value = "getRoleListByUId", key = "#userId")
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean addRoleByUser(String userId, String role) throws Exception {
@@ -125,7 +123,6 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         return true;
     }
 
-    @CacheEvict(value = "getRoleListByUId", key = "#userId")
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean deleteRoleByUser(String userId) throws Exception {
