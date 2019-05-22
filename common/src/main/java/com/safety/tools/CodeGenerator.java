@@ -26,7 +26,7 @@ public class CodeGenerator {
 //        String projectPath = System.getProperty("user.dir");
 
 //        String projectPath = "D:/project";
-        String projectPath = "/Users/lixinyu/workspace/project";
+        String projectPath = "/Users/wuzhenzhen/workspace/project";
         gc.setOutputDir(projectPath + "/src/main/java");
 
 
@@ -42,11 +42,11 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://47.93.34.148:3306/uc?serverTimezone=GMT&characterEncoding=utf-8");
+        dsc.setUrl("jdbc:mysql://59.110.217.114:3306/safety?serverTimezone=GMT&characterEncoding=utf-8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("bFUgqNnqOyFrEYJ4vpWAmXg7y20D");
+        dsc.setPassword("root");
         mpg.setDataSource(dsc);
 
         // 包配置
