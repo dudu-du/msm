@@ -240,16 +240,18 @@ public class OrgController extends BaseController {
      * @param simpleName  简称 可以为""
      * @param orgType     机构类型
      * @param parentId    父类机构ID 没有父类传"0"
+     * @param header    负责人
+     * @param worker    成员
      * @return JsonResult
      */
     @RequestMapping(value = "/org", method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
     public JsonResult addOrg(String orgType, String code, String name, String simpleName, String parentId,
-                             String remarksType, Integer sort, String domainName) {
+                             String remarksType, Integer sort, String domainName,String header,String worker) {
         try {
             //todo 字典表验证
-            boolean result = orgService.addOrg(orgType, code, name, simpleName, parentId, remarksType, sort, domainName);
+            boolean result = orgService.addOrg(orgType, code, name, simpleName, parentId, remarksType, sort, domainName,header,worker);
             log.info("添加机构");
             if (result) {
                 Org org = orgService.getOrgByCode(code);
@@ -275,15 +277,20 @@ public class OrgController extends BaseController {
      * @param simpleName  简称 可以为""
      * @param orgType     机构类型  1局机构2学校3部门
      * @param parentId    父类机构ID 没有父类传"0"
+     * @param header    负责人
+     * @param worker    成员
      * @return JsonResult
      */
     @RequestMapping(value = "/org", method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateOrg(String orgId, String orgType, String code, String name, String simpleName, String parentId, String remarksType, Integer sort, String domainName) {
+    public JsonResult updateOrg(String orgId, String orgType, String code, String name,
+                                String simpleName, String parentId, String remarksType,
+                                Integer sort, String domainName,String header,String worker) {
         try {
             //todo 字典表验证
-            boolean result = orgService.updateOrg(orgId, orgType, code, name, simpleName, parentId, remarksType, sort, domainName);
+            boolean result = orgService.updateOrg(orgId, orgType, code, name, simpleName,
+                    parentId, remarksType, sort, domainName,header,worker);
             log.info("修改机构");
             if (result) {
                 return renderSuccess("修改机构成功");

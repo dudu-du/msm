@@ -18,7 +18,7 @@
         <div class="layui-col-md4 jiaoyujigou">
             <div class="layui-card parent-position">
                 <div class="layui-card-header safety-card-header">
-                    <span>教育机构</span>
+                    <span>机构</span>
                     <div class="mechanismBtn">
                         <#--<button name="mechanismsort" class="layui-btn safety-btn-primary layui-btn-sm safety-card-btn"><i class="iconfont icon-yijijigou"></i>排序</button>-->
                         <button name="mechanism" class="layui-btn safety-btn-primary layui-btn-sm safety-card-btn"><i class="iconfont icon-yijijigou"></i>新建一级机构</button>

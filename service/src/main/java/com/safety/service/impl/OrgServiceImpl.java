@@ -1,5 +1,6 @@
 package com.safety.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.safety.entity.Org;
 import com.safety.exception.ProgramException;
@@ -167,7 +168,7 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean addOrg(String orgType, String code, String name, String simpleName, String parentId,
-                          String remarksType,Integer sort,String domainName) throws Exception {
+                          String remarksType,Integer sort,String domainName,String header,String worker) throws Exception {
         if (orgType == null || "".equals(orgType) || code == null || "".equals(code) || name == null || "".equals(name) || parentId == null || "".equals(parentId)) {
             throw new ProgramException("参数错误！");
         }
@@ -208,6 +209,8 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
         org.setDomainName(domainName);
         org.setFirstPy(HanyupinyinUtil.getFirstLetters(name));
         org.setFullPy(HanyupinyinUtil.toHanyuPinyin(name));
+        org.setHeader(header);
+        org.setWorker(worker);
         if (remarksType == null) {
             remarksType = "";
         }
@@ -224,7 +227,7 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean updateOrg(String orgId, String orgType, String code, String name, String simpleName, String parentId,
-                             String remarksType, Integer sort,String domainName) throws Exception {
+                             String remarksType, Integer sort,String domainName,String header,String worker) throws Exception {
         if (orgId == null || "".equals(orgId)) {
             throw new ProgramException("参数错误！");
         }
@@ -281,6 +284,12 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org> implements IOrgS
             org.setRemarksType(remarksType);
         if (sort != null && !"".equals(sort))
             org.setSort(sort);
+        if(!StringUtils.isEmpty(header)){
+            org.setHeader(header);
+        }
+        if(!StringUtils.isEmpty(worker)){
+            org.setWorker(worker);
+        }
         org.setDomainName(domainName);
         org.setModifydatetime(LocalDateTime.now());
         int update = baseMapper.updateById(org);

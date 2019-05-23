@@ -16,6 +16,8 @@
         <result column="department_id" property="departmentId" />
         <result column="remarks_type" property="remarksType" />
         <result column="domain_name" property="domainName"/>
+        <result column="header" property="header"/>
+        <result column="worker" property="worker"/>
         <result column="sort" property="sort" />
         <result column="del" property="del" />
         <result column="createdatetime" property="createdatetime" />

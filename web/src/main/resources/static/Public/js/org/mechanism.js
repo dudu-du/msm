@@ -100,13 +100,15 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
             ,treeUpId:'parentId'//树形父id字段名称
             ,treeShowName:'name'//以树形式显示的字段
             ,cols: [[
-                {field:'name', title: '学校部门'},
+                {field:'name', title: '部门'},
                 {field:'sort', title: '排序'},
+                {field:'header', title: '负责人'},
+                {field:'worker', title: '成员'},
                 {title: '操作',width:190,toolbar: '#barDemo'}
             ]]
             ,page:false,
             done:function(res){
-                $("#orgcontent").html("<em>"+datas.name+"</em><em>机构编码:"+datas.code+"</em><em>域名:"+(datas.domainName==null?"未设置":datas.domainName)+"</em>");
+                $("#orgcontent").html("<em>"+datas.name+"</em><em>机构编码:"+datas.code+"</em>");
             }
         });
         treeGrid.on('tool('+tableId+')',function (obj) {
@@ -235,6 +237,18 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
+        '<label class="layui-form-label">负责人</label>'+
+        '<div class="layui-input-block">'+
+        '<input type="text" name="header" lay-verify="header" autocomplete="off" placeholder="请输入负责人" class="layui-input">'+
+        '</div>'+
+        '</div>'+
+        '<div class="layui-form-item">'+
+        '<label class="layui-form-label">成员</label>'+
+        '<div class="layui-input-block">'+
+        '<input type="text" name="worker" lay-verify="worker" autocomplete="off" placeholder="请输入成员" class="layui-input">'+
+        '</div>'+
+        '</div>'+
+        '<div class="layui-form-item">'+
         '<label class="layui-form-label">排序</label>'+
         '<div class="layui-input-block">'+
         '<input type="text" name="sort" lay-verify="sort" autocomplete="off" placeholder="请输入排序序号" class="layui-input">'+
@@ -281,7 +295,9 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                 if(tag == 'edit'){
                     form.val('fromInput', {
                         "name": datas.name,
-                        "sort":datas.sort
+                        "sort":datas.sort,
+                        "header": datas.header,
+                        "worker":datas.worker
                     })
                 }
             },
@@ -302,7 +318,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
         $.ajax({
             url: '/View/org',
             type:'POST',
-            data:{parentId:res.topmech,orgType:'OT_DEPARTMENT',code:'1',name:res.name,sort:res.sort},
+            data:{parentId:res.topmech,orgType:'OT_DEPARTMENT',code:'1',name:res.name,sort:res.sort,
+                header:res.header,worker:res.worker},
             dataType: 'json',
             success: function(data){
                 console.log(data);
@@ -321,7 +338,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
         $.ajax({
             url: '/View/org',
             type:'PUT',
-            data:{orgId:lineData.id,parentId:res.topmech,orgType:'OT_DEPARTMENT',code:'1',name:res.name,sort:res.sort},
+            data:{orgId:lineData.id,parentId:res.topmech,orgType:'OT_DEPARTMENT',code:'1',name:res.name,
+                sort:res.sort,header:res.header,worker:res.worker},
             dataType: 'json',
             success: function(data){
                 console.log(data);
@@ -405,8 +423,7 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
         '<div class="layui-form-item typeJG">'+
         '<label class="layui-form-label">机构类型</label>'+
         '<div class="layui-input-block">'+
-        '<input type="radio" name="sex" lay-filter="type" value="OT_BUREAU" title="局级单位" checked="">'+
-        '<input type="radio" name="sex" lay-filter="type" value="OT_SCHOOL" title="校级单位">'+
+        '<input type="radio" name="sex" lay-filter="type" value="OT_BUREAU" title="子公司" checked="">'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
@@ -421,20 +438,24 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
         '<input type="text" name="code" lay-verify="code" autocomplete="off" placeholder="请输入机构编码" class="layui-input">'+
         '</div>'+
         '</div>'+
-        '<div class="layui-form-item layui-form-hide">'+
-        '<label class="layui-form-label">学校类型</label>'+
+        '<div class="layui-form-item">'+
+        '<label class="layui-form-label">负责人</label>'+
         '<div class="layui-input-block">'+
-        '<select name="interest" lay-verify="school" lay-filter="aihao">'+
-        '<option value="" name="none"></option>'+
-        '</select>'+
+        '<input type="text" name="header" lay-verify="header" autocomplete="off" placeholder="请输入负责人" class="layui-input">'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
-        '<label class="layui-form-label">绑定域名</label>'+
+        '<label class="layui-form-label">成员</label>'+
         '<div class="layui-input-block">'+
-        '<input type="text" name="domain" lay-verify="domain" autocomplete="off" placeholder="请输入绑定域名" class="layui-input">'+
+        '<input type="text" name="worker" lay-verify="worker" autocomplete="off" placeholder="请输入成员" class="layui-input">'+
         '</div>'+
         '</div>'+
+        // '<div class="layui-form-item">'+
+        // '<label class="layui-form-label">绑定域名</label>'+
+        // '<div class="layui-input-block">'+
+        // '<input type="text" name="domain" lay-verify="domain" autocomplete="off" placeholder="请输入绑定域名" class="layui-input">'+
+        // '</div>'+
+        // '</div>'+
         '</div>';
     function addMaskJG(tag,datas,domt,eve){
         var tilT;
@@ -456,21 +477,21 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                 layero.addClass('layui-form').attr('lay-filter','fromInput');
                 layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
                 $('select[name="interest"] .schoolInfo').remove();
-                $.ajax({
-                    url: '/View/getDictList',
-                    type:'GET',
-                    async: false,
-                    data:{parentCode:'WE_SCHOOLTYPE'},
-                    dataType: 'json',
-                    success: function(res){
-                        var schoolData = res.data;
-                        for (var i = 0; i < schoolData.length; i++) {
-                            var options = '<option class="schoolInfo" value="'+schoolData[i].code+'">' + schoolData[i].name + '</option>';
-                            $(options).appendTo('select[name="interest"]');
-                        }
-                        form.render('select', 'fromInput');
-                    }
-                });
+                // $.ajax({
+                //     url: '/View/getDictList',
+                //     type:'GET',
+                //     async: false,
+                //     data:{parentCode:'WE_SCHOOLTYPE'},
+                //     dataType: 'json',
+                //     success: function(res){
+                //         var schoolData = res.data;
+                //         for (var i = 0; i < schoolData.length; i++) {
+                //             var options = '<option class="schoolInfo" value="'+schoolData[i].code+'">' + schoolData[i].name + '</option>';
+                //             $(options).appendTo('select[name="interest"]');
+                //         }
+                //         form.render('select', 'fromInput');
+                //     }
+                // });
                 form.render();
                 if(tag == 'edit'){
                     if(datas.orgType == 'OT_BUREAU'){
@@ -478,6 +499,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                             "name": datas.name ,
                             "code": datas.code,
                             "sex": datas.orgType,
+                            "header": datas.header ,
+                            "worker": datas.worker,
                             "domain":datas.domainName
                         })
                     }else{
@@ -486,6 +509,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                             "name": datas.name ,
                             "code": datas.code,
                             "sex": datas.orgType,
+                            "header": datas.header ,
+                            "worker": datas.worker,
                             "interest":datas.remarksType,
                             "domain":datas.domainName
                         });
@@ -505,12 +530,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                                 return '只能填写数字'
                             }
                         }
-                    },
-                    school:function(value){
-                        if(value == '0'){
-                            return '学校类型不能为空'
-                        }
                     }
+
                 });
                 //单选切换
                 form.on('radio(type)',function(data){
@@ -535,7 +556,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                         $.ajax({
                             url: '/View/org',
                             type:'POST',
-                            data:{parentId:addparentId,orgType:data.field.sex,code:data.field.code,name:data.field.name,remarksType:data.field.interest,domainName:data.field.domain},
+                            data:{parentId:addparentId,orgType:data.field.sex,code:data.field.code,name:data.field.name,
+                                remarksType:data.field.interest,domainName:data.field.domain,header:data.field.header,worker:data.field.worker},
                             dataType: 'json',
                             success: function(dataA){
                                 console.log(dataA);
@@ -548,6 +570,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                                         orgType:dataA.data.orgType,
                                         parentId:dataA.data.parentId,
                                         remarksType:dataA.data.remarksType,
+                                        header:dataA.data.header,
+                                        worker:dataA.data.worker,
                                         domainName:dataA.data.domainName
                                     };
                                     if(domt == 'ai'){
@@ -565,7 +589,9 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                         $.ajax({
                             url: '/View/org',
                             type:'PUT',
-                            data:{orgId:datas.id,orgType:data.field.sex,code:data.field.code,name:data.field.name,parentId:parentId,remarksType:data.field.interest,domainName:data.field.domain},
+                            data:{orgId:datas.id,orgType:data.field.sex,code:data.field.code,name:data.field.name,
+                                parentId:parentId,remarksType:data.field.interest,domainName:data.field.domain
+                                ,header:data.field.header,worker:data.field.worker},
                             dataType: 'json',
                             success: function(dataE){
                                 console.log(dataE);
@@ -576,6 +602,8 @@ layui.use(['element','table','atree','layer','form','treeGrid','eleTree'], funct
                                     datas.orgType=data.field.sex;
                                     datas.remarksType=data.field.interest;
                                     datas.domainName=data.field.domain;
+                                    datas.header=data.field.header;
+                                    datas.worker=data.field.worker;
                                     eve(data.field.name)
                                 }else{
                                     layer.msg(dataE.msg);

@@ -100,10 +100,14 @@ public interface IOrgService extends IService<Org> {
      * @param orgType     机构类型  1局机构2学校3部门
      * @param parentId    父类机构ID 没有父类传"0"
      * @param domainName  机构域名
+     * @param header    负责人
+     * @param worker    成员
      * @return boolean
      * @throws Exception
      */
-    boolean addOrg(String orgType, String code, String name, String simpleName, String parentId, String remarksType, Integer sort,String domainName) throws Exception;
+    boolean addOrg(String orgType, String code, String name, String simpleName,
+                   String parentId, String remarksType, Integer sort,String domainName,
+                   String header,String worker) throws Exception;
 
     /**
      * 修改机构列表
@@ -116,10 +120,12 @@ public interface IOrgService extends IService<Org> {
      * @param orgType     机构类型  1局机构2学校3部门
      * @param parentId    父类机构ID 没有父类传"0"
      * @param domainName  机构域名
+     * @param header    负责人
+     * @param worker    成员
      * @return boolean
      */
     boolean updateOrg(String orgId, String orgType, String code, String name, String simpleName, String parentId,
-                      String remarksType,Integer sort,String domainName) throws Exception;
+                      String remarksType,Integer sort,String domainName,String header,String worker) throws Exception;
 
     /**
      * 删除机构列表

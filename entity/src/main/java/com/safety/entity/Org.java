@@ -67,6 +67,16 @@ public class Org extends Model<Org> {
     private String domainName;
 
     /**
+     * 负责人
+     */
+    private String header;
+
+    /**
+     * 成员
+     */
+    private String worker;
+
+    /**
      * 排序
      */
     private Integer sort;
@@ -151,6 +161,22 @@ public class Org extends Model<Org> {
     }
     public String getRemarksType() {
         return remarksType;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getWorker() {
+        return worker;
+    }
+
+    public void setWorker(String worker) {
+        this.worker = worker;
     }
 
     public void setRemarksType(String remarksType) {
