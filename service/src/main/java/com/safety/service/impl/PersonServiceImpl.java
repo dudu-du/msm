@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.safety.dto.user.OfficeAdminParams;
 import com.safety.dto.user.SchoolAdminParams;
+import com.safety.dto.user.TeacherParams;
 import com.safety.entity.*;
 import com.safety.exception.ProgramException;
 import com.safety.extentity.*;
@@ -166,5 +167,29 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         schoolAdminParams.setStart(start);
         List<OfficeAdmin> list = baseMapper.getSchoolAdminList(schoolAdminParams);
         return new PageData(page, count, pageSize, list);
+    }
+
+    @Override
+    public PageData getTeahcherListByScope(TeacherParams teacherParams) throws ProgramException {
+        Integer page = teacherParams.getPage();
+        Integer pageSize = teacherParams.getPageSize();
+        if (page == null || pageSize == null) {
+            throw new ProgramException("分页参数异常:page[" + page
+                    + "],pageSize[" + pageSize + "]");
+        }
+        int count = baseMapper.getTeacherCount(teacherParams);
+        //从第几个开始
+        int start = PageData.calcFirstItemIndexOfPage(page, pageSize, count);
+        teacherParams.setStart(start);
+        List<Teacher> list = baseMapper.getTeacherList(teacherParams);
+        return new PageData(page, count, pageSize, list);
+    }
+
+    @Override
+    public List<Teacher> getTeacherListNoPage(TeacherParams teacherParams) throws ProgramException {
+        if (teacherParams.getOrgId() == null || "".equals(teacherParams.getOrgId())) {
+            throw new ProgramException("学校ID不能为空");
+        }
+        return baseMapper.getTeacherList(teacherParams);
     }
 }

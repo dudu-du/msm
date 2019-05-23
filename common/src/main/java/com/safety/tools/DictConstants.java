@@ -69,6 +69,8 @@ public class DictConstants {
     public static final String ROLE_SHCOOLADMIN = "ROLE_SHCOOLADMIN";
     //超级管理员
     public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
+    //机构管理员
+    public static final String ROLE_ORGADMIN = "ROLE_ORGADMIN";
 
     //系统token标识
     public static final String TOKEN_SYSTEM = "1";

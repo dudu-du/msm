@@ -22,7 +22,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,{field:'sex', title:'性别'}
             ,{field:'tel', title:'手机号'}
             ,{field:'email', title:'邮箱'}
-            ,{field:'orgName', title:'所属学校'}
+            ,{field:'orgName', title:'所属公司'}
             ,{field:'identityNo', title:'身份证号码'}
             ,{title:'操作', toolbar: '#barDemo',width:180}
         ]]
@@ -75,40 +75,6 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             done: function(res, page, count){
                 $('.table-btns-box').show();
                 $('.table-btns-num').hide();
-                upload.render({
-                    elem: '#uploadExcel'
-                    ,url: origin + '/View/uploadTeacher'
-                    ,accept: 'file' //普通文件
-                    ,done: function(res){
-                        console.log(res);
-                        if(res.status == 200){
-                            var datas = res.data;
-                            var msg = "";
-                            tableLoad();
-                            if(datas.anomalousCauseList.length==0){
-                                layer.msg('教师导入成功');
-                            }else{
-                                msg = msg +"导入["+datas.count+"]条,成功["+datas.succeedCount+"]条！";
-                                if(datas.anomalousCauseList.length>0){
-                                    $.each(datas.anomalousCauseList,function (i,item) {
-                                        msg = msg+item.cause+"["+item.detail+"] "
-                                    })
-                                }
-                                layer.open({
-                                    type: 1,
-                                    content: msg, //这里content是一个普通的String
-                                    btn: ['确定'],
-                                    yes:function () {
-                                        layer.closeAll();
-                                        tableLoad();
-                                    }
-                                });
-                            }
-                        }else{
-                            layer.msg(res.msg);
-                        }
-                    }
-                });
             },
             // ,page: true
             page: {
@@ -129,116 +95,6 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         switch(obj.event){
             case 'addTeacher':
                 addMaskTeacher('add');
-                break;
-            case 'download':
-                if(org_id == 0){
-                    layer.open({
-                        type:1,
-                        area:'484px',
-                        title:'下载教师模板',
-                        content:downLoadTemplate,
-                        btn:['确定','取消'],
-                        success:function(layero, index){
-                            $('.lay-mask-box .layui-form-hide').show();
-                            layero.addClass('layui-form').attr('lay-filter','fromInput');
-                            layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
-                            $.ajax({
-                                url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.success) {
-                                        var orgDatas = data.data;
-                                        if(data.status == 200 && orgDatas.length>0){
-                                            $('select[name="orgId"] option').remove();
-                                            $.each(orgDatas,function (index,val) {
-                                                $("#orgId").append("<option value="+val.id+">"+val.name+"</option>");
-                                            })
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    } else {
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                            form.render();
-                        },
-                        yes:function(){
-                            form.on('submit(fromContent)', function (data) {
-                                var objData = data.field;
-                                window.open(origin + '/View/teacherTemplate?orgId='+objData.orgId);
-                                layer.closeAll();
-                            })
-                        }
-                    });
-                }else{
-                    window.open(origin + '/View/teacherTemplate?orgId='+org_id);
-                }
-                break;
-            case 'import':
-                layer.msg( '导入');
-                break;
-            case 'export':
-                layer.open({
-                    type:1,
-                    area:'484px',
-                    title:'导出教师',
-                    content:downLoadTemplate,
-                    btn:['确定','取消'],
-                    success:function(layero, index){
-                        $('.lay-mask-box .layui-form-hide').show();
-                        layero.addClass('layui-form').attr('lay-filter','fromInput');
-                        layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
-                        if(org_id && org_id!='0'){
-                            $.ajax({
-                                url: origin + '/View/org?orgId='+org_id,
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.success) {
-                                        var orgDatas = data.data;
-                                        $('select[name="orgId"] option').remove();
-                                        if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_SCHOOL'){
-                                            $("#orgId").append("<option value="+orgDatas.id+" selected='selected'>"+orgDatas.name+"</option>");
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    } else {
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                        }else{
-                            $.ajax({
-                                url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data){
-                                    if(data.success){
-                                        var orgDatas = data.data;
-                                        if(data.status == 200 && orgDatas.length>0){
-                                            $('select[name="orgId"] option').remove();
-                                            $.each(orgDatas,function (index,val){
-                                                $("#orgId").append("<option value="+val.id+">"+val.name+"</option>");
-                                            })
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    }else{
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                        }
-                        form.render();
-                    },
-                    yes:function () {
-                        form.on('submit(fromContent)', function (data) {
-                            var objData = data.field;
-                            window.open(origin + '/View/exportExcel?orgId='+objData.orgId);
-                            layer.closeAll();
-                        })
-
-                    }
-                });
                 break;
             case 'del':
                 var checkStatus = table.checkStatus('table')
@@ -295,7 +151,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         }
     });
 
-    //加载所有学校
+    //加载所有公司
     function getAllSchool(org_id,editOrgId){
         $.ajax({
             url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
@@ -322,7 +178,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             }
         });
     }
-    //加载当前机构的学校
+    //加载当前机构的公司
     function getCurrentSchool(org_id,editOrgId) {
         $.ajax({
             url: origin + '/View/org?orgId='+org_id,
@@ -376,7 +232,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         } else if(obj.event === 'edit'){
             addMaskTeacher('edit',data)
         }else if(obj.event === 'password'){
-            layer.confirm('真的重置么', function(index){
+            layer.confirm('确定重置密码吗', function(index){
                 $.ajax({
                     url: origin + "/password?id="+data.loginId,
                     type: "PUT",
@@ -500,7 +356,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         '<input type="hidden" name="loginId">'+
         '<input type="hidden" name="pic" id="person_pic">'+
         '<div class="layui-form-item layui-form-hide '+stuHide+'">'+
-        '<label class="layui-form-label">所属学校</label>'+
+        '<label class="layui-form-label">所属公司</label>'+
         '<div class="layui-input-block">'+
         '<select id ="orgId" name="orgId" lay-filter="orgId_name" lay-verify="school" lay-search="">'+
         '<option value=""></option>'+
@@ -551,22 +407,12 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         '</div>'+
         '</div>'+
         '</div>';
-    var downLoadTemplate = '<div class="lay-mask-box">' +
-        '<div class="layui-form-item layui-form-hide">'+
-        '<label class="layui-form-label">所属学校</label>'+
-        '<div class="layui-input-block">'+
-        '<select id ="orgId" name="orgId" lay-filter="orgId_name" lay-verify="school" lay-search="">'+
-        '<option value=""></option>'+
-        '</select>'+
-        '</div>'+
-        '</div>'+
-        '</div>';
     function addMaskTeacher(tag,datas){
         var title;
         if(tag == 'add'){
-            title = '添加教师'
+            title = '添加工作人员'
         }else{
-            title = '编辑教师'
+            title = '编辑工作人员'
         }
         layer.open({
             type:1,
@@ -603,7 +449,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     form.verify({
                         school:function(value){
                             if(value == ''){
-                                return '请选择所属学校'
+                                return '请选择所属公司'
                             }
                         }
                     });

@@ -104,56 +104,9 @@ public class HomeController extends BaseController {
             bmv.addObject("school_desc",orgDesc);
             bmv.addObject("school_font",orgFont);
             bmv.addObject("font_colour",fontColour);
-            if(roleList.contains("ROLE_ORGADMIN") || roleList.contains("ROLE_SUPERADMIN")) {
-                logger.info("用户已登录跳转到总界面，登录用户id为：" + session.getAttribute("MEMBER_USER_KEY"));
-                bmv.setViewName("home/index");
-            }
-            else{
-                logger.info("用户已登录跳转到模块界面，登录用户id为：" + session.getAttribute("MEMBER_USER_KEY"));
-                bmv.setViewName("home/product");
-            }
+            logger.info("用户已登录跳转到总界面，登录用户id为：" + session.getAttribute("MEMBER_USER_KEY"));
+            bmv.setViewName("home/index");
         }
-        return bmv;
-    }
-
-    @RequestMapping(value = "/base",method = RequestMethod.GET)
-    public BaseModelAndView base(BaseModelAndView bmv, HttpServletRequest request, HttpServletResponse response) {
-        if(bmv==null){
-            bmv = new BaseModelAndView();
-        }
-        String orgName = "";
-        String orgNameCn = "";
-        String orgPic = "";
-        String orgIcon = "";
-        String orgDesc = "";
-        String orgFont = "";
-        String fontColour = "";
-        Object orgId = request.getAttribute("orgId");
-        if(orgId != null && !StringUtils.isEmpty(orgId)){
-//            try {
-//                Map schoolMap = schoolService.getSchoolMap(orgId.toString());
-//                if(schoolMap != null) {
-//                    orgName = schoolMap.get("name").toString();
-//                    orgNameCn = schoolMap.get("schoolCn").toString();
-//                    orgPic = schoolMap.get("schoolImg").toString();
-//                    orgIcon = schoolMap.get("schoolIcon").toString();
-//                    orgDesc = schoolMap.get("schoolProfile").toString();
-//                    orgFont = schoolMap.get("schoolFont").toString();
-//                    fontColour = schoolMap.get("fontColour").toString();
-//                }
-//            }
-//            catch (Exception e){
-//                logger.error("获取机构信息失败"+e.getMessage());
-//            }
-        }
-        bmv.addObject("org_name",orgName);
-        bmv.addObject("school_namecn", orgNameCn);
-        bmv.addObject("org_pic",orgPic);
-        bmv.addObject("school_icon",orgIcon);
-        bmv.addObject("school_desc",orgDesc);
-        bmv.addObject("school_font",orgFont);
-        bmv.addObject("font_colour",fontColour);
-        bmv.setViewName("home/index");
         return bmv;
     }
 
