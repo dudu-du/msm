@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.safety.mapper.CheckSeasonRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.safety.entity.CheckSeasonRecord">
+        <id column="id" property="id" />
+        <result column="check_season_id" property="checkSeasonId" />
+        <result column="check_content" property="checkContent" />
+        <result column="create_person_fk" property="createPersonFk" />
+        <result column="org_fk" property="orgFk" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+</mapper>

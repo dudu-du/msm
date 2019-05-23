@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author safety
- * @since 2019-05-22
+ * @since 2019-05-23
  */
 public interface IRiskEvaluationListService extends IService<RiskEvaluationList> {
 

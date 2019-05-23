@@ -10,12 +10,15 @@ import java.io.Serializable;
  * </p>
  *
  * @author safety
- * @since 2019-05-22
+ * @since 2019-05-23
  */
 public class RiskControl extends Model<RiskControl> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键ID
+     */
     private String id;
 
     /**
@@ -23,9 +26,25 @@ public class RiskControl extends Model<RiskControl> {
      */
     private Integer state;
 
+    /**
+     * 创建时间
+     */
     private LocalDateTime createTime;
 
+    /**
+     * 修改时间
+     */
     private LocalDateTime modifyTime;
+
+    /**
+     * 填写人ID
+     */
+    private String createPersonFk;
+
+    /**
+     * 所属机构ID
+     */
+    private String orgFk;
 
     public String getId() {
         return id;
@@ -55,6 +74,20 @@ public class RiskControl extends Model<RiskControl> {
     public void setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
     }
+    public String getCreatePersonFk() {
+        return createPersonFk;
+    }
+
+    public void setCreatePersonFk(String createPersonFk) {
+        this.createPersonFk = createPersonFk;
+    }
+    public String getOrgFk() {
+        return orgFk;
+    }
+
+    public void setOrgFk(String orgFk) {
+        this.orgFk = orgFk;
+    }
 
     @Override
     protected Serializable pkVal() {
@@ -68,6 +101,8 @@ public class RiskControl extends Model<RiskControl> {
         ", state=" + state +
         ", createTime=" + createTime +
         ", modifyTime=" + modifyTime +
+        ", createPersonFk=" + createPersonFk +
+        ", orgFk=" + orgFk +
         "}";
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.safety.mapper.CheckDangerChecklistMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.safety.entity.CheckDangerChecklist">
+        <id column="id" property="id" />
+        <result column="risk_position" property="riskPosition" />
+        <result column="harmful_factors" property="harmfulFactors" />
+        <result column="measure" property="measure" />
+        <result column="runaway_performance" property="runawayPerformance" />
+        <result column="control_org_fk" property="controlOrgFk" />
+        <result column="control_org_name" property="controlOrgName" />
+        <result column="control_org_person_fk" property="controlOrgPersonFk" />
+        <result column="control_org_person_name" property="controlOrgPersonName" />
+        <result column="investigation_org_fk" property="investigationOrgFk" />
+        <result column="investigation_org_name" property="investigationOrgName" />
+        <result column="investigation_org_person_fk" property="investigationOrgPersonFk" />
+        <result column="investigation_org_person_name" property="investigationOrgPersonName" />
+        <result column="investigation_count" property="investigationCount" />
+        <result column="remark" property="remark" />
+        <result column="create_person_fk" property="createPersonFk" />
+        <result column="org_fk" property="orgFk" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+</mapper>

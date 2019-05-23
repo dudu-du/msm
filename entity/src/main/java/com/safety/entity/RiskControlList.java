@@ -10,21 +10,49 @@ import java.io.Serializable;
  * </p>
  *
  * @author safety
- * @since 2019-05-22
+ * @since 2019-05-23
  */
 public class RiskControlList extends Model<RiskControlList> {
 
     private static final long serialVersionUID = 1L;
 
-    private byte[] id;
+    /**
+     * 主键
+     */
+    private String id;
 
     /**
-     * 有害因素
+     * 岗位单元ID
+     */
+    private String postFk;
+
+    /**
+     * 岗位单元名称
+     */
+    private String postName;
+
+    /**
+     * 危险有害因素
      */
     private String harmfulFactors;
 
     /**
-     * 有效措施
+     * 安全风险等级id
+     */
+    private String levelFk;
+
+    /**
+     * 安全风险等级名称
+     */
+    private String levelName;
+
+    /**
+     * 安全风险等级序号（排序使用）
+     */
+    private String levelNum;
+
+    /**
+     * 现有措施有效性
      */
     private String measure;
 
@@ -34,32 +62,65 @@ public class RiskControlList extends Model<RiskControlList> {
     private String departmentFk;
 
     /**
-     * 风险类型id
+     * 部门名称
      */
-    private Long typeFk;
-
-    /**
-     * 风险等级id
-     */
-    private Long levelFk;
+    private String departmentName;
 
     /**
      * 责任人id
      */
     private String personFk;
 
-    private String fk;
+    /**
+     * 责任人名称
+     */
+    private String personName;
 
+    /**
+     * 关联ID
+     */
+    private String riskControlFk;
+
+    /**
+     * 创建时间
+     */
     private LocalDateTime createTime;
 
+    /**
+     * 修改时间
+     */
     private LocalDateTime modifyTime;
 
-    public byte[] getId() {
+    /**
+     * 填写人ID
+     */
+    private String createPersonFk;
+
+    /**
+     * 所属机构ID
+     */
+    private String orgFk;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(byte[] id) {
+    public void setId(String id) {
         this.id = id;
+    }
+    public String getPostFk() {
+        return postFk;
+    }
+
+    public void setPostFk(String postFk) {
+        this.postFk = postFk;
+    }
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
     }
     public String getHarmfulFactors() {
         return harmfulFactors;
@@ -67,6 +128,27 @@ public class RiskControlList extends Model<RiskControlList> {
 
     public void setHarmfulFactors(String harmfulFactors) {
         this.harmfulFactors = harmfulFactors;
+    }
+    public String getLevelFk() {
+        return levelFk;
+    }
+
+    public void setLevelFk(String levelFk) {
+        this.levelFk = levelFk;
+    }
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+    public String getLevelNum() {
+        return levelNum;
+    }
+
+    public void setLevelNum(String levelNum) {
+        this.levelNum = levelNum;
     }
     public String getMeasure() {
         return measure;
@@ -82,19 +164,12 @@ public class RiskControlList extends Model<RiskControlList> {
     public void setDepartmentFk(String departmentFk) {
         this.departmentFk = departmentFk;
     }
-    public Long getTypeFk() {
-        return typeFk;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setTypeFk(Long typeFk) {
-        this.typeFk = typeFk;
-    }
-    public Long getLevelFk() {
-        return levelFk;
-    }
-
-    public void setLevelFk(Long levelFk) {
-        this.levelFk = levelFk;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
     public String getPersonFk() {
         return personFk;
@@ -103,12 +178,19 @@ public class RiskControlList extends Model<RiskControlList> {
     public void setPersonFk(String personFk) {
         this.personFk = personFk;
     }
-    public String getFk() {
-        return fk;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setFk(String fk) {
-        this.fk = fk;
+    public void setPersonName(String personName) {
+        this.personName = personName;
+    }
+    public String getRiskControlFk() {
+        return riskControlFk;
+    }
+
+    public void setRiskControlFk(String riskControlFk) {
+        this.riskControlFk = riskControlFk;
     }
     public LocalDateTime getCreateTime() {
         return createTime;
@@ -124,6 +206,20 @@ public class RiskControlList extends Model<RiskControlList> {
     public void setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
     }
+    public String getCreatePersonFk() {
+        return createPersonFk;
+    }
+
+    public void setCreatePersonFk(String createPersonFk) {
+        this.createPersonFk = createPersonFk;
+    }
+    public String getOrgFk() {
+        return orgFk;
+    }
+
+    public void setOrgFk(String orgFk) {
+        this.orgFk = orgFk;
+    }
 
     @Override
     protected Serializable pkVal() {
@@ -134,15 +230,22 @@ public class RiskControlList extends Model<RiskControlList> {
     public String toString() {
         return "RiskControlList{" +
         "id=" + id +
+        ", postFk=" + postFk +
+        ", postName=" + postName +
         ", harmfulFactors=" + harmfulFactors +
+        ", levelFk=" + levelFk +
+        ", levelName=" + levelName +
+        ", levelNum=" + levelNum +
         ", measure=" + measure +
         ", departmentFk=" + departmentFk +
-        ", typeFk=" + typeFk +
-        ", levelFk=" + levelFk +
+        ", departmentName=" + departmentName +
         ", personFk=" + personFk +
-        ", fk=" + fk +
+        ", personName=" + personName +
+        ", riskControlFk=" + riskControlFk +
         ", createTime=" + createTime +
         ", modifyTime=" + modifyTime +
+        ", createPersonFk=" + createPersonFk +
+        ", orgFk=" + orgFk +
         "}";
     }
 }
