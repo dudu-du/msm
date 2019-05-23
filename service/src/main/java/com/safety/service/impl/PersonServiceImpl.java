@@ -61,7 +61,7 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean saveEntity(ExtPerson entity) throws ProgramException {
-        if (entity.getOrgId() == null || "".equals(entity.getOrgId())) {
+        if (!DictConstants.PERSON_OFFICEADMIN.equals(entity.getPersonType()) && StringUtils.isEmpty(entity.getOrgId())) {
             throw new ProgramException("机构ID不能为空");
         }
         if (entity.getPersonType() != null && DictConstants.PERSON_STUDENT.equals(entity.getPersonType())

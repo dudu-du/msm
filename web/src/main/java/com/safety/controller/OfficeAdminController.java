@@ -65,23 +65,8 @@ public class OfficeAdminController extends BaseController {
                                         @RequestParam(value = "pageSize") Integer pageSize){
         officeAdminParams.setPage(page);
         officeAdminParams.setPageSize(pageSize);
-        if(officeAdminParams.getOrgId()==null || "0".equals(officeAdminParams.getOrgId())){//超级管理员
-            officeAdminParams.setOrgId("");
-        }
-        PageData list = null;
-        if(officeAdminParams.getOrgName()!=null && !"".equals(officeAdminParams.getOrgName())){
-            List<String> orgIds = new ArrayList<>();
-            try {
-                List<Org> orgList=orgService.getOrgListBystr(DictConstants.ORGTYPE_BUREAU,officeAdminParams.getOrgName());
-                if(orgList == null || orgList.size() == 0){
-                    return renderSuccess(new PageData<>(page,pageSize));
-                }
-                orgIds=orgList.stream().map(Org::getId).collect(Collectors.toList());
-            } catch (Exception e) {
-                log.error("获取机构异常",e);
-            }
-            officeAdminParams.setOrgIds(orgIds);
-        }
+        officeAdminParams.setOrgId("");
+        PageData list ;
         try {
             list = personService.getOfficeAdminListByScope(officeAdminParams);
         } catch (ProgramException e) {
@@ -98,8 +83,12 @@ public class OfficeAdminController extends BaseController {
             officeAdmin.setPersonType(DictConstants.PERSON_OFFICEADMIN);
             officeAdmin.setId(UUIDUtil.getUUID());
             officeAdmin.setLoginId(UUIDUtil.getUUID());
+            officeAdmin.setOrgId("0");
             officeAdmin.setCreatedatetime(LocalDateTime.now());
             officeAdmin.setModifydatetime(LocalDateTime.now());
+            List<String> roleList = new ArrayList<>();
+            roleList.add(DictConstants.ROLE_SUPERADMIN);
+            officeAdmin.setRoleList(roleList);
             if(personService.saveEntity(officeAdmin)){
                 return renderSuccess();
             }
