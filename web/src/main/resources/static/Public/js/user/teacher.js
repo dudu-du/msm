@@ -37,7 +37,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,{title:'操作', toolbar: '#barDemo',width:180}
         ]]
     }
-    getSearchSchool(form,'OT_SCHOOL');
+    getSearchSchool(form,'OT_BUREAU');
     tableLoad();
     function tableLoad(data){
         var url = origin + '/View/listTeacherInfo';
@@ -154,7 +154,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     //加载所有公司
     function getAllSchool(org_id,editOrgId){
         $.ajax({
-            url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
+            url: origin + '/View/allTypeOrgList?orgType=OT_BUREAU',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -188,7 +188,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 if(data.success){
                     var orgDatas = data.data;
                     $('select[name="orgId"] option').remove();
-                    if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_SCHOOL' && orgDatas.id == editOrgId){
+                    if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_BUREAU' && orgDatas.id == editOrgId){
                         $("#orgId").append("<option value="+orgDatas.id+" selected='selected'>"+orgDatas.name+"</option>");
                     }
                     form.render();//这里需要重新渲染一次，不然下拉框没有效果
@@ -426,7 +426,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
                 form.render();
                 $.ajax({
-                    url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
+                    url: origin + '/View/allTypeOrgList?orgType=OT_BUREAU',
                     type: 'GET',
                     async:false,
                     dataType: 'json',
