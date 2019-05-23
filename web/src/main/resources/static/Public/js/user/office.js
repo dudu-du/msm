@@ -48,7 +48,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,defaultToolbar:['']
             ,cols: [[
                 {type: 'checkbox'}
-                ,{field:'orgName', title:'所属机构'}
+                // ,{field:'orgName', title:'所属机构'}
                 ,{field:'loginName', title:'用户名',  sort: true}
                 ,{field:'realname', title:'姓名',  unresize: true, sort: true}
                 // ,{field:'tel', title:'手机号'}
@@ -70,31 +70,6 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         $('.table-search-box input').keydown(function(e){
             if (event.keyCode == "13") {//keyCode=13是回车键
                 $('i[lay-event="search"]').trigger('click');
-            }
-        });
-    }
-    //获取所有局机构
-    function getOrg(editOrgId){
-        $.ajax({
-            url: origin + '/View/allTypeOrgList?orgType=OT_BUREAU',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                if (data.success) {
-                    var orgDatas = data.data;
-                    if(data.status == 200 && orgDatas.length>0){
-                        $.each(orgDatas,function (index,val){
-                            if(editOrgId == val.id){
-                                $("#orgId").append("<option value="+val.id+" selected='selected'>"+val.name+"</option>");
-                            }else{
-                                $("#orgId").append("<option value="+val.id+">"+val.name+"</option>");
-                            }
-                        })
-                    }
-                    form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                } else {
-                    console.log(data.msg)
-                }
             }
         });
     }
@@ -179,7 +154,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         } else if(obj.event === 'edit'){
             addMaskOffice('edit',data);
         }else if(obj.event === 'password'){
-            layer.confirm('真的重置么', function(index){
+            layer.confirm('确定重置密码吗？', function(index){
                 $.ajax({
                     url: origin + "/password?id="+data.loginId,
                     type: "PUT",
@@ -234,51 +209,25 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	var addOfficeHtml = '<div class="lay-mask-box">' +
             '<input type="hidden" name="id">'+
             '<input type="hidden" name="loginId">'+
-	        '<div class="layui-form-item layui-form-hide">'+
-	        '<label class="layui-form-label">所属机构</label>'+
-	        '<div class="layui-input-block">'+
-	        '<select id="orgId" name="orgId" lay-filter="aihao" lay-verify="school" lay-search="">'+
-	        '<option value=""></option>'+
-	        '</select><span class="must">*</span>'+
-	        '</div>'+
-	        '</div>'+
 	        '<div class="layui-form-item">'+
 	        '<label class="layui-form-label">用户名</label>'+
 	        '<div class="layui-input-block">'+
 	        '<input type="text" name="loginName" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input"><span class="must">*</span>'+
 	        '</div>'+
 	        '</div>'+
-	        '<div class="layui-form-item layui-hide">'+
+	        '<div class="layui-form-item">'+
 	        '<label class="layui-form-label">姓名</label>'+
 	        '<div class="layui-input-block">'+
-	        '<input type="text" name="realname" lay-verify="name" autocomplete="off" placeholder="请输入姓名" class="layui-input">'+
-	        '</div>'+
-	        '</div>'+
-			'<div class="layui-form-item" id="password-div">'+
-			'<label class="layui-form-label">密码</label>'+
-			'<div class="layui-input-block">'+
-			'<input type="new-password" name="password" lay-verify="password" autocomplete="off" placeholder="不填写则为默认密码" class="layui-input">'+
-			'</div>'+
-			'</div>'+
-	        '<div class="layui-form-item layui-hide">'+
-	        '<label class="layui-form-label">手机号</label>'+
-	        '<div class="layui-input-block">'+
-	        '<input type="text" name="tel" autocomplete="off" placeholder="请输入手机号" class="layui-input">'+
-	        '</div>'+
-	        '</div>'+
-	        '<div class="layui-form-item layui-hide">'+
-	        '<label class="layui-form-label">邮箱</label>'+
-	        '<div class="layui-input-block">'+
-	        '<input type="text" name="email" autocomplete="off" placeholder="请输入邮箱" class="layui-input">'+
+	        '<input type="text" name="realname" lay-verify="name" autocomplete="off" placeholder="请输入姓名" class="layui-input"><span class="must">*</span>'+
 	        '</div>'+
 	        '</div>'+
 	        '</div>';
 	    function addMaskOffice(tag,data){
 	        var title;
 	        if(tag == 'add'){
-	            title = '添加局管理员'
+	            title = '添加管理员'
 	        }else{
-	            title = '编辑局管理员'
+	            title = '编辑管理员'
 	        }
 	        layer.open({
 	            type:1,
@@ -291,43 +240,11 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	                layero.addClass('layui-form').attr('lay-filter','fromInput');
 	                layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
 	                form.render();
-                    var uploadInst = upload.render({  //上传图片
-                        elem: '#upIcon',
-                        url: origin + '/View/picture?folderSecond=person/',
-                        field: 'uploadPicture',
-                        before: function (obj) {
-                            //预读本地文件示例，不支持ie8
-                            obj.preview(function (index, file, result) {
-                                $('#demo1').attr('src', result); //图片链接（base64）
-                            });
-                        },
-                        choose: function (obj) {
-                            $('.layui-btn[lay-filter="fromContent"]').attr('disabled', true).text('上传中...')
-                        },
-                        done: function (res) {
-                            $('.layui-btn[lay-filter="fromContent"]').attr('disabled', false).text('提交');
-                            //如果上传失败
-                            if (res.success) {
-                                imageData=res.data;
-                                return layer.msg('上传成功');
-                            } else {
-                                return layer.msg('上传失败');
-                            }
-                            //上传成功
-                        },
-                        error: function () {
-                            //演示失败状态，并实现重传
-                            var demoText = $('#demoText');
-                            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                            demoText.find('.demo-reload').on('click', function () {
-                                uploadInst.upload();
-                            });
-                        }
-                    });
+
 	                form.verify({
-	                    school:function(value){
+	                    name:function(value){
 	                        if(value == ''){
-	                            return '请选择所属机构'
+	                            return '姓名不能为空'
 	                        }
 	                    },
 	                    username:function(value){
@@ -335,46 +252,17 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	                            return '用户名不能为空'
 	                        }
 	                    },
-                        /*phone:function(value){
-                            if(value == ''){
-                                return '手机号码不能为空'
-                            }else{
-                                if(!/^1\d{10}$/.test(value)){
-                                    return '请输入正确的手机号'
-                                }
-                            }
-                        },
-                        email:function(value){
-                            if(value == ''){
-                                return '邮箱不能为空'
-                            }else{
-                                if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)){
-                                    return '邮箱格式不正确'
-                                }
-                            }
-                        }*/
 	                });
 	                if(tag == 'edit'){
-                        if(data.pic){
-                            $('#demo1').attr('src', pictureOssUrl + "/" + data.pic);
-                            imageData = data.pic;
-                        }
                         $('#password-div').hide();
-                        getOrg(data.orgId);
-                        console.log(data);
 	                    form.val('fromInput', {
 	                        "id":data.id,
                             "loginId":data.loginId,
-	                        "orgId":data.orgId,
 	                        "loginName":data.loginName,
-	                        "realname":data.realname,
-	                        "tel": data.tel,
-	                        "email":data.email,
-                            "pic":data.pic
+	                        "realname":data.realname
 	                    })
 	                }else{
                         $('#password-div').show();
-                        getOrg();
                     }
 	            },
 	            yes:function(){
@@ -388,11 +276,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                                     id: objData.id,
                                     loginId:objData.loginId,
                                     loginName: objData.loginName,
-                                    orgId: objData.orgId,
-                                    realname: '局管理员',
-                                    tel:objData.tel,
-                                    email:objData.email,
-                                    pic:imageData
+                                    realname: objData.realname
                                 },
                                 dataType: 'json',
                                 success: function (data) {
@@ -409,11 +293,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                                 {
                                     loginName: objData.loginName,
                                     orgId: objData.orgId,
-                                    realname: '局管理员',
-                                    password:objData.password,
-                                    tel:objData.tel,
-                                    email:objData.email,
-                                    pic:imageData
+                                    realname: objData.realname,
+                                    password:objData.password
                                 },
                                 function (data) {
                                     if (data.success) {

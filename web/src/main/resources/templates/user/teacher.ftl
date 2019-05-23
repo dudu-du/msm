@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <title>教师管理</title>
+    <title>工作人员管理</title>
     <link rel="stylesheet" href="/node_modules/layui-src/dist/css/layui.css">
     <link rel="stylesheet" href="/Public/css/public-yun.css">
     <link rel="stylesheet" href="/Public/css/public-color.css">
@@ -20,12 +20,7 @@
                     <script type="text/html" id="toolbarDemo">
                         <div class="layui-btn-container">
                             <div class="table-btns-box">
-                                <button class="layui-btn layui-btn-sm" lay-event="addTeacher"><i class="iconfont icon-renyuanzengjia"></i>添加教师</button>
-                                <div class="layui-btn-group">
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="download"><i class="iconfont icon-shuangsechangyongtubiao-"></i>下载模板</button>
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="uploadExcel"><i class="iconfont icon-daoru"></i>导入</button>
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="export"><i class="iconfont icon-daochu"></i>导出</button>
-                                </div>
+                                <button class="layui-btn layui-btn-sm" lay-event="addTeacher"><i class="iconfont icon-renyuanzengjia"></i>添加工作人员</button>
                             </div>
                             <div class="table-btns-num">
                                 <span class="table-cho-num"></span>
@@ -58,8 +53,7 @@
                 </div>
                 <div class="layui-card-body layui-form">
                     <div class="layui-form-item layui-hide schoolSelects">
-                        <label class="layui-form-label">所属学校</label>
-                        <#--<input id="teacher_orgName" type="text" name="orgName" autocomplete="off" placeholder="请输入学校名称" class="layui-input">-->
+                        <label class="layui-form-label">所属公司</label>
                         <div class="layui-input-inline">
                             <select id="teacher_orgName" name="selectSearch" lay-verify="school" lay-filter="selectSearch" lay-search="">
                                 <option value="">直接选择或搜索选择</option>

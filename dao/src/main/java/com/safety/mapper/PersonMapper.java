@@ -6,6 +6,7 @@ import com.safety.dto.user.SchoolAdminParams;
 import com.safety.dto.user.TeacherParams;
 import com.safety.entity.OfficeAdmin;
 import com.safety.entity.Person;
+import com.safety.entity.Teacher;
 import com.safety.extentity.ExtPerson;
 import com.safety.extentity.ExtPersonDepartment;
 import org.apache.ibatis.annotations.Param;
@@ -309,4 +310,14 @@ public interface PersonMapper extends BaseMapper<Person> {
     int getSchoolAdminCount(SchoolAdminParams schoolAdminParams);
 
     List<OfficeAdmin> getSchoolAdminList(SchoolAdminParams schoolAdminParams);
+
+    /**
+     * 教师列表
+     *
+     * @param teacherParams
+     * @return
+     */
+    int getTeacherCount(TeacherParams teacherParams);
+
+    List<Teacher> getTeacherList(TeacherParams teacherParams);
 }
