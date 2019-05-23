@@ -1,6 +1,5 @@
 package com.safety.entity;
 
-import java.math.BigDecimal;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author safety
- * @since 2019-05-22
+ * @since 2019-05-23
  */
 public class RiskIdentificationList extends Model<RiskIdentificationList> {
 
@@ -57,7 +56,7 @@ public class RiskIdentificationList extends Model<RiskIdentificationList> {
     /**
      * 暴露于危险环境的频繁程度(E)
      */
-    private BigDecimal e;
+    private Float e;
 
     /**
      * 发生事故产生的后果（C）
@@ -130,11 +129,11 @@ public class RiskIdentificationList extends Model<RiskIdentificationList> {
     public void setL(Float l) {
         this.l = l;
     }
-    public BigDecimal getE() {
+    public Float getE() {
         return e;
     }
 
-    public void setE(BigDecimal e) {
+    public void setE(Float e) {
         this.e = e;
     }
     public Float getC() {

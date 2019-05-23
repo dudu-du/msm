@@ -16,7 +16,7 @@ import org.springframework.web.filter.HttpPutFormContentFilter;
 @MapperScan("com.safety.mapper")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-@EnableCaching(proxyTargetClass = true)
+//@EnableCaching(proxyTargetClass = true)
 public class WebApplication {
 
     @Bean
