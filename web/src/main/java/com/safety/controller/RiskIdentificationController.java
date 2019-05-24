@@ -36,7 +36,7 @@ public class RiskIdentificationController extends BaseController {
     @RequestMapping(value = "/riskIdentificationView",method = RequestMethod.GET)
     public BaseModelAndView getIdentificationList(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("/mechanismAdmin");
+        modelAndView.setViewName("risk/incidentification");
         return modelAndView;
     }
 
