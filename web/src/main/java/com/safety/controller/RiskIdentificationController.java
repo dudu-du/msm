@@ -33,7 +33,7 @@ public class RiskIdentificationController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/identificationView",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskIdentificationView",method = RequestMethod.GET)
     public BaseModelAndView getIdentificationList(){
         BaseModelAndView modelAndView = new BaseModelAndView();
         modelAndView.setViewName("/mechanismAdmin");
@@ -45,10 +45,10 @@ public class RiskIdentificationController extends BaseController {
      * @param riskIdentification
      * @return
      */
-    @RequestMapping(value = "/identification",method = RequestMethod.POST)
+    @RequestMapping(value = "/riskIdentification",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addIdentification(RiskIdentification riskIdentification){
+    public JsonResult addRiskIdentification(RiskIdentification riskIdentification){
         String id = UUIDUtil.getUUID();
         riskIdentification.setId(id);
         boolean result = iRiskIdentificationService.save(riskIdentification);
@@ -64,10 +64,10 @@ public class RiskIdentificationController extends BaseController {
      * @param riskIdentification
      * @return
      */
-    @RequestMapping(value = "/identification",method = RequestMethod.PUT)
+    @RequestMapping(value = "/riskIdentification",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateIdentification(RiskIdentification riskIdentification){
+    public JsonResult updateRiskIdentification(RiskIdentification riskIdentification){
         boolean result = iRiskIdentificationService.updateById(riskIdentification);
         if (result){
             return renderSuccess("修改成功");
@@ -81,10 +81,10 @@ public class RiskIdentificationController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/identification",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/riskIdentification",method = RequestMethod.DELETE)
     @ResponseBody
     @CrossOrigin
-    public JsonResult deleteIdentification(String id){
+    public JsonResult deleteRiskIdentification(String id){
         boolean result = iRiskIdentificationService.removeById(id);
         if (result){
             return renderSuccess("删除成功");
@@ -98,9 +98,9 @@ public class RiskIdentificationController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/identification",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskIdentification",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getIdentificationById(String id){
+    public JsonResult getRiskIdentificationById(String id){
         RiskIdentification riskIdentification = iRiskIdentificationService.getById(id);
         if(riskIdentification!=null){
             return renderSuccess("查询成功",riskIdentification);

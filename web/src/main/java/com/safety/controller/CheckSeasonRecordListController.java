@@ -1,9 +1,18 @@
 package com.safety.controller;
 
 
+import com.safety.entity.CheckSeasonRecordList;
+import com.safety.service.ICheckSeasonRecordListService;
+import com.safety.tools.BaseController;
+import com.safety.tools.JsonResult;
+import com.safety.tools.UUIDUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -15,6 +24,75 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/safety/checkSeasonRecordList")
-public class CheckSeasonRecordListController {
+public class CheckSeasonRecordListController extends BaseController {
+    @Autowired
+    private ICheckSeasonRecordListService iCheckSeasonRecordListService;
+    /**
+     * 添加
+     * @param checkSeasonRecordList
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordList",method = RequestMethod.POST)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult addCheckSeasonRecordList(CheckSeasonRecordList checkSeasonRecordList){
+        String id = UUIDUtil.getUUID();
+        checkSeasonRecordList.setId(id);
+        boolean result = iCheckSeasonRecordListService.save(checkSeasonRecordList);
+        if (result){
+            return renderSuccess("添加成功", id);
+        }else {
+            return renderSuccess("添加失败");
+        }
+    }
 
+    /**
+     * 修改
+     * @param checkSeasonRecordList
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordList",method = RequestMethod.PUT)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult updateCheckSeasonRecordList(CheckSeasonRecordList checkSeasonRecordList){
+        boolean result = iCheckSeasonRecordListService.updateById(checkSeasonRecordList);
+        if (result){
+            return renderSuccess("修改成功");
+        }else {
+            return renderSuccess("修改失败");
+        }
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordList",method = RequestMethod.DELETE)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult deleteCheckSeasonRecordList(String id){
+        boolean result = iCheckSeasonRecordListService.removeById(id);
+        if (result){
+            return renderSuccess("删除成功");
+        }else {
+            return renderSuccess("删除失败");
+        }
+    }
+
+    /**
+     * 通过ID查询
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordList",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckSeasonRecordListById(String id){
+        CheckSeasonRecordList checkSeasonRecordList = iCheckSeasonRecordListService.getById(id);
+        if(checkSeasonRecordList!=null){
+            return renderSuccess("查询成功",checkSeasonRecordList);
+        }else {
+            return renderSuccess("无数据");
+        }
+    }
 }

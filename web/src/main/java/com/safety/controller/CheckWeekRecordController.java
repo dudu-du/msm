@@ -1,9 +1,18 @@
 package com.safety.controller;
 
 
+import com.safety.entity.CheckWeekRecord;
+import com.safety.service.ICheckWeekRecordService;
+import com.safety.tools.BaseController;
+import com.safety.tools.JsonResult;
+import com.safety.tools.UUIDUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -15,6 +24,75 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/safety/checkWeekRecord")
-public class CheckWeekRecordController {
+public class CheckWeekRecordController extends BaseController {
+    @Autowired
+    private ICheckWeekRecordService iCheckWeekRecordService;
+    /**
+     * 添加
+     * @param checkWeekRecord
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecord",method = RequestMethod.POST)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult addCheckWeekRecord(CheckWeekRecord checkWeekRecord){
+        String id = UUIDUtil.getUUID();
+        checkWeekRecord.setId(id);
+        boolean result = iCheckWeekRecordService.save(checkWeekRecord);
+        if (result){
+            return renderSuccess("添加成功", id);
+        }else {
+            return renderSuccess("添加失败");
+        }
+    }
 
+    /**
+     * 修改
+     * @param checkWeekRecord
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecord",method = RequestMethod.PUT)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult updateCheckWeekRecord(CheckWeekRecord checkWeekRecord){
+        boolean result = iCheckWeekRecordService.updateById(checkWeekRecord);
+        if (result){
+            return renderSuccess("修改成功");
+        }else {
+            return renderSuccess("修改失败");
+        }
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecord",method = RequestMethod.DELETE)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult deleteCheckWeekRecord(String id){
+        boolean result = iCheckWeekRecordService.removeById(id);
+        if (result){
+            return renderSuccess("删除成功");
+        }else {
+            return renderSuccess("删除失败");
+        }
+    }
+
+    /**
+     * 通过ID查询
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecord",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckWeekRecordById(String id){
+        CheckWeekRecord checkWeekRecord = iCheckWeekRecordService.getById(id);
+        if(checkWeekRecord!=null){
+            return renderSuccess("查询成功",checkWeekRecord);
+        }else {
+            return renderSuccess("无数据");
+        }
+    }
 }

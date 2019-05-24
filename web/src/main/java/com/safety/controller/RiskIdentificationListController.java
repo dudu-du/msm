@@ -29,14 +29,14 @@ public class RiskIdentificationListController extends BaseController {
     @Autowired
     private IRiskIdentificationListService iRiskIdentificationListService;
     /**
-     * 添加风险辨识清单
+     * 添加
      * @param riskIdentificationList
      * @return
      */
-    @RequestMapping(value = "/identificationList",method = RequestMethod.POST)
+    @RequestMapping(value = "/riskIdentificationList",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addIdentification(RiskIdentificationList riskIdentificationList){
+    public JsonResult addRiskIdentificationList(RiskIdentificationList riskIdentificationList){
         String id = UUIDUtil.getUUID();
         riskIdentificationList.setId(id);
         boolean result = iRiskIdentificationListService.save(riskIdentificationList);
@@ -48,14 +48,14 @@ public class RiskIdentificationListController extends BaseController {
     }
 
     /**
-     * 修改风险辨识清单
+     * 修改
      * @param riskIdentificationList
      * @return
      */
-    @RequestMapping(value = "/identificationList",method = RequestMethod.PUT)
+    @RequestMapping(value = "/riskIdentificationList",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateIdentification(RiskIdentificationList riskIdentificationList){
+    public JsonResult updateRiskIdentificationList(RiskIdentificationList riskIdentificationList){
         boolean result = iRiskIdentificationListService.updateById(riskIdentificationList);
         if (result){
             return renderSuccess("修改成功");
@@ -69,10 +69,10 @@ public class RiskIdentificationListController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/identificationList",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/riskIdentificationList",method = RequestMethod.DELETE)
     @ResponseBody
     @CrossOrigin
-    public JsonResult deleteIdentification(String id){
+    public JsonResult deleteRiskIdentificationList(String id){
         boolean result = iRiskIdentificationListService.removeById(id);
         if (result){
             return renderSuccess("删除成功");
@@ -86,9 +86,9 @@ public class RiskIdentificationListController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/identificationList",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskIdentificationList",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getIdentificationById(String id){
+    public JsonResult getRiskIdentificationListById(String id){
         RiskIdentificationList riskIdentificationList = iRiskIdentificationListService.getById(id);
         if(riskIdentificationList!=null){
             return renderSuccess("查询成功",riskIdentificationList);
