@@ -3,6 +3,7 @@ package com.safety.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -45,6 +46,13 @@ public class RiskIdentification extends Model<RiskIdentification> {
      * 所属机构ID
      */
     private String orgFk;
+
+    /**
+     * 安全风险辨识列表
+     * @return
+     */
+    private List<RiskIdentificationList> RiskIdentificationList;
+
 
     public String getId() {
         return id;
@@ -92,6 +100,14 @@ public class RiskIdentification extends Model<RiskIdentification> {
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public List<com.safety.entity.RiskIdentificationList> getRiskIdentificationList() {
+        return RiskIdentificationList;
+    }
+
+    public void setRiskIdentificationList(List<com.safety.entity.RiskIdentificationList> riskIdentificationList) {
+        RiskIdentificationList = riskIdentificationList;
     }
 
     @Override

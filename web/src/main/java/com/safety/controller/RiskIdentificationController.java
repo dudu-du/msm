@@ -4,6 +4,7 @@ package com.safety.controller;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ import com.safety.tools.BaseController;
 import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -108,10 +111,27 @@ public class RiskIdentificationController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/riskIdentification",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskIdentificationById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getRiskIdentificationById(String id){
         RiskIdentification riskIdentification = iRiskIdentificationService.getById(id);
+        if(riskIdentification!=null){
+            return renderSuccess("查询成功",riskIdentification);
+        }else {
+            return renderSuccess("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/riskIdentification",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskIdentificationByParam(String orgId, String year){
+        RiskIdentification riskIdentification = iRiskIdentificationService.getByParam(orgId,year);
         if(riskIdentification!=null){
             return renderSuccess("查询成功",riskIdentification);
         }else {

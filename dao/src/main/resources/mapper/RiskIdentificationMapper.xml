@@ -12,4 +12,7 @@
         <result column="org_fk" property="orgFk" />
     </resultMap>
 
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from risk_identification where org_fk = #{orgFk} and create_time =#{createTime}
+    </select>
 </mapper>

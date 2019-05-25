@@ -100,7 +100,7 @@ public class RiskDictController extends BaseController {
 
     /**
      * 通过code查询列表
-     * @param id
+     * @param code
      * @return
      */
     @RequestMapping(value = "/riskDictList",method = RequestMethod.GET)
