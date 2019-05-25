@@ -58,7 +58,7 @@ new Vue({
 					this.$data.topselect.orgs.value = response.data.data[0].id;
 				}
 				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
-//				that.search();
+				that.search();
 			}else{
 				this.$message.warning(response.data.msg);
 			}
@@ -69,7 +69,7 @@ new Vue({
 	data: function() {
 		return {
 			dialogFormVisible: false,
-			curData:{id:'111',state:1},
+			curData:{},
 			activeNames:['1'],
 			form: new Control(),
 			post_options: [],
@@ -187,12 +187,12 @@ new Vue({
 			}
 		},
 		search(){//搜索
-			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
+			axios.get('/safety/riskControl/riskControl',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;
 					this.$data.tableData = [];
-					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Incidentfication(e)));
+					response.data.data.riskControlList.forEach(e=>this.$data.tableData.push(new Control(e)));
 				}else{
 					this.$message.warning(response.data.msg);
 				}
@@ -237,7 +237,6 @@ new Vue({
 			this.$refs[formName].resetFields();
 		},
 		headerStyle({row, rowIndex}){
-			console.log(rowIndex);
 			return 'background:#F5F7FA;';
 		}
 	}
