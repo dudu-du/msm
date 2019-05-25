@@ -2,14 +2,18 @@ package com.safety.controller;
 
 
 import com.safety.entity.CheckDayRecord;
+import com.safety.exception.ProgramException;
 import com.safety.service.ICheckDayRecordService;
 import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Controller;
  * @since 2019-05-23
  */
 @Controller
+@Slf4j
 @RequestMapping("/safety/checkDayRecord")
 public class CheckDayRecordController extends BaseController {
     @Autowired
@@ -82,14 +87,35 @@ public class CheckDayRecordController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkDayRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkDayRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckDayRecordById(String id){
-        CheckDayRecord checkDayRecord = iCheckDayRecordService.getById(id);
-        if(checkDayRecord!=null){
-            return renderSuccess("查询成功",checkDayRecord);
-        }else {
-            return renderError("无数据");
+        try {
+            CheckDayRecord checkDayRecord = iCheckDayRecordService.getCheckDayRecordListById(id);
+            if(checkDayRecord!=null){
+                return renderSuccess("查询成功",checkDayRecord);
+            }else {
+                return renderError("无数据");
+            }
         }
+        catch (ProgramException p) {
+            log.error("获取日治理记录失败." + p.getMessage());
+            return renderError(p.getMessage());
+        } catch (Exception e) {
+            log.error("获取日治理记录失败." + e.getMessage());
+            return renderError("获取日治理记录失败");
+        }
+    }
+
+    /**
+     * 查询日治理列表
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecord",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getCheckDayRecord(){
+        List<CheckDayRecord> result = iCheckDayRecordService.getCheckDayRecord();
+        return renderSuccess("查询成功",result);
     }
 }

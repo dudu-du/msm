@@ -2,6 +2,9 @@ package com.safety.mapper;
 
 import com.safety.entity.CheckDayRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-05-23
  */
 public interface CheckDayRecordMapper extends BaseMapper<CheckDayRecord> {
-
+    List<CheckDayRecord> selectCheckDayRecord();
+    CheckDayRecord selectCheckDayRecordListById(@Param("id") String id);
 }
