@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckWeekRecordListController extends BaseController {
     @RequestMapping(value = "/checkWeekRecordList",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckWeekRecordList(CheckWeekRecordList checkWeekRecordList){
+    public JsonResult addCheckWeekRecordList(@RequestBody CheckWeekRecordList checkWeekRecordList){
         String id = UUIDUtil.getUUID();
         checkWeekRecordList.setId(id);
         boolean result = iCheckWeekRecordListService.save(checkWeekRecordList);
@@ -54,7 +51,7 @@ public class CheckWeekRecordListController extends BaseController {
     @RequestMapping(value = "/checkWeekRecordList",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckWeekRecordList(CheckWeekRecordList checkWeekRecordList){
+    public JsonResult updateCheckWeekRecordList(@RequestBody CheckWeekRecordList checkWeekRecordList){
         boolean result = iCheckWeekRecordListService.updateById(checkWeekRecordList);
         if (result){
             return renderSuccess("修改成功");

@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckSpecialController extends BaseController {
     @RequestMapping(value = "/checkSpecial",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckSpecial(CheckSpecial checkSpecial){
+    public JsonResult addCheckSpecial(@RequestBody CheckSpecial checkSpecial){
         String id = UUIDUtil.getUUID();
         checkSpecial.setId(id);
         boolean result = iCheckSpecialService.save(checkSpecial);
@@ -54,7 +51,7 @@ public class CheckSpecialController extends BaseController {
     @RequestMapping(value = "/checkSpecial",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckSpecial(CheckSpecial checkSpecial){
+    public JsonResult updateCheckSpecial(@RequestBody CheckSpecial checkSpecial){
         boolean result = iCheckSpecialService.updateById(checkSpecial);
         if (result){
             return renderSuccess("修改成功");

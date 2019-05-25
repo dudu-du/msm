@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckRectificationReceiptController extends BaseController {
     @RequestMapping(value = "/checkRectificationReceipt",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckRectificationReceipt(CheckRectificationReceipt checkRectificationReceipt){
+    public JsonResult addCheckRectificationReceipt(@RequestBody CheckRectificationReceipt checkRectificationReceipt){
         String id = UUIDUtil.getUUID();
         checkRectificationReceipt.setId(id);
         boolean result = iCheckRectificationReceiptService.save(checkRectificationReceipt);
@@ -54,7 +51,7 @@ public class CheckRectificationReceiptController extends BaseController {
     @RequestMapping(value = "/checkRectificationReceipt",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckRectificationReceipt(CheckRectificationReceipt checkRectificationReceipt){
+    public JsonResult updateCheckRectificationReceipt(@RequestBody CheckRectificationReceipt checkRectificationReceipt){
         boolean result = iCheckRectificationReceiptService.updateById(checkRectificationReceipt);
         if (result){
             return renderSuccess("修改成功");

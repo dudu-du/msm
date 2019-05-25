@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -36,7 +33,7 @@ public class CheckComprehensiveHolidayListController extends BaseController {
     @RequestMapping(value = "/checkComprehensiveHolidayList",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckComprehensiveHolidayList(CheckComprehensiveHolidayList checkComprehensiveHolidayList){
+    public JsonResult addCheckComprehensiveHolidayList(@RequestBody CheckComprehensiveHolidayList checkComprehensiveHolidayList){
         String id = UUIDUtil.getUUID();
         checkComprehensiveHolidayList.setId(id);
         boolean result = iCheckComprehensiveHolidayListService.save(checkComprehensiveHolidayList);
@@ -55,7 +52,7 @@ public class CheckComprehensiveHolidayListController extends BaseController {
     @RequestMapping(value = "/checkComprehensiveHolidayList",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckComprehensiveHolidayList(CheckComprehensiveHolidayList checkComprehensiveHolidayList){
+    public JsonResult updateCheckComprehensiveHolidayList(@RequestBody CheckComprehensiveHolidayList checkComprehensiveHolidayList){
         boolean result = iCheckComprehensiveHolidayListService.updateById(checkComprehensiveHolidayList);
         if (result){
             return renderSuccess("修改成功");

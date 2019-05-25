@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckHolidayRecordListController extends BaseController {
     @RequestMapping(value = "/checkHolidayRecordList",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckHolidayRecordList(CheckHolidayRecordList checkHolidayRecordList){
+    public JsonResult addCheckHolidayRecordList(@RequestBody CheckHolidayRecordList checkHolidayRecordList){
         String id = UUIDUtil.getUUID();
         checkHolidayRecordList.setId(id);
         boolean result = iCheckHolidayRecordListService.save(checkHolidayRecordList);
@@ -54,7 +51,7 @@ public class CheckHolidayRecordListController extends BaseController {
     @RequestMapping(value = "/checkHolidayRecordList",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckHolidayRecordList(CheckHolidayRecordList checkHolidayRecordList){
+    public JsonResult updateCheckHolidayRecordList(@RequestBody CheckHolidayRecordList checkHolidayRecordList){
         boolean result = iCheckHolidayRecordListService.updateById(checkHolidayRecordList);
         if (result){
             return renderSuccess("修改成功");

@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCard",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard){
+    public JsonResult addSafetyNotificationCard(@RequestBody SafetyNotificationCard safetyNotificationCard){
         String id = UUIDUtil.getUUID();
         safetyNotificationCard.setId(id);
         boolean result = iSafetyNotificationCardService.save(safetyNotificationCard);
@@ -54,7 +51,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCard",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard){
+    public JsonResult updateSafetyNotificationCard(@RequestBody SafetyNotificationCard safetyNotificationCard){
         boolean result = iSafetyNotificationCardService.updateById(safetyNotificationCard);
         if (result){
             return renderSuccess("修改成功");

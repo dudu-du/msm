@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckDangerLedgerController extends BaseController {
     @RequestMapping(value = "/checkDangerLedger",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckDangerLedger(CheckDangerLedger checkDangerLedger){
+    public JsonResult addCheckDangerLedger(@RequestBody CheckDangerLedger checkDangerLedger){
         String id = UUIDUtil.getUUID();
         checkDangerLedger.setId(id);
         boolean result = iCheckDangerLedgerService.save(checkDangerLedger);
@@ -54,7 +51,7 @@ public class CheckDangerLedgerController extends BaseController {
     @RequestMapping(value = "/checkDangerLedger",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckDangerLedger(CheckDangerLedger checkDangerLedger){
+    public JsonResult updateCheckDangerLedger(@RequestBody CheckDangerLedger checkDangerLedger){
         boolean result = iCheckDangerLedgerService.updateById(checkDangerLedger);
         if (result){
             return renderSuccess("修改成功");

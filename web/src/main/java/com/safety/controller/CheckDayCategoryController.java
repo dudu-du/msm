@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckDayCategoryController extends BaseController {
     @RequestMapping(value = "/checkDayCategory",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckDayCategory(CheckDayCategory checkDayCategory){
+    public JsonResult addCheckDayCategory(@RequestBody CheckDayCategory checkDayCategory){
         String id = UUIDUtil.getUUID();
         checkDayCategory.setId(id);
         boolean result = iCheckDayCategoryService.save(checkDayCategory);
@@ -54,7 +51,7 @@ public class CheckDayCategoryController extends BaseController {
     @RequestMapping(value = "/checkDayCategory",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckDayCategory(CheckDayCategory checkDayCategory){
+    public JsonResult updateCheckDayCategory(@RequestBody CheckDayCategory checkDayCategory){
         boolean result = iCheckDayCategoryService.updateById(checkDayCategory);
         if (result){
             return renderSuccess("修改成功");

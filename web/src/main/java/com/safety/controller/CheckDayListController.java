@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckDayListController extends BaseController {
     @RequestMapping(value = "/checkDayList",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckDayList(CheckDayList checkDayList){
+    public JsonResult addCheckDayList(@RequestBody CheckDayList checkDayList){
         String id = UUIDUtil.getUUID();
         checkDayList.setId(id);
         boolean result = iCheckDayListService.save(checkDayList);
@@ -54,7 +51,7 @@ public class CheckDayListController extends BaseController {
     @RequestMapping(value = "/checkDayList",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckDayList(CheckDayList checkDayList){
+    public JsonResult updateCheckDayList(@RequestBody CheckDayList checkDayList){
         boolean result = iCheckDayListService.updateById(checkDayList);
         if (result){
             return renderSuccess("修改成功");

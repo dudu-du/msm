@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckComprehensiveSeasonController extends BaseController {
     @RequestMapping(value = "/checkComprehensiveSeason",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckComprehensiveSeason(CheckComprehensiveSeason checkComprehensiveSeason){
+    public JsonResult addCheckComprehensiveSeason(@RequestBody CheckComprehensiveSeason checkComprehensiveSeason){
         String id = UUIDUtil.getUUID();
         checkComprehensiveSeason.setId(id);
         boolean result = iCheckComprehensiveSeasonService.save(checkComprehensiveSeason);
@@ -54,7 +51,7 @@ public class CheckComprehensiveSeasonController extends BaseController {
     @RequestMapping(value = "/checkComprehensiveSeason",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckComprehensiveSeason(CheckComprehensiveSeason checkComprehensiveSeason){
+    public JsonResult updateCheckComprehensiveSeason(@RequestBody CheckComprehensiveSeason checkComprehensiveSeason){
         boolean result = iCheckComprehensiveSeasonService.updateById(checkComprehensiveSeason);
         if (result){
             return renderSuccess("修改成功");

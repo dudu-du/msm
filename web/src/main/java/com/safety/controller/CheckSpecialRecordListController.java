@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckSpecialRecordListController extends BaseController {
     @RequestMapping(value = "/checkSpecialRecordList",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckSpecialRecordList(CheckSpecialRecordList checkSpecialRecordList){
+    public JsonResult addCheckSpecialRecordList(@RequestBody CheckSpecialRecordList checkSpecialRecordList){
         String id = UUIDUtil.getUUID();
         checkSpecialRecordList.setId(id);
         boolean result = iCheckSpecialRecordListService.save(checkSpecialRecordList);
@@ -54,7 +51,7 @@ public class CheckSpecialRecordListController extends BaseController {
     @RequestMapping(value = "/checkSpecialRecordList",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckSpecialRecordList(CheckSpecialRecordList checkSpecialRecordList){
+    public JsonResult updateCheckSpecialRecordList(@RequestBody CheckSpecialRecordList checkSpecialRecordList){
         boolean result = iCheckSpecialRecordListService.updateById(checkSpecialRecordList);
         if (result){
             return renderSuccess("修改成功");

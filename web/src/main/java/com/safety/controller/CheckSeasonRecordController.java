@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class CheckSeasonRecordController extends BaseController {
     @RequestMapping(value = "/checkSeasonRecord",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addCheckSeasonRecord(CheckSeasonRecord checkSeasonRecord){
+    public JsonResult addCheckSeasonRecord(@RequestBody CheckSeasonRecord checkSeasonRecord){
         String id = UUIDUtil.getUUID();
         checkSeasonRecord.setId(id);
         boolean result = iCheckSeasonRecordService.save(checkSeasonRecord);
@@ -54,7 +51,7 @@ public class CheckSeasonRecordController extends BaseController {
     @RequestMapping(value = "/checkSeasonRecord",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateCheckSeasonRecord(CheckSeasonRecord checkSeasonRecord){
+    public JsonResult updateCheckSeasonRecord(@RequestBody CheckSeasonRecord checkSeasonRecord){
         boolean result = iCheckSeasonRecordService.updateById(checkSeasonRecord);
         if (result){
             return renderSuccess("修改成功");

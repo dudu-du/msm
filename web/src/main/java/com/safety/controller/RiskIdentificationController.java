@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.safety.entity.RiskIdentification;
 import com.safety.service.IOrgService;
@@ -61,7 +58,7 @@ public class RiskIdentificationController extends BaseController {
     @RequestMapping(value = "/riskIdentification",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addRiskIdentification(RiskIdentification riskIdentification){
+    public JsonResult addRiskIdentification(@RequestBody RiskIdentification riskIdentification){
         String id = UUIDUtil.getUUID();
         riskIdentification.setId(id);
         boolean result = iRiskIdentificationService.save(riskIdentification);
@@ -80,7 +77,7 @@ public class RiskIdentificationController extends BaseController {
     @RequestMapping(value = "/riskIdentification",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateRiskIdentification(RiskIdentification riskIdentification){
+    public JsonResult updateRiskIdentification(@RequestBody RiskIdentification riskIdentification){
         boolean result = iRiskIdentificationService.updateById(riskIdentification);
         if (result){
             return renderSuccess("修改成功");

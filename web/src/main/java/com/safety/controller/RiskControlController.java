@@ -7,12 +7,9 @@ import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -35,7 +32,7 @@ public class RiskControlController extends BaseController {
     @RequestMapping(value = "/riskControl",method = RequestMethod.POST)
     @ResponseBody
     @CrossOrigin
-    public JsonResult addRiskControl(RiskControl riskControl){
+    public JsonResult addRiskControl(@RequestBody RiskControl riskControl){
         String id = UUIDUtil.getUUID();
         riskControl.setId(id);
         boolean result = iRiskControlService.save(riskControl);
@@ -54,7 +51,7 @@ public class RiskControlController extends BaseController {
     @RequestMapping(value = "/riskControl",method = RequestMethod.PUT)
     @ResponseBody
     @CrossOrigin
-    public JsonResult updateRiskControl(RiskControl riskControl){
+    public JsonResult updateRiskControl(@RequestBody RiskControl riskControl){
         boolean result = iRiskControlService.updateById(riskControl);
         if (result){
             return renderSuccess("修改成功");
