@@ -9,8 +9,8 @@ import com.safety.entity.Teacher;
 import com.safety.exception.ProgramException;
 import com.safety.extentity.ExtPerson;
 import com.safety.tools.PageData;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
+//import org.apache.shiro.SecurityUtils;
+//import org.apache.shiro.session.Session;
 
 import java.util.List;
 
@@ -122,16 +122,16 @@ public interface IPersonService extends IService<Person> {
      */
     List<Teacher> getTeacherListNoPage(TeacherParams teacherParams) throws ProgramException;
 
-    /**
-     * 获取当前用户信息
-     *
-     * @param
-     * @return
-     * @throws Exception
-     */
-    public static Person getCurrentPerson() {
-        Session session = SecurityUtils.getSubject().getSession();
-        Person person = (Person) session.getAttribute("MEMBER_USER_PERSON");
-        return person;
-    }
+//    /**
+//     * 获取当前用户信息
+//     *
+//     * @param
+//     * @return
+//     * @throws Exception
+//     */
+//    public static Person getCurrentPerson() {
+//        Session session = SecurityUtils.getSubject().getSession();
+//        Person person = (Person) session.getAttribute("MEMBER_USER_PERSON");
+//        return person;
+//    }
 }
