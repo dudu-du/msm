@@ -44,7 +44,7 @@ public class RiskDictController extends BaseController {
         if (result){
             return renderSuccess("添加成功", id);
         }else {
-            return renderSuccess("添加失败");
+            return renderError("添加失败");
         }
     }
 
@@ -61,7 +61,7 @@ public class RiskDictController extends BaseController {
         if (result){
             return renderSuccess("修改成功");
         }else {
-            return renderSuccess("修改失败");
+            return renderError("修改失败");
         }
     }
 
@@ -78,7 +78,7 @@ public class RiskDictController extends BaseController {
         if (result){
             return renderSuccess("删除成功");
         }else {
-            return renderSuccess("删除失败");
+            return renderError("删除失败");
         }
     }
 
@@ -94,7 +94,7 @@ public class RiskDictController extends BaseController {
         if(riskDict!=null){
             return renderSuccess("查询成功",riskDict);
         }else {
-            return renderSuccess("无数据");
+            return renderError("无数据");
         }
     }
 
@@ -110,7 +110,7 @@ public class RiskDictController extends BaseController {
         if(riskDictList!=null){
             return renderSuccess("查询成功",riskDictList);
         }else {
-            return renderSuccess("无数据");
+            return renderError("无数据");
         }
     }
 }

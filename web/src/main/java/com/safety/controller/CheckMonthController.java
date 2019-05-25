@@ -42,7 +42,7 @@ public class CheckMonthController extends BaseController {
         if (result){
             return renderSuccess("添加成功", id);
         }else {
-            return renderSuccess("添加失败");
+            return renderError("添加失败");
         }
     }
 
@@ -59,7 +59,7 @@ public class CheckMonthController extends BaseController {
         if (result){
             return renderSuccess("修改成功");
         }else {
-            return renderSuccess("修改失败");
+            return renderError("修改失败");
         }
     }
 
@@ -76,7 +76,7 @@ public class CheckMonthController extends BaseController {
         if (result){
             return renderSuccess("删除成功");
         }else {
-            return renderSuccess("删除失败");
+            return renderError("删除失败");
         }
     }
 
@@ -92,7 +92,7 @@ public class CheckMonthController extends BaseController {
         if(checkMonth!=null){
             return renderSuccess("查询成功",checkMonth);
         }else {
-            return renderSuccess("无数据");
+            return renderError("无数据");
         }
     }
 }
