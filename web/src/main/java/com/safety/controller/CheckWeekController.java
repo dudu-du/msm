@@ -82,10 +82,27 @@ public class CheckWeekController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkWeekById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckWeekById(String id){
         CheckWeek checkWeek = iCheckWeekService.getById(id);
+        if(checkWeek!=null){
+            return renderSuccess("查询成功",checkWeek);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckWeekByParam(String orgId, String year){
+        CheckWeek checkWeek = iCheckWeekService.getByParam(orgId,year);
         if(checkWeek!=null){
             return renderSuccess("查询成功",checkWeek);
         }else {

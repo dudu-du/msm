@@ -3,6 +3,8 @@ package com.safety.mapper;
 import com.safety.entity.CheckWeek;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Map;
+
 /**
  * <p>
  * 周治理记录 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckWeekMapper extends BaseMapper<CheckWeek> {
 
+    CheckWeek selectByParam(Map param);
 }

@@ -19,4 +19,7 @@
         <result column="org_fk" property="orgFk" />
     </resultMap>
 
+    <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_week_list where check_week_fk = #{checkWeekFk} order by check_type_name;
+    </select>
 </mapper>
