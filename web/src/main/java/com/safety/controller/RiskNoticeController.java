@@ -4,11 +4,12 @@ package com.safety.controller;
 import com.safety.entity.RiskNotice;
 import com.safety.service.IRiskNoticeService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
 
 /**
@@ -24,6 +25,14 @@ import org.springframework.stereotype.Controller;
 public class RiskNoticeController extends BaseController {
     @Autowired
     private IRiskNoticeService iRiskNoticeService;
+    
+    @RequestMapping(value = "/riskNoticeView",method = RequestMethod.GET)
+    public BaseModelAndView getIdentificationList(){
+    	
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/notice");
+        return modelAndView;
+    }
     /**
      * 添加
      * @param riskNotice
@@ -82,10 +91,27 @@ public class RiskNoticeController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/riskNotice",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskNoticeById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getRiskNoticeById(String id){
         RiskNotice riskNotice = iRiskNoticeService.getById(id);
+        if(riskNotice!=null){
+            return renderSuccess("查询成功",riskNotice);
+        }else {
+            return renderError("无数据");
+        }
+    }
+    
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/riskNotice",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskControlByParam(String orgId, String year){
+    	RiskNotice riskNotice = iRiskNoticeService.getByParam(orgId,year);
         if(riskNotice!=null){
             return renderSuccess("查询成功",riskNotice);
         }else {

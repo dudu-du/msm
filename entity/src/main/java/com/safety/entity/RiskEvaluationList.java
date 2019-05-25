@@ -1,6 +1,7 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -141,6 +142,17 @@ public class RiskEvaluationList extends Model<RiskEvaluationList> {
      */
     private String orgFk;
 
+    /**
+     * 位置标记
+     * @return
+     */
+    private Integer index;
+
+    /**
+     * 个数标记
+     */
+    private Integer union;
+    
     public String getId() {
         return id;
     }
@@ -322,7 +334,23 @@ public class RiskEvaluationList extends Model<RiskEvaluationList> {
         return this.id;
     }
 
-    @Override
+    public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+
+	public Integer getUnion() {
+		return union;
+	}
+
+	public void setUnion(Integer union) {
+		this.union = union;
+	}
+
+	@Override
     public String toString() {
         return "RiskEvaluationList{" +
         "id=" + id +

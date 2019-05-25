@@ -1,7 +1,7 @@
 package com.safety.service;
 
-import com.safety.entity.RiskNotice;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.safety.entity.RiskNotice;
 
 /**
  * <p>
@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IRiskNoticeService extends IService<RiskNotice> {
 
+	RiskNotice getByParam(String orgId, String yearStr);
 }

@@ -1,8 +1,10 @@
 package com.safety.entity;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
  * <p>
@@ -45,6 +47,8 @@ public class RiskControl extends Model<RiskControl> {
      * 所属机构ID
      */
     private String orgFk;
+    
+    private List<RiskControlList> riskControlList;
 
     public String getId() {
         return id;
@@ -89,7 +93,15 @@ public class RiskControl extends Model<RiskControl> {
         this.orgFk = orgFk;
     }
 
-    @Override
+    public List<RiskControlList> getRiskControlList() {
+		return riskControlList;
+	}
+
+	public void setRiskControlList(List<RiskControlList> riskControlList) {
+		this.riskControlList = riskControlList;
+	}
+
+	@Override
     protected Serializable pkVal() {
         return this.id;
     }

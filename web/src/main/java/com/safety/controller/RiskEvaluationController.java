@@ -4,11 +4,12 @@ package com.safety.controller;
 import com.safety.entity.RiskEvaluation;
 import com.safety.service.IRiskEvaluationService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
 
 /**
@@ -24,6 +25,14 @@ import org.springframework.stereotype.Controller;
 public class RiskEvaluationController extends BaseController {
     @Autowired
     private IRiskEvaluationService iRiskEvaluationService;
+    
+    @RequestMapping(value = "/riskEvaluationView",method = RequestMethod.GET)
+    public BaseModelAndView getIdentificationList(){
+    	
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/evaluation");
+        return modelAndView;
+    }
     /**
      * 添加
      * @param riskEvaluation
@@ -82,10 +91,27 @@ public class RiskEvaluationController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/riskEvaluation",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskEvaluationById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getRiskEvaluationById(String id){
         RiskEvaluation riskEvaluation = iRiskEvaluationService.getById(id);
+        if(riskEvaluation!=null){
+            return renderSuccess("查询成功",riskEvaluation);
+        }else {
+            return renderError("无数据");
+        }
+    }
+    
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/riskEvaluation",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskEvaluationByParam(String orgId, String year){
+    	RiskEvaluation riskEvaluation = iRiskEvaluationService.getByParam(orgId,year);
         if(riskEvaluation!=null){
             return renderSuccess("查询成功",riskEvaluation);
         }else {
