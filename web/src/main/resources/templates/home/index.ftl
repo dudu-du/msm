@@ -14,13 +14,16 @@
 <body>
 <div class="layui-layout layui-layout-admin" id="lay_page_main">
     <div class="layui-header">
-        <div class="layui-logo"><span>
+        <div class="layui-logo">
+            <img src="/Public/image/login/logo.jpg" height="40px" width="40px">
+            <span>
             <#if org_name=="">
-            safety为石
+            双重预防机制
             <#else >
                 ${org_name}
             </#if>
-        </span></div>
+            </span>
+        </div>
         <ul class="layui-nav layui-layout-left" lay-filter="topleft">
             <li class="layui-nav-item layadmin-flexible" lay-unselect="">
                 <a href="javascript:;" lay-event="flexible" title="侧边伸缩">

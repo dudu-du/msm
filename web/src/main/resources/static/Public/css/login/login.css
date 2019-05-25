@@ -17,6 +17,8 @@ button, input, optgroup, option, select, textarea{
 }
 .logo-big{
     padding: 140px 0 88px;
+    height: 100px;
+    width: 100px;
 }
 .login-win{
     width:1196px;
