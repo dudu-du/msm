@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <title>基础资料-智慧教育服务平台</title>
+    <title>基础资料-双重预防机制运行信息管理平台</title>
     <link rel="stylesheet" href="/node_modules/layui-src/dist/css/layui.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_912670_72s4xsa6she.css">
     <link rel="stylesheet" href="/Public/css/public-yun.css">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <title>首页-智慧教育服务平台</title>
+    <title>首页-双重预防机制运行信息管理平台</title>
     <link rel="stylesheet" href="/node_modules/layui-src/dist/css/layui.css">
     <link rel="stylesheet" href="/Public/css/public-yun.css">
     <link rel="stylesheet" href="/Public/css/public-color.css">

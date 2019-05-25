@@ -4,7 +4,7 @@
     <!--日志输出路径-->
     <!--<property name="LOG_HOME" value="/Users/wuzhenzhen/workspace"/>-->
     <!--<property name="LOG_HOME" value="/Users/wuzhenzhen/workspace"/>-->
-    <property name="LOG_HOME" value="D:\\WS_EDU\\Project\\log"/>
+    <property name="LOG_HOME" value="C:\\Project\\log"/>
 
 
     <!--控制台日志输出配置-->
