@@ -82,10 +82,27 @@ public class CheckMonthController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkMonth",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkMonthById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckMonthById(String id){
         CheckMonth checkMonth = iCheckMonthService.getById(id);
+        if(checkMonth!=null){
+            return renderSuccess("查询成功",checkMonth);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckWeekByParam(String orgId, String year){
+        CheckMonth checkMonth = iCheckMonthService.getByParam(orgId,year);
         if(checkMonth!=null){
             return renderSuccess("查询成功",checkMonth);
         }else {

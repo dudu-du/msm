@@ -63,6 +63,17 @@ public class CheckWeekServiceImpl extends ServiceImpl<CheckWeekMapper, CheckWeek
         return checkWeek;
     }
 
+    @Override
+    public boolean addCheckWeek(CheckWeek checkWeek) {
+        List<CheckWeekList> checkWeekLists = checkWeek.getCheckWeekList();
+        if (checkWeekLists.size()>0){
+            for (CheckWeekList checkWeekList:checkWeekLists){
+                checkWeekListMapper.insert(checkWeekList);
+            }
+        }
+        return true;
+    }
+
     private void sortList(List<CheckWeekList> list){
         int index = 1;
         int union = 1;

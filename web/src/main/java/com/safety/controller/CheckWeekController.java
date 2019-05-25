@@ -33,11 +33,9 @@ public class CheckWeekController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckWeek(@RequestBody CheckWeek checkWeek){
-        String id = UUIDUtil.getUUID();
-        checkWeek.setId(id);
-        boolean result = iCheckWeekService.save(checkWeek);
+        boolean result = iCheckWeekService.addCheckWeek(checkWeek);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }

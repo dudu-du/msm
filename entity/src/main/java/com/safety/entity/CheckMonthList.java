@@ -81,6 +81,18 @@ public class CheckMonthList extends Model<CheckMonthList> {
      */
     private String orgFk;
 
+    /**
+     * 位置标记
+     * @return
+     */
+    private Integer index;
+
+    /**
+     * 个数标记
+     */
+    private Integer union;
+
+
     public String getId() {
         return id;
     }
@@ -176,6 +188,22 @@ public class CheckMonthList extends Model<CheckMonthList> {
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public Integer getUnion() {
+        return union;
+    }
+
+    public void setUnion(Integer union) {
+        this.union = union;
     }
 
     @Override

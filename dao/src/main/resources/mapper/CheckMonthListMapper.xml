@@ -19,4 +19,7 @@
         <result column="org_fk" property="orgFk" />
     </resultMap>
 
+    <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_month_list where check_month_fk = #{checkMonthFk} order by check_type_name;
+    </select>
 </mapper>
