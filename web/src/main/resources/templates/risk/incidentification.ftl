@@ -52,16 +52,16 @@
 						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 					</el-row>
-					<el-table :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod">
+					<el-table :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="150"></el-table-column>
-						<el-table-column prop="post_name" label="岗位（设备设施/作业活动）单元" width="150">
+						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150">
 						</el-table-column>
 						<el-table-column label="安全风险辨识">
-							<el-table-column prop="factor" label="危险有害因素" width="120">
+							<el-table-column prop="harmfulFactors" label="危险有害因素" width="120">
 							</el-table-column>
-							<el-table-column prop="trouble" label="事故类型">
+							<el-table-column prop="troubleNameList" label="事故类型">
 								<template slot-scope="scope">
-							        <el-tag type="warning" disable-transitions v-for="item in scope.row.trouble">{{item}}</el-tag>
+							        <el-tag type="warning" disable-transitions v-for="item in scope.row.troubleNameList">{{item}}</el-tag>
 							    </template>
 							</el-table-column>
 							<el-table-column prop="cause" label="原因"></el-table-column>
@@ -74,26 +74,26 @@
 							<el-table-column prop="measure" label="现有措施有效性"></el-table-column>
 						</el-table-column>
 						<el-table-column label="LEC风险分析法">
-							<el-table-column prop="num_l" label="事故发生的可能性(L)"></el-table-column>
-							<el-table-column prop="num_e" label="暴露于危险环境的频繁程度(E)"></el-table-column>
-							<el-table-column prop="num_c" label="发生事故产生的后果(C)"></el-table-column>
-							<el-table-column prop="num_d" label="D值"></el-table-column>
+							<el-table-column prop="numL" label="事故发生的可能性(L)"></el-table-column>
+							<el-table-column prop="numE" label="暴露于危险环境的频繁程度(E)"></el-table-column>
+							<el-table-column prop="numC" label="发生事故产生的后果(C)"></el-table-column>
+							<el-table-column prop="numD" label="D值"></el-table-column>
 						</el-table-column>
-						<el-table-column prop="level_name" label="安全风险评价">
+						<el-table-column prop="levelName" label="安全风险评价">
 							
 						</el-table-column>
-						<el-table-column prop="level_name" label="操作" width="140px">
+						<el-table-column label="操作" width="140px">
 							<template slot-scope="scope">
 								<el-popover
 								  placement="top"
 								  width="160" >
 								  <div style="text-align: right; margin: 0">
-								    <el-button size="mini" type="text" @click="addcheck(1,1,'checkForm')">月检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(1,1,'checkForm')">周检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(0,1,'checkForm')">日检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(1,0,'checkForm')">专项检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm')">综合检查(节假日、复产前)</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm')">综合检查(季节性)</el-button>
+								    <el-button size="mini" type="text" @click="addcheck(1,1,'checkForm',scope.row)">月检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(1,1,'checkForm',scope.row)">周检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(0,1,'checkForm',scope.row)">日检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(1,0,'checkForm',scope.row)">专项检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm',scope.row)">综合检查(节假日、复产前)</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm',scope.row)">综合检查(季节性)</el-button>
 								  </div>
 								  <el-button slot="reference"  type="info" size="mini" icon="el-icon-s-unfold" circle></el-button>
 								</el-popover>
@@ -110,30 +110,30 @@
 					</div>
 				</el-footer>
 			</el-container>
-			<el-dialog title="安全风险辨识项" :visible.sync="dialogFormVisible" @open="dialogFormOpen">
+			<el-dialog title="安全风险辨识项" :visible.sync="dialogFormVisible" @open="dialogFormOpen" @close="dialogClose('validateForm')">
 			  <el-form :model="form" label-width="110px" label-position="right" ref="validateForm">
-			    <el-form-item label="岗位单元" prop="post_name">
-			    	<el-select v-model="form.post_name" placeholder="请选择">
+			    <el-form-item label="岗位单元" prop="postName">
+			    	<el-select v-model="form.postName" placeholder="请选择">
 					    <el-option
 					      v-for="item in post_options"
-					      :key="item.id"
+					      :key="item.name"
 					      :label="item.name"
-					      :value="item.id">
+					      :value="item.name">
 					    </el-option>
 					 </el-select>
 			    </el-form-item>
-			    <el-form-item label="危险有害因素" prop="factor">
-			    	<el-select v-model="form.factor" placeholder="请选择">
+			    <el-form-item label="危险有害因素" prop="harmfulFactors">
+			    	<el-select v-model="form.harmfulFactors" placeholder="请选择">
 					    <el-option
 					      v-for="item in facotrs"
-					      :key="item.id"
+					      :key="item.name"
 					      :label="item.name"
-					      :value="item.id">
+					      :value="item.name">
 					    </el-option>
 					 </el-select>
 			    </el-form-item>
-			    <el-form-item prop="trouble">
-			    	<el-transfer v-model="form.trouble" :props="{key:'id',label:'name'}" :data="troubles" :titles=["事故类型","已选择"]></el-transfer>			    	
+			    <el-form-item prop="troubleNameList">
+			    	<el-transfer v-model="form.troubleNameList" :props="{key:'name',label:'name'}" :data="troubles" :titles=["事故类型","已选择"]></el-transfer>			    	
 			    </el-form-item>
 			    <el-form-item label="原因" prop="cause">
 			      <el-input v-model="form.cause" autocomplete="off" type="textarea"></el-input>
@@ -153,24 +153,21 @@
 			    <el-form-item label="现有措施有效性" prop="measure">
 			      <el-input v-model="form.measure" autocomplete="off" type="textarea"></el-input>
 			    </el-form-item>
-			    <el-form-item label="L" prop="num_l">
-			      <el-input v-model="form.num_l" autocomplete="off" placeholder="事故发生的可能性(L)"></el-input>
+			    <el-form-item label="L" prop="numL">
+			      <el-input v-model="form.numL" type="number" step="0.01" autocomplete="off" placeholder="事故发生的可能性(L)"></el-input>
 			    </el-form-item>
-			    <el-form-item label="E" prop="num_e">
-			      <el-input v-model="form.num_e" autocomplete="off" placeholder="暴露于危险环境的频繁程度(E)"></el-input>
+			    <el-form-item label="E" prop="numE">
+			      <el-input v-model="form.numE" type="number" step="0.01" autocomplete="off" placeholder="暴露于危险环境的频繁程度(E)"></el-input>
 			    </el-form-item>
-			    <el-form-item label="C" prop="num_c">
-			      <el-input v-model="form.num_c" autocomplete="off" placeholder="发生事故产生的后果(C)"></el-input>
+			    <el-form-item label="C" prop="numC">
+			      <el-input v-model="form.numC" type="number" step="0.01" autocomplete="off" placeholder="发生事故产生的后果(C)"></el-input>
 			    </el-form-item>
-			    <el-form-item label="D值" prop="num_d">
-			      <el-input v-model="form.num_d" autocomplete="off"></el-input>
+			    <el-form-item label="D值" prop="numD">
+			      <el-input v-model="form.numD" type="number" step="0.01" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="安全风险评价" prop="level_name">
-				    <el-select v-model="form.level_name" placeholder="请选择风险等级">
-				      <el-option label="重大风险" value="重大风险"></el-option>
-				      <el-option label="较大风险一般风险" value="较大风险一般风险"></el-option>
-				      <el-option label="一般风险" value="一般风险"></el-option>
-				      <el-option label="低风险" value="低风险"></el-option>
+			    <el-form-item label="安全风险评价" prop="levelName">
+				    <el-select v-model="form.levelName" placeholder="请选择风险等级">
+				      <el-option v-for="item in levels" :label="item.name" :key="item.name" :value="item.name"></el-option>
 				    </el-select>
 			  	</el-form-item>
 			  </el-form>

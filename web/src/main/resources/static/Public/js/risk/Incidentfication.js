@@ -1,22 +1,78 @@
 var Incidentfication = function(obj) {
+	
 	if(!obj) {
 		this.cause = '';
-		this.post_name = '';
-		this.factor = '';
-		this.trouble = [];
+		this.postName = '';
+		this.harmfulFactors = '';
+		this.troubleNameList = [];
 		this.consequence = '';
 		this.incidence = '';
 		this.possibility = '';
 		this.seriousness = '';
 		this.measure = '';
-		this.num_l = '';
-		this.num_e = '';
-		this.num_c = '';
-		this.num_d = '';
-		this.level_name = '';
+		this.numL = '';
+		this.numE = '';
+		this.numC = '';
+		this.numD = '';
+		this.levelName = '';
+	}else{
+		if(obj.index){
+			this.index = obj.index;
+		}
+		if(obj.union){
+			this.union = obj.union;
+		}
+		this.id = obj.id;
+		this.cause = obj.cause;
+		this.postName = obj.postName;
+		this.harmfulFactors = obj.harmfulFactors;
+		this.consequence = obj.consequence;
+		this.incidence = obj.incidence;
+		this.possibility = obj.possibility;
+		this.seriousness = obj.seriousness;
+		this.measure = obj.measure;
+		this.numL = obj.numL;
+		this.numE = obj.numE;
+		this.numC = obj.numC;
+		this.numD = obj.numD;
+		this.levelName = obj.levelName;
+		this.riskIdentificationFk = obj.riskIdentificationFk;
+		this.orgFk = obj.orgFk;
+		this.troubleNameList = obj.troubleNameList;
+		if(obj.troubleName){
+			this.troubleNameList = obj.troubleName.split(',');			
+		}
+		if(obj.troubleFk){
+			this.troubleFkList = obj.troubleFk.split(',');			
+		}
 	}
 };
-Incidentfication.prototype = {};
+Incidentfication.prototype = {
+		toJava:function(){
+			if(this.troubleNameList){
+				var s = '';
+				this.troubleName = '';
+				this.troubleNameList.forEach(e=>{
+					this.troubleName =this.troubleName + s + e;
+					s=',';
+				});
+				
+			}
+			if(this.postName &&this.postName.split(',').length==2){
+				this.postFk = this.postName.split(',')[0];
+				this.postName = this.postName.split(',')[1];
+			}
+			if(this.harmfulFactors &&this.harmfulFactors.split(',').length==2){
+				this.harmfulFactorsFk = this.harmfulFactors.split(',')[0];
+				this.harmfulFactors = this.harmfulFactors.split(',')[1];
+			}
+			if(this.levelName &&this.levelName.split(',').length==2){
+				this.levelFk = this.levelName.split(',')[0];
+				this.levelName = this.levelName.split(',')[1];
+			}
+			return this;
+		}
+};
 
 var addcheck = {
 	template:'#addcheck',
@@ -47,12 +103,14 @@ new Vue({
 	el: '#app',
 	components: {addcheck,axios},
 	created:function(){
+		var that = this;
 		axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
 			if(response.data.success === true){
 				if(response.data.data.length>0){
 					this.$data.topselect.orgs.value = response.data.data[0].id;
 				}
 				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
+				that.search();
 			}else{
 				this.$message.warning(response.data.msg);
 			}
@@ -65,11 +123,13 @@ new Vue({
 			firstcol: '',
 			dialogFormVisible: false,
 			checkFormVisible: false,
+			curData:{},
 			activeNames:['1'],
 			form: new Incidentfication(),
 			post_options: [],
 			facotrs:[],
 			troubles: [],
+			levels:[],
 			tableData: [],
 			topselect:{
 				orgs:{
@@ -109,40 +169,42 @@ new Vue({
 		},
 		submitForm(formName){
 			this.$data.dialogFormVisible = false;
-			var formData = JSON.parse(JSON.stringify(this.$data.form));
+			var formData = JSON.parse(JSON.stringify(this.$data.form.toJava()));
+			formData.riskIdentificationFk = this.$data.curData.id;
+			formData.orgFk = this.$data.topselect.orgs.value;
 			this.$refs[formName].resetFields();
 			var isNew=true,index,isAdd=false,unionIndex=0;
-			var tableData = this.$data.tableData;
-			for(var i=0;i<tableData.length;i++){
-				if(tableData[i].union){
-					if(!isNew){
-						tableData[index].union = tableData[index].union + 1;
-						tableData.splice(i,0,formData);
-						isAdd = true;
-						break;
+			if(formData.id){
+				delete formData.index;
+				delete formData.union;
+				axios.put('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+					if(response.data.success === true){
+						this.$message.success(response.data.msg);
+						this.search();
+					}else{
+						this.$message.warning(response.data.msg);
 					}
-					index=i;
-					unionIndex = tableData[i].index;
-				}
-				if(tableData[i].post_name === formData.post_name){
-					isNew = false;
-					continue;
-				}
+				}).catch(err=>{
+					this.$message.error('服务器异常，请稍后再试！');
+				});
+			}else{
+				axios.post('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+					if(response.data.success === true){
+						this.$message.success(response.data.msg);
+						this.search();
+					}else{
+						this.$message.warning(response.data.msg);
+					}
+				}).catch(err=>{
+					this.$message.error('服务器异常，请稍后再试！');
+				});
 			}
-			if(isNew == true){
-				formData.union = 1;
-				formData.index = unionIndex + 1;
-				tableData.push(formData);
-				isAdd = true;
-			}
-			if(isAdd == false){
-				tableData[index].union = tableData[index].union + 1;
-				tableData.push(formData);
-			}
+			
+			
 			
 			
 		},edit(row,formName){
-			this.$data.form = row;
+			this.$data.form = new Incidentfication(row);
 			this.$data.dialogFormVisible = true;
 		},del(row){
 			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -150,10 +212,16 @@ new Vue({
 	          cancelButtonText: '取消',
 	          type: 'warning'
 	        }).then(() => {
-	          this.$message({
-	            type: 'success',
-	            message: '删除成功!'
-	          });
+	        	axios.delete('/safety/riskIdentificationList/riskIdentificationList',{params:{id:row.id}}).then(response=>{
+	        		if(response.data.success === true){
+						this.$message.success(response.data.msg);
+						this.search();
+					}else{
+						this.$message.warning(response.data.msg);
+					}
+	        	}).catch(err=>{
+	        		this.$message.error('服务器异常，请稍后再试！');
+	        	});
 	        }).catch(() => {
 	          this.$message({
 	            type: 'info',
@@ -161,7 +229,10 @@ new Vue({
 	          });          
 	        });
 		},
-		addcheck(type,item,formName){
+		addcheck(type,item,formName,row){
+			this.$data.checks.checktype = type;
+			this.$data.checks.checkitem = item;
+			this.$refs.singleTable.setCurrentRow(row);
 			this.$data.checkFormVisible = true;
 		},
 		orgsChange(val){
@@ -171,33 +242,40 @@ new Vue({
 			axios.get
 		},
 		cellClassMethod({row, column, rowIndex, columnIndex}){//表格单元格class触发方法
-			console.log(columnIndex);
 			if(columnIndex==14){//风险等级
-				if(row.level_name === '重大风险'){
+				if(row.levelName === '重大风险'){
 					return 'danger-row';
 				}
-				if(row.level_name === '较大风险一般风险'){
+				if(row.levelName === '较大风险'){
 					return 'warning-row';
 				}
-				if(row.level_name === '一般风险'){
+				if(row.levelName === '一般风险'){
 					return 'common-row';
 				}
-				if(row.level_name === '低风险'){
+				if(row.levelName === '低风险'){
 					return 'success-row';
 				}
 			}
 		},
 		search(){//搜索
-			axios.get('').then(response=>{
-				
+			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
+				if(response.data.success === true){
+					this.$data.curData.id = response.data.data.id;
+					this.$data.curData.state = response.data.data.state;
+					this.$data.tableData = [];
+					console.log(response.data.data.riskIdentificationList);
+					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Incidentfication(e)));
+				}else{
+					this.$message.warning(response.data.msg);
+				}
 			}).catch(err=>{
 				this.$message.error('服务器异常，请稍后再试！');
 			});
 		},
 		dialogFormOpen(){
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'postlist'}}).then(response=>{
-				console.log(response.data.data);
 				if(response.data.success === true){
+					this.$data.post_options = [];
 					response.data.data.forEach(e=>this.$data.post_options.push(e));
 				}else{
 					this.$message.warning(response.data.msg);
@@ -207,6 +285,7 @@ new Vue({
 			});
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'harmfullist'}}).then(response=>{
 				if(response.data.success === true){
+					this.$data.facotrs = [];
 					response.data.data.forEach(e=>this.$data.facotrs.push(e));
 				}else{
 					this.$message.warning(response.data.msg);
@@ -216,6 +295,7 @@ new Vue({
 			});
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'troublelist'}}).then(response=>{
 				if(response.data.success === true){
+					this.$data.troubles = [];
 					response.data.data.forEach(e=>this.$data.troubles.push(e));
 				}else{
 					this.$message.warning(response.data.msg);
@@ -223,6 +303,20 @@ new Vue({
 			}).catch(err=>{
 				this.$message.error('服务器异常，请稍后再试！');
 			});
+			axios.get('/safety/riskDict/riskDictList',{params:{code:'levellist'}}).then(response=>{
+				if(response.data.success === true){
+					this.$data.levels = [];
+					response.data.data.forEach(e=>this.$data.levels.push(e));
+				}else{
+					this.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		},
+		dialogClose(formName){
+			this.$data.form = new Incidentfication();
+			this.$refs[formName].resetFields();
 		}
 	}
 });

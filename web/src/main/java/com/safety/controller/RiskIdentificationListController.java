@@ -6,10 +6,14 @@ import com.safety.service.IRiskIdentificationListService;
 import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -57,7 +61,7 @@ public class RiskIdentificationListController extends BaseController {
         if (result){
             return renderSuccess("修改成功");
         }else {
-            return renderError("修改失败");
+            return renderSuccess("修改失败");
         }
     }
 
@@ -74,7 +78,7 @@ public class RiskIdentificationListController extends BaseController {
         if (result){
             return renderSuccess("删除成功");
         }else {
-            return renderError("删除失败");
+            return renderSuccess("删除失败");
         }
     }
 
@@ -90,7 +94,7 @@ public class RiskIdentificationListController extends BaseController {
         if(riskIdentificationList!=null){
             return renderSuccess("查询成功",riskIdentificationList);
         }else {
-            return renderError("无数据");
+            return renderSuccess("无数据");
         }
     }
 }
