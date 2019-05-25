@@ -2,7 +2,7 @@ var Notice = function(obj) {
 	
 	if(!obj) {
 		this.cause = '';
-		this.postName = '';
+		this.locationName = '';
 		this.harmfulFactors = '';
 		this.troubleNameList = [];
 		this.consequence = '';
@@ -22,7 +22,7 @@ var Notice = function(obj) {
 		}
 		this.id = obj.id;
 		this.cause = obj.cause;
-		this.postName = obj.postName;
+		this.locationName = obj.locationName;
 		this.harmfulFactors = obj.harmfulFactors;
 		this.consequence = obj.consequence;
 		this.incidence = obj.incidence;
@@ -170,7 +170,7 @@ new Vue({
 			
 			
 		},edit(row,formName){
-			this.$data.form = new Incidentfication(row);
+			this.$data.form = new Notice(row);
 			this.$data.dialogFormVisible = true;
 		},del(row){
 			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
