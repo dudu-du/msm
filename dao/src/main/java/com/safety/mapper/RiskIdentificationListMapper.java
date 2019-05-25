@@ -3,6 +3,9 @@ package com.safety.mapper;
 import com.safety.entity.RiskIdentificationList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 安全风险辨识清单列表 Mapper 接口
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RiskIdentificationListMapper extends BaseMapper<RiskIdentificationList> {
 
+    List<RiskIdentificationList> selectByPid(Map map);
 }

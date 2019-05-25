@@ -43,10 +43,21 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
         param.put("createTime",year);
         RiskIdentification riskIdentification = riskIdentificationMapper.selectByParam(param);
         if (riskIdentification!=null){
+            //判断时间 修改状态
+            LocalDateTime localDateTime = LocalDateTime.now();
+            int nowYear = localDateTime.getYear();
+            if (nowYear == Integer.parseInt(yearStr)){
+                riskIdentification.setState(1);
+            }else {
+                riskIdentification.setState(0);
+            }
             String id = riskIdentification.getId();
             Map map = new HashMap();
-            map.put("risk_identification_fk",id);
-            List<RiskIdentificationList> list = riskIdentificationListMapper.selectByMap(map);
+            map.put("riskIdentificationFk",id);
+            List<RiskIdentificationList> list = riskIdentificationListMapper.selectByPid(map);
+            if (list.size()>0){
+                sortList(list);
+            }
             riskIdentification.setRiskIdentificationList(list);
         }else {
             riskIdentification = new RiskIdentification();
@@ -54,6 +65,14 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
             riskIdentification.setOrgFk(orgId);
             riskIdentification.setCreateTime(year);
             riskIdentificationMapper.insert(riskIdentification);
+            //判断时间 修改状态
+            LocalDateTime localDateTime = LocalDateTime.now();
+            int nowYear = localDateTime.getYear();
+            if (nowYear == Integer.parseInt(yearStr)){
+                riskIdentification.setState(1);
+            }else {
+                riskIdentification.setState(0);
+            }
             riskIdentification.setRiskIdentificationList(new ArrayList<>());
         }
         return riskIdentification;
@@ -68,8 +87,34 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
             Map map = new HashMap();
             map.put("risk_identification_fk",id);
             List<RiskIdentificationList> list = riskIdentificationListMapper.selectByMap(map);
+            if (list.size()>0){
+                sortList(list);
+            }
             riskIdentification.setRiskIdentificationList(list);
         }
         return riskIdentification;
+    }
+
+    private List<RiskIdentificationList> sortList(List<RiskIdentificationList> list){
+        int index = 1;
+        int union = 1;
+        String postName = "";
+        int position = 0;
+        for (int i=0;i<list.size();i++){
+            RiskIdentificationList riskIdentificationList = list.get(i);
+            if (postName.equals(riskIdentificationList.getPostName())){
+                union++;
+            }else {
+                postName = riskIdentificationList.getPostName();
+                RiskIdentificationList first = list.get(position);
+                first.setUnion(union);
+                riskIdentificationList.setIndex(index);
+                riskIdentificationList.setUnion(1);
+                index++;
+                position = i;
+                union = 1;
+            }
+        }
+        return list;
     }
 }
