@@ -74,34 +74,18 @@ Incidentfication.prototype = {
 		}
 };
 
-var addcheck = {
-	template:'#addcheck',
-	props:['checktype','checkitem'],
-	data:function(){
-		return {
-			checkForm:{
-	        	domains:[{value:''}]
-	        }
-		};
-	},
-	methods:{
-		addDomain(formName) {
-	        this.$data.checkForm.domains.push({
-	          value: '',
-	          key: Date.now()
-	        });
-	    },
-	    removeDomain(domain){
-	    	var index = this.$data.checkForm.domains.indexOf(domain)
-	        if (index !== -1) {
-	          this.$data.checkForm.domains.splice(index, 1)
-	        }
-	    }
+var Check = function(obj){
+	if(!obj){
+		this.checkTypeName = '';
+		this.checkContent = '';
+		this.checkMethod = '';
+		this.key = Date.now();
 	}
-};
+}
+
 new Vue({
 	el: '#app',
-	components: {addcheck,axios},
+	components: {axios},
 	created:function(){
 		var that = this;
 		axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
@@ -140,8 +124,12 @@ new Vue({
 			},
 			checks:{
 				checktype:0,
-				checkitem:0
-			}
+				width:'50%'
+			},
+			checkForm:{
+	        	domains:[new Check()],
+	        	typeList:[]
+	        }
 		}
 	},
 	methods: {
@@ -229,9 +217,9 @@ new Vue({
 	          });          
 	        });
 		},
-		addcheck(type,item,formName,row){
+		addcheck(type,formName,row){
 			this.$data.checks.checktype = type;
-			this.$data.checks.checkitem = item;
+			
 			this.$refs.singleTable.setCurrentRow(row);
 			this.$data.checkFormVisible = true;
 		},
@@ -263,7 +251,6 @@ new Vue({
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;
 					this.$data.tableData = [];
-					console.log(response.data.data.riskIdentificationList);
 					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Incidentfication(e)));
 				}else{
 					this.$message.warning(response.data.msg);
@@ -317,6 +304,39 @@ new Vue({
 		dialogClose(formName){
 			this.$data.form = new Incidentfication();
 			this.$refs[formName].resetFields();
-		}
+		},
+		changeDialogWidth(){
+			return '20%';
+		},
+		checkFormOpen(){
+			axios.get('/safety/riskDict/riskDictList',{params:{code:'typelist'}}).then(response=>{
+				if(response.data.success === true){
+					this.$data.checkForm.typeList = [];
+					response.data.data.forEach(e=>this.$data.checkForm.typeList.push(e));
+				}else{
+					this.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		},
+		addDomain(formName) {
+			this.$data.checkForm.domains.push({
+				checkTypeName: '',
+				checkContent:'',
+				checkMethod:'',
+				key: Date.now()
+	        });
+	    },
+	    removeDomain(domain){
+	    	var index = this.$data.checkForm.domains.indexOf(domain)
+	        if (index !== -1) {
+	          this.$data.checkForm.domains.splice(index, 1)
+	        }
+	    },
+	    resetCheckForm(formName){
+	    	this.$data.checkForm.domains = [];
+	    	this.$data.checkForm.domains.push(new Check());
+	    }
 	}
 });

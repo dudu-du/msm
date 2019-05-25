@@ -82,18 +82,18 @@
 						<el-table-column prop="levelName" label="安全风险评价">
 							
 						</el-table-column>
-						<el-table-column label="操作" width="140px">
+						<el-table-column label="操作" width="140px" v-if="curData.state==1">
 							<template slot-scope="scope">
 								<el-popover
 								  placement="top"
 								  width="160" >
 								  <div style="text-align: right; margin: 0">
-								    <el-button size="mini" type="text" @click="addcheck(1,1,'checkForm',scope.row)">月检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(1,1,'checkForm',scope.row)">周检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(0,1,'checkForm',scope.row)">日检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(1,0,'checkForm',scope.row)">专项检查</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm',scope.row)">综合检查(节假日、复产前)</el-button>
-								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm',scope.row)">综合检查(季节性)</el-button>
+								    <el-button size="mini" type="text" @click="addcheck(1,'checkForm',scope.row)">月检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(2,'checkForm',scope.row)">周检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(3,'checkForm',scope.row)">日检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(4,'checkForm',scope.row)">专项检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(5,'checkForm',scope.row)">综合检查(节假日、复产前)</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(6,'checkForm',scope.row)">综合检查(季节性)</el-button>
 								  </div>
 								  <el-button slot="reference"  type="info" size="mini" icon="el-icon-s-unfold" circle></el-button>
 								</el-popover>
@@ -106,7 +106,7 @@
 				<el-footer>
 					<div style="width:100%;height:100%">
 						<span style="width:48.5%;display: inline-block;"></span>
-						<el-button circle type="success" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
+						<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
 					</div>
 				</el-footer>
 			</el-container>
@@ -176,41 +176,42 @@
 			    <el-button type="primary" @click="submitForm('validateForm')">确 定</el-button>
 			  </div>
 			</el-dialog>
-			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" >
-				<addcheck :checktype="checks.checktype" :checkitem="checks.checkitem"></addcheck>
-			</el-dialog>	
+			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" @open="checkFormOpen">
+				<el-form  :model="checkForm" ref="checkForm" label-width="66px">
+				  <el-form-item
+				    v-for="(domain, index) in checkForm.domains"
+				    :key="domain.key"
+				  >
+				  <el-col :span="4">
+				  	<el-form-item>
+					  	<el-select  v-model="domain.checkTypeName" placeholder="类型" v-if="checks.checktype == 1 || checks.checktype == 2 || checks.checktype == 4">
+					      <el-option v-for="item in checkForm.typeList" :label="item.name" :value="item.name"></el-option>
+					    </el-select>
+				    </el-form-item>
+				  </el-col>
+				  <el-col :span="10">
+				  	<el-form-item>
+				    	<el-input v-model="domain.checkContent" v-if="checks.checktype == 1 || checks.checktype == 2 || checks.checktype == 3" placeholder="检查项目及相关要求"></el-input>
+				  	</el-form-item>
+				  </el-col>
+				  <el-col :span="6">
+				  	<el-form-item>
+				    	<el-input v-model="domain.checkMethod" placeholder="检查方法"></el-input>
+				    </el-form-item>
+				  </el-col>
+				  <el-col :span="4">
+				  	<el-button @click.prevent="removeDomain(domain)">删除</el-button>
+				  </el-col>
+				  </el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+				   <el-button type="primary" @click="submitForm('checkForm')">提交</el-button>
+				    <el-button @click="addDomain('checkForm')">新增</el-button>
+				    <el-button @click="resetCheckForm('checkForm')">重置</el-button>
+				 </div>
+			</el-dialog>
 		</div>
 	</body>
 <script type="text/javascript" src="/Public/js/risk/Incidentfication.js" ></script>
-<script type="text/x-template" id="addcheck">
-	<el-form  ref="checkForm" label-width="66px">
-	  <el-form-item
-	    v-for="(domain, index) in checkForm.domains"
-	    :key="domain.key"
-	    :prop="'domains.' + index + '.value'"
-	  >
-	  <el-col :span="4">
-	  <el-select  placeholder="活动区域" v-if="checktype==1">
-	      <el-option label="区域一" value="shanghai"></el-option>
-	      <el-option label="区域二" value="beijing"></el-option>
-	    </el-select>
-	  </el-col>
-	  <el-col :span="10">
-	    <el-input v-model="domain.value" v-if="checkitem==1" placeholder="检查项目及相关要求"></el-input>
-	  </el-col>
-	  <el-col :span="6">
-	    <el-input v-model="domain.value" placeholder="检查方法"></el-input>
-	  </el-col>
-	  <el-col :span="4">
-	  	<el-button @click.prevent="removeDomain(domain)">删除</el-button>
-	  </el-col>
-	  </el-form-item>
-	  <el-form-item>
-	  	<span style="width:27%;display: inline-block;"></span>
-	    <el-button type="primary" @click="submitForm('checkFormForm')">提交</el-button>
-	    <el-button @click="addDomain('checkFormForm')">新增</el-button>
-	    <el-button @click="resetForm('checkFormForm')">重置</el-button>
-	  </el-form-item>
-	</el-form>
-</script>
+
 </html>
