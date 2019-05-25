@@ -22,15 +22,15 @@
 <div class="login-main flex">
 	<div class="login-left">
 		<div class="logo-big-box">
-			<img src="/Public/image/login/logo-big.png" class="logo-big">
+			<img src="/Public/image/login/logo.jpg" class="logo-big">
 			<img src="/Public/image/login/login-left-bg.png" class="login-left-bg">
 		</div>
 	</div>
 	<div class="login-win">
 		<div class="login-box">
 			<div class="login-box-header">
-				<img src="/Public/image/login/logo-small.png" alt="">
-				<p class="logo-text">智慧教育服务平台</p>
+				<#--<img src="/Public/image/login/logo-small.png" alt="">-->
+				<p class="logo-text">双重预防机制运行信息管理平台</p>
 			</div>
 			<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
 				<p class="login-erro"></p>
