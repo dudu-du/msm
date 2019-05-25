@@ -1,7 +1,9 @@
 package com.safety.mapper;
 
-import com.safety.entity.RiskControl;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.RiskControl;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-05-23
  */
 public interface RiskControlMapper extends BaseMapper<RiskControl> {
-
+	RiskControl selectByParam(Map param);
 }

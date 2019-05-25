@@ -1,7 +1,7 @@
 package com.safety.service;
 
-import com.safety.entity.RiskEvaluation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.safety.entity.RiskEvaluation;
 
 /**
  * <p>
@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-05-23
  */
 public interface IRiskEvaluationService extends IService<RiskEvaluation> {
-
+	RiskEvaluation getByParam(String orgId, String year);
 }

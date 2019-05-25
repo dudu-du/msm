@@ -91,10 +91,27 @@ public class RiskNoticeController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/riskNotice",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskNoticeById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getRiskNoticeById(String id){
         RiskNotice riskNotice = iRiskNoticeService.getById(id);
+        if(riskNotice!=null){
+            return renderSuccess("查询成功",riskNotice);
+        }else {
+            return renderError("无数据");
+        }
+    }
+    
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/riskNotice",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskControlByParam(String orgId, String year){
+    	RiskNotice riskNotice = iRiskNoticeService.getByParam(orgId,year);
         if(riskNotice!=null){
             return renderSuccess("查询成功",riskNotice);
         }else {

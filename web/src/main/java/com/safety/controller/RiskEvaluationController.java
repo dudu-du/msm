@@ -91,10 +91,27 @@ public class RiskEvaluationController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/riskEvaluation",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskEvaluationById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getRiskEvaluationById(String id){
         RiskEvaluation riskEvaluation = iRiskEvaluationService.getById(id);
+        if(riskEvaluation!=null){
+            return renderSuccess("查询成功",riskEvaluation);
+        }else {
+            return renderError("无数据");
+        }
+    }
+    
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/riskEvaluation",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskEvaluationByParam(String orgId, String year){
+    	RiskEvaluation riskEvaluation = iRiskEvaluationService.getByParam(orgId,year);
         if(riskEvaluation!=null){
             return renderSuccess("查询成功",riskEvaluation);
         }else {

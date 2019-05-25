@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ICheckWeekService extends IService<CheckWeek> {
 
     CheckWeek getByParam(String orgId, String year);
+
+    boolean addCheckWeek(CheckWeek checkWeek);
 }

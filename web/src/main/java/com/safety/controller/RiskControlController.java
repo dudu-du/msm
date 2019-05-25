@@ -1,16 +1,20 @@
 package com.safety.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.safety.entity.RiskControl;
 import com.safety.service.IRiskControlService;
 import com.safety.tools.BaseController;
 import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -91,10 +95,27 @@ public class RiskControlController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/riskControl",method = RequestMethod.GET)
+    @RequestMapping(value = "/riskControlById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getRiskControlById(String id){
         RiskControl riskControl = iRiskControlService.getById(id);
+        if(riskControl!=null){
+            return renderSuccess("查询成功",riskControl);
+        }else {
+            return renderError("无数据");
+        }
+    }
+    
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/riskControl",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskControlByParam(String orgId, String year){
+        RiskControl riskControl = iRiskControlService.getByParam(orgId,year);
         if(riskControl!=null){
             return renderSuccess("查询成功",riskControl);
         }else {

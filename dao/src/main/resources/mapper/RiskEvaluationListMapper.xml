@@ -30,5 +30,7 @@
         <result column="create_person_fk" property="createPersonFk" />
         <result column="org_fk" property="orgFk" />
     </resultMap>
-
+	<select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from risk_evaluation_list where risk_evaluation_fk = #{riskEvaluationFk} order by post_name;
+    </select>
 </mapper>

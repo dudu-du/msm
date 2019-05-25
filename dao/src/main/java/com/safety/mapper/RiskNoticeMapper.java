@@ -1,7 +1,9 @@
 package com.safety.mapper;
 
-import com.safety.entity.RiskNotice;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.RiskNotice;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RiskNoticeMapper extends BaseMapper<RiskNotice> {
 
+	RiskNotice selectByParam(Map map);
 }
