@@ -1,6 +1,7 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -135,8 +136,34 @@ public class RiskNoticeList extends Model<RiskNoticeList> {
      * 所属机构ID
      */
     private String orgFk;
+    /**
+     * 位置标记
+     * @return
+     */
+    private Integer index;
 
-    public String getId() {
+    /**
+     * 个数标记
+     */
+    private Integer union;
+    
+    public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+
+	public Integer getUnion() {
+		return union;
+	}
+
+	public void setUnion(Integer union) {
+		this.union = union;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -86,7 +86,7 @@ new Vue({
 					this.$data.topselect.orgs.value = response.data.data[0].id;
 				}
 				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
-//				that.search();
+				that.search();
 			}else{
 				this.$message.warning(response.data.msg);
 			}
@@ -140,14 +140,14 @@ new Vue({
 		submitForm(formName){
 			this.$data.dialogFormVisible = false;
 			var formData = JSON.parse(JSON.stringify(this.$data.form.toJava()));
-			formData.riskIdentificationFk = this.$data.curData.id;
+			formData.riskEvaluationFk = this.$data.curData.id;
 			formData.orgFk = this.$data.topselect.orgs.value;
 			this.$refs[formName].resetFields();
 			var isNew=true,index,isAdd=false,unionIndex=0;
 			if(formData.id){
 				delete formData.index;
 				delete formData.union;
-				axios.put('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+				axios.put('/safety/riskEvaluationList/riskEvaluationList',formData).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -158,7 +158,7 @@ new Vue({
 					this.$message.error('服务器异常，请稍后再试！');
 				});
 			}else{
-				axios.post('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+				axios.post('/safety/riskEvaluationList/riskEvaluationList',formData).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -174,7 +174,7 @@ new Vue({
 			
 			
 		},edit(row,formName){
-			this.$data.form = new Incidentfication(row);
+			this.$data.form = new Evaluation(row);
 			this.$data.dialogFormVisible = true;
 		},del(row){
 			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -182,7 +182,7 @@ new Vue({
 	          cancelButtonText: '取消',
 	          type: 'warning'
 	        }).then(() => {
-	        	axios.delete('/safety/riskIdentificationList/riskIdentificationList',{params:{id:row.id}}).then(response=>{
+	        	axios.delete('/safety/riskEvaluationList/riskEvaluationList',{params:{id:row.id}}).then(response=>{
 	        		if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -216,12 +216,12 @@ new Vue({
 			}
 		},
 		search(){//搜索
-			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
+			axios.get('/safety/riskEvaluation/riskEvaluation',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;
 					this.$data.tableData = [];
-					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Evaluation(e)));
+					response.data.data.riskEvaluationList.forEach(e=>this.$data.tableData.push(new Evaluation(e)));
 				}else{
 					this.$message.warning(response.data.msg);
 				}

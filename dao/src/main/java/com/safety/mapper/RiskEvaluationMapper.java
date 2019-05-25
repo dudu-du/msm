@@ -1,7 +1,9 @@
 package com.safety.mapper;
 
-import com.safety.entity.RiskEvaluation;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.RiskEvaluation;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RiskEvaluationMapper extends BaseMapper<RiskEvaluation> {
 
+	RiskEvaluation selectByParam(Map map);
 }

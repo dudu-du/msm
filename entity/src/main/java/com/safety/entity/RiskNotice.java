@@ -1,8 +1,10 @@
 package com.safety.entity;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
  * <p>
@@ -46,7 +48,19 @@ public class RiskNotice extends Model<RiskNotice> {
      */
     private String orgFk;
 
-    public String getId() {
+    
+    private List<RiskNoticeList> riskNoticeList;
+    
+    
+    public List<RiskNoticeList> getRiskNoticeList() {
+		return riskNoticeList;
+	}
+
+	public void setRiskNoticeList(List<RiskNoticeList> riskNoticeList) {
+		this.riskNoticeList = riskNoticeList;
+	}
+
+	public String getId() {
         return id;
     }
 

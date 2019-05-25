@@ -55,7 +55,7 @@ public class RiskControlServiceImpl extends ServiceImpl<RiskControlMapper, RiskC
             }
             String id = riskControl.getId();
             Map<String,Object> map = new HashMap<>();
-            map.put("riskIdentificationFk",id);
+            map.put("riskControlFk",id);
             List<RiskControlList> list = riskControlListMapper.selectByPid(map);
             if (list.size()>0){
                 sortList(list);

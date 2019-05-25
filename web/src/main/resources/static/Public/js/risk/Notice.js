@@ -82,7 +82,7 @@ new Vue({
 					this.$data.topselect.orgs.value = response.data.data[0].id;
 				}
 				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
-//				that.search();
+				that.search();
 			}else{
 				this.$message.warning(response.data.msg);
 			}
@@ -136,14 +136,14 @@ new Vue({
 		submitForm(formName){
 			this.$data.dialogFormVisible = false;
 			var formData = JSON.parse(JSON.stringify(this.$data.form.toJava()));
-			formData.riskIdentificationFk = this.$data.curData.id;
+			formData.riskNoticeFk = this.$data.curData.id;
 			formData.orgFk = this.$data.topselect.orgs.value;
 			this.$refs[formName].resetFields();
 			var isNew=true,index,isAdd=false,unionIndex=0;
 			if(formData.id){
 				delete formData.index;
 				delete formData.union;
-				axios.put('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+				axios.put('/safety/riskNoticeList/riskNoticeList',formData).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -154,7 +154,7 @@ new Vue({
 					this.$message.error('服务器异常，请稍后再试！');
 				});
 			}else{
-				axios.post('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+				axios.post('/safety/riskNoticeList/riskNoticeList',formData).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -178,7 +178,7 @@ new Vue({
 	          cancelButtonText: '取消',
 	          type: 'warning'
 	        }).then(() => {
-	        	axios.delete('/safety/riskIdentificationList/riskIdentificationList',{params:{id:row.id}}).then(response=>{
+	        	axios.delete('/safety/riskNoticeList/riskNoticeList',{params:{id:row.id}}).then(response=>{
 	        		if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -212,12 +212,12 @@ new Vue({
 			}
 		},
 		search(){//搜索
-			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
+			axios.get('/safety/riskNotice/riskNotice',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;
 					this.$data.tableData = [];
-					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Notice(e)));
+					response.data.data.riskNoticeList.forEach(e=>this.$data.tableData.push(new Notice(e)));
 				}else{
 					this.$message.warning(response.data.msg);
 				}

@@ -29,5 +29,7 @@
         <result column="create_person_fk" property="createPersonFk" />
         <result column="org_fk" property="orgFk" />
     </resultMap>
-
+	<select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from risk_notice_list where risk_notice_fk = #{riskNoticeFk} order by location_name;
+    </select>
 </mapper>

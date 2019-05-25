@@ -5,6 +5,8 @@ var Control = function(obj) {
 		this.harmfulFactors = '';
 		this.measure = '';
 		this.levelName = '';
+		this.departmentName = '';
+		this.personName = '';
 	}else{
 		if(obj.index){
 			this.index = obj.index;
@@ -17,15 +19,10 @@ var Control = function(obj) {
 		this.harmfulFactors = obj.harmfulFactors;
 		this.measure = obj.measure;
 		this.levelName = obj.levelName;
+		this.departmentName = obj.departmentName;
+		this.personName = obj.personName;
 		this.riskControlFk = obj.riskControlFk;
 		this.orgFk = obj.orgFk;
-		this.troubleNameList = obj.troubleNameList;
-		if(obj.troubleName){
-			this.troubleNameList = obj.troubleName.split(',');			
-		}
-		if(obj.troubleFk){
-			this.troubleFkList = obj.troubleFk.split(',');			
-		}
 	}
 };
 Control.prototype = {
@@ -111,14 +108,14 @@ new Vue({
 		submitForm(formName){
 			this.$data.dialogFormVisible = false;
 			var formData = JSON.parse(JSON.stringify(this.$data.form.toJava()));
-			formData.riskIdentificationFk = this.$data.curData.id;
+			formData.riskControlFk = this.$data.curData.id;
 			formData.orgFk = this.$data.topselect.orgs.value;
 			this.$refs[formName].resetFields();
 			var isNew=true,index,isAdd=false,unionIndex=0;
 			if(formData.id){
 				delete formData.index;
 				delete formData.union;
-				axios.put('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+				axios.put('/safety/riskControlList/riskControlList',formData).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -129,7 +126,8 @@ new Vue({
 					this.$message.error('服务器异常，请稍后再试！');
 				});
 			}else{
-				axios.post('/safety/riskIdentificationList/riskIdentificationList',formData).then(response=>{
+
+				axios.post('/safety/riskControlList/riskControlList',formData).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -145,7 +143,7 @@ new Vue({
 			
 			
 		},edit(row,formName){
-			this.$data.form = new Incidentfication(row);
+			this.$data.form = new Control(row);
 			this.$data.dialogFormVisible = true;
 		},del(row){
 			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -153,7 +151,7 @@ new Vue({
 	          cancelButtonText: '取消',
 	          type: 'warning'
 	        }).then(() => {
-	        	axios.delete('/safety/riskIdentificationList/riskIdentificationList',{params:{id:row.id}}).then(response=>{
+	        	axios.delete('/safety/riskControlList/riskControlList',{params:{id:row.id}}).then(response=>{
 	        		if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						this.search();
@@ -233,7 +231,7 @@ new Vue({
 			});
 		},
 		dialogClose(formName){
-			this.$data.form = new Incidentfication();
+			this.$data.form = new Control();
 			this.$refs[formName].resetFields();
 		},
 		headerStyle({row, rowIndex}){

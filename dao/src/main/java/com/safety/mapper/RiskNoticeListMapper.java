@@ -1,7 +1,10 @@
 package com.safety.mapper;
 
-import com.safety.entity.RiskNoticeList;
+import java.util.List;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.RiskNoticeList;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RiskNoticeListMapper extends BaseMapper<RiskNoticeList> {
 
+	List<RiskNoticeList> selectByPid(Map map);
 }

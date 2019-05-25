@@ -61,7 +61,7 @@
 						</el-table-column>
 						<el-table-column prop="harmfulFactors" label="危险有害因素" width="120">
 						</el-table-column>
-						<el-table-column prop="levelName" label="</el-table-column>"></el-table-column>
+						<el-table-column prop="levelName" label="安全风险等级"></el-table-column>
 						<el-table-column prop="measure" label="现有措施有效性"></el-table-column>
 						<el-table-column prop="departmentName" label="责任部门"></el-table-column>
 						<el-table-column prop="personName" label="责任人"></el-table-column>
@@ -109,6 +109,12 @@
 			  	</el-form-item>
 			    <el-form-item label="现有措施有效性" prop="measure">
 			      <el-input v-model="form.measure" autocomplete="off" type="textarea"></el-input>
+			    </el-form-item>
+			    <el-form-item label="责任部门" prop="departmentName">
+			      <el-input v-model="form.departmentName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="责任人" prop="personName">
+			      <el-input v-model="form.personName" autocomplete="off"></el-input>
 			    </el-form-item>
 			  </el-form>
 			  <div slot="footer" class="dialog-footer">
