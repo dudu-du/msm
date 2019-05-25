@@ -204,7 +204,7 @@
 				  </el-form-item>
 				</el-form>
 				<div slot="footer" class="dialog-footer">
-				   <el-button type="primary" @click="submitForm('checkForm')">提交</el-button>
+				   <el-button type="primary" @click="submitCheckForm('checkForm')">提交</el-button>
 				    <el-button @click="addDomain('checkForm')">新增</el-button>
 				    <el-button @click="resetCheckForm('checkForm')">重置</el-button>
 				 </div>

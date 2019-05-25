@@ -80,6 +80,10 @@ var Check = function(obj){
 		this.checkContent = '';
 		this.checkMethod = '';
 		this.key = Date.now();
+	}else{
+		this.checkTypeName = obj.checkTypeName;
+		this.checkContent = obj.checkContent;
+		this.checkMethod = obj.checkMethod;
 	}
 }
 
@@ -334,6 +338,32 @@ new Vue({
 	    resetCheckForm(formName){
 	    	this.$data.checkForm.domains = [];
 	    	this.$data.checkForm.domains.push(new Check());
+	    },
+	    submitCheckForm(formName){
+	    	var check ={orgFk:this.$data.topselect.orgs.value};
+	    	var list = [];
+	    	this.$data.checkForm.domains.forEach(e=>{
+	    		var c = new Check(e);
+	    		c.riskIdentificationListId = this.$data.curData.id;
+	    		list.push(c);
+	    	});
+	    	this.$refs[formName].resetFields();
+	    	var url= '';
+	    	if(this.$data.checks.checktype == 1){
+	    		check.checkWeekList = list;
+	    		url = '/safety/checkWeek/checkWeek';
+	    	}
+	    	var that = this;
+	    	axios.post(url,check).then(response=>{
+	    		if(response.data.success === true){
+	    			that.checkFormVisible = false;
+					this.$message.success(response.data.msg);
+				}else{
+					this.$message.warning(response.data.msg);
+				}
+	    	}).catch(err=>{
+	    		this.$message.error('服务器异常，请稍后再试！');
+	    	});
 	    }
 	}
 });
