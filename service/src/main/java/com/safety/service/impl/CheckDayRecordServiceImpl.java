@@ -1,10 +1,14 @@
 package com.safety.service.impl;
 
 import com.safety.entity.CheckDayRecord;
+import com.safety.excel.util.StringUtils;
+import com.safety.exception.ProgramException;
 import com.safety.mapper.CheckDayRecordMapper;
 import com.safety.service.ICheckDayRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper, CheckDayRecord> implements ICheckDayRecordService {
 
+    @Override
+    public List<CheckDayRecord> getCheckDayRecord(){
+        return baseMapper.selectCheckDayRecord();
+    }
+
+    @Override
+    public CheckDayRecord getCheckDayRecordListById(String recordId) throws Exception{
+        if(StringUtils.isEmpty(recordId)){
+            throw new ProgramException("参数错误");
+        }
+        return baseMapper.selectCheckDayRecordListById(recordId);
+    }
 }

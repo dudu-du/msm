@@ -3,6 +3,7 @@ package com.safety.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -50,6 +51,12 @@ public class CheckDayRecord extends Model<CheckDayRecord> {
      * 修改时间
      */
     private LocalDateTime modifyTime;
+
+    /**
+     * 填写内容列表
+     * @return
+     */
+    private List<CheckDayRecordList> checkDayRecordList;
 
     public String getId() {
         return id;
@@ -99,6 +106,14 @@ public class CheckDayRecord extends Model<CheckDayRecord> {
 
     public void setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public List<CheckDayRecordList> getCheckDayRecordList() {
+        return checkDayRecordList;
+    }
+
+    public void setCheckDayRecordList(List<CheckDayRecordList> checkDayRecordList) {
+        this.checkDayRecordList = checkDayRecordList;
     }
 
     @Override

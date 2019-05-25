@@ -13,4 +13,28 @@
         <result column="modify_time" property="modifyTime" />
     </resultMap>
 
+    <resultMap id="ExtCheckDayRecordMap" type="com.safety.entity.CheckDayRecord" extends="BaseResultMap">
+        <collection property="checkDayRecordList" ofType="com.safety.entity.CheckDayRecordList">
+            <id column="id" property="id" />
+            <result column="check_day_record_id" property="checkDayRecordId" />
+            <result column="check_day_list_id" property="checkDayListId" />
+            <result column="result" property="result" />
+            <result column="create_person_fk" property="createPersonFk" />
+            <result column="org_fk" property="orgFk" />
+            <result column="create_time" property="createTime" />
+            <result column="modify_time" property="modifyTime" />
+        </collection>
+    </resultMap>
+
+    <select id="selectCheckDayRecord" resultMap="ExtCheckDayRecordMap">
+        select c.*
+        from check_day_record c
+    </select>
+
+    <select id="selectCheckDayRecordListById" resultMap="ExtCheckDayRecordMap" parameterType="string">
+        select c.*,l.*
+        from check_day_record c
+        LEFT JOIN check_day_record_list l on c.id = l.check_day_record_id
+        where c.id = #{id}
+    </select>
 </mapper>
