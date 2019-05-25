@@ -18,8 +18,9 @@ var Incidentfication = function(obj) {
 };
 Incidentfication.prototype = {};
 
-var monthweek = {
-	template:'#month-week',
+var addcheck = {
+	template:'#addcheck',
+	props:['checktype','checkitem'],
 	data:function(){
 		return {
 			checkForm:{
@@ -42,11 +43,9 @@ var monthweek = {
 	    }
 	}
 };
-
-
 new Vue({
 	el: '#app',
-	components: {monthweek,axios},
+	components: {addcheck,axios},
 	created:function(){
 		axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
 			if(response.data.success === true){
@@ -68,31 +67,9 @@ new Vue({
 			checkFormVisible: false,
 			activeNames:['1'],
 			form: new Incidentfication(),
-			post_options: [{
-					value: '工作平台',
-					label: '工作平台'
-				},
-				{
-					value: '装矿平台',
-					label: '装矿平台'
-				}
-			],
-			facotrs:[{
-					value: '人的因素',
-					label: '人的因素'
-				},
-				{
-					value: '环境因素',
-					label: '环境因素'
-				}
-			],
-			troubles: [{
-				key: '坍塌',
-				label: '坍塌'
-			}, {
-				key: '其它伤害',
-				label: '其它伤害'
-			}],
+			post_options: [],
+			facotrs:[],
+			troubles: [],
 			tableData: [],
 			topselect:{
 				orgs:{
@@ -100,8 +77,11 @@ new Vue({
 					data:[]
 				},
 				date:'2019'
+			},
+			checks:{
+				checktype:0,
+				checkitem:0
 			}
-			
 		}
 	},
 	methods: {
@@ -181,7 +161,7 @@ new Vue({
 	          });          
 	        });
 		},
-		monthweek(formName){
+		addcheck(type,item,formName){
 			this.$data.checkFormVisible = true;
 		},
 		orgsChange(val){
@@ -189,6 +169,60 @@ new Vue({
 		},
 		refreshTable(){
 			axios.get
+		},
+		cellClassMethod({row, column, rowIndex, columnIndex}){//表格单元格class触发方法
+			console.log(columnIndex);
+			if(columnIndex==14){//风险等级
+				if(row.level_name === '重大风险'){
+					return 'danger-row';
+				}
+				if(row.level_name === '较大风险一般风险'){
+					return 'warning-row';
+				}
+				if(row.level_name === '一般风险'){
+					return 'common-row';
+				}
+				if(row.level_name === '低风险'){
+					return 'success-row';
+				}
+			}
+		},
+		search(){//搜索
+			axios.get('').then(response=>{
+				
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		},
+		dialogFormOpen(){
+			axios.get('/safety/riskDict/riskDictList',{params:{code:'postlist'}}).then(response=>{
+				console.log(response.data.data);
+				if(response.data.success === true){
+					response.data.data.forEach(e=>this.$data.post_options.push(e));
+				}else{
+					this.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+			axios.get('/safety/riskDict/riskDictList',{params:{code:'harmfullist'}}).then(response=>{
+				if(response.data.success === true){
+					response.data.data.forEach(e=>this.$data.facotrs.push(e));
+				}else{
+					this.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+			axios.get('/safety/riskDict/riskDictList',{params:{code:'troublelist'}}).then(response=>{
+				if(response.data.success === true){
+					response.data.data.forEach(e=>this.$data.troubles.push(e));
+				}else{
+					this.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
 		}
 	}
 });

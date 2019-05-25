@@ -9,21 +9,40 @@
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<style>
+			.el-table .warning-row {
+			    background: #DAA520;
+			    color:#000000;
+			 }
+			
+			 .el-table .success-row {
+			    background: #4169E1;
+			    color:#000000;
+			 }
+			 .el-table .danger-row{
+			 	background:#FF0000;
+			 	color:#000000;
+			 }
+			 .el-table .common-row{
+			 	background:#FFFF00;
+			 	color:#000000;
+			 }
+		</style>
 	</head>
 
 	<body>
 		<div id="app">
 			<el-container>
 				<el-main>
-					<el-row>
-						<el-select placeholder="请选择" v-model="topselect.date" style="margin-bottom:10px">
+					<el-row style="margin-bottom:10px">
+						<el-select placeholder="请选择" v-model="topselect.date">
 						    <el-option
 						      key="2019"
 						      label="2019年"
 						      value="2019">
 						    </el-option>
 						 </el-select>
-						<el-select placeholder="请选择" v-model="topselect.orgs.value" style="margin-bottom:10px" @change="orgsChange">
+						<el-select placeholder="请选择" v-model="topselect.orgs.value" @change="orgsChange">
 						    <el-option
 						      v-for="item in topselect.orgs.data"
 						      :key="item.id"
@@ -31,9 +50,9 @@
 						      :value="item.id">
 						    </el-option>
 						  </el-select>
-						  <el-button type="primary" icon="el-icon-search">搜索</el-button>
+						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 					</el-row>
-					<el-table :data="tableData" style="width: 100%" :span-method="arraySpanMethod" >
+					<el-table :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod">
 						<el-table-column prop="index" label="序号" width="150"></el-table-column>
 						<el-table-column prop="post_name" label="岗位（设备设施/作业活动）单元" width="150">
 						</el-table-column>
@@ -68,13 +87,13 @@
 								<el-popover
 								  placement="top"
 								  width="160" >
-								  <p>请选择检查表单类型？</p>
 								  <div style="text-align: right; margin: 0">
-								    <el-button size="mini" type="text" @click="monthweek">月检查</el-button>
-								    <el-button type="text" size="mini" @click="monthweek">周检查</el-button>
-								    <el-button type="text" size="mini" >日检查</el-button>
-								    <el-button type="text" size="mini" >专项检查</el-button>
-								    <el-button type="text" size="mini" >综合检查</el-button>
+								    <el-button size="mini" type="text" @click="addcheck(1,1,'checkForm')">月检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(1,1,'checkForm')">周检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(0,1,'checkForm')">日检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(1,0,'checkForm')">专项检查</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm')">综合检查(节假日、复产前)</el-button>
+								    <el-button type="text" size="mini" @click="addcheck(0,0,'checkForm')">综合检查(季节性)</el-button>
 								  </div>
 								  <el-button slot="reference"  type="info" size="mini" icon="el-icon-s-unfold" circle></el-button>
 								</el-popover>
@@ -91,15 +110,15 @@
 					</div>
 				</el-footer>
 			</el-container>
-			<el-dialog title="安全风险辨识项" :visible.sync="dialogFormVisible">
+			<el-dialog title="安全风险辨识项" :visible.sync="dialogFormVisible" @open="dialogFormOpen">
 			  <el-form :model="form" label-width="110px" label-position="right" ref="validateForm">
 			    <el-form-item label="岗位单元" prop="post_name">
 			    	<el-select v-model="form.post_name" placeholder="请选择">
 					    <el-option
 					      v-for="item in post_options"
-					      :key="item.value"
-					      :label="item.label"
-					      :value="item.value">
+					      :key="item.id"
+					      :label="item.name"
+					      :value="item.id">
 					    </el-option>
 					 </el-select>
 			    </el-form-item>
@@ -107,14 +126,14 @@
 			    	<el-select v-model="form.factor" placeholder="请选择">
 					    <el-option
 					      v-for="item in facotrs"
-					      :key="item.value"
-					      :label="item.label"
-					      :value="item.value">
+					      :key="item.id"
+					      :label="item.name"
+					      :value="item.id">
 					    </el-option>
 					 </el-select>
 			    </el-form-item>
 			    <el-form-item prop="trouble">
-			    	<el-transfer v-model="form.trouble" :data="troubles" :titles=["事故类型","已选择"]></el-transfer>			    	
+			    	<el-transfer v-model="form.trouble" :props="{key:'id',label:'name'}" :data="troubles" :titles=["事故类型","已选择"]></el-transfer>			    	
 			    </el-form-item>
 			    <el-form-item label="原因" prop="cause">
 			      <el-input v-model="form.cause" autocomplete="off" type="textarea"></el-input>
@@ -161,12 +180,12 @@
 			  </div>
 			</el-dialog>
 			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" >
-				<monthweek></monthweek>
+				<addcheck :checktype="checks.checktype" :checkitem="checks.checkitem"></addcheck>
 			</el-dialog>	
 		</div>
 	</body>
 <script type="text/javascript" src="/Public/js/risk/Incidentfication.js" ></script>
-<script type="text/x-template" id="month-week">
+<script type="text/x-template" id="addcheck">
 	<el-form  ref="checkForm" label-width="66px">
 	  <el-form-item
 	    v-for="(domain, index) in checkForm.domains"
@@ -174,13 +193,13 @@
 	    :prop="'domains.' + index + '.value'"
 	  >
 	  <el-col :span="4">
-	  <el-select  placeholder="活动区域" >
+	  <el-select  placeholder="活动区域" v-if="checktype==1">
 	      <el-option label="区域一" value="shanghai"></el-option>
 	      <el-option label="区域二" value="beijing"></el-option>
 	    </el-select>
 	  </el-col>
 	  <el-col :span="10">
-	    <el-input v-model="domain.value" placeholder="检查项目及相关要求"></el-input>
+	    <el-input v-model="domain.value" v-if="checkitem==1" placeholder="检查项目及相关要求"></el-input>
 	  </el-col>
 	  <el-col :span="6">
 	    <el-input v-model="domain.value" placeholder="检查方法"></el-input>
