@@ -58,4 +58,18 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
         }
         return riskIdentification;
     }
+
+    @Override
+    public RiskIdentification getById(String id) {
+        Map param = new HashMap();
+        param.put("id",id);
+        RiskIdentification riskIdentification = riskIdentificationMapper.selectByParam(param);
+        if (riskIdentification!=null){
+            Map map = new HashMap();
+            map.put("risk_identification_fk",id);
+            List<RiskIdentificationList> list = riskIdentificationListMapper.selectByMap(map);
+            riskIdentification.setRiskIdentificationList(list);
+        }
+        return riskIdentification;
+    }
 }

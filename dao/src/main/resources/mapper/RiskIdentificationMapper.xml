@@ -13,6 +13,17 @@
     </resultMap>
 
     <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select * from risk_identification where org_fk = #{orgFk} and create_time =#{createTime}
+        select * from risk_identification
+        <where>
+            <if test="orgFk!=null">
+                and org_fk = #{orgFk}
+            </if>
+            <if test="createTime!=null">
+                and create_time =#{createTime}
+            </if>
+            <if test="id!=null">
+                and id =#{id}
+            </if>
+        </where>
     </select>
 </mapper>
