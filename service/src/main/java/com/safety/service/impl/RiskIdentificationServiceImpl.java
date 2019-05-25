@@ -104,6 +104,8 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
             RiskIdentificationList riskIdentificationList = list.get(i);
             if (postName.equals(riskIdentificationList.getPostName())){
                 union++;
+                RiskIdentificationList first = list.get(position);
+                first.setUnion(union);
             }else {
                 postName = riskIdentificationList.getPostName();
                 RiskIdentificationList first = list.get(position);
