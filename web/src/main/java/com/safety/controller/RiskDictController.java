@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * <p>
  * 风险相关数据字典 前端控制器
@@ -91,6 +93,22 @@ public class RiskDictController extends BaseController {
         RiskDict riskDict = iRiskDictService.getById(id);
         if(riskDict!=null){
             return renderSuccess("查询成功",riskDict);
+        }else {
+            return renderSuccess("无数据");
+        }
+    }
+
+    /**
+     * 通过code查询列表
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/riskDictList",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskDictListByCode(String code){
+        List<RiskDict> riskDictList = iRiskDictService.getRiskDictListByCode(code);
+        if(riskDictList!=null){
+            return renderSuccess("查询成功",riskDictList);
         }else {
             return renderSuccess("无数据");
         }

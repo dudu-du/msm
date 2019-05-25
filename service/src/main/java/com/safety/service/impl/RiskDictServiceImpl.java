@@ -4,7 +4,10 @@ import com.safety.entity.RiskDict;
 import com.safety.mapper.RiskDictMapper;
 import com.safety.service.IRiskDictService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RiskDictServiceImpl extends ServiceImpl<RiskDictMapper, RiskDict> implements IRiskDictService {
 
+    @Autowired
+    private RiskDictMapper riskDictMapper;
+
+    @Override
+    public List<RiskDict> getRiskDictListByCode(String code) {
+       return riskDictMapper.getRiskDictListByCode(code);
+    }
 }
