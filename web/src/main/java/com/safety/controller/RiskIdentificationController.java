@@ -1,19 +1,23 @@
 package com.safety.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.safety.entity.RiskIdentification;
+import com.safety.service.IOrgService;
+import com.safety.service.IRiskIdentificationListService;
 import com.safety.service.IRiskIdentificationService;
 import com.safety.tools.BaseController;
 import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -24,10 +28,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 2019-05-23
  */
 @Controller
+@Slf4j
 @RequestMapping("/safety/riskIdentification")
 public class RiskIdentificationController extends BaseController {
     @Autowired
     private IRiskIdentificationService iRiskIdentificationService;
+    @Autowired
+    private IRiskIdentificationListService iRiskIdentificationListService;
+    @Autowired
+    private IOrgService iOrgService;
 
     /**
      *
@@ -35,6 +44,7 @@ public class RiskIdentificationController extends BaseController {
      */
     @RequestMapping(value = "/riskIdentificationView",method = RequestMethod.GET)
     public BaseModelAndView getIdentificationList(){
+    	
         BaseModelAndView modelAndView = new BaseModelAndView();
         modelAndView.setViewName("risk/incidentification");
         return modelAndView;

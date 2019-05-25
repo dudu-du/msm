@@ -18,12 +18,55 @@ var Incidentfication = function(obj) {
 };
 Incidentfication.prototype = {};
 
+var monthweek = {
+	template:'#month-week',
+	data:function(){
+		return {
+			checkForm:{
+	        	domains:[{value:''}]
+	        }
+		};
+	},
+	methods:{
+		addDomain(formName) {
+	        this.$data.checkForm.domains.push({
+	          value: '',
+	          key: Date.now()
+	        });
+	    },
+	    removeDomain(domain){
+	    	var index = this.$data.checkForm.domains.indexOf(domain)
+	        if (index !== -1) {
+	          this.$data.checkForm.domains.splice(index, 1)
+	        }
+	    }
+	}
+};
+
+
 new Vue({
 	el: '#app',
+	components: {monthweek,axios},
+	created:function(){
+		axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+			if(response.data.success === true){
+				if(response.data.data.length>0){
+					this.$data.topselect.orgs.value = response.data.data[0].id;
+				}
+				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
+			}else{
+				this.$message.warning(response.data.msg);
+			}
+		}).catch(err=>{
+			this.$message.error('服务器异常，请稍后再试！');
+		});
+	},
 	data: function() {
 		return {
 			firstcol: '',
 			dialogFormVisible: false,
+			checkFormVisible: false,
+			activeNames:['1'],
 			form: new Incidentfication(),
 			post_options: [{
 					value: '工作平台',
@@ -50,7 +93,15 @@ new Vue({
 				key: '其它伤害',
 				label: '其它伤害'
 			}],
-			tableData: []
+			tableData: [],
+			topselect:{
+				orgs:{
+					value:'',
+					data:[]
+				},
+				date:'2019'
+			}
+			
 		}
 	},
 	methods: {
@@ -103,15 +154,41 @@ new Vue({
 				formData.index = unionIndex + 1;
 				tableData.push(formData);
 				isAdd = true;
-				console.log("add new");
 			}
 			if(isAdd == false){
-				console.log("add same");
 				tableData[index].union = tableData[index].union + 1;
 				tableData.push(formData);
 			}
 			
 			
+		},edit(row,formName){
+			this.$data.form = row;
+			this.$data.dialogFormVisible = true;
+		},del(row){
+			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+	          confirmButtonText: '确定',
+	          cancelButtonText: '取消',
+	          type: 'warning'
+	        }).then(() => {
+	          this.$message({
+	            type: 'success',
+	            message: '删除成功!'
+	          });
+	        }).catch(() => {
+	          this.$message({
+	            type: 'info',
+	            message: '已取消删除'
+	          });          
+	        });
+		},
+		monthweek(formName){
+			this.$data.checkFormVisible = true;
+		},
+		orgsChange(val){
+//			alert(val);
+		},
+		refreshTable(){
+			axios.get
 		}
 	}
 });
