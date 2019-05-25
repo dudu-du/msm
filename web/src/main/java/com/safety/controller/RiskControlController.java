@@ -4,11 +4,12 @@ package com.safety.controller;
 import com.safety.entity.RiskControl;
 import com.safety.service.IRiskControlService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
 
 /**
@@ -24,6 +25,14 @@ import org.springframework.stereotype.Controller;
 public class RiskControlController extends BaseController {
     @Autowired
     private IRiskControlService iRiskControlService;
+    
+    @RequestMapping(value = "/riskControlView",method = RequestMethod.GET)
+    public BaseModelAndView getIdentificationList(){
+    	
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/control");
+        return modelAndView;
+    }
     /**
      * 添加
      * @param riskControl

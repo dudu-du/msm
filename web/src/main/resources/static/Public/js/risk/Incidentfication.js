@@ -226,9 +226,6 @@ new Vue({
 		orgsChange(val){
 //			alert(val);
 		},
-		refreshTable(){
-			axios.get
-		},
 		cellClassMethod({row, column, rowIndex, columnIndex}){//表格单元格class触发方法
 			if(columnIndex==14){//风险等级
 				if(row.levelName === '重大风险'){

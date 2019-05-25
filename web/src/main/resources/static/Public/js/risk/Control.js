@@ -17,7 +17,7 @@ var Control = function(obj) {
 		this.harmfulFactors = obj.harmfulFactors;
 		this.measure = obj.measure;
 		this.levelName = obj.levelName;
-		this.riskIdentificationFk = obj.riskIdentificationFk;
+		this.riskControlFk = obj.riskControlFk;
 		this.orgFk = obj.orgFk;
 		this.troubleNameList = obj.troubleNameList;
 		if(obj.troubleName){
@@ -58,7 +58,7 @@ new Vue({
 					this.$data.topselect.orgs.value = response.data.data[0].id;
 				}
 				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
-				that.search();
+//				that.search();
 			}else{
 				this.$message.warning(response.data.msg);
 			}
@@ -69,7 +69,7 @@ new Vue({
 	data: function() {
 		return {
 			dialogFormVisible: false,
-			curData:{},
+			curData:{id:'111',state:1},
 			activeNames:['1'],
 			form: new Control(),
 			post_options: [],
@@ -171,7 +171,7 @@ new Vue({
 	        });
 		},
 		cellClassMethod({row, column, rowIndex, columnIndex}){//表格单元格class触发方法
-			if(columnIndex==14){//风险等级
+			if(columnIndex==3){//风险等级
 				if(row.levelName === '重大风险'){
 					return 'danger-row';
 				}
@@ -235,6 +235,10 @@ new Vue({
 		dialogClose(formName){
 			this.$data.form = new Incidentfication();
 			this.$refs[formName].resetFields();
+		},
+		headerStyle({row, rowIndex}){
+			console.log(rowIndex);
+			return 'background:#F5F7FA;';
 		}
 	}
 });

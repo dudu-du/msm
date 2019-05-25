@@ -27,6 +27,9 @@
 			 	background:#FFFF00;
 			 	color:#000000;
 			 }
+			 .header-row{
+			 	background:#DCDCDC !important;
+			 }
 		</style>
 	</head>
 
@@ -42,7 +45,7 @@
 						      value="2019">
 						    </el-option>
 						 </el-select>
-						<el-select placeholder="请选择" v-model="topselect.orgs.value" @change="orgsChange">
+						<el-select placeholder="请选择" v-model="topselect.orgs.value">
 						    <el-option
 						      v-for="item in topselect.orgs.data"
 						      :key="item.id"
@@ -52,13 +55,13 @@
 						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 					</el-row>
-					<el-table :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
+					<el-table border :header-cell-style="headerStyle" :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="150"></el-table-column>
 						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150">
 						</el-table-column>
 						<el-table-column prop="harmfulFactors" label="危险有害因素" width="120">
 						</el-table-column>
-						<el-table-column prop="levelName" label="安全风险评价"></el-table-column>
+						<el-table-column prop="levelName" label="</el-table-column>"></el-table-column>
 						<el-table-column prop="measure" label="现有措施有效性"></el-table-column>
 						<el-table-column prop="departmentName" label="责任部门"></el-table-column>
 						<el-table-column prop="personName" label="责任人"></el-table-column>

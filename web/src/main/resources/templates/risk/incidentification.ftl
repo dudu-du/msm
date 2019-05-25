@@ -4,7 +4,6 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-		<link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_y6fcnyw4tpf.css">
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
@@ -52,7 +51,7 @@
 						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 					</el-row>
-					<el-table :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
+					<el-table highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="150"></el-table-column>
 						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150">
 						</el-table-column>
