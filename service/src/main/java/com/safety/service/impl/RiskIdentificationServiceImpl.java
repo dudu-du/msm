@@ -85,8 +85,8 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
         RiskIdentification riskIdentification = riskIdentificationMapper.selectByParam(param);
         if (riskIdentification!=null){
             Map map = new HashMap();
-            map.put("risk_identification_fk",id);
-            List<RiskIdentificationList> list = riskIdentificationListMapper.selectByMap(map);
+            map.put("riskIdentificationFk",id);
+            List<RiskIdentificationList> list = riskIdentificationListMapper.selectByPid(map);
             if (list.size()>0){
                 sortList(list);
             }
@@ -95,7 +95,7 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
         return riskIdentification;
     }
 
-    private List<RiskIdentificationList> sortList(List<RiskIdentificationList> list){
+    private void sortList(List<RiskIdentificationList> list){
         int index = 1;
         int union = 1;
         String postName = "";
@@ -115,6 +115,5 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
                 union = 1;
             }
         }
-        return list;
     }
 }
