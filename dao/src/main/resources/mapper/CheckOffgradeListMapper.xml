@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.safety.mapper.CheckOffgradeListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.safety.entity.CheckOffgradeList">
+        <id column="id" property="id" />
+        <id column="content" property="content" />
+        <id column="level_fk" property="levelFk" />
+        <id column="level_name" property="levelName" />
+        <id column="level_num" property="levelNum" />
+        <id column="check_type" property="checkType" />
+        <id column="check_fk" property="checkFk" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="org_fk" property="orgFk" />
+        <result column="create_person_fk" property="createPersonFk" />
+    </resultMap>
+</mapper>
