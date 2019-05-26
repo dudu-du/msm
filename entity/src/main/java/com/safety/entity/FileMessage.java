@@ -1,6 +1,7 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
@@ -9,9 +10,9 @@ import java.io.Serializable;
  * </p>
  *
  * @author safety
- * @since 2019-05-25
+ * @since 2019-05-26
  */
-public class File extends Model<File> {
+public class FileMessage extends Model<FileMessage> {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,9 +37,29 @@ public class File extends Model<File> {
     private Integer type;
 
     /**
+     * 机构id
+     */
+    private String orgFk;
+
+    /**
+     * 创建人id
+     */
+    private String createPersonFk;
+
+    /**
      * 备注
      */
     private String remark;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 修改时间
+     */
+    private LocalDateTime modifyTime;
 
     public String getId() {
         return id;
@@ -68,12 +89,40 @@ public class File extends Model<File> {
     public void setType(Integer type) {
         this.type = type;
     }
+    public String getOrgFk() {
+        return orgFk;
+    }
+
+    public void setOrgFk(String orgFk) {
+        this.orgFk = orgFk;
+    }
+    public String getCreatePersonFk() {
+        return createPersonFk;
+    }
+
+    public void setCreatePersonFk(String createPersonFk) {
+        this.createPersonFk = createPersonFk;
+    }
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+    public LocalDateTime getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(LocalDateTime modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     @Override
@@ -83,12 +132,16 @@ public class File extends Model<File> {
 
     @Override
     public String toString() {
-        return "File{" +
+        return "FileMessage{" +
         "id=" + id +
         ", name=" + name +
         ", path=" + path +
         ", type=" + type +
+        ", orgFk=" + orgFk +
+        ", createPersonFk=" + createPersonFk +
         ", remark=" + remark +
+        ", createTime=" + createTime +
+        ", modifyTime=" + modifyTime +
         "}";
     }
 }
