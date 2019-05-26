@@ -35,12 +35,13 @@ import java.util.List;
 public class FileMessageController extends BaseController {
     @Autowired
     private IFileMessageService iFileMessageService;
-
+    
     @RequestMapping(value = "/fileInsideView",method = RequestMethod.GET)
     public BaseModelAndView getFileInsideView(){
 
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("filemessage/fileinside");
+        modelAndView.addObject("fileType", 1);
+        modelAndView.setViewName("doc/filelist");
         return modelAndView;
     }
 
@@ -48,7 +49,8 @@ public class FileMessageController extends BaseController {
     public BaseModelAndView getFileExternalView(){
 
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("filemessage/fileexternal");
+        modelAndView.addObject("fileType", 2);
+        modelAndView.setViewName("doc/filelist");
         return modelAndView;
     }
 

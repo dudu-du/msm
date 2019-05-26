@@ -54,6 +54,7 @@ public class FileMessageServiceImpl extends ServiceImpl<FileMessageMapper, FileM
             fileMessage.setPath(path);
             fileMessage.setViewPath("/file/"+fileName);
             fileMessage.setOrgFk(orgId);
+            fileMessage.setType(type);
             fileMessage.setCreatePersonFk(userId);
             fileMessage.setCreateTime(LocalDateTime.now());
             fileMessage.setModifyTime(LocalDateTime.now());
@@ -73,6 +74,7 @@ public class FileMessageServiceImpl extends ServiceImpl<FileMessageMapper, FileM
             throw new ProgramException("参数错误");
         }
         FileMessage fileMessage = baseMapper.selectById(id);
+        baseMapper.deleteById(fileMessage.getId());
         if(fileMessage == null){
             throw new ProgramException("文件不存在");
         }
