@@ -2,6 +2,7 @@ package com.safety.mapper;
 
 import com.safety.entity.CheckMonthList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.CheckMonthRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ import java.util.Map;
 public interface CheckMonthListMapper extends BaseMapper<CheckMonthList> {
 
     List<CheckMonthList> selectByPid(Map map);
+
+    List<CheckMonthList> selectByParam(Map map);
 }

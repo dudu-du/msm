@@ -49,7 +49,7 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
     private String checkType;
 
     /**
-     * 不合格项的关联ID
+     * 不合格项的关联填写单ID
      */
     private String checkFk;
 
@@ -73,6 +73,11 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
      * 填写人ID
      */
     private String createPersonFk;
+
+    /**
+     * 不合格项的关联模板项ID
+     */
+    private String checkListFk;
 
 
 
@@ -169,6 +174,14 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
         this.createPersonFk = createPersonFk;
     }
 
+    public String getCheckListFk() {
+        return checkListFk;
+    }
+
+    public void setCheckListFk(String checkListFk) {
+        this.checkListFk = checkListFk;
+    }
+
     @Override
     public String toString() {
         return "CheckOffgradeList{" +
@@ -183,6 +196,7 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
                 ", modifyTime=" + modifyTime +
                 ", orgFk='" + orgFk + '\'' +
                 ", createPersonFk='" + createPersonFk + '\'' +
+                ", checkListFk='" + checkListFk + '\'' +
                 '}';
     }
 }

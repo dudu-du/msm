@@ -33,11 +33,9 @@ public class CheckMonthRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckMonthRecord(@RequestBody CheckMonthRecord checkMonthRecord){
-        String id = UUIDUtil.getUUID();
-        checkMonthRecord.setId(id);
-        boolean result = iCheckMonthRecordService.save(checkMonthRecord);
+        boolean result = iCheckMonthRecordService.addCheckMonthRecord(checkMonthRecord);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,10 +80,27 @@ public class CheckMonthRecordController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkMonthRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkMonthRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckMonthRecordById(String id){
         CheckMonthRecord checkMonthRecord = iCheckMonthRecordService.getById(id);
+        if(checkMonthRecord!=null){
+            return renderSuccess("查询成功",checkMonthRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkMonthRecord",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckMonthRecordByParam(String orgId, String year){
+        CheckMonthRecord checkMonthRecord = iCheckMonthRecordService.getByParam(orgId,year);
         if(checkMonthRecord!=null){
             return renderSuccess("查询成功",checkMonthRecord);
         }else {

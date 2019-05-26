@@ -92,6 +92,11 @@ public class CheckMonthList extends Model<CheckMonthList> {
      */
     private Integer union;
 
+    /**
+     * 填写结果
+     */
+    private String result;
+
 
     public String getId() {
         return id;
@@ -204,6 +209,14 @@ public class CheckMonthList extends Model<CheckMonthList> {
 
     public void setUnion(Integer union) {
         this.union = union;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     @Override

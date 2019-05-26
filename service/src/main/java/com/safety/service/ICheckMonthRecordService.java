@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckMonthRecordService extends IService<CheckMonthRecord> {
 
+    CheckMonthRecord getByParam(String orgId, String year);
+
+    boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord);
+
 }

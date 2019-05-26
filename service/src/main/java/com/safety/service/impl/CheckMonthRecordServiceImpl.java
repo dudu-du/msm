@@ -1,10 +1,19 @@
 package com.safety.service.impl;
 
-import com.safety.entity.CheckMonthRecord;
-import com.safety.mapper.CheckMonthRecordMapper;
+import com.safety.entity.*;
+import com.safety.mapper.*;
 import com.safety.service.ICheckMonthRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.safety.tools.UUIDUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,4 +26,120 @@ import org.springframework.stereotype.Service;
 @Service
 public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMapper, CheckMonthRecord> implements ICheckMonthRecordService {
 
+    @Autowired
+    private CheckMonthRecordMapper checkMonthRecordMapper;
+    @Autowired
+    private CheckMonthRecordListMapper checkMonthRecordListMapper;
+    @Autowired
+    private CheckMonthListMapper checkMonthListMapper;
+    @Autowired
+    private CheckMonthMapper checkMonthMapper;
+    @Autowired
+    private CheckOffgradeListMapper checkOffgradeListMapper;
+
+    @Override
+    public CheckMonthRecord getByParam(String orgId, String yearStr) {
+        //根据机构ID和年份查询当前是否有值
+        Map param = new HashMap();
+        param.put("orgFk",orgId);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
+        param.put("createTime",year);
+        CheckMonthRecord checkMonthRecord = checkMonthRecordMapper.selectByParam(param);
+        if (checkMonthRecord!=null){
+            String checkMonthId = checkMonthRecord.getCheckMonthId();
+            Map map = new HashMap();
+            map.put("checkMonthFk",checkMonthId);
+            List<CheckMonthList> list = checkMonthListMapper.selectByParam(map);
+            if (list.size()>0){
+                sortList(list);
+            }
+            checkMonthRecord.setCheckMonthList(list);
+        }else {
+            //先获取是否已经添加好模板
+            CheckMonth checkMonth = checkMonthMapper.selectByParam(param);
+            if (checkMonth==null){
+                return null;
+            }
+            String checkMonthId = checkMonth.getId();
+            checkMonthRecord = new CheckMonthRecord();
+            checkMonthRecord.setCheckMonthId(checkMonthId);
+            checkMonthRecord.setId(UUIDUtil.getUUID());
+            checkMonthRecord.setOrgFk(orgId);
+            checkMonthRecord.setCreateTime(year);
+            checkMonthRecordMapper.insert(checkMonthRecord);
+            checkMonthRecord.setCheckMonthList(new ArrayList<>());
+        }
+        return checkMonthRecord;
+    }
+
+    @Override
+    public boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
+        List<CheckMonthList> checkMonthLists = checkMonthRecord.getCheckMonthList();
+        String checkMonthRecordId = checkMonthRecord.getId();
+        if (checkMonthLists.size()>0){
+            for (CheckMonthList checkMonthList:checkMonthLists){
+                //判断是否填写值
+                if (checkMonthList.getResult()==null){
+                    continue;
+                }
+                //先查询是否已填入值
+                Map map = new HashMap();
+                map.put("check_month_list_id",checkMonthList.getId());
+                map.put("check_month_record_id",checkMonthRecordId);
+                List<CheckMonthRecordList> list = checkMonthRecordListMapper.selectByMap(map);
+                CheckMonthRecordList checkMonthRecordList;
+                //若已经有值直接进行修改
+                if (list.size()>0){
+                    checkMonthRecordList = list.get(0);
+                    checkMonthRecordListMapper.updateById(checkMonthRecordList);
+                }else {
+                    checkMonthRecordList = new CheckMonthRecordList();
+                    checkMonthRecordList.setId(UUIDUtil.getUUID());
+                    checkMonthRecordList.setCheckMonthListId(checkMonthList.getId());
+                    checkMonthRecordList.setCheckMonthRecordId(checkMonthRecordId);
+                    checkMonthRecordList.setResult(checkMonthList.getResult());
+                    checkMonthRecordListMapper.insert(checkMonthRecordList);
+                }
+                String result = checkMonthRecordList.getResult();
+                //TODO:将2替换为常量 判断如果为否时需要添加不合格表
+                if ("2".equals(result)){
+                    CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
+                    checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setCheckFk(checkMonthRecordId);
+                    checkOffgradeList.setCheckListFk(checkMonthList.getId());
+                    //TODO:将月测试规定为常量
+                    checkOffgradeList.setCheckType("月测试");
+                    //TODO:此处只保存了安全风险等级名称
+                    checkOffgradeList.setLevelName(checkMonthList.getLevelName());
+                    checkOffgradeListMapper.insert(checkOffgradeList);
+                }
+            }
+        }
+        return true;
+    }
+
+    private void sortList(List<CheckMonthList> list){
+        int index = 1;
+        int union = 1;
+        String checkTypeName = "";
+        int position = 0;
+        for (int i=0;i<list.size();i++){
+            CheckMonthList checkMonthList = list.get(i);
+            if (checkTypeName.equals(checkMonthList.getCheckTypeName())){
+                union++;
+                CheckMonthList first = list.get(position);
+                first.setUnion(union);
+            }else {
+                checkTypeName = checkMonthList.getCheckTypeName();
+                CheckMonthList first = list.get(position);
+                first.setUnion(union);
+                checkMonthList.setIndex(index);
+                checkMonthList.setUnion(1);
+                index++;
+                position = i;
+                union = 1;
+            }
+        }
+    }
 }
