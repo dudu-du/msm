@@ -350,8 +350,28 @@ new Vue({
 	    	this.$refs[formName].resetFields();
 	    	var url= '';
 	    	if(this.$data.checks.checktype == 1){
+	    		check.checkMonthList = list;
+	    		url = '/safety/checkMonth/checkMonth';
+	    	}
+	    	if(this.$data.checks.checktype == 2){
 	    		check.checkWeekList = list;
 	    		url = '/safety/checkWeek/checkWeek';
+	    	}
+	    	if(this.$data.checks.checktype == 3){
+	    		check.checkDayList = list;
+	    		url = '/safety/checkDay/checkDay';
+	    	}
+	    	if(this.$data.checks.checktype == 4){
+	    		check.checkSpecialList = list;
+	    		url = '/safety/checkSpecial/checkSpecial';
+	    	}
+	    	if(this.$data.checks.checktype == 5){
+	    		check.checkComprehensiveHolidayList = list;
+	    		url = '/safety/checkComprehensiveHoliday/checkComprehensiveHoliday';
+	    	}
+	    	if(this.$data.checks.checktype == 6){
+	    		check.checkComprehensiveSeasonList = list;
+	    		url = '/safety/checkComprehensiveSeason/checkComprehensiveSeason';
 	    	}
 	    	var that = this;
 	    	axios.post(url,check).then(response=>{

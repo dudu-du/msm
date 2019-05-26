@@ -52,12 +52,12 @@ new Vue({
 		axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
 			if(response.data.success === true){
 				if(response.data.data.length>0){
-					this.$data.topselect.orgs.value = response.data.data[0].id;
+					that.$data.topselect.orgs.value = response.data.data[0].id;
 				}
-				response.data.data.forEach(e=>this.$data.topselect.orgs.data.push(e));
+				response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
 				that.search();
 			}else{
-				this.$message.warning(response.data.msg);
+				that.$message.warning(response.data.msg);
 			}
 		}).catch(err=>{
 			this.$message.error('服务器异常，请稍后再试！');
