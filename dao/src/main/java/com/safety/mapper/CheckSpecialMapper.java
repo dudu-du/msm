@@ -3,6 +3,8 @@ package com.safety.mapper;
 import com.safety.entity.CheckSpecial;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Map;
+
 /**
  * <p>
  * 专项检查 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckSpecialMapper extends BaseMapper<CheckSpecial> {
 
+    CheckSpecial selectByParam(Map param);
 }

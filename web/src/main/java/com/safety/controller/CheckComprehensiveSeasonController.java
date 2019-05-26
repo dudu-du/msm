@@ -33,11 +33,9 @@ public class CheckComprehensiveSeasonController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckComprehensiveSeason(@RequestBody CheckComprehensiveSeason checkComprehensiveSeason){
-        String id = UUIDUtil.getUUID();
-        checkComprehensiveSeason.setId(id);
-        boolean result = iCheckComprehensiveSeasonService.save(checkComprehensiveSeason);
+        boolean result = iCheckComprehensiveSeasonService.addCheckComprehensiveSeason(checkComprehensiveSeason);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,10 +80,27 @@ public class CheckComprehensiveSeasonController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkComprehensiveSeason",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkComprehensiveSeasonById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckComprehensiveSeasonById(String id){
         CheckComprehensiveSeason checkComprehensiveSeason = iCheckComprehensiveSeasonService.getById(id);
+        if(checkComprehensiveSeason!=null){
+            return renderSuccess("查询成功",checkComprehensiveSeason);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveSeason",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckComprehensiveSeasonByParam(String orgId, String year){
+        CheckComprehensiveSeason checkComprehensiveSeason = iCheckComprehensiveSeasonService.getByParam(orgId,year);
         if(checkComprehensiveSeason!=null){
             return renderSuccess("查询成功",checkComprehensiveSeason);
         }else {

@@ -34,11 +34,9 @@ public class CheckComprehensiveHolidayController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckComprehensiveHoliday(@RequestBody CheckComprehensiveHoliday checkComprehensiveHoliday){
-        String id = UUIDUtil.getUUID();
-        checkComprehensiveHoliday.setId(id);
-        boolean result = iCheckComprehensiveHolidayService.save(checkComprehensiveHoliday);
+        boolean result = iCheckComprehensiveHolidayService.addCheckComprehensiveHoliday(checkComprehensiveHoliday);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -83,10 +81,27 @@ public class CheckComprehensiveHolidayController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkComprehensiveHoliday",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkComprehensiveHolidayById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckComprehensiveHolidayById(String id){
         CheckComprehensiveHoliday checkComprehensiveHoliday = iCheckComprehensiveHolidayService.getById(id);
+        if(checkComprehensiveHoliday!=null){
+            return renderSuccess("查询成功",checkComprehensiveHoliday);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveHoliday",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckComprehensiveHolidayByParam(String orgId, String year){
+        CheckComprehensiveHoliday checkComprehensiveHoliday = iCheckComprehensiveHolidayService.getByParam(orgId,year);
         if(checkComprehensiveHoliday!=null){
             return renderSuccess("查询成功",checkComprehensiveHoliday);
         }else {

@@ -61,6 +61,11 @@ public class CheckComprehensiveHolidayList extends Model<CheckComprehensiveHolid
      */
     private String orgFk;
 
+    /**
+     * 父级ID
+     */
+    private String checkComprehensiveHolidayFk;
+
     public String getId() {
         return id;
     }
@@ -130,6 +135,14 @@ public class CheckComprehensiveHolidayList extends Model<CheckComprehensiveHolid
         return this.id;
     }
 
+    public String getCheckComprehensiveHolidayFk() {
+        return checkComprehensiveHolidayFk;
+    }
+
+    public void setCheckComprehensiveHolidayFk(String checkComprehensiveHolidayFk) {
+        this.checkComprehensiveHolidayFk = checkComprehensiveHolidayFk;
+    }
+
     @Override
     public String toString() {
         return "CheckComprehensiveHolidayList{" +
@@ -142,6 +155,7 @@ public class CheckComprehensiveHolidayList extends Model<CheckComprehensiveHolid
         ", modifyTime=" + modifyTime +
         ", createPersonFk=" + createPersonFk +
         ", orgFk=" + orgFk +
+        ", checkComprehensiveHolidayFk=" + checkComprehensiveHolidayFk +
         "}";
     }
 }

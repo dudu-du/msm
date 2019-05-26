@@ -61,6 +61,11 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
      */
     private String orgFk;
 
+    /**
+     * 父级ID
+     */
+    private String checkComprehensiveSeasonFk;
+
     public String getId() {
         return id;
     }
@@ -128,6 +133,14 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public String getCheckComprehensiveSeasonFk() {
+        return checkComprehensiveSeasonFk;
+    }
+
+    public void setCheckComprehensiveSeasonFk(String checkComprehensiveSeasonFk) {
+        this.checkComprehensiveSeasonFk = checkComprehensiveSeasonFk;
     }
 
     @Override

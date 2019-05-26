@@ -33,11 +33,9 @@ public class CheckSpecialController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckSpecial(@RequestBody CheckSpecial checkSpecial){
-        String id = UUIDUtil.getUUID();
-        checkSpecial.setId(id);
-        boolean result = iCheckSpecialService.save(checkSpecial);
+        boolean result = iCheckSpecialService.addCheckSpecial(checkSpecial);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,10 +80,27 @@ public class CheckSpecialController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkSpecial",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkSpecialById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckSpecialById(String id){
         CheckSpecial checkSpecial = iCheckSpecialService.getById(id);
+        if(checkSpecial!=null){
+            return renderSuccess("查询成功",checkSpecial);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckSpecialByParam(String orgId, String year){
+        CheckSpecial checkSpecial = iCheckSpecialService.getByParam(orgId,year);
         if(checkSpecial!=null){
             return renderSuccess("查询成功",checkSpecial);
         }else {

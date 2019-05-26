@@ -3,6 +3,9 @@ package com.safety.mapper;
 import com.safety.entity.CheckComprehensiveHolidayList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 综合检查(节假日、复产前)列表 Mapper 接口
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckComprehensiveHolidayListMapper extends BaseMapper<CheckComprehensiveHolidayList> {
 
+    List<CheckComprehensiveHolidayList> selectByPid(Map map);
 }

@@ -46,7 +46,7 @@ public class CheckMonthServiceImpl extends ServiceImpl<CheckMonthMapper, CheckMo
         if (checkMonth!=null){
             String id = checkMonth.getId();
             Map map = new HashMap();
-            map.put("checkWeekFk",id);
+            map.put("checkMonthFk",id);
             List<CheckMonthList> list = checkMonthListMapper.selectByPid(map);
             if (list.size()>0){
                 sortList(list);
@@ -61,6 +61,18 @@ public class CheckMonthServiceImpl extends ServiceImpl<CheckMonthMapper, CheckMo
             checkMonth.setCheckMonthList(new ArrayList<>());
         }
         return checkMonth;
+    }
+
+    @Override
+    public boolean addCheckMonth(CheckMonth checkMonth) {
+        List<CheckMonthList> checkMonthLists = checkMonth.getCheckMonthList();
+        if (checkMonthLists.size()>0){
+            for (CheckMonthList checkWeekList:checkMonthLists){
+                checkWeekList.setId(UUIDUtil.getUUID());
+                checkMonthListMapper.insert(checkWeekList);
+            }
+        }
+        return true;
     }
 
     private void sortList(List<CheckMonthList> list){

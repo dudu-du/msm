@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckComprehensiveSeasonService extends IService<CheckComprehensiveSeason> {
 
+    CheckComprehensiveSeason getByParam(String orgId, String year);
+
+    boolean addCheckComprehensiveSeason(CheckComprehensiveSeason checkComprehensiveSeason);
+
 }

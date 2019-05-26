@@ -15,4 +15,18 @@
         <result column="org_fk" property="orgFk" />
     </resultMap>
 
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_special
+        <where>
+            <if test="orgFk!=null">
+                and org_fk = #{orgFk}
+            </if>
+            <if test="createTime!=null">
+                and create_time =#{createTime}
+            </if>
+            <if test="id!=null">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
 </mapper>

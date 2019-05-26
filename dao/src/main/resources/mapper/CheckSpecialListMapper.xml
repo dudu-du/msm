@@ -17,5 +17,7 @@
         <result column="create_person_fk" property="createPersonFk" />
         <result column="org_fk" property="orgFk" />
     </resultMap>
-
+    <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_special_list where check_special_fk = #{checkSpecialFk} order by check_type_name;
+    </select>
 </mapper>

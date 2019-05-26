@@ -3,6 +3,7 @@ package com.safety.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -90,6 +91,11 @@ public class CheckComprehensiveSeason extends Model<CheckComprehensiveSeason> {
      * 修改时间
      */
     private LocalDateTime modifyTime;
+
+    /**
+     * 子表集合
+     */
+    private List<CheckComprehensiveSeasonList> checkComprehensiveSeasonList;
 
     public String getId() {
         return id;
@@ -200,6 +206,14 @@ public class CheckComprehensiveSeason extends Model<CheckComprehensiveSeason> {
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public List<CheckComprehensiveSeasonList> getCheckComprehensiveSeasonList() {
+        return checkComprehensiveSeasonList;
+    }
+
+    public void setCheckComprehensiveSeasonList(List<CheckComprehensiveSeasonList> checkComprehensiveSeasonList) {
+        this.checkComprehensiveSeasonList = checkComprehensiveSeasonList;
     }
 
     @Override

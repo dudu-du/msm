@@ -3,6 +3,7 @@ package com.safety.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -60,6 +61,11 @@ public class CheckSpecial extends Model<CheckSpecial> {
      * 所属机构ID
      */
     private String orgFk;
+
+    /**
+     * 子表集合
+     */
+    private List<CheckSpecialList> checkSpecialList;
 
     public String getId() {
         return id;
@@ -128,6 +134,14 @@ public class CheckSpecial extends Model<CheckSpecial> {
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public List<CheckSpecialList> getCheckSpecialList() {
+        return checkSpecialList;
+    }
+
+    public void setCheckSpecialList(List<CheckSpecialList> checkSpecialList) {
+        this.checkSpecialList = checkSpecialList;
     }
 
     @Override

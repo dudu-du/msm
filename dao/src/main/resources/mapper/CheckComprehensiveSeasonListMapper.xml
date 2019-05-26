@@ -13,6 +13,10 @@
         <result column="modify_time" property="modifyTime" />
         <result column="create_person_fk" property="createPersonFk" />
         <result column="org_fk" property="orgFk" />
+        <result column="check_comprehensive_season_fk" property="checkComprehensiveSeasonFk" />
     </resultMap>
 
+    <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_comprehensive_season_list where check_comprehensive_season_fk = #{checkComprehensiveSeasonFk};
+    </select>
 </mapper>

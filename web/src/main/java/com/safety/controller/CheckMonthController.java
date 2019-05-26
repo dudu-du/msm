@@ -33,11 +33,9 @@ public class CheckMonthController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckMonth(@RequestBody CheckMonth checkMonth){
-        String id = UUIDUtil.getUUID();
-        checkMonth.setId(id);
-        boolean result = iCheckMonthService.save(checkMonth);
+        boolean result = iCheckMonthService.addCheckMonth(checkMonth);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -99,9 +97,9 @@ public class CheckMonthController extends BaseController {
      * @param year
      * @return
      */
-    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkMonth",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckWeekByParam(String orgId, String year){
+    public JsonResult getCheckMonthByParam(String orgId, String year){
         CheckMonth checkMonth = iCheckMonthService.getByParam(orgId,year);
         if(checkMonth!=null){
             return renderSuccess("查询成功",checkMonth);

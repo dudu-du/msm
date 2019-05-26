@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckComprehensiveHolidayService extends IService<CheckComprehensiveHoliday> {
 
+    CheckComprehensiveHoliday getByParam(String orgId, String year);
+
+    boolean addCheckComprehensiveHoliday(CheckComprehensiveHoliday checkComprehensiveHoliday);
+
 }

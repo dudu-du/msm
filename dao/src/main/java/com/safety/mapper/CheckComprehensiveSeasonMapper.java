@@ -3,6 +3,8 @@ package com.safety.mapper;
 import com.safety.entity.CheckComprehensiveSeason;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Map;
+
 /**
  * <p>
  * 综合检查(季节性) Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckComprehensiveSeasonMapper extends BaseMapper<CheckComprehensiveSeason> {
 
+    CheckComprehensiveSeason selectByParam(Map param);
 }

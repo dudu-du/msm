@@ -3,6 +3,9 @@ package com.safety.mapper;
 import com.safety.entity.CheckSpecialList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 专项检查列表 Mapper 接口
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckSpecialListMapper extends BaseMapper<CheckSpecialList> {
 
+    List<CheckSpecialList> selectByPid(Map map);
 }

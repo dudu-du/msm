@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckSpecialService extends IService<CheckSpecial> {
 
+    CheckSpecial getByParam(String orgId, String year);
+
+    boolean addCheckSpecial(CheckSpecial checkSpecial);
+
 }
