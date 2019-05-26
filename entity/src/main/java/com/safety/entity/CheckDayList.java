@@ -81,6 +81,32 @@ public class CheckDayList extends Model<CheckDayList> {
      */
     private String orgFk;
 
+    /**
+     * 日治理外键
+     */
+    private String checkDayFk;
+
+    /**
+     * 班组ID
+     */
+    private String checkTeamFk;
+
+    /**
+     * 班组名称
+     */
+    private String checkTeamName;
+
+    /**
+     * 位置标记
+     * @return
+     */
+    private Integer index;
+
+    /**
+     * 个数标记
+     */
+    private Integer union;
+
     public String getId() {
         return id;
     }
@@ -178,22 +204,65 @@ public class CheckDayList extends Model<CheckDayList> {
         return this.id;
     }
 
+    public String getCheckDayFk() {
+        return checkDayFk;
+    }
+
+    public void setCheckDayFk(String checkDayFk) {
+        this.checkDayFk = checkDayFk;
+    }
+
+    public String getCheckTeamFk() {
+        return checkTeamFk;
+    }
+
+    public void setCheckTeamFk(String checkTeamFk) {
+        this.checkTeamFk = checkTeamFk;
+    }
+
+    public String getCheckTeamName() {
+        return checkTeamName;
+    }
+
+    public void setCheckTeamName(String checkTeamName) {
+        this.checkTeamName = checkTeamName;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public Integer getUnion() {
+        return union;
+    }
+
+    public void setUnion(Integer union) {
+        this.union = union;
+    }
+
     @Override
     public String toString() {
         return "CheckDayList{" +
-        "id=" + id +
-        ", checkTypeFk=" + checkTypeFk +
-        ", checkTypeName=" + checkTypeName +
-        ", checkContent=" + checkContent +
-        ", checkMethod=" + checkMethod +
-        ", checkDayCategoryFk=" + checkDayCategoryFk +
-        ", riskIdentificationListId=" + riskIdentificationListId +
-        ", cause=" + cause +
-        ", levelName=" + levelName +
-        ", createTime=" + createTime +
-        ", modifyTime=" + modifyTime +
-        ", createPersonFk=" + createPersonFk +
-        ", orgFk=" + orgFk +
-        "}";
+                "id='" + id + '\'' +
+                ", checkTypeFk='" + checkTypeFk + '\'' +
+                ", checkTypeName='" + checkTypeName + '\'' +
+                ", checkContent='" + checkContent + '\'' +
+                ", checkMethod='" + checkMethod + '\'' +
+                ", checkDayCategoryFk='" + checkDayCategoryFk + '\'' +
+                ", riskIdentificationListId='" + riskIdentificationListId + '\'' +
+                ", cause='" + cause + '\'' +
+                ", levelName='" + levelName + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", createPersonFk='" + createPersonFk + '\'' +
+                ", orgFk='" + orgFk + '\'' +
+                ", checkDayFk='" + checkDayFk + '\'' +
+                ", checkTeamFk='" + checkTeamFk + '\'' +
+                ", checkTeamName='" + checkTeamName + '\'' +
+                '}';
     }
 }

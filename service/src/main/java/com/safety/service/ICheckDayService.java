@@ -13,4 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckDayService extends IService<CheckDay> {
 
+    CheckDay getByParam(String orgId, String year,String teamId);
+
+    boolean addCheckDay(CheckDay checkDay);
 }

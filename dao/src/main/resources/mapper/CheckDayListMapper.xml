@@ -17,6 +17,20 @@
         <result column="modify_time" property="modifyTime" />
         <result column="create_person_fk" property="createPersonFk" />
         <result column="org_fk" property="orgFk" />
+        <result column="check_day_fk" property="checkDayFk" />
+        <result column="check_team_fk" property="checkTeamFk" />
+        <result column="check_team_name" property="checkTeamName" />
     </resultMap>
-
+    <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_day_list
+        <where>
+            <if test="checkDayFk!=null">
+                and check_day_fk = #{checkDayFk}
+            </if>
+            <if test="checkTeamFk!=null and checkTeamFk!=''">
+                and check_team_fk = #{checkTeamFk}
+            </if>
+        </where>
+          order by check_team_name;
+    </select>
 </mapper>

@@ -33,11 +33,9 @@ public class CheckDayController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckDay(@RequestBody CheckDay checkDay){
-        String id = UUIDUtil.getUUID();
-        checkDay.setId(id);
-        boolean result = iCheckDayService.save(checkDay);
+        boolean result = iCheckDayService.addCheckDay(checkDay);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,7 +80,7 @@ public class CheckDayController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkDay",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkDayById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckDayById(String id){
         CheckDay checkDay = iCheckDayService.getById(id);
@@ -93,5 +91,20 @@ public class CheckDayController extends BaseController {
         }
     }
 
-
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkDay",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckDayByParam(String orgId, String year,String teamId){
+        CheckDay checkDay = iCheckDayService.getByParam(orgId,year,teamId);
+        if(checkDay!=null){
+            return renderSuccess("查询成功",checkDay);
+        }else {
+            return renderError("无数据");
+        }
+    }
 }
