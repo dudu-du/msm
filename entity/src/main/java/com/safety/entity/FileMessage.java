@@ -32,6 +32,11 @@ public class FileMessage extends Model<FileMessage> {
     private String path;
 
     /**
+     * 信息文件预览地址
+     */
+    private String viewPath;
+
+    /**
      * 信息文件类型 1-内部信息 2-外部信息
      */
     private Integer type;
@@ -86,6 +91,13 @@ public class FileMessage extends Model<FileMessage> {
         return type;
     }
 
+    public String getViewPath() {
+        return viewPath;
+    }
+
+    public void setViewPath(String viewPath) {
+        this.viewPath = viewPath;
+    }
     public void setType(Integer type) {
         this.type = type;
     }
