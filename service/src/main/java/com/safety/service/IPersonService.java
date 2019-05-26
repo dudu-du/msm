@@ -122,13 +122,13 @@ public interface IPersonService extends IService<Person> {
      */
     List<Teacher> getTeacherListNoPage(TeacherParams teacherParams) throws ProgramException;
 
-//    /**
-//     * 获取当前用户信息
-//     *
-//     * @param
-//     * @return
-//     * @throws Exception
-//     */
+    /**
+     * 获取当前用户信息
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
 //    public static Person getCurrentPerson() {
 //        Session session = SecurityUtils.getSubject().getSession();
 //        Person person = (Person) session.getAttribute("MEMBER_USER_PERSON");

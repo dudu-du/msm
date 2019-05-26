@@ -46,7 +46,7 @@ allprojects {
  
 }
 
-clean << {
+clean {
     if (file('out').exists()) {
         file('out').deleteDir()
     }
