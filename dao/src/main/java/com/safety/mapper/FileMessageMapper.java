@@ -1,6 +1,6 @@
 package com.safety.mapper;
 
-import com.safety.entity.File;
+import com.safety.entity.FileMessage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author safety
- * @since 2019-05-25
+ * @since 2019-05-26
  */
-public interface FileMapper extends BaseMapper<File> {
+public interface FileMessageMapper extends BaseMapper<FileMessage> {
 
 }
