@@ -1,6 +1,7 @@
 package com.safety.service.impl;
 
 import com.safety.entity.FileMessage;
+import com.safety.excel.util.StringUtils;
 import com.safety.exception.ProgramException;
 import com.safety.mapper.FileMessageMapper;
 import com.safety.service.IFileMessageService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -50,13 +52,32 @@ public class FileMessageServiceImpl extends ServiceImpl<FileMessageMapper, FileM
             fileMessage.setId(UUIDUtil.getUUID());
             fileMessage.setName(fileName);
             fileMessage.setPath(path);
+            fileMessage.setViewPath("/file/"+fileName);
             fileMessage.setOrgFk(orgId);
             fileMessage.setCreatePersonFk(userId);
             fileMessage.setCreateTime(LocalDateTime.now());
             fileMessage.setModifyTime(LocalDateTime.now());
             baseMapper.insert(fileMessage);
         }
+        return true;
+    }
 
+    @Override
+    public List<FileMessage> getFileMessageList(int type){
+        return baseMapper.selectFileMessage(type);
+    }
+
+    @Override
+    public boolean deleteFile(String id) throws Exception{
+        if(StringUtils.isEmpty(id)){
+            throw new ProgramException("参数错误");
+        }
+        FileMessage fileMessage = baseMapper.selectById(id);
+        if(fileMessage == null){
+            throw new ProgramException("文件不存在");
+        }
+        File file = new File(fileMessage.getPath());
+        file.delete();
         return true;
     }
 }

@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.safety.entity.FileMessage;
 import com.safety.entity.Person;
 import com.safety.exception.ProgramException;
 import com.safety.service.IFileMessageService;
@@ -70,8 +71,59 @@ public class FileMessageController extends BaseController {
             log.error("上传文件失败." + e.getMessage());
             return renderError("上传文件失败");
         }
+    }
 
+    /**
+     * 查询内部/外部文件列表
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "/fileList",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getFileMessageList(int type){
+        List<FileMessage> fileMessageList = iFileMessageService.getFileMessageList(type);
+        if(fileMessageList!=null){
+            return renderSuccess("查询成功",fileMessageList);
+        }else {
+            return renderError("无数据");
+        }
+    }
 
+    /**
+     * 根据id查询内部/外部文件列表
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/fileById",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getFileMessageById(String id){
+        FileMessage fileMessage = iFileMessageService.getById(id);
+        if(fileMessage!=null){
+            return renderSuccess("查询成功",fileMessage);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据id删除文件
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/fileById",method = RequestMethod.DELETE)
+    @ResponseBody
+    public JsonResult deleteFile(String id){
+        try {
+            boolean result  = iFileMessageService.deleteFile(id);
+            return renderSuccess("删除成功",result);
+        }
+        catch (ProgramException p) {
+            log.error("删除失败." + p.getMessage());
+            return renderError(p.getMessage());
+        } catch (Exception e) {
+            log.error("删除失败." + e.getMessage());
+            return renderError("删除失败");
+        }
     }
 
 //    @RequestMapping("hello")

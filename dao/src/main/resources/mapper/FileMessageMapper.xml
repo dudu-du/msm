@@ -15,4 +15,10 @@
         <result column="modify_time" property="modifyTime" />
     </resultMap>
 
+    <select id="selectFileMessage" parameterType="int" resultMap="BaseResultMap">
+        select *
+        from file_message
+        where type = #{type}
+    </select>
+
 </mapper>

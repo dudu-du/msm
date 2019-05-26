@@ -11,7 +11,7 @@ public class ResourceConfig implements WebMvcConfigurer {
     private String path;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String staticMapping="/image/**";
+        String staticMapping="/file/**";
         String localDirectory = "file:"+path;
         registry.addResourceHandler(staticMapping).addResourceLocations(localDirectory);
         WebMvcConfigurer.super.addResourceHandlers(registry);

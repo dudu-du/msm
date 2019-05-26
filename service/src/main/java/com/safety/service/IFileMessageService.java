@@ -24,4 +24,20 @@ public interface IFileMessageService extends IService<FileMessage> {
      * @throws Exception
      */
     boolean uploadFile(List<MultipartFile> fileList, String userId, String orgId,int type) throws Exception;
+
+    /**
+     * 获取文件列表
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    List<FileMessage> getFileMessageList(int type);
+
+    /**
+     * 根据id删除文件
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteFile(String id) throws Exception;
 }
