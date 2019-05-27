@@ -26,4 +26,8 @@
             </if>
         </where>
     </select>
+
+    <select id="selectAll"  resultMap="BaseResultMap">
+        select *  from check_month_record order by create_time desc ;
+    </select>
 </mapper>

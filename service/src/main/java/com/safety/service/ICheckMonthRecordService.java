@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckMonthRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +18,5 @@ public interface ICheckMonthRecordService extends IService<CheckMonthRecord> {
 
     boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord);
 
+    PageInfo<CheckMonthRecord> getByPage(Integer currentPage, Integer pageSize);
 }

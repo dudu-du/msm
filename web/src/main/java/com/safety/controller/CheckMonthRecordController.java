@@ -1,15 +1,16 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckMonthRecord;
 import com.safety.service.ICheckMonthRecordService;
 import com.safety.tools.BaseController;
 import com.safety.tools.JsonResult;
-import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+
 
 /**
  * <p>
@@ -103,6 +104,23 @@ public class CheckMonthRecordController extends BaseController {
         CheckMonthRecord checkMonthRecord = iCheckMonthRecordService.getByParam(orgId,year);
         if(checkMonthRecord!=null){
             return renderSuccess("查询成功",checkMonthRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkMonthRecordByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckMonthRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckMonthRecord> page = iCheckMonthRecordService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }

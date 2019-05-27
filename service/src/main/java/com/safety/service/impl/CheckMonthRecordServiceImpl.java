@@ -1,5 +1,7 @@
 package com.safety.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.*;
 import com.safety.mapper.*;
 import com.safety.service.ICheckMonthRecordService;
@@ -130,6 +132,13 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
             }
         }
         return true;
+    }
+
+    @Override
+    public PageInfo<CheckMonthRecord> getByPage(Integer currentPage, Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<CheckMonthRecord> checkMonthRecords = checkMonthRecordMapper.selectAll();
+        return new PageInfo<>(checkMonthRecords);
     }
 
     private void sortList(List<CheckMonthList> list){
