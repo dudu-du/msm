@@ -114,7 +114,7 @@ public class CheckDangerChecklist extends Model<CheckDangerChecklist> {
     /**
      *填写否的记录ID
      */
-    private String recordListFk;
+    private String offgradeListFk;
 
     /**
      *不合格项来源
@@ -260,12 +260,12 @@ public class CheckDangerChecklist extends Model<CheckDangerChecklist> {
         return this.id;
     }
 
-    public String getRecordListFk() {
-        return recordListFk;
+    public String getOffgradeListFk() {
+        return offgradeListFk;
     }
 
-    public void setRecordListFk(String recordListFk) {
-        this.recordListFk = recordListFk;
+    public void setOffgradeListFk(String offgradeListFk) {
+        this.offgradeListFk = offgradeListFk;
     }
 
     public String getCheckType() {
@@ -298,7 +298,7 @@ public class CheckDangerChecklist extends Model<CheckDangerChecklist> {
                 ", orgFk='" + orgFk + '\'' +
                 ", createTime=" + createTime +
                 ", modifyTime=" + modifyTime +
-                ", recordListFk='" + recordListFk + '\'' +
+                ", offgradeListFk='" + offgradeListFk + '\'' +
                 ", checkType='" + checkType + '\'' +
                 '}';
     }

@@ -124,7 +124,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      *填写否的记录ID
      */
-    private String recordListFk;
+    private String offgradeListFk;
 
     /**
      *不合格项来源
@@ -284,12 +284,12 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
         return this.id;
     }
 
-    public String getRecordListFk() {
-        return recordListFk;
+    public String getOffgradeListFk() {
+        return offgradeListFk;
     }
 
-    public void setRecordListFk(String recordListFk) {
-        this.recordListFk = recordListFk;
+    public void setOffgradeListFk(String offgradeListFk) {
+        this.offgradeListFk = offgradeListFk;
     }
 
     public String getCheckType() {
@@ -324,7 +324,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
                 ", orgFk='" + orgFk + '\'' +
                 ", createTime=" + createTime +
                 ", modifyTime=" + modifyTime +
-                ", recordListFk='" + recordListFk + '\'' +
+                ", offgradeListFk='" + offgradeListFk + '\'' +
                 ", checkType='" + checkType + '\'' +
                 '}';
     }

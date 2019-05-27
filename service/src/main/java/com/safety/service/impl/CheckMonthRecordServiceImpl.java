@@ -119,6 +119,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkOffgradeList.setCheckListFk(checkMonthList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
+                    checkOffgradeList.setOrgFk(checkMonthList.getOrgFk());
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
                     checkOffgradeListMapper.insert(checkOffgradeList);
