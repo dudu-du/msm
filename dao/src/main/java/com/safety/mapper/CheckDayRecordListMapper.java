@@ -2,6 +2,7 @@ package com.safety.mapper;
 
 import com.safety.entity.CheckDayRecordList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.CheckRectificationReceipt;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,5 @@ public interface CheckDayRecordListMapper extends BaseMapper<CheckDayRecordList>
     List<Map<String,Object>> selectChecklistLevelCountByOrg(Map map);
     List<Map<String,Object>> selectLedgerResultCountByOrg(Map map);
     List<Map<String,Object>> selectLedgerLevelCountByOrg(Map map);
+    List<CheckRectificationReceipt> selectReceiptByOrg(Map map);
 }

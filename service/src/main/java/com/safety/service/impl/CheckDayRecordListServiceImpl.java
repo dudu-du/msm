@@ -1,6 +1,7 @@
 package com.safety.service.impl;
 
 import com.safety.entity.CheckDayRecordList;
+import com.safety.entity.CheckRectificationReceipt;
 import com.safety.excel.util.StringUtils;
 import com.safety.exception.ProgramException;
 import com.safety.mapper.CheckDayRecordListMapper;
@@ -69,5 +70,17 @@ public class CheckDayRecordListServiceImpl extends ServiceImpl<CheckDayRecordLis
         param.put("startTime",startTime);
         param.put("endTime",endTime);
         return baseMapper.selectLedgerLevelCountByOrg(param);
+    }
+
+    @Override
+    public List<CheckRectificationReceipt> getReceiptListByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectReceiptByOrg(param);
     }
 }

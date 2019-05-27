@@ -2,6 +2,7 @@ package com.safety.service;
 
 import com.safety.entity.CheckDayRecordList;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.safety.entity.CheckRectificationReceipt;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -54,4 +55,14 @@ public interface ICheckDayRecordListService extends IService<CheckDayRecordList>
      * @throws Exception
      */
     List<Map<String,Object>> getLedgerLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
+
+    /**
+     * 获取日治理检查表中否的回执单列表
+     * @param orgId
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List<CheckRectificationReceipt> getReceiptListByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
 }

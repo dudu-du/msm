@@ -1,5 +1,6 @@
 package com.safety.controller;
 
+import com.safety.entity.CheckRectificationReceipt;
 import com.safety.exception.ProgramException;
 import com.safety.service.ICheckDayRecordListService;
 import com.safety.service.IRiskIdentificationListService;
@@ -133,6 +134,29 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
             List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+    /**
+     * 获取日治理检查表中否的回执单列表
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/dayReceiptList",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getDayReceiptList(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<CheckRectificationReceipt> result = iCheckDayRecordListService.getReceiptListByOrg(orgId,startTime,endTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
