@@ -37,6 +37,10 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     @Autowired
     private CheckOffgradeListMapper checkOffgradeListMapper;
 
+    private final String YES = "1";
+    private final String NO = "0";
+    private final String CHECK_TYPE = "月排查记录";
+
     @Override
     public CheckMonthRecord getByParam(String orgId, String yearStr) {
         //根据机构ID和年份查询当前是否有值
@@ -102,17 +106,24 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkMonthRecordListMapper.insert(checkMonthRecordList);
                 }
                 String result = checkMonthRecordList.getResult();
-                //TODO:将2替换为常量 判断如果为否时需要添加不合格表
-                if ("2".equals(result)){
+                //查询是否已经添加
+                Map map1 = new HashMap();
+                map1.put("check_list_fk",checkMonthList.getId());
+                map1.put("check_fk",checkMonthRecordId);
+                List<CheckOffgradeList> list1 = checkOffgradeListMapper.selectByMap(map1);
+                //之前没有值 且保存为否时 新增新值
+                if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
                     checkOffgradeList.setCheckFk(checkMonthRecordId);
                     checkOffgradeList.setCheckListFk(checkMonthList.getId());
-                    //TODO:将月测试规定为常量
-                    checkOffgradeList.setCheckType("月测试");
+                    checkOffgradeList.setCheckType(CHECK_TYPE);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                }else if (YES.equals(result)&&list1.size()>0){
+                    //之前有值 且保存为是时 删掉旧的值
+                    checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
