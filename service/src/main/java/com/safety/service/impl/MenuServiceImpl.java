@@ -63,6 +63,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                 if (entity.getIsLeaf() != 1) {
                     object.put("menus", getMenuTree(entity.getId(), list));
                 }
+                object.put("menus", getMenuTree(entity.getId(), list));
                 array.add(object);
             }
         }
