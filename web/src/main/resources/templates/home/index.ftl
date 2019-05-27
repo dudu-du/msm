@@ -6,7 +6,7 @@
     <title>双重预防机制运行信息管理平台</title>
     <link rel="stylesheet" href="/node_modules/layui-src/dist/css/layui.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_912670_72s4xsa6she.css">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_fiuaabso1ki.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_u88h5gpjqra.css">
     <link rel="stylesheet" href="/Public/css/public-yun.css">
     <link rel="stylesheet" href="/Public/css/public-color.css">
     <link rel="icon" type="image/x-icon" href="/Public/image/bitbug_favicon.ico" sizes="48x48">

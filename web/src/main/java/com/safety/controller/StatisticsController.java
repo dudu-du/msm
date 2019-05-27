@@ -7,12 +7,16 @@ import com.safety.service.ICheckMonthRecordListService;
 import com.safety.service.ICheckWeekRecordListService;
 import com.safety.service.IRiskIdentificationListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +42,14 @@ public class StatisticsController extends BaseController {
     @Autowired
     private ICheckMonthRecordListService iCheckMonthRecordListService;
 
+    @RequestMapping(value = "/checkDay",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDay(){
+    	
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("statistics/day");
+        return modelAndView;
+    }
+    
     /**
      * 获取风险辨识安全登记数量
      * @param
