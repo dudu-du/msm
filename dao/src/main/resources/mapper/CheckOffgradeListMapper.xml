@@ -16,5 +16,6 @@
         <result column="org_fk" property="orgFk" />
         <result column="create_person_fk" property="createPersonFk" />
         <result column="check_list_fk" property="checkListFk" />
+        <result column="state" property="state" />
     </resultMap>
 </mapper>

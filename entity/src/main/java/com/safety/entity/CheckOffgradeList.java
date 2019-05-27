@@ -79,6 +79,11 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
      */
     private String checkListFk;
 
+    /**
+     * 是否处理 1处理 0未处理
+     */
+    private String state;
+
 
 
     @Override
@@ -180,6 +185,14 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
 
     public void setCheckListFk(String checkListFk) {
         this.checkListFk = checkListFk;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override
