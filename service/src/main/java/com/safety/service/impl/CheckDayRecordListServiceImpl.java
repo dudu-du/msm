@@ -24,7 +24,7 @@ import java.util.Map;
 @Service
 public class CheckDayRecordListServiceImpl extends ServiceImpl<CheckDayRecordListMapper, CheckDayRecordList> implements ICheckDayRecordListService {
     @Override
-    public List<Map<String,Object>> getResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+    public List<Map<String,Object>> getChecklistResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
         if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
             throw new ProgramException("参数错误");
         }
@@ -32,6 +32,42 @@ public class CheckDayRecordListServiceImpl extends ServiceImpl<CheckDayRecordLis
         param.put("orgId",orgId);
         param.put("startTime",startTime);
         param.put("endTime",endTime);
-        return baseMapper.selectResultCountByOrg(param);
+        return baseMapper.selectChecklistResultCountByOrg(param);
+    }
+
+    @Override
+    public List<Map<String,Object>> getChecklistLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectChecklistLevelCountByOrg(param);
+    }
+
+    @Override
+    public List<Map<String,Object>> getLedgerResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectLedgerResultCountByOrg(param);
+    }
+
+    @Override
+    public List<Map<String,Object>> getLedgerLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectLedgerLevelCountByOrg(param);
     }
 }

@@ -13,13 +13,46 @@
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
     </resultMap>
-    <select id="selectResultCountByOrg" resultType="map" parameterType="map">
-        select o.name,DAY(create_time),count(1) as count
-        from check_day_record_list l
-        INNER JOIN org o on l.org_fk=o.id
-        where org_fk = #{orgId}
+    <select id="selectChecklistResultCountByOrg" resultType="map" parameterType="map">
+        select o.name,DAY(c.create_time),count(1) as count
+        from check_danger_checklist c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_record_list l on l.id = c.record_list_fk
+        where c.org_fk = #{orgId}
         and result = '0'
-        and create_time &gt;= #{startTime} and create_time &lt;= #{endTime}
-        GROUP BY o.name,DAY(create_time)
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DAY(c.create_time)
+    </select>
+    <select id="selectChecklistLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,DAY(c.create_time),ll.level_name,count(1) as count
+        from check_danger_checklist c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_record_list l on l.id = c.record_list_fk
+        INNER JOIN check_day_list ll on l.check_day_list_id
+        where c.org_fk = #{orgId}
+        and result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DAY(c.create_time),ll.level_name
+    </select>
+    <select id="selectLedgerResultCountByOrg" resultType="map" parameterType="map">
+        select o.name,DAY(c.create_time),count(1) as count
+        from check_danger_ledger c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_record_list l on l.id = c.record_list_fk
+        where c.org_fk = #{orgId}
+        and result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DAY(c.create_time)
+    </select>
+    <select id="selectLedgerLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,DAY(c.create_time),ll.level_name,count(1) as count
+        from check_danger_ledger c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_record_list l on l.id = c.record_list_fk
+        INNER JOIN check_day_list ll on l.check_day_list_id
+        where c.org_fk = #{orgId}
+        and result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DAY(c.create_time),ll.level_name
     </select>
 </mapper>

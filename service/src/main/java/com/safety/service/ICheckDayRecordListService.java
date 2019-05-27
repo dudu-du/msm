@@ -17,12 +17,41 @@ import java.util.Map;
  */
 public interface ICheckDayRecordListService extends IService<CheckDayRecordList> {
     /**
-     * 统计日治理清单中否的个数
+     * 统计日治理检查表中否的清单个数
      * @param orgId
      * @param startTime
      * @param endTime
      * @return
      * @throws Exception
      */
-    List<Map<String,Object>> getResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
+    List<Map<String,Object>> getChecklistResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
+
+    /**
+     * 统计日治理检查表中否的清单对应的等级个数
+     * @param orgId
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List<Map<String,Object>> getChecklistLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
+    /**
+     * 统计日治理检查表中否的台账个数
+     * @param orgId
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List<Map<String,Object>> getLedgerResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
+
+    /**
+     * 统计日治理检查表中否的清单对应的台账个数
+     * @param orgId
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List<Map<String,Object>> getLedgerLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception;
 }

@@ -49,18 +49,90 @@ public class StatisticsController extends BaseController {
     }
 
     /**
-     * 获取日治理清单中否的个数
+     * 统计日治理检查表中否的清单个数
      * @param
      * @return
      */
-    @RequestMapping(value = "/checkRecordListResultCount",method = RequestMethod.GET)
+    @RequestMapping(value = "/dayChecklistResultCount",method = RequestMethod.GET)
     @ResponseBody
     @CrossOrigin
-    public JsonResult getCheckRecordListResultCount(String orgId
+    public JsonResult getDayChecklistResultCount(String orgId
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckDayRecordListService.getResultCountByOrg(orgId,startTime,endTime);
+            List<Map<String,Object>> result = iCheckDayRecordListService.getChecklistResultCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计日治理检查表中否的清单对应等级个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/dayCheckListLevelCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getDayCheckListLevelCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckDayRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计日治理检查表中否的台账个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/dayLedgertResultCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getDayLedgerResultCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerResultCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计日治理检查表中否的台账对应等级个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/dayLedgerLevelCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getDayLedgerLevelCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){

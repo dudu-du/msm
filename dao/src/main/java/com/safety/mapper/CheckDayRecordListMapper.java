@@ -15,5 +15,8 @@ import java.util.Map;
  * @since 2019-05-23
  */
 public interface CheckDayRecordListMapper extends BaseMapper<CheckDayRecordList> {
-    List<Map<String,Object>> selectResultCountByOrg(Map map);
+    List<Map<String,Object>> selectChecklistResultCountByOrg(Map map);
+    List<Map<String,Object>> selectChecklistLevelCountByOrg(Map map);
+    List<Map<String,Object>> selectLedgerResultCountByOrg(Map map);
+    List<Map<String,Object>> selectLedgerLevelCountByOrg(Map map);
 }
