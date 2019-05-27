@@ -13,5 +13,13 @@
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
     </resultMap>
-
+    <select id="selectResultCountByOrg" resultType="map" parameterType="map">
+        select o.name,DAY(create_time),count(1) as count
+        from check_day_record_list l
+        INNER JOIN org o on l.org_fk=o.id
+        where org_fk = #{orgId}
+        and result = '0'
+        and create_time &gt;= #{startTime} and create_time &lt;= #{endTime}
+        GROUP BY o.name,DAY(create_time)
+    </select>
 </mapper>
