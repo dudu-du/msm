@@ -23,6 +23,8 @@
         <result column="org_fk" property="orgFk" />
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
+        <result column="record_list_fk" property="recordListFk" />
+        <result column="check_type" property="checkType" />
     </resultMap>
 
 </mapper>

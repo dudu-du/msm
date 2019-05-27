@@ -121,6 +121,16 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
      */
     private LocalDateTime modifyTime;
 
+    /**
+     *填写否的记录ID
+     */
+    private String recordListFk;
+
+    /**
+     *不合格项来源
+     */
+    private String checkType;
+
     public String getId() {
         return id;
     }
@@ -274,30 +284,48 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
         return this.id;
     }
 
+    public String getRecordListFk() {
+        return recordListFk;
+    }
+
+    public void setRecordListFk(String recordListFk) {
+        this.recordListFk = recordListFk;
+    }
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
+    }
+
     @Override
     public String toString() {
         return "CheckDangerLedger{" +
-        "id=" + id +
-        ", investigationTime=" + investigationTime +
-        ", investigationOrgPersonFk=" + investigationOrgPersonFk +
-        ", investigationOrgPersonName=" + investigationOrgPersonName +
-        ", rectificationPosition=" + rectificationPosition +
-        ", rectificationName=" + rectificationName +
-        ", rectificationLevel=" + rectificationLevel +
-        ", governmentMeasure=" + governmentMeasure +
-        ", complateTime=" + complateTime +
-        ", controlOrgFk=" + controlOrgFk +
-        ", controlOrgName=" + controlOrgName +
-        ", controlOrgPersonFk=" + controlOrgPersonFk +
-        ", controlOrgPersonName=" + controlOrgPersonName +
-        ", reviewTime=" + reviewTime +
-        ", reviewPersonFk=" + reviewPersonFk +
-        ", reviewPersonName=" + reviewPersonName +
-        ", reviewResult=" + reviewResult +
-        ", createPersonFk=" + createPersonFk +
-        ", orgFk=" + orgFk +
-        ", createTime=" + createTime +
-        ", modifyTime=" + modifyTime +
-        "}";
+                "id='" + id + '\'' +
+                ", investigationTime=" + investigationTime +
+                ", investigationOrgPersonFk='" + investigationOrgPersonFk + '\'' +
+                ", investigationOrgPersonName='" + investigationOrgPersonName + '\'' +
+                ", rectificationPosition='" + rectificationPosition + '\'' +
+                ", rectificationName='" + rectificationName + '\'' +
+                ", rectificationLevel='" + rectificationLevel + '\'' +
+                ", governmentMeasure='" + governmentMeasure + '\'' +
+                ", complateTime=" + complateTime +
+                ", controlOrgFk='" + controlOrgFk + '\'' +
+                ", controlOrgName='" + controlOrgName + '\'' +
+                ", controlOrgPersonFk='" + controlOrgPersonFk + '\'' +
+                ", controlOrgPersonName='" + controlOrgPersonName + '\'' +
+                ", reviewTime=" + reviewTime +
+                ", reviewPersonFk='" + reviewPersonFk + '\'' +
+                ", reviewPersonName='" + reviewPersonName + '\'' +
+                ", reviewResult='" + reviewResult + '\'' +
+                ", createPersonFk='" + createPersonFk + '\'' +
+                ", orgFk='" + orgFk + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", recordListFk='" + recordListFk + '\'' +
+                ", checkType='" + checkType + '\'' +
+                '}';
     }
 }

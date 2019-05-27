@@ -111,6 +111,16 @@ public class CheckDangerChecklist extends Model<CheckDangerChecklist> {
      */
     private LocalDateTime modifyTime;
 
+    /**
+     *填写否的记录ID
+     */
+    private String recordListFk;
+
+    /**
+     *不合格项来源
+     */
+    private String checkType;
+
     public String getId() {
         return id;
     }
@@ -250,28 +260,46 @@ public class CheckDangerChecklist extends Model<CheckDangerChecklist> {
         return this.id;
     }
 
+    public String getRecordListFk() {
+        return recordListFk;
+    }
+
+    public void setRecordListFk(String recordListFk) {
+        this.recordListFk = recordListFk;
+    }
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
+    }
+
     @Override
     public String toString() {
         return "CheckDangerChecklist{" +
-        "id=" + id +
-        ", riskPosition=" + riskPosition +
-        ", harmfulFactors=" + harmfulFactors +
-        ", measure=" + measure +
-        ", runawayPerformance=" + runawayPerformance +
-        ", controlOrgFk=" + controlOrgFk +
-        ", controlOrgName=" + controlOrgName +
-        ", controlOrgPersonFk=" + controlOrgPersonFk +
-        ", controlOrgPersonName=" + controlOrgPersonName +
-        ", investigationOrgFk=" + investigationOrgFk +
-        ", investigationOrgName=" + investigationOrgName +
-        ", investigationOrgPersonFk=" + investigationOrgPersonFk +
-        ", investigationOrgPersonName=" + investigationOrgPersonName +
-        ", investigationCount=" + investigationCount +
-        ", remark=" + remark +
-        ", createPersonFk=" + createPersonFk +
-        ", orgFk=" + orgFk +
-        ", createTime=" + createTime +
-        ", modifyTime=" + modifyTime +
-        "}";
+                "id='" + id + '\'' +
+                ", riskPosition='" + riskPosition + '\'' +
+                ", harmfulFactors='" + harmfulFactors + '\'' +
+                ", measure='" + measure + '\'' +
+                ", runawayPerformance='" + runawayPerformance + '\'' +
+                ", controlOrgFk='" + controlOrgFk + '\'' +
+                ", controlOrgName='" + controlOrgName + '\'' +
+                ", controlOrgPersonFk='" + controlOrgPersonFk + '\'' +
+                ", controlOrgPersonName='" + controlOrgPersonName + '\'' +
+                ", investigationOrgFk='" + investigationOrgFk + '\'' +
+                ", investigationOrgName='" + investigationOrgName + '\'' +
+                ", investigationOrgPersonFk='" + investigationOrgPersonFk + '\'' +
+                ", investigationOrgPersonName='" + investigationOrgPersonName + '\'' +
+                ", investigationCount=" + investigationCount +
+                ", remark='" + remark + '\'' +
+                ", createPersonFk='" + createPersonFk + '\'' +
+                ", orgFk='" + orgFk + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", recordListFk='" + recordListFk + '\'' +
+                ", checkType='" + checkType + '\'' +
+                '}';
     }
 }
