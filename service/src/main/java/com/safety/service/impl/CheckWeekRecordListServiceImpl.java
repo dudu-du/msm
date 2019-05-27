@@ -1,10 +1,18 @@
 package com.safety.service.impl;
 
+import com.safety.entity.CheckRectificationReceipt;
 import com.safety.entity.CheckWeekRecordList;
+import com.safety.excel.util.StringUtils;
+import com.safety.exception.ProgramException;
 import com.safety.mapper.CheckWeekRecordListMapper;
 import com.safety.service.ICheckWeekRecordListService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,5 +24,63 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CheckWeekRecordListServiceImpl extends ServiceImpl<CheckWeekRecordListMapper, CheckWeekRecordList> implements ICheckWeekRecordListService {
+    @Override
+    public List<Map<String,Object>> getChecklistResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectChecklistResultCountByOrg(param);
+    }
 
+    @Override
+    public List<Map<String,Object>> getChecklistLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectChecklistLevelCountByOrg(param);
+    }
+
+    @Override
+    public List<Map<String,Object>> getLedgerResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectLedgerResultCountByOrg(param);
+    }
+
+    @Override
+    public List<Map<String,Object>> getLedgerLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectLedgerLevelCountByOrg(param);
+    }
+
+    @Override
+    public List<CheckRectificationReceipt> getReceiptListByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        return baseMapper.selectReceiptByOrg(param);
+    }
 }

@@ -14,4 +14,80 @@
         <result column="modify_time" property="modifyTime" />
     </resultMap>
 
+    <resultMap id="ReceiptResultMap" type="com.safety.entity.CheckRectificationReceipt">
+        <id column="id" property="id" />
+        <result column="check_org_fk" property="checkOrgFk" />
+        <result column="check_org_name" property="checkOrgName" />
+        <result column="fill_time" property="fillTime" />
+        <result column="check_person_fk" property="checkPersonFk" />
+        <result column="check_person_name" property="checkPersonName" />
+        <result column="check_time" property="checkTime" />
+        <result column="check_code" property="checkCode" />
+        <result column="rectification_org_fk" property="rectificationOrgFk" />
+        <result column="rectification_org_name" property="rectificationOrgName" />
+        <result column="rectification_person_fk" property="rectificationPersonFk" />
+        <result column="rectification_person_name" property="rectificationPersonName" />
+        <result column="rectification_content" property="rectificationContent" />
+        <result column="rectification_time" property="rectificationTime" />
+        <result column="rectification_measure" property="rectificationMeasure" />
+        <result column="rectification_result" property="rectificationResult" />
+        <result column="org_fk" property="orgFk" />
+        <result column="org_name" property="orgName" />
+        <result column="create_person_fk" property="createPersonFk" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <select id="selectChecklistResultCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time),count(1) as count
+        from check_danger_checklist c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_week_record_list l on l.id = c.record_list_fk
+        where c.org_fk = #{orgId}
+        and l.result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time)
+    </select>
+    <select id="selectChecklistLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time),ll.level_name,count(1) as count
+        from check_danger_checklist c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_week_record_list l on l.id = c.record_list_fk
+        INNER JOIN check_week_list ll on l.check_week_list_id
+        where c.org_fk = #{orgId}
+        and l.result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time),ll.level_name
+    </select>
+    <select id="selectLedgerResultCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time),count(1) as count
+        from check_danger_ledger c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_week_record_list l on l.id = c.record_list_fk
+        where c.org_fk = #{orgId}
+        and l.result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time)
+    </select>
+    <select id="selectLedgerLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time),ll.level_name,count(1) as count
+        from check_danger_ledger c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_week_record_list l on l.id = c.record_list_fk
+        INNER JOIN check_week_list ll on l.check_week_list_id
+        where c.org_fk = #{orgId}
+        and l.result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time),ll.level_name
+    </select>
+    <select id="selectReceiptByOrg" resultMap="ReceiptResultMap" parameterType="map">
+        select c.*
+        from check_rectification_receipt c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_week_record_list l on l.id = c.record_list_fk
+        where c.org_fk = #{orgId}
+        and l.result = '0'
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time)
+    </select>
 </mapper>
