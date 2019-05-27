@@ -34,4 +34,21 @@
     <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
         select * from risk_identification_list where risk_identification_fk = #{riskIdentificationFk} order by post_name;
     </select>
+
+    <select id="selectLevelCountByOrg" resultType="map" parameterType="map">
+        SELECT
+            o.name,
+            l.level_name,
+            count( 1 ) AS count
+        FROM
+            risk_identification i
+            INNER JOIN risk_identification_list l ON i.id = l.risk_identification_fk
+            left join org o on o.id = i.org_fk
+        WHERE
+            YEAR ( i.create_time ) = YEAR ( NOW( ) )
+            <if test="orgId !=null and orgId !=''">
+                AND i.org_fk = #{orgId}
+            </if>
+        GROUP BY o.name,l.level_name
+    </select>
 </mapper>

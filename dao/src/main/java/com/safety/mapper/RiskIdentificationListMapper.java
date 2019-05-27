@@ -17,4 +17,6 @@ import java.util.Map;
 public interface RiskIdentificationListMapper extends BaseMapper<RiskIdentificationList> {
 
     List<RiskIdentificationList> selectByPid(Map map);
+
+    List<Map<String,Object>> selectLevelCountByOrg(Map map);
 }
