@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDayRecord;
 import com.safety.exception.ProgramException;
 import com.safety.service.ICheckDayRecordService;
@@ -117,5 +118,22 @@ public class CheckDayRecordController extends BaseController {
     public JsonResult getCheckDayRecord(){
         List<CheckDayRecord> result = iCheckDayRecordService.getCheckDayRecord();
         return renderSuccess("查询成功",result);
+    }
+
+    /**
+     * 分页查询日治理记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckDayRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckDayRecord> page = iCheckDayRecordService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
+        }else {
+            return renderError("无数据");
+        }
     }
 }

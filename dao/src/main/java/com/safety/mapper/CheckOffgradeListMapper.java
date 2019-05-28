@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.safety.entity.CheckDay;
 import com.safety.entity.CheckOffgradeList;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,5 +16,7 @@ import java.util.Map;
  * @since 2019-05-23
  */
 public interface CheckOffgradeListMapper extends BaseMapper<CheckOffgradeList> {
+
+    List<CheckOffgradeList> selectAll();
 
 }

@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDayRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -27,4 +28,6 @@ public interface ICheckDayRecordService extends IService<CheckDayRecord> {
      * @throws Exception
      */
     CheckDayRecord getCheckDayRecordListById(String recordId) throws Exception;
+
+    PageInfo<CheckDayRecord> getByPage(Integer currentPage, Integer pageSize);
 }
