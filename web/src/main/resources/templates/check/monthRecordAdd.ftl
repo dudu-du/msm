@@ -46,7 +46,7 @@
 						    </el-date-picker>
 						</el-col>
 						<el-col :span="6">
-						<el-input placeholder="请输入内容" >
+						<el-input placeholder="请输入内容" v-model="inputValue">
 						    <template slot="prepend">排查人员：</template>
 						  </el-input>
 						</el-col>
@@ -113,7 +113,8 @@
 				},
 				tableData:[],
 				data:{},
-				dateValue:''
+				dateValue:'',
+				inputValue:''
 			};
 		},
 		created:function(){
