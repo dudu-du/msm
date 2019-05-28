@@ -209,16 +209,6 @@ new Vue({
 			}).catch(err=>{
 				this.$message.error('服务器异常，请稍后再试！');
 			});
-			axios.get('/safety/riskDict/riskDictList',{params:{code:'harmfullist'}}).then(response=>{
-				if(response.data.success === true){
-					this.$data.facotrs = [];
-					response.data.data.forEach(e=>this.$data.facotrs.push(e));
-				}else{
-					this.$message.warning(response.data.msg);
-				}
-			}).catch(err=>{
-				this.$message.error('服务器异常，请稍后再试！');
-			});
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'levellist'}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.levels = [];

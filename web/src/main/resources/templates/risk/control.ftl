@@ -93,14 +93,7 @@
 					 </el-select>
 			    </el-form-item>
 			    <el-form-item label="危险有害因素" prop="harmfulFactors">
-			    	<el-select v-model="form.harmfulFactors" placeholder="请选择">
-					    <el-option
-					      v-for="item in facotrs"
-					      :key="item.name"
-					      :label="item.name"
-					      :value="item.name">
-					    </el-option>
-					 </el-select>
+                    <el-input v-model="form.harmfulFactors" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="安全风险评价" prop="levelName">
 				    <el-select v-model="form.levelName" placeholder="请选择风险等级">
