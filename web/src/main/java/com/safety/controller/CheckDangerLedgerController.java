@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDangerLedger;
 import com.safety.service.ICheckDangerLedgerService;
 import com.safety.tools.BaseController;
@@ -92,6 +93,23 @@ public class CheckDangerLedgerController extends BaseController {
         CheckDangerLedger checkDangerLedger = iCheckDangerLedgerService.getById(id);
         if(checkDangerLedger!=null){
             return renderSuccess("查询成功",checkDangerLedger);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询台账
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerLedgerByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckDangerLedgerByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckDangerLedger> page = iCheckDangerLedgerService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }
