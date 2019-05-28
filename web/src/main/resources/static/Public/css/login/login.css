@@ -21,16 +21,16 @@ button, input, optgroup, option, select, textarea{
     width: 100px;
 }
 .login-win{
-    width:1196px;
+    width:1280px;
     height:100%;
-    padding:182px 0;
-    background:url(../../image/login/login-win-bg.png);
+    padding:150px 0;
+    margin: 0 auto;
+    /*background:url(../../image/login/login-win-bg.png);*/
 }
 .login-box{
-    width:488px;
-    height:502px;
+    width:1000px;
+    height:375px;
     margin:0 auto;
-    padding:74px 92px 0;
     text-align: center;
     border-radius:4px;
     background-color:#fff;
@@ -38,12 +38,14 @@ button, input, optgroup, option, select, textarea{
 }
 .logo-text{
     padding-top:16px;
-    font-size:20px;
-    color:#b3b3b3;
+    font-size:38px;
+    color:#fff;
     line-height: 1;
+    letter-spacing: 6px;
 }
 .login-box-header{
-    padding-bottom:33px;
+    padding-bottom:50px;
+    text-align: center;
 }
 .layadmin-user-login-body .layui-form-item {
     position: relative;

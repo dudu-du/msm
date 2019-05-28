@@ -18,20 +18,18 @@
         }
     </script>
 </head>
-<body onload="loadTopWindow()">
+<body onload="loadTopWindow()" style="background: url(/Public/image/login/bg_login.png) no-repeat;-webkit-background-size: cover;background-size: cover;" >
 <div class="login-main flex">
-	<div class="login-left">
-		<div class="logo-big-box">
-			<img src="/Public/image/login/login-left-bg.png" class="login-left-bg">
-		</div>
-	</div>
 	<div class="login-win">
+		<div class="login-box-header">
+			<img style="width:60px;height:60px;position:relative;top:-8px;right:12px;" src="/Public/image/login/logo.jpg" alt="">
+			<span class="logo-text">双重预防机制运行信息管理平台</span>
+		</div>
 		<div class="login-box">
-			<div class="login-box-header">
-				<img style="width:30px;height:30px;position:relative;top:-4px;right:3px;" src="/Public/image/login/logo.jpg" alt="">
-				<span class="logo-text">双重预防机制运行信息管理平台</span>
+			<div class="login-left-box" style="width:600px;height: 375px;float: left;border-radius: 4px;background: url(/Public/image/login/login-left.jpg) no-repeat;background-size: cover;">
 			</div>
-			<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+			<div class="layadmin-user-login-box layadmin-user-login-body layui-form" style="float:left;width: 300px;padding: 100px 50px 0 50px;position: relative;">
+				<p class="login-tips" style="position: absolute;top: 0;left: 0;width: 400px;height: 90px;text-align: left;text-indent: 20px;line-height: 90px;background: #3993d6;font-size: 30px;color: #fff;">请登录</p>
 				<p class="login-erro"></p>
 				<div class="layui-form-item">
 					<label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
