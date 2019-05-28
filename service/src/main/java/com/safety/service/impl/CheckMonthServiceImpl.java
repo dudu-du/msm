@@ -69,6 +69,7 @@ public class CheckMonthServiceImpl extends ServiceImpl<CheckMonthMapper, CheckMo
         if (checkMonthLists.size()>0){
             for (CheckMonthList checkWeekList:checkMonthLists){
                 checkWeekList.setId(UUIDUtil.getUUID());
+                checkWeekList.setCreateTime(LocalDateTime.now());
                 checkMonthListMapper.insert(checkWeekList);
             }
         }

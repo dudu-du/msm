@@ -32,7 +32,7 @@
     </resultMap>
 
     <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select * from risk_identification_list where risk_identification_fk = #{riskIdentificationFk} order by post_name;
+        select * from risk_identification_list where risk_identification_fk = #{riskIdentificationFk} order by post_name,create_time;
     </select>
 
     <select id="selectLevelCountByOrg" resultType="map" parameterType="map">

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 隐患治理信息台账 前端控制器
@@ -36,6 +38,7 @@ public class CheckDangerLedgerController extends BaseController {
     public JsonResult addCheckDangerLedger(@RequestBody CheckDangerLedger checkDangerLedger){
         String id = UUIDUtil.getUUID();
         checkDangerLedger.setId(id);
+        checkDangerLedger.setCreateTime(LocalDateTime.now());
         boolean result = iCheckDangerLedgerService.save(checkDangerLedger);
         if (result){
             return renderSuccess("添加成功", id);

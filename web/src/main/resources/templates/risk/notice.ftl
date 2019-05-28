@@ -89,9 +89,9 @@
 					</div>
 				</el-footer>
 			</el-container>
-			<el-dialog title="安全风险辨识项" :visible.sync="dialogFormVisible" @open="dialogFormOpen" @close="dialogClose('validateForm')">
+			<el-dialog title="公告项" :visible.sync="dialogFormVisible" @open="dialogFormOpen" @close="dialogClose('validateForm')">
 			  <el-form :model="form" label-width="110px" label-position="right" ref="validateForm">
-			    <el-form-item label="岗位单元" prop="locationName">
+			    <el-form-item label="部位" prop="locationName">
 			    	<el-select v-model="form.locationName" placeholder="请选择">
 					    <el-option
 					      v-for="item in post_options"

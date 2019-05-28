@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 月治理记录列表 前端控制器
@@ -36,6 +38,7 @@ public class CheckMonthListController extends BaseController {
     public JsonResult addCheckMonthList(@RequestBody CheckMonthList checkMonthList){
         String id = UUIDUtil.getUUID();
         checkMonthList.setId(id);
+        checkMonthList.setCreateTime(LocalDateTime.now());
         boolean result = iCheckMonthListService.save(checkMonthList);
         if (result){
             return renderSuccess("添加成功", id);

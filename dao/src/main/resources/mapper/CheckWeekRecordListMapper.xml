@@ -62,7 +62,7 @@
         select o.name,WEEK(c.create_time) as weekofyear,count(1) as count
         from check_danger_ledger c
         INNER JOIN org o on c.org_fk=o.id
-        INNER JOIN check_week_record_list l on l.id = c.record_list_fk
+        INNER JOIN check_offgrade_list l on l.id = c.offgrade_list_fk
         where c.check_type = '周排查记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 安全风险动态评估列表 前端控制器
@@ -35,6 +37,7 @@ public class RiskEvaluationListController extends BaseController {
     public JsonResult addRiskEvaluationList(@RequestBody RiskEvaluationList riskEvaluationList){
         String id = UUIDUtil.getUUID();
         riskEvaluationList.setId(id);
+        riskEvaluationList.setCreateTime(LocalDateTime.now());
         boolean result = iRiskEvaluationListService.save(riskEvaluationList);
         if (result){
             return renderSuccess("添加成功", id);

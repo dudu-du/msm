@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -42,6 +43,7 @@ public class CheckDayRecordController extends BaseController {
     public JsonResult addCheckDayRecord(@RequestBody CheckDayRecord checkDayRecord){
         String id = UUIDUtil.getUUID();
         checkDayRecord.setId(id);
+        checkDayRecord.setCreateTime(LocalDateTime.now());
         boolean result = iCheckDayRecordService.save(checkDayRecord);
         if (result){
             return renderSuccess("添加成功", id);

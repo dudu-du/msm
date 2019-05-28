@@ -226,7 +226,7 @@ new Vue({
 			});
 		},
 		dialogFormOpen(){
-			axios.get('/safety/riskDict/riskDictList',{params:{code:'postlist'}}).then(response=>{
+			axios.get('/safety/riskDict/riskDictList',{params:{code:'positionlist'}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.post_options = [];
 					response.data.data.forEach(e=>this.$data.post_options.push(e));

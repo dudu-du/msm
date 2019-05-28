@@ -69,6 +69,7 @@ public class CheckWeekServiceImpl extends ServiceImpl<CheckWeekMapper, CheckWeek
         if (checkWeekLists.size()>0){
             for (CheckWeekList checkWeekList:checkWeekLists){
                 checkWeekList.setId(UUIDUtil.getUUID());
+                checkWeekList.setCreateTime(LocalDateTime.now());
                 checkWeekListMapper.insert(checkWeekList);
             }
         }

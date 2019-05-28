@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 岗位安全风险告知卡列表 前端控制器
@@ -36,6 +38,7 @@ public class SafetyNotificationCardListController extends BaseController {
     public JsonResult addSafetyNotificationCardList(@RequestBody SafetyNotificationCardList safetyNotificationCardList){
         String id = UUIDUtil.getUUID();
         safetyNotificationCardList.setId(id);
+        safetyNotificationCardList.setCreateTime(LocalDateTime.now());
         boolean result = iSafetyNotificationCardListService.save(safetyNotificationCardList);
         if (result){
             return renderSuccess("添加成功", id);

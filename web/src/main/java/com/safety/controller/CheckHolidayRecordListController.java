@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 综合节假日排查记录填写列表 前端控制器
@@ -36,6 +38,7 @@ public class CheckHolidayRecordListController extends BaseController {
     public JsonResult addCheckHolidayRecordList(@RequestBody CheckHolidayRecordList checkHolidayRecordList){
         String id = UUIDUtil.getUUID();
         checkHolidayRecordList.setId(id);
+        checkHolidayRecordList.setCreateTime(LocalDateTime.now());
         boolean result = iCheckHolidayRecordListService.save(checkHolidayRecordList);
         if (result){
             return renderSuccess("添加成功", id);

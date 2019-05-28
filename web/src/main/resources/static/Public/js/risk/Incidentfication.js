@@ -80,10 +80,12 @@ var Check = function(obj){
 		this.checkContent = '';
 		this.checkMethod = '';
 		this.key = Date.now();
+		this.checkMonthFk = '';
 	}else{
 		this.checkTypeName = obj.checkTypeName;
 		this.checkContent = obj.checkContent;
 		this.checkMethod = obj.checkMethod;
+		this.checkMonthFk = obj.checkMonthFk;
 	}
 }
 
@@ -132,7 +134,8 @@ new Vue({
 			},
 			checkForm:{
 	        	domains:[new Check()],
-	        	typeList:[]
+	        	typeList:[],
+	        	id:''
 	        }
 		}
 	},
@@ -310,15 +313,47 @@ new Vue({
 			return '20%';
 		},
 		checkFormOpen(){
+			var that = this;
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'typelist'}}).then(response=>{
 				if(response.data.success === true){
-					this.$data.checkForm.typeList = [];
+					that.$data.checkForm.typeList = [];
 					response.data.data.forEach(e=>this.$data.checkForm.typeList.push(e));
 				}else{
-					this.$message.warning(response.data.msg);
+					that.$message.warning(response.data.msg);
 				}
 			}).catch(err=>{
-				this.$message.error('服务器异常，请稍后再试！');
+				that.$message.error('服务器异常，请稍后再试！');
+			});
+			var url= '';
+	    	if(this.$data.checks.checktype == 1){
+	    		url = '/safety/checkMonth/checkMonth';
+	    	}
+	    	if(this.$data.checks.checktype == 2){
+	    		url = '/safety/checkWeek/checkWeek';
+	    	}
+	    	if(this.$data.checks.checktype == 3){
+	    		url = '/safety/checkDay/checkDay';
+	    	}
+	    	if(this.$data.checks.checktype == 4){
+	    		url = '/safety/checkSpecial/checkSpecial';
+	    	}
+	    	if(this.$data.checks.checktype == 5){
+	    		url = '/safety/checkComprehensiveHoliday/checkComprehensiveHoliday';
+	    	}
+	    	if(this.$data.checks.checktype == 6){
+	    		url = '/safety/checkComprehensiveSeason/checkComprehensiveSeason';
+	    	}
+			axios.get(url,{params:{year:new Date().getFullYear(),orgId:this.$data.topselect.orgs.value}}).then(response=>{
+				if(response.data.success === true){
+	    			that.$data.checkForm.id = response.data.data.id;
+	    			console.log(that.$data.checkForm.id);
+				}else{
+					that.$message.warning(response.data.msg);
+					that.$data.checkFormVisible =false;
+				}
+			}).catch(err=>{
+				that.$message.warning(response.data.msg);
+				that.$data.checkFormVisible =false;
 			});
 		},
 		addDomain(formName) {
@@ -344,6 +379,7 @@ new Vue({
 	    	var list = [];
 	    	this.$data.checkForm.domains.forEach(e=>{
 	    		var c = new Check(e);
+	    		c.checkMonthFk = this.$data.checkForm.id;
 	    		c.riskIdentificationListId = this.$data.curData.id;
 	    		list.push(c);
 	    	});
@@ -374,16 +410,19 @@ new Vue({
 	    		url = '/safety/checkComprehensiveSeason/checkComprehensiveSeason';
 	    	}
 	    	var that = this;
-	    	axios.post(url,check).then(response=>{
+
+			axios.post(url,check).then(response=>{
 	    		if(response.data.success === true){
 	    			that.checkFormVisible = false;
-					this.$message.success(response.data.msg);
+	    			that.$message.success(response.data.msg);
 				}else{
-					this.$message.warning(response.data.msg);
+					that.$message.warning(response.data.msg);
 				}
 	    	}).catch(err=>{
-	    		this.$message.error('服务器异常，请稍后再试！');
+	    		that.$message.error('服务器异常，请稍后再试！');
 	    	});
+				
+	    	
 	    }
 	}
 });

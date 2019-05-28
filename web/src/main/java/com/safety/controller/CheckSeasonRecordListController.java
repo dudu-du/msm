@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 综合季度排查记录填写列表 前端控制器
@@ -36,6 +38,7 @@ public class CheckSeasonRecordListController extends BaseController {
     public JsonResult addCheckSeasonRecordList(@RequestBody CheckSeasonRecordList checkSeasonRecordList){
         String id = UUIDUtil.getUUID();
         checkSeasonRecordList.setId(id);
+        checkSeasonRecordList.setCreateTime(LocalDateTime.now());
         boolean result = iCheckSeasonRecordListService.save(checkSeasonRecordList);
         if (result){
             return renderSuccess("添加成功", id);

@@ -320,4 +320,123 @@ public class StatisticsController extends BaseController {
             return renderError("获取失败");
         }
     }
+
+    /**
+     * 统计月检查表中否的清单个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/monthChecklistResultCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getMonthChecklistResultCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getChecklistResultCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计月检查表中否的清单对应等级个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/monthCheckListLevelCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getMonthCheckListLevelCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计月检查表中否的台账个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/monthLedgertResultCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getMonthLedgerResultCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getLedgerResultCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计月检查表中否的台账对应等级个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/monthLedgerLevelCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getMonthLedgerLevelCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+    /**
+     * 获取月检查表中否的回执单列表
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/monthReceiptList",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getMonthReceiptList(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            List<CheckRectificationReceipt> result = iCheckMonthRecordListService.getReceiptListByOrg(orgId,startTime,endTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
 }
