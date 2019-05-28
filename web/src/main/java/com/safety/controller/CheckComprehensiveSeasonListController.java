@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 综合检查(季节性)列表 前端控制器
@@ -36,6 +38,7 @@ public class CheckComprehensiveSeasonListController extends BaseController {
     public JsonResult addCheckComprehensiveSeasonList(@RequestBody CheckComprehensiveSeasonList checkComprehensiveSeasonList){
         String id = UUIDUtil.getUUID();
         checkComprehensiveSeasonList.setId(id);
+        checkComprehensiveSeasonList.setCreateTime(LocalDateTime.now());
         boolean result = iCheckComprehensiveSeasonListService.save(checkComprehensiveSeasonList);
         if (result){
             return renderSuccess("添加成功", id);

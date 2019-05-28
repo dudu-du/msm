@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 周排查记录填写列表 前端控制器
@@ -36,6 +38,7 @@ public class CheckSpecialRecordListController extends BaseController {
     public JsonResult addCheckSpecialRecordList(@RequestBody CheckSpecialRecordList checkSpecialRecordList){
         String id = UUIDUtil.getUUID();
         checkSpecialRecordList.setId(id);
+        checkSpecialRecordList.setCreateTime(LocalDateTime.now());
         boolean result = iCheckSpecialRecordListService.save(checkSpecialRecordList);
         if (result){
             return renderSuccess("添加成功", id);

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 隐患整改回执单 前端控制器
@@ -36,6 +38,7 @@ public class CheckRectificationReceiptController extends BaseController {
     public JsonResult addCheckRectificationReceipt(@RequestBody CheckRectificationReceipt checkRectificationReceipt){
         String id = UUIDUtil.getUUID();
         checkRectificationReceipt.setId(id);
+        checkRectificationReceipt.setCreateTime(LocalDateTime.now());
         boolean result = iCheckRectificationReceiptService.save(checkRectificationReceipt);
         if (result){
             return renderSuccess("添加成功", id);

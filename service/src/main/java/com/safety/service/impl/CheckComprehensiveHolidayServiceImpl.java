@@ -65,6 +65,7 @@ public class CheckComprehensiveHolidayServiceImpl extends ServiceImpl<CheckCompr
         if (checkComprehensiveHolidayLists.size()>0){
             for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:checkComprehensiveHolidayLists){
                 checkComprehensiveHolidayList.setId(UUIDUtil.getUUID());
+                checkComprehensiveHolidayList.setCreateTime(LocalDateTime.now());
                 checkComprehensiveHolidayListMapper.insert(checkComprehensiveHolidayList);
             }
         }

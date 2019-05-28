@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 日治理记录列表 前端控制器
@@ -36,6 +38,7 @@ public class CheckDayListController extends BaseController {
     public JsonResult addCheckDayList(@RequestBody CheckDayList checkDayList){
         String id = UUIDUtil.getUUID();
         checkDayList.setId(id);
+        checkDayList.setCreateTime(LocalDateTime.now());
         boolean result = iCheckDayListService.save(checkDayList);
         if (result){
             return renderSuccess("添加成功", id);

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 月排查记录填写 前端控制器
@@ -36,6 +38,7 @@ public class CheckWeekRecordController extends BaseController {
     public JsonResult addCheckWeekRecord(@RequestBody CheckWeekRecord checkWeekRecord){
         String id = UUIDUtil.getUUID();
         checkWeekRecord.setId(id);
+        checkWeekRecord.setCreateTime(LocalDateTime.now());
         boolean result = iCheckWeekRecordService.save(checkWeekRecord);
         if (result){
             return renderSuccess("添加成功", id);

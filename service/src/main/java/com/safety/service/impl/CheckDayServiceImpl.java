@@ -70,6 +70,7 @@ public class CheckDayServiceImpl extends ServiceImpl<CheckDayMapper, CheckDay> i
         if (checkDayLists.size()>0){
             for (CheckDayList checkDayList:checkDayLists){
                 checkDayList.setId(UUIDUtil.getUUID());
+                checkDayList.setCreateTime(LocalDateTime.now());
                 checkDayListMapper.insert(checkDayList);
             }
         }

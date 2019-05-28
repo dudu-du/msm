@@ -106,6 +106,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkMonthRecordList.setCheckMonthListId(checkMonthList.getId());
                     checkMonthRecordList.setCheckMonthRecordId(checkMonthRecordId);
                     checkMonthRecordList.setResult(checkMonthList.getResult());
+                    checkMonthRecordList.setCreateTime(LocalDateTime.now());
                     checkMonthRecordListMapper.insert(checkMonthRecordList);
                 }
                 String result = checkMonthRecordList.getResult();
@@ -125,6 +126,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkOffgradeList.setOrgFk(checkMonthList.getOrgFk());
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
+                    checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值

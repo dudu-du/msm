@@ -68,6 +68,7 @@ public class CheckSpecialServiceImpl extends ServiceImpl<CheckSpecialMapper, Che
         if (checkSpecialLists.size()>0){
             for (CheckSpecialList checkSpecialList:checkSpecialLists){
                 checkSpecialList.setId(UUIDUtil.getUUID());
+                checkSpecialList.setCreateTime(LocalDateTime.now());
                 checkSpecialListMapper.insert(checkSpecialList);
             }
         }

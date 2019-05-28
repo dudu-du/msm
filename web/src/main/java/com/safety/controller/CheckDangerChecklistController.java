@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 隐患排查清单 前端控制器
@@ -36,6 +38,7 @@ public class CheckDangerChecklistController extends BaseController {
     public JsonResult addCheckDangerChecklist(@RequestBody CheckDangerChecklist checkDangerChecklist){
         String id = UUIDUtil.getUUID();
         checkDangerChecklist.setId(id);
+        checkDangerChecklist.setCreateTime(LocalDateTime.now());
         boolean result = iCheckDangerChecklistService.save(checkDangerChecklist);
         if (result){
             return renderSuccess("添加成功", id);
