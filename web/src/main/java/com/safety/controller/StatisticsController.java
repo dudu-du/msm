@@ -49,6 +49,22 @@ public class StatisticsController extends BaseController {
         modelAndView.setViewName("statistics/day");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    public BaseModelAndView getCheckWeek(){
+
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("statistics/week");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/checkMonth",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonth(){
+
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("statistics/month");
+        return modelAndView;
+    }
     
     /**
      * 获取风险辨识安全登记数量
