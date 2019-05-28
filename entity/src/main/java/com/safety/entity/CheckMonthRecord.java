@@ -53,6 +53,26 @@ public class CheckMonthRecord extends Model<CheckMonthRecord> {
     private LocalDateTime modifyTime;
 
     /**
+     * 排查开始时间
+     */
+    private LocalDateTime checkStartTime;
+
+    /**
+     * 排查结束时间
+     */
+    private LocalDateTime checkEndTime;
+
+    /**
+     * 排查人ID
+     */
+    private String checkPersonFk;
+
+    /**
+     * 排查人名称
+     */
+    private String checkPersonName;
+
+    /**
      * 条目集合
      */
     private List<CheckMonthList> checkMonthList;
@@ -113,6 +133,38 @@ public class CheckMonthRecord extends Model<CheckMonthRecord> {
         return this.id;
     }
 
+    public LocalDateTime getCheckStartTime() {
+        return checkStartTime;
+    }
+
+    public void setCheckStartTime(LocalDateTime checkStartTime) {
+        this.checkStartTime = checkStartTime;
+    }
+
+    public LocalDateTime getCheckEndTime() {
+        return checkEndTime;
+    }
+
+    public void setCheckEndTime(LocalDateTime checkEndTime) {
+        this.checkEndTime = checkEndTime;
+    }
+
+    public String getCheckPersonFk() {
+        return checkPersonFk;
+    }
+
+    public void setCheckPersonFk(String checkPersonFk) {
+        this.checkPersonFk = checkPersonFk;
+    }
+
+    public String getCheckPersonName() {
+        return checkPersonName;
+    }
+
+    public void setCheckPersonName(String checkPersonName) {
+        this.checkPersonName = checkPersonName;
+    }
+
     public List<CheckMonthList> getCheckMonthList() {
         return checkMonthList;
     }
@@ -124,13 +176,18 @@ public class CheckMonthRecord extends Model<CheckMonthRecord> {
     @Override
     public String toString() {
         return "CheckMonthRecord{" +
-        "id=" + id +
-        ", checkMonthId=" + checkMonthId +
-        ", checkContent=" + checkContent +
-        ", createPersonFk=" + createPersonFk +
-        ", orgFk=" + orgFk +
-        ", createTime=" + createTime +
-        ", modifyTime=" + modifyTime +
-        "}";
+                "id='" + id + '\'' +
+                ", checkMonthId='" + checkMonthId + '\'' +
+                ", checkContent='" + checkContent + '\'' +
+                ", createPersonFk='" + createPersonFk + '\'' +
+                ", orgFk='" + orgFk + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", checkStartTime=" + checkStartTime +
+                ", checkEndTime=" + checkEndTime +
+                ", checkPersonFk='" + checkPersonFk + '\'' +
+                ", checkPersonName='" + checkPersonName + '\'' +
+                ", checkMonthList=" + checkMonthList +
+                '}';
     }
 }

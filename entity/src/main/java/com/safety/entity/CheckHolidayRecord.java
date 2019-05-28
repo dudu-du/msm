@@ -51,6 +51,26 @@ public class CheckHolidayRecord extends Model<CheckHolidayRecord> {
      */
     private LocalDateTime modifyTime;
 
+    /**
+     * 排查开始时间
+     */
+    private LocalDateTime checkStartTime;
+
+    /**
+     * 排查结束时间
+     */
+    private LocalDateTime checkEndTime;
+
+    /**
+     * 排查人ID
+     */
+    private String checkPersonFk;
+
+    /**
+     * 排查人名称
+     */
+    private String checkPersonName;
+
     public String getId() {
         return id;
     }
@@ -106,16 +126,52 @@ public class CheckHolidayRecord extends Model<CheckHolidayRecord> {
         return this.id;
     }
 
+    public LocalDateTime getCheckStartTime() {
+        return checkStartTime;
+    }
+
+    public void setCheckStartTime(LocalDateTime checkStartTime) {
+        this.checkStartTime = checkStartTime;
+    }
+
+    public LocalDateTime getCheckEndTime() {
+        return checkEndTime;
+    }
+
+    public void setCheckEndTime(LocalDateTime checkEndTime) {
+        this.checkEndTime = checkEndTime;
+    }
+
+    public String getCheckPersonFk() {
+        return checkPersonFk;
+    }
+
+    public void setCheckPersonFk(String checkPersonFk) {
+        this.checkPersonFk = checkPersonFk;
+    }
+
+    public String getCheckPersonName() {
+        return checkPersonName;
+    }
+
+    public void setCheckPersonName(String checkPersonName) {
+        this.checkPersonName = checkPersonName;
+    }
+
     @Override
     public String toString() {
         return "CheckHolidayRecord{" +
-        "id=" + id +
-        ", checkHolidayId=" + checkHolidayId +
-        ", checkContent=" + checkContent +
-        ", createPersonFk=" + createPersonFk +
-        ", orgFk=" + orgFk +
-        ", createTime=" + createTime +
-        ", modifyTime=" + modifyTime +
-        "}";
+                "id='" + id + '\'' +
+                ", checkHolidayId='" + checkHolidayId + '\'' +
+                ", checkContent='" + checkContent + '\'' +
+                ", createPersonFk='" + createPersonFk + '\'' +
+                ", orgFk='" + orgFk + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", checkStartTime=" + checkStartTime +
+                ", checkEndTime=" + checkEndTime +
+                ", checkPersonFk='" + checkPersonFk + '\'' +
+                ", checkPersonName='" + checkPersonName + '\'' +
+                '}';
     }
 }

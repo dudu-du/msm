@@ -51,6 +51,26 @@ public class CheckSeasonRecord extends Model<CheckSeasonRecord> {
      */
     private LocalDateTime modifyTime;
 
+    /**
+     * 排查开始时间
+     */
+    private LocalDateTime checkStartTime;
+
+    /**
+     * 排查结束时间
+     */
+    private LocalDateTime checkEndTime;
+
+    /**
+     * 排查人ID
+     */
+    private String checkPersonFk;
+
+    /**
+     * 排查人名称
+     */
+    private String checkPersonName;
+
     public String getId() {
         return id;
     }
