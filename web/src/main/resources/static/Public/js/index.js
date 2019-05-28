@@ -54,6 +54,7 @@ layui.use(['element','layer'], function(){
             dataType: 'json',
             success: function(res){
                 var menuData = res.data;
+                console.log(menuData);
                 if(res.success){
                     $('.layui-side-scroll').append(eachMenu(menuData));
                     element.render();
@@ -80,12 +81,22 @@ layui.use(['element','layer'], function(){
                     }else{
                         NameT = '';
                     }
-                    if(childItem.menuname == '设备管理' || childItem.menuname == '设备控制'){
-                        thisUrl = childItem.url+'?org='+org_id;
-                    }else{
+                    var hasChildList = childItem.menus.length>0 ? 1 : 0,childMenuList = childItem.menus,menuTypeList = childItem.isThirdWeb;
+                    if(childMenuList.length>0){
+                        var childMenuListHtml = '<dl class="layui-nav-child-list">';
+                        layui.each(childMenuList,function(index,childListItem){
+                            var thisListUrl;
+                            if(childListItem.url){
+                                thisListUrl = childListItem.url;
+                            }
+                            childMenuListHtml += '<dd><a href="javascript:;" id="" data-parent="1" lay-href="'+thisListUrl+'"><cite>'+childListItem.menuname+'</cite></a></dd>';
+                        });
+                        childMenuListHtml += '</dl>';
+                    }
+                    if(childItem.url){
                         thisUrl = childItem.url;
                     }
-                    childMenuHtml += '<dd><a href="javascript:;" id="'+NameT+'" data-parent="1" data-type="'+childItem.isThirdWeb+'" lay-href="'+thisUrl+'"><cite>'+childItem.menuname+'</cite></a></dd>';
+                    childMenuHtml += '<dd><a href="javascript:;" id="'+NameT+'" data-parent="0" lay-tips="'+childItem.menuname+'" data="'+index+'" '+(hasChildList ? '': 'lay-href="'+childItem.url+'"')+' data-type="'+childItem.isThirdWeb+'"><cite>'+childItem.menuname+'</cite>'+(hasChildList ? '<span class="layui-nav-more"></span>' : '')+'</a>'+(hasChildList ? childMenuListHtml : '')+'</dd>';
                 });
                 childMenuHtml +='</dl>';
             }
@@ -163,6 +174,7 @@ layui.use(['element','layer'], function(){
             $('#lay_page_main').removeClass('layadmin-side-shrink');
             $(elem).parent().siblings().removeClass('layui-nav-itemed');
             var h,t,mapH,nameTextC,nameTextP;
+            console.log($(elem).attr('lay-href'));
             if($(elem).attr('lay-href')){
                 h = $(elem).attr('lay-href');
                 $('#lay-iframe').attr('src',h);
@@ -191,6 +203,27 @@ layui.use(['element','layer'], function(){
                 $('.layui-breadcrumb').html('');
                 $(mapH).appendTo('.layui-breadcrumb');
                 element.render('breadcrumb');
+            }
+            else{
+                if($(elem).parent().prop("tagName") == "LI"){
+                    if($(elem).parent().hasClass("layui-nav-itemed")){
+                        $(elem).parent().addClass('layui-nav-itemed');
+                        $(elem).parent().siblings("li").removeClass('layui-nav-itemed');
+                    }
+                    else{
+                        $(elem).parent().removeClass('layui-nav-itemed');
+                    }
+                }
+                else if($(elem).parent().prop("tagName")=="DD"){
+                    $(elem).parent().removeClass("layui-this");
+                    if(!$(elem).parent().hasClass("layui-nav-itemed")){
+                        $(elem).parent().addClass('layui-nav-itemed');
+                        $(elem).parent().siblings("dd").removeClass('layui-nav-itemed');
+                    }
+                    else{
+                        $(elem).parent().removeClass('layui-nav-itemed');
+                    }
+                }
             }
         }
     });
