@@ -83,6 +83,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     @Override
     public boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
         List<CheckMonthList> checkMonthLists = checkMonthRecord.getCheckMonthList();
+        checkMonthRecordMapper.updateById(checkMonthRecord);
         String checkMonthRecordId = checkMonthRecord.getId();
         if (checkMonthLists.size()>0){
             for (CheckMonthList checkMonthList:checkMonthLists){

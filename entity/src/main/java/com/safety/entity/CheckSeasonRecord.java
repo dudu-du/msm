@@ -126,6 +126,38 @@ public class CheckSeasonRecord extends Model<CheckSeasonRecord> {
         return this.id;
     }
 
+    public LocalDateTime getCheckStartTime() {
+        return checkStartTime;
+    }
+
+    public void setCheckStartTime(LocalDateTime checkStartTime) {
+        this.checkStartTime = checkStartTime;
+    }
+
+    public LocalDateTime getCheckEndTime() {
+        return checkEndTime;
+    }
+
+    public void setCheckEndTime(LocalDateTime checkEndTime) {
+        this.checkEndTime = checkEndTime;
+    }
+
+    public String getCheckPersonFk() {
+        return checkPersonFk;
+    }
+
+    public void setCheckPersonFk(String checkPersonFk) {
+        this.checkPersonFk = checkPersonFk;
+    }
+
+    public String getCheckPersonName() {
+        return checkPersonName;
+    }
+
+    public void setCheckPersonName(String checkPersonName) {
+        this.checkPersonName = checkPersonName;
+    }
+
     @Override
     public String toString() {
         return "CheckSeasonRecord{" +
