@@ -1,8 +1,11 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -54,12 +57,14 @@ public class CheckSeasonRecord extends Model<CheckSeasonRecord> {
     /**
      * 排查开始时间
      */
-    private LocalDateTime checkStartTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date checkStartTime;
 
     /**
      * 排查结束时间
      */
-    private LocalDateTime checkEndTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date checkEndTime;
 
     /**
      * 排查人ID
@@ -126,19 +131,19 @@ public class CheckSeasonRecord extends Model<CheckSeasonRecord> {
         return this.id;
     }
 
-    public LocalDateTime getCheckStartTime() {
+    public Date getCheckStartTime() {
         return checkStartTime;
     }
 
-    public void setCheckStartTime(LocalDateTime checkStartTime) {
+    public void setCheckStartTime(Date checkStartTime) {
         this.checkStartTime = checkStartTime;
     }
 
-    public LocalDateTime getCheckEndTime() {
+    public Date getCheckEndTime() {
         return checkEndTime;
     }
 
-    public void setCheckEndTime(LocalDateTime checkEndTime) {
+    public void setCheckEndTime(Date checkEndTime) {
         this.checkEndTime = checkEndTime;
     }
 
