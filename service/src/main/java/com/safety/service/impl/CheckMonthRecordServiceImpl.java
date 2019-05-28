@@ -144,6 +144,24 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         return new PageInfo<>(checkMonthRecords);
     }
 
+    @Override
+    public CheckMonthRecord getById(String id) {
+        Map param = new HashMap();
+        param.put("id",id);
+        CheckMonthRecord checkMonthRecord = checkMonthRecordMapper.selectByParam(param);
+        if (checkMonthRecord!=null){
+            String checkMonthId = checkMonthRecord.getCheckMonthId();
+            Map map = new HashMap();
+            map.put("checkMonthFk",checkMonthId);
+            List<CheckMonthList> list = checkMonthListMapper.selectByParam(map);
+            if (list.size()>0){
+                sortList(list);
+            }
+            checkMonthRecord.setCheckMonthList(list);
+        }
+        return checkMonthRecord;
+    }
+
     private void sortList(List<CheckMonthList> list){
         int index = 1;
         int union = 1;
