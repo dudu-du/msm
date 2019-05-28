@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 安全风险辨识清单列表 前端控制器
@@ -40,6 +42,7 @@ public class RiskIdentificationListController extends BaseController {
     public JsonResult addRiskIdentificationList(@RequestBody RiskIdentificationList riskIdentificationList){
         String id = UUIDUtil.getUUID();
         riskIdentificationList.setId(id);
+        riskIdentificationList.setCreateTime(LocalDateTime.now());
         boolean result = iRiskIdentificationListService.save(riskIdentificationList);
         if (result){
             return renderSuccess("添加成功", id);

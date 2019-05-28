@@ -73,7 +73,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
             checkMonthRecord.setCheckMonthId(checkMonthId);
             checkMonthRecord.setId(UUIDUtil.getUUID());
             checkMonthRecord.setOrgFk(orgId);
-            checkMonthRecord.setCreateTime(year);
+            checkMonthRecord.setCreateTime(LocalDateTime.now());
             checkMonthRecordMapper.insert(checkMonthRecord);
             checkMonthRecord.setCheckMonthList(new ArrayList<>());
         }

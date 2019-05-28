@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 安全风险分级管控列表 前端控制器
@@ -35,6 +37,7 @@ public class RiskControlListController extends BaseController {
     public JsonResult addRiskControlList(@RequestBody RiskControlList riskControlList){
         String id = UUIDUtil.getUUID();
         riskControlList.setId(id);
+        riskControlList.setCreateTime(LocalDateTime.now());
         boolean result = iRiskControlListService.save(riskControlList);
         if (result){
             return renderSuccess("添加成功", id);
