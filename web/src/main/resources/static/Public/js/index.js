@@ -54,7 +54,6 @@ layui.use(['element','layer'], function(){
             dataType: 'json',
             success: function(res){
                 var menuData = res.data;
-                console.log(menuData);
                 if(res.success){
                     $('.layui-side-scroll').append(eachMenu(menuData));
                     element.render();
@@ -174,7 +173,6 @@ layui.use(['element','layer'], function(){
             $('#lay_page_main').removeClass('layadmin-side-shrink');
             $(elem).parent().siblings().removeClass('layui-nav-itemed');
             var h,t,mapH,nameTextC,nameTextP;
-            console.log($(elem).attr('lay-href'));
             if($(elem).attr('lay-href')){
                 h = $(elem).attr('lay-href');
                 $('#lay-iframe').attr('src',h);
