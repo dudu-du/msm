@@ -28,5 +28,7 @@
         <result column="offgrade_list_fk" property="offgradeListFk" />
         <result column="check_type" property="checkType" />
     </resultMap>
-
+    <select id="selectAll"  resultMap="BaseResultMap">
+        select *  from check_danger_ledger order by create_time desc
+    </select>
 </mapper>

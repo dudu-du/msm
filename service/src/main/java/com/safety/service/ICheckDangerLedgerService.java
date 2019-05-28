@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDangerLedger;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckDangerLedgerService extends IService<CheckDangerLedger> {
 
+    PageInfo<CheckDangerLedger> getByPage(Integer currentPage, Integer pageSize);
 }

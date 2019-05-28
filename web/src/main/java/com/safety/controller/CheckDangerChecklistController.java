@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDangerChecklist;
 import com.safety.service.ICheckDangerChecklistService;
 import com.safety.tools.BaseController;
@@ -92,6 +93,23 @@ public class CheckDangerChecklistController extends BaseController {
         CheckDangerChecklist checkDangerChecklist = iCheckDangerChecklistService.getById(id);
         if(checkDangerChecklist!=null){
             return renderSuccess("查询成功",checkDangerChecklist);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询清单
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerChecklistByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckDangerChecklistByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckDangerChecklist> page = iCheckDangerChecklistService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }
