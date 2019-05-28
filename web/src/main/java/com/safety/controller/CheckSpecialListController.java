@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckSpecialList;
 import com.safety.service.ICheckSpecialListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,40 @@ public class CheckSpecialListController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialListAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialListAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialListAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialListUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialListUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialListUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialListPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialListPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialListPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

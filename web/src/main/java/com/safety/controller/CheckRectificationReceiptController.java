@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckRectificationReceipt;
 import com.safety.service.ICheckRectificationReceiptService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,41 @@ public class CheckRectificationReceiptController extends BaseController {
             return renderError("无数据");
         }
     }
+
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkRectificationReceiptAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckRectificationReceiptAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/checkRectificationReceiptAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkRectificationReceiptUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckRectificationReceiptUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/checkRectificationReceiptUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkRectificationReceiptPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckRectificationReceiptPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/checkRectificationReceiptPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.SafetyNotificationCard;
 import com.safety.service.ISafetyNotificationCardService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,40 @@ public class SafetyNotificationCardController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardAdd",method = RequestMethod.GET)
+    public BaseModelAndView getSafetyNotificationCardAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/notificationCardAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getSafetyNotificationCardUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/notificationCardUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardPage",method = RequestMethod.GET)
+    public BaseModelAndView getSafetyNotificationCardPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/notificationCardPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

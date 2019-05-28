@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckDayRecordList;
 import com.safety.service.ICheckDayRecordListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,40 @@ public class CheckDayRecordListController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordListAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordListAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordListAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordListUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordListUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordListUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordListPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordListPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordListPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckHolidayRecordList;
 import com.safety.service.ICheckHolidayRecordListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,40 @@ public class CheckHolidayRecordListController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkHolidayRecordListAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckHolidayRecordListAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/holidayRecordListAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkHolidayRecordListUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckHolidayRecordListUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/holidayRecordListUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkHolidayRecordListPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckHolidayRecordListPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/holidayRecordListPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

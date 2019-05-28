@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckComprehensiveHolidayList;
 import com.safety.service.ICheckComprehensiveHolidayListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,4 +94,40 @@ public class CheckComprehensiveHolidayListController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveHolidayListAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveHolidayListAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/comprehensiveHolidayListAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveHolidayListUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveHolidayListUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/comprehensiveHolidayListUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveHolidayListPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveHolidayListPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/comprehensiveHolidayListPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

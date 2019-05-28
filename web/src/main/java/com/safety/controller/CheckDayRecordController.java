@@ -6,6 +6,7 @@ import com.safety.entity.CheckDayRecord;
 import com.safety.exception.ProgramException;
 import com.safety.service.ICheckDayRecordService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -136,4 +137,40 @@ public class CheckDayRecordController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckDangerLedger;
 import com.safety.service.ICheckDangerLedgerService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,40 @@ public class CheckDangerLedgerController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerLedgerAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerLedgerAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dangerLedgerAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerLedgerUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerLedgerUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dangerLedgerUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerLedgerPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerLedgerPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dangerLedgerPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

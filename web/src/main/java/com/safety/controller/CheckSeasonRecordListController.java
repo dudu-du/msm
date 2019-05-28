@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckSeasonRecordList;
 import com.safety.service.ICheckSeasonRecordListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,41 @@ public class CheckSeasonRecordListController extends BaseController {
             return renderError("无数据");
         }
     }
+
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordListAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSeasonRecordListAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/seasonRecordListAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordListUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSeasonRecordListUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/seasonRecordListUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordListPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSeasonRecordListPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/seasonRecordListPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

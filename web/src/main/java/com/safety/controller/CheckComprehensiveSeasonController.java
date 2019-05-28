@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckComprehensiveSeason;
 import com.safety.service.ICheckComprehensiveSeasonService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,4 +108,40 @@ public class CheckComprehensiveSeasonController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveSeasonAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveSeasonAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/comprehensiveSeasonAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveSeasonUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveSeasonUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/comprehensiveSeasonUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkComprehensiveSeasonPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveSeasonPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/comprehensiveSeasonPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

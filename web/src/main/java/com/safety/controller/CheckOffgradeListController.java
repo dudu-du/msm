@@ -7,6 +7,7 @@ import com.safety.entity.CheckOffgradeList;
 import com.safety.service.ICheckDayService;
 import com.safety.service.ICheckOffgradeListService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,4 +43,41 @@ public class CheckOffgradeListController extends BaseController {
             return renderError("无数据");
         }
     }
+
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkOffgradeListAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckOffgradeListAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/offgradeListAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkOffgradeListUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckOffgradeListUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/offgradeListUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkOffgradeListPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckOffgradeListPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/offgradeListPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

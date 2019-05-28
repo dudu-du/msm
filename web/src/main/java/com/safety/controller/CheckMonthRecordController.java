@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckMonthRecord;
 import com.safety.service.ICheckMonthRecordService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -125,4 +126,40 @@ public class CheckMonthRecordController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkMonthRecordAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonthRecordAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/monthRecordAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkMonthRecordUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonthRecordUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/monthRecordUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkMonthRecordPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonthRecordPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/monthRecordPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }

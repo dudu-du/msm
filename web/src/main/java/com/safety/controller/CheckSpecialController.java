@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.CheckSpecial;
 import com.safety.service.ICheckSpecialService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,7 @@ public class CheckSpecialController extends BaseController {
      * @param year
      * @return
      */
-    @RequestMapping(value = "/checkWeek",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkSpecial",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckSpecialByParam(String orgId, String year){
         CheckSpecial checkSpecial = iCheckSpecialService.getByParam(orgId,year);
@@ -107,4 +108,40 @@ public class CheckSpecialController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialAdd",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialUpdate",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialUpdate(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialUpdate");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialPage",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }
