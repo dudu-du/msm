@@ -17,4 +17,7 @@ import java.util.List;
 public interface CheckDayRecordMapper extends BaseMapper<CheckDayRecord> {
     List<CheckDayRecord> selectCheckDayRecord();
     CheckDayRecord selectCheckDayRecordListById(@Param("id") String id);
+
+    List<CheckDayRecord> selectAll();
+
 }

@@ -52,6 +52,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
         CheckMonthRecord checkMonthRecord = checkMonthRecordMapper.selectByParam(param);
+        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
         if (checkMonthRecord!=null){
             String checkMonthId = checkMonthRecord.getCheckMonthId();
             Map map = new HashMap();

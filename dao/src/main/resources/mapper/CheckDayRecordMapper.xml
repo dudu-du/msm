@@ -37,4 +37,7 @@
         LEFT JOIN check_day_record_list l on c.id = l.check_day_record_id
         where c.id = #{id}
     </select>
+    <select id="selectAll" resultType="com.safety.entity.CheckDayRecord">
+
+    </select>
 </mapper>

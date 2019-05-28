@@ -1,5 +1,7 @@
 package com.safety.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDayRecord;
 import com.safety.excel.util.StringUtils;
 import com.safety.exception.ProgramException;
@@ -32,5 +34,12 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
             throw new ProgramException("参数错误");
         }
         return baseMapper.selectCheckDayRecordListById(recordId);
+    }
+
+    @Override
+    public PageInfo<CheckDayRecord> getByPage(Integer currentPage, Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<CheckDayRecord> checkMonthRecords = baseMapper.selectAll();
+        return new PageInfo<>(checkMonthRecords);
     }
 }
