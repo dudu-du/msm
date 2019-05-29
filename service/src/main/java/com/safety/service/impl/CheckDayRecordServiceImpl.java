@@ -97,6 +97,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setContent(checkDayList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkDayRecordId);
                     checkOffgradeList.setCheckListFk(checkDayList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);

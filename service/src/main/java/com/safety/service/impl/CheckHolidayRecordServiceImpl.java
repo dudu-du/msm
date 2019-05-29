@@ -86,6 +86,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setContent(checkComprehensiveHolidayList.getContent());
                     checkOffgradeList.setCheckFk(checkHolidayRecordId);
                     checkOffgradeList.setCheckListFk(checkComprehensiveHolidayList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);

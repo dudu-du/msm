@@ -129,6 +129,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setContent(checkSpecialList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkSpecialRecordId);
                     checkOffgradeList.setCheckListFk(checkSpecialList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);

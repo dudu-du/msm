@@ -86,6 +86,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setContent(checkWeekList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkWeekRecordId);
                     checkOffgradeList.setCheckListFk(checkWeekList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);

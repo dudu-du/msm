@@ -131,6 +131,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setContent(checkMonthList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkMonthRecordId);
                     checkOffgradeList.setCheckListFk(checkMonthList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);
