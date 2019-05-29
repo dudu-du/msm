@@ -113,10 +113,10 @@ public class SafetyNotificationCardController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/safetyNotificationCardUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getSafetyNotificationCardUpdate(){
+    @RequestMapping(value = "/safetyNotificationCardEdit",method = RequestMethod.GET)
+    public BaseModelAndView getSafetyNotificationCardEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardUpdate");
+        modelAndView.setViewName("check/notificationCardEdit");
         return modelAndView;
     }
 

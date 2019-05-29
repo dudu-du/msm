@@ -125,10 +125,10 @@ public class CheckSpecialController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkSpecialUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckSpecialUpdate(){
+    @RequestMapping(value = "/checkSpecialEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/specialUpdate");
+        modelAndView.setViewName("check/specialEdit");
         return modelAndView;
     }
 

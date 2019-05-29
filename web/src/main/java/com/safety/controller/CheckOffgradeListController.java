@@ -61,10 +61,10 @@ public class CheckOffgradeListController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkOffgradeListUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckOffgradeListUpdate(){
+    @RequestMapping(value = "/checkOffgradeListEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckOffgradeListEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/offgradeListUpdate");
+        modelAndView.setViewName("check/offgradeListEdit");
         return modelAndView;
     }
 

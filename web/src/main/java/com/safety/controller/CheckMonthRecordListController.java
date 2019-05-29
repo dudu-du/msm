@@ -113,10 +113,10 @@ public class CheckMonthRecordListController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkMonthRecordListUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckMonthRecordListUpdate(){
+    @RequestMapping(value = "/checkMonthRecordListEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonthRecordListEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/monthRecordListUpdate");
+        modelAndView.setViewName("check/monthRecordListEdit");
         return modelAndView;
     }
 

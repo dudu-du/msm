@@ -113,10 +113,10 @@ public class CheckSpecialRecordListController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkSpecialRecordListUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckSpecialRecordListUpdate(){
+    @RequestMapping(value = "/checkSpecialRecordListEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialRecordListEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/specialRecordListUpdate");
+        modelAndView.setViewName("check/specialRecordListEdit");
         return modelAndView;
     }
 

@@ -146,10 +146,10 @@ public class CheckWeekRecordController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkWeekRecordUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckWeekRecordUpdate(){
+    @RequestMapping(value = "/checkWeekRecordEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckWeekRecordEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/weekRecordUpdate");
+        modelAndView.setViewName("check/weekRecordEdit");
         return modelAndView;
     }
 

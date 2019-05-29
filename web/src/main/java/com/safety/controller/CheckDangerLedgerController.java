@@ -131,10 +131,10 @@ public class CheckDangerLedgerController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkDangerLedgerUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckDangerLedgerUpdate(){
+    @RequestMapping(value = "/checkDangerLedgerEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerLedgerEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/dangerLedgerUpdate");
+        modelAndView.setViewName("check/dangerLedgerEdit");
         return modelAndView;
     }
 
