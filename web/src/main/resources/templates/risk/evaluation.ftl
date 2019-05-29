@@ -51,7 +51,9 @@
 						    </el-option>
 						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                        <input type="button" id="print" value="打印" class="el-button el-button--success"/>
 					</el-row>
+                    <div id="divprint">
 					<el-table border highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="60"></el-table-column>
 						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="100">
@@ -89,6 +91,7 @@
 						     </template>
 						</el-table-column>
 					</el-table>
+                    </div>
 				</el-main>
 				<el-footer>
 					<div style="width:100%;height:100%">
@@ -166,5 +169,13 @@
 		</div>
 	</body>
 <script type="text/javascript" src="/Public/js/risk/Evaluation.js" ></script>
-
+    <script src="/node_modules/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#print").click(function(){
+                $("#divprint").printArea();
+            });
+        });
+    </script>
 </html>
