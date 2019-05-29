@@ -40,9 +40,9 @@
 						</el-table-column>
 						<el-table-column label="操作" width="232" align="center">
 							<template slot-scope="scope">
-								<!--
-								<el-button  @click="" type="primary" size="mini" icon="el-icon-search" circle></el-button>
-								--!>
+
+<#--								<el-button  @click="" type="primary" size="mini" icon="el-icon-search" circle></el-button>-->
+
 								<el-tooltip class="item" effect="dark" content="清单" placement="top-start">
 						        <el-button style="margin-left:0" @click="addBtn(scope.row,'firstForm')" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
 						        </el-tooltip>
@@ -224,10 +224,11 @@ new Vue({
         	this.$refs[formName].resetFields();
         },
         submitForm(formName){
+        	var that = this;
         	this.$data.dialogFormVisible = false;
         	this.$refs[formName].resetFields();
         	axios.post('/safety/checkDangerChecklist/checkDangerChecklist',this.$data.form).then(function(response){
-        		this.$data.form.offgradeListFk = '';
+				that.$data.form.offgradeListFk = '';
         		if(response.data.success === true){
         			that.$message.success(response.data.msg);
 				}else{
