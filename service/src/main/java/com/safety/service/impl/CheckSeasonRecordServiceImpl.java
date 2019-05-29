@@ -59,8 +59,8 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                 }
                 //先查询是否已填入值
                 Map map = new HashMap();
-                map.put("check_holiday_list_id",checkComprehensiveSeasonList.getId());
-                map.put("check_holiday_record_id",checkSeasonRecordId);
+                map.put("check_season_list_id",checkComprehensiveSeasonList.getId());
+                map.put("check_season_record_id",checkSeasonRecordId);
                 List<CheckSeasonRecordList> list = checkSeasonRecordListMapper.selectByMap(map);
                 CheckSeasonRecordList checkSeasonRecordList;
                 //若已经有值直接进行修改
