@@ -42,7 +42,7 @@
         select o.name,DATE(c.create_time) as dateofyear,count(1) as count
         from check_danger_checklist c
         INNER JOIN org o on c.org_fk=o.id
-        where c.check_type = '日排查记录'
+        where c.check_type = '日治理记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
         GROUP BY o.name,DATE(c.create_time)
@@ -52,7 +52,7 @@
         from check_danger_checklist c
         INNER JOIN org o on c.org_fk=o.id
         INNER JOIN check_offgrade_list l on l.id = c.offgrade_list_fk
-        where c.check_type = '日排查记录'
+        where c.check_type = '日治理记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
         GROUP BY o.name,DATE(c.create_time),l.level_name
@@ -62,7 +62,7 @@
         select o.name,DATE(c.create_time) as dateofyear,count(1) as count
         from check_danger_ledger c
         INNER JOIN org o on c.org_fk=o.id
-        where c.check_type = '日排查记录'
+        where c.check_type = '日治理记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
         GROUP BY o.name,DATE(c.create_time)
@@ -72,7 +72,7 @@
         from check_danger_ledger c
         INNER JOIN org o on c.org_fk=o.id
         INNER JOIN check_offgrade_list l on l.id = c.offgrade_list_fk
-        where c.check_type = '日排查记录'
+        where c.check_type = '日治理记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
         GROUP BY o.name,DATE(c.create_time),l.level_name
@@ -82,7 +82,7 @@
         select c.*
         from check_rectification_receipt c
         INNER JOIN org o on c.org_fk=o.id
-        where c.check_type = '日排查记录'
+        where c.check_type = '日治理记录'
         and c.org_fk = #{orgId}
         and l.result = '0'
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
