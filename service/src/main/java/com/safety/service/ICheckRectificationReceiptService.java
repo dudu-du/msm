@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckRectificationReceipt;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckRectificationReceiptService extends IService<CheckRectificationReceipt> {
 
+    PageInfo<CheckRectificationReceipt> getByPage(Integer currentPage, Integer pageSize);
 }

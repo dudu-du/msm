@@ -3,6 +3,8 @@ package com.safety.mapper;
 import com.safety.entity.CheckRectificationReceipt;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 隐患整改回执单 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckRectificationReceiptMapper extends BaseMapper<CheckRectificationReceipt> {
 
+    List<CheckRectificationReceipt> selectAll();
 }

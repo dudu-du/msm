@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckRectificationReceipt;
 import com.safety.service.ICheckRectificationReceiptService;
 import com.safety.tools.BaseController;
@@ -92,6 +93,23 @@ public class CheckRectificationReceiptController extends BaseController {
         CheckRectificationReceipt checkRectificationReceipt = iCheckRectificationReceiptService.getById(id);
         if(checkRectificationReceipt!=null){
             return renderSuccess("查询成功",checkRectificationReceipt);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询清单
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkRectificationReceiptByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckRectificationReceiptByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckRectificationReceipt> page = iCheckRectificationReceiptService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }
