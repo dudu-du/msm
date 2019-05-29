@@ -65,7 +65,7 @@
 			</el-container>
 			<el-dialog title="隐患排查清单" :visible.sync="dialogFormVisible" ref="dialogForm" @closed="closedDialog('firstForm')">
 			  <el-form :model="form" label-width="120px" ref="firstForm">
-			    <el-form-item label="风险部位" prop="riskPosition">
+			    <el-form-item label="风险部位">
 			      <el-input v-model="form.riskPosition" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="风险因素">
