@@ -113,7 +113,7 @@
 				axios.get('/safety/checkHolidayRecord/checkHolidayRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
 						that.$data.tableData=[];
-						response.data.data.checkHolidayList.forEach(e=>{
+						response.data.data.checkComprehensiveHolidayList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
 					}else{

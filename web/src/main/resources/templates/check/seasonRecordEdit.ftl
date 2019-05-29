@@ -113,7 +113,7 @@
 				axios.get('/safety/checkSeasonRecord/checkSeasonRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
 						that.$data.tableData = [];
-						response.data.data.checkSeasonList.forEach(e=>{
+						response.data.data.checkComprehensiveSeasonList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
 					}else{

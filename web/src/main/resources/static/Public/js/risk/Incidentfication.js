@@ -395,9 +395,11 @@ new Vue({
 		    		c.checkSpecialFk = this.$data.checkForm.id;
 		    	}
 		    	if(this.$data.checks.checktype == 5){
+		    		c.content = c.checkContent;
 		    		c.checkComprehensiveHolidayFk = this.$data.checkForm.id;
 		    	}
 		    	if(this.$data.checks.checktype == 6){
+		    		c.content = c.checkContent;
 		    		c.checkComprehensiveSeasonFk = this.$data.checkForm.id;
 		    	}
 	    		c.riskIdentificationListId = this.$data.curData.id;
