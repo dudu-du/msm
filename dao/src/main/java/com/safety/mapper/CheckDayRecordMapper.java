@@ -22,4 +22,6 @@ public interface CheckDayRecordMapper extends BaseMapper<CheckDayRecord> {
     List<CheckDayRecord> selectAll();
 
     CheckDayRecord selectByParam(Map param);
+
+    int updateById(CheckDayRecord checkDayRecord);
 }

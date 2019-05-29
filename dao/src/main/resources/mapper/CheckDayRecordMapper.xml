@@ -42,7 +42,7 @@
         where c.id = #{id}
     </select>
     <select id="selectAll" resultType="com.safety.entity.CheckDayRecord">
-
+        select *  from check_day_record order by create_time desc
     </select>
     <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
         select * from check_day_record
@@ -58,4 +58,28 @@
             </if>
         </where>
     </select>
+
+    <update id="updateById" parameterType="com.safety.entity.CheckDayRecord">
+        update check_day_record
+        <set>
+            <if test="checkDayId!=null">
+                check_day_id = #{checkDayId},
+            </if>
+            <if test="checkContent!=null">
+                check_content = #{checkContent},
+            </if>
+            <if test="checkStartTime!=null">
+                check_start_time = #{checkStartTime},
+            </if>
+            <if test="checkEndTime!=null">
+                check_end_time = #{checkEndTime},
+            </if>
+            <if test="checkPersonName!=null">
+                check_person_name = #{checkPersonName},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
 </mapper>

@@ -16,5 +16,45 @@
         <result column="check_person_fk" property="checkPersonFk" />
         <result column="check_person_name" property="checkPersonName" />
     </resultMap>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_week_record
+        <where>
+            <if test="orgFk!=null">
+                and org_fk = #{orgFk}
+            </if>
+            <if test="createTime!=null">
+                and create_time =#{createTime}
+            </if>
+            <if test="id!=null">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
+    <select id="selectAll"  resultMap="BaseResultMap">
+        select *  from check_week_record order by create_time desc
+    </select>
+    <update id="updateById" parameterType="com.safety.entity.CheckWeekRecord">
+        update check_week_record
+        <set>
+            <if test="checkWeekId!=null">
+                check_week_id = #{checkWeekId},
+            </if>
+            <if test="checkContent!=null">
+                check_content = #{checkContent},
+            </if>
+            <if test="checkStartTime!=null">
+                check_start_time = #{checkStartTime},
+            </if>
+            <if test="checkEndTime!=null">
+                check_end_time = #{checkEndTime},
+            </if>
+            <if test="checkPersonName!=null">
+                check_person_name = #{checkPersonName},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
 
 </mapper>

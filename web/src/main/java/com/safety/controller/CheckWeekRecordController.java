@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckWeekRecord;
 import com.safety.service.ICheckWeekRecordService;
 import com.safety.tools.BaseController;
@@ -36,12 +37,9 @@ public class CheckWeekRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckWeekRecord(@RequestBody CheckWeekRecord checkWeekRecord){
-        String id = UUIDUtil.getUUID();
-        checkWeekRecord.setId(id);
-        checkWeekRecord.setCreateTime(LocalDateTime.now());
-        boolean result = iCheckWeekRecordService.save(checkWeekRecord);
+        boolean result = iCheckWeekRecordService.addCheckWeekRecord(checkWeekRecord);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,16 +80,51 @@ public class CheckWeekRecordController extends BaseController {
     }
 
     /**
-     * 通过ID查询
+     * 通过ID查询b'
+     *
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkWeekRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkWeekRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckWeekRecordById(String id){
         CheckWeekRecord checkWeekRecord = iCheckWeekRecordService.getById(id);
         if(checkWeekRecord!=null){
             return renderSuccess("查询成功",checkWeekRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecord",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckWeekRecordByParam(String orgId, String year){
+        CheckWeekRecord checkWeekRecord = iCheckWeekRecordService.getByParam(orgId,year);
+        if(checkWeekRecord!=null){
+            return renderSuccess("查询成功",checkWeekRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecordByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckWeekRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckWeekRecord> page = iCheckWeekRecordService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }

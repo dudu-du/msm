@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -75,6 +76,11 @@ public class CheckWeekRecord extends Model<CheckWeekRecord> {
      * 排查人名称
      */
     private String checkPersonName;
+
+    /**
+     *
+     */
+    private List<CheckWeekList> checkWeekList;
 
     public String getId() {
         return id;
@@ -163,6 +169,14 @@ public class CheckWeekRecord extends Model<CheckWeekRecord> {
         this.checkPersonName = checkPersonName;
     }
 
+    public List<CheckWeekList> getCheckWeekList() {
+        return checkWeekList;
+    }
+
+    public void setCheckWeekList(List<CheckWeekList> checkWeekList) {
+        this.checkWeekList = checkWeekList;
+    }
+
     @Override
     public String toString() {
         return "CheckWeekRecord{" +
@@ -177,6 +191,7 @@ public class CheckWeekRecord extends Model<CheckWeekRecord> {
                 ", checkEndTime=" + checkEndTime +
                 ", checkPersonFk='" + checkPersonFk + '\'' +
                 ", checkPersonName='" + checkPersonName + '\'' +
+                ", checkWeekList=" + checkWeekList +
                 '}';
     }
 }

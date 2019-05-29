@@ -92,6 +92,11 @@ public class CheckWeekList extends Model<CheckWeekList> {
      */
     private Integer union;
 
+    /**
+     * 填写结果
+     */
+    private String result;
+
     public String getId() {
         return id;
     }
@@ -205,22 +210,33 @@ public class CheckWeekList extends Model<CheckWeekList> {
         this.union = union;
     }
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     @Override
     public String toString() {
         return "CheckWeekList{" +
-        "id=" + id +
-        ", checkTypeFk=" + checkTypeFk +
-        ", checkTypeName=" + checkTypeName +
-        ", checkContent=" + checkContent +
-        ", checkMethod=" + checkMethod +
-        ", checkWeekFk=" + checkWeekFk +
-        ", riskIdentificationListId=" + riskIdentificationListId +
-        ", cause=" + cause +
-        ", levelName=" + levelName +
-        ", createTime=" + createTime +
-        ", modifyTime=" + modifyTime +
-        ", createPersonFk=" + createPersonFk +
-        ", orgFk=" + orgFk +
-        "}";
+                "id='" + id + '\'' +
+                ", checkTypeFk='" + checkTypeFk + '\'' +
+                ", checkTypeName='" + checkTypeName + '\'' +
+                ", checkContent='" + checkContent + '\'' +
+                ", checkMethod='" + checkMethod + '\'' +
+                ", checkWeekFk='" + checkWeekFk + '\'' +
+                ", riskIdentificationListId='" + riskIdentificationListId + '\'' +
+                ", cause='" + cause + '\'' +
+                ", levelName='" + levelName + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", createPersonFk='" + createPersonFk + '\'' +
+                ", orgFk='" + orgFk + '\'' +
+                ", index=" + index +
+                ", union=" + union +
+                ", result='" + result + '\'' +
+                '}';
     }
 }
