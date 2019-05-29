@@ -93,7 +93,7 @@
 					</el-table>
 				</el-main>
 				<el-footer>
-						注：月排查由主要负责人组织并实施。
+
 					</div>
 				</el-footer>
 			</el-container>

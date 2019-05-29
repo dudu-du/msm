@@ -68,7 +68,7 @@
 				</el-main>
 				<el-footer>
 					<div style="width:100%;height:100%">
-						注：月排查由主要负责人组织并实施。
+						注：周排查由安全管理副职组织并实施。
 					</div>
 				</el-footer>
 			</el-container>
