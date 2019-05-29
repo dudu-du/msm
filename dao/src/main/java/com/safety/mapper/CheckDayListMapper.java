@@ -2,6 +2,7 @@ package com.safety.mapper;
 
 import com.safety.entity.CheckDayList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.CheckDayRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ import java.util.Map;
 public interface CheckDayListMapper extends BaseMapper<CheckDayList> {
 
     List<CheckDayList> selectByPid(Map map);
+
+    List<CheckDayList> selectByParam(Map map);
 }

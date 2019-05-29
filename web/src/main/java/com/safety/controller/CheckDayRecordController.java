@@ -41,12 +41,9 @@ public class CheckDayRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckDayRecord(@RequestBody CheckDayRecord checkDayRecord){
-        String id = UUIDUtil.getUUID();
-        checkDayRecord.setId(id);
-        checkDayRecord.setCreateTime(LocalDateTime.now());
-        boolean result = iCheckDayRecordService.save(checkDayRecord);
+        boolean result = iCheckDayRecordService.addCheckDayRecord(checkDayRecord);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -94,20 +91,11 @@ public class CheckDayRecordController extends BaseController {
     @RequestMapping(value = "/checkDayRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckDayRecordById(String id){
-        try {
-            CheckDayRecord checkDayRecord = iCheckDayRecordService.getCheckDayRecordListById(id);
-            if(checkDayRecord!=null){
-                return renderSuccess("查询成功",checkDayRecord);
-            }else {
-                return renderError("无数据");
-            }
-        }
-        catch (ProgramException p) {
-            log.error("获取日治理记录失败." + p.getMessage());
-            return renderError(p.getMessage());
-        } catch (Exception e) {
-            log.error("获取日治理记录失败." + e.getMessage());
-            return renderError("获取日治理记录失败");
+        CheckDayRecord checkMonthRecord = iCheckDayRecordService.getById(id);
+        if(checkMonthRecord!=null){
+            return renderSuccess("查询成功",checkMonthRecord);
+        }else {
+            return renderError("无数据");
         }
     }
 
@@ -118,9 +106,13 @@ public class CheckDayRecordController extends BaseController {
     @RequestMapping(value = "/checkDayRecord",method = RequestMethod.GET)
     @ResponseBody
     @CrossOrigin
-    public JsonResult getCheckDayRecord(){
-        List<CheckDayRecord> result = iCheckDayRecordService.getCheckDayRecord();
-        return renderSuccess("查询成功",result);
+    public JsonResult getCheckDayRecord(String orgId, String year){
+        CheckDayRecord checkDayRecord = iCheckDayRecordService.getByParam(orgId,year);
+        if(checkDayRecord!=null){
+            return renderSuccess("查询成功",checkDayRecord);
+        }else {
+            return renderError("无数据");
+        }
     }
 
     /**

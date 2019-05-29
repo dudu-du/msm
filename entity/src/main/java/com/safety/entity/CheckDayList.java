@@ -107,6 +107,11 @@ public class CheckDayList extends Model<CheckDayList> {
      */
     private Integer union;
 
+    /**
+     * 填写结果
+     */
+    private String result;
+
     public String getId() {
         return id;
     }
@@ -244,6 +249,14 @@ public class CheckDayList extends Model<CheckDayList> {
         this.union = union;
     }
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     @Override
     public String toString() {
         return "CheckDayList{" +
@@ -263,6 +276,9 @@ public class CheckDayList extends Model<CheckDayList> {
                 ", checkDayFk='" + checkDayFk + '\'' +
                 ", checkTeamFk='" + checkTeamFk + '\'' +
                 ", checkTeamName='" + checkTeamName + '\'' +
+                ", index=" + index +
+                ", union=" + union +
+                ", result='" + result + '\'' +
                 '}';
     }
 }

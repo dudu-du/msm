@@ -81,7 +81,7 @@ public class CheckDayRecord extends Model<CheckDayRecord> {
      * 填写内容列表
      * @return
      */
-    private List<CheckDayRecordList> checkDayRecordList;
+    private List<CheckDayList> checkDayList;
 
     public String getId() {
         return id;
@@ -133,12 +133,12 @@ public class CheckDayRecord extends Model<CheckDayRecord> {
         this.modifyTime = modifyTime;
     }
 
-    public List<CheckDayRecordList> getCheckDayRecordList() {
-        return checkDayRecordList;
+    public List<CheckDayList> getCheckDayList() {
+        return checkDayList;
     }
 
-    public void setCheckDayRecordList(List<CheckDayRecordList> checkDayRecordList) {
-        this.checkDayRecordList = checkDayRecordList;
+    public void setCheckDayList(List<CheckDayList> checkDayList) {
+        this.checkDayList = checkDayList;
     }
 
     public Date getCheckStartTime() {
@@ -192,7 +192,7 @@ public class CheckDayRecord extends Model<CheckDayRecord> {
                 ", checkEndTime=" + checkEndTime +
                 ", checkPersonFk='" + checkPersonFk + '\'' +
                 ", checkPersonName='" + checkPersonName + '\'' +
-                ", checkDayRecordList=" + checkDayRecordList +
+                ", checkDayList=" + checkDayList +
                 '}';
     }
 }

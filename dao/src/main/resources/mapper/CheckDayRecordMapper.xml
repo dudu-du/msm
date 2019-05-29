@@ -44,4 +44,18 @@
     <select id="selectAll" resultType="com.safety.entity.CheckDayRecord">
 
     </select>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from check_day_record
+        <where>
+            <if test="orgFk!=null">
+                and org_fk = #{orgFk}
+            </if>
+            <if test="createTime!=null">
+                and create_time =#{createTime}
+            </if>
+            <if test="id!=null">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
 </mapper>
