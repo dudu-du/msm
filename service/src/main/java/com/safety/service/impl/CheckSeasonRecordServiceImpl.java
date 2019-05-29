@@ -86,6 +86,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
                     checkOffgradeList.setId(UUIDUtil.getUUID());
+                    checkOffgradeList.setContent(checkComprehensiveSeasonList.getContent());
                     checkOffgradeList.setCheckFk(checkSeasonRecordId);
                     checkOffgradeList.setCheckListFk(checkComprehensiveSeasonList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);
