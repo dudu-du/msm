@@ -39,43 +39,43 @@
     </resultMap>
 
     <select id="selectChecklistResultCountByOrg" resultType="map" parameterType="map">
-        select o.name,DAY(c.create_time) as dateofyear,count(1) as count
+        select o.name,DATE(c.create_time) as dateofyear,count(1) as count
         from check_danger_checklist c
         INNER JOIN org o on c.org_fk=o.id
         where c.check_type = '日排查记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
-        GROUP BY o.name,DAY(c.create_time)
+        GROUP BY o.name,DATE(c.create_time)
     </select>
     <select id="selectChecklistLevelCountByOrg" resultType="map" parameterType="map">
-        select o.name,DAY(c.create_time) as dateofyear,l.level_name,count(1) as count
+        select o.name,DATE(c.create_time) as dateofyear,l.level_name,count(1) as count
         from check_danger_checklist c
         INNER JOIN org o on c.org_fk=o.id
         INNER JOIN check_offgrade_list l on l.id = c.offgrade_list_fk
         where c.check_type = '日排查记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
-        GROUP BY o.name,DAY(c.create_time),l.level_name
+        GROUP BY o.name,DATE(c.create_time),l.level_name
         order by l.level_num
     </select>
     <select id="selectLedgerResultCountByOrg" resultType="map" parameterType="map">
-        select o.name,DAY(c.create_time) as dateofyear,count(1) as count
+        select o.name,DATE(c.create_time) as dateofyear,count(1) as count
         from check_danger_ledger c
         INNER JOIN org o on c.org_fk=o.id
         where c.check_type = '日排查记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
-        GROUP BY o.name,DAY(c.create_time)
+        GROUP BY o.name,DATE(c.create_time)
     </select>
     <select id="selectLedgerLevelCountByOrg" resultType="map" parameterType="map">
-        select o.name,DAY(c.create_time) as dateofyear,l.level_name,count(1) as count
+        select o.name,DATE(c.create_time) as dateofyear,l.level_name,count(1) as count
         from check_danger_ledger c
         INNER JOIN org o on c.org_fk=o.id
         INNER JOIN check_offgrade_list l on l.id = c.offgrade_list_fk
         where c.check_type = '日排查记录'
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
-        GROUP BY o.name,DAY(c.create_time),l.level_name
+        GROUP BY o.name,DATE(c.create_time),l.level_name
         order by l.level_num
     </select>
     <select id="selectReceiptByOrg" resultMap="ReceiptResultMap" parameterType="map">
@@ -86,6 +86,6 @@
         and c.org_fk = #{orgId}
         and l.result = '0'
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
-        GROUP BY o.name,DAY(c.create_time)
+        GROUP BY o.name,DATE(c.create_time)
     </select>
 </mapper>
