@@ -52,8 +52,8 @@
 				<el-footer>
 					<span style="width:40.5%;display: inline-block;"></span>
 					<el-button-group>
-						<el-button type="primary" v-model="data" @click="prev(data.prePage,2)" icon="el-icon-arrow-left">上一页</el-button>
-						<el-button type="primary" v-model="data" @click="next(data.nextPage,2)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+						<el-button type="primary" v-model="data" @click="prev(data.prePage,10)" icon="el-icon-arrow-left">上一页</el-button>
+						<el-button type="primary" v-model="data" @click="next(data.nextPage,10)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
 					</el-button-group>
 				</el-footer>
 			</el-container>
