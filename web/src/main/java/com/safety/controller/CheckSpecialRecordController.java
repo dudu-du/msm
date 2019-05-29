@@ -146,10 +146,10 @@ public class CheckSpecialRecordController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkSpecialRecordUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckSpecialRecordUpdate(){
+    @RequestMapping(value = "/checkSpecialRecordEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialRecordEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/specialRecordUpdate");
+        modelAndView.setViewName("check/specialRecordEdit");
         return modelAndView;
     }
 

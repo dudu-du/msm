@@ -147,10 +147,10 @@ public class CheckSeasonRecordController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkSeasonRecordUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckSeasonRecordUpdate(){
+    @RequestMapping(value = "/checkSeasonRecordEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSeasonRecordEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/seasonRecordUpdate");
+        modelAndView.setViewName("check/seasonRecordEdit");
         return modelAndView;
     }
 

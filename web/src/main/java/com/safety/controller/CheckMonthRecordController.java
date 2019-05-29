@@ -144,10 +144,10 @@ public class CheckMonthRecordController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkMonthRecordUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckMonthRecordUpdate(){
+    @RequestMapping(value = "/checkMonthRecordEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonthRecordEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/monthRecordUpdate");
+        modelAndView.setViewName("check/monthRecordEdit");
         return modelAndView;
     }
 

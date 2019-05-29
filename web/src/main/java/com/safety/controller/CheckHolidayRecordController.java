@@ -146,10 +146,10 @@ public class CheckHolidayRecordController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkHolidayRecordUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckHolidayRecordUpdate(){
+    @RequestMapping(value = "/checkHolidayRecordEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckHolidayRecordEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/holidayRecordUpdate");
+        modelAndView.setViewName("check/holidayRecordEdit");
         return modelAndView;
     }
 

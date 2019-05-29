@@ -125,10 +125,10 @@ public class CheckDayController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkDayUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckDayUpdate(){
+    @RequestMapping(value = "/checkDayEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/dayUpdate");
+        modelAndView.setViewName("check/dayEdit");
         return modelAndView;
     }
 

@@ -131,10 +131,10 @@ public class CheckDangerChecklistController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkDangerChecklistUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckDangerChecklistUpdate(){
+    @RequestMapping(value = "/checkDangerChecklistEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerChecklistEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/dangerChecklistUpdate");
+        modelAndView.setViewName("check/dangerChecklistEdit");
         return modelAndView;
     }
 

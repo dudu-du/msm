@@ -125,10 +125,10 @@ public class CheckComprehensiveSeasonController extends BaseController {
      * 修改页面
      * @return
      */
-    @RequestMapping(value = "/checkComprehensiveSeasonUpdate",method = RequestMethod.GET)
-    public BaseModelAndView getCheckComprehensiveSeasonUpdate(){
+    @RequestMapping(value = "/checkComprehensiveSeasonEdit",method = RequestMethod.GET)
+    public BaseModelAndView getCheckComprehensiveSeasonEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/comprehensiveSeasonUpdate");
+        modelAndView.setViewName("check/comprehensiveSeasonEdit");
         return modelAndView;
     }
 
