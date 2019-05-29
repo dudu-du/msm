@@ -32,15 +32,17 @@
 						</el-table-column>
 						<el-table-column prop="content" label="内容" width="240" align="center">
 						</el-table-column>
-						<el-table-column prop="levelName" label="风险等级名称" width="240" align="center">
+						<el-table-column prop="levelName" label="风险等级" width="240" align="center">
 						</el-table-column>
-						<el-table-column prop="levelNum" label="风险等级" width="240" align="center">
+						<el-table-column prop="levelNum" label="风险等级" width="240" align="center" v-if="false">
 						</el-table-column>
 						<el-table-column prop="createTime" label="创建时间" width="240" align="center">
 						</el-table-column>
 						<el-table-column label="操作" width="232" align="center">
 							<template slot-scope="scope">
+								<!--
 								<el-button  @click="" type="primary" size="mini" icon="el-icon-search" circle></el-button>
+								--!>
 								<el-tooltip class="item" effect="dark" content="清单" placement="top-start">
 						        <el-button style="margin-left:0" @click="addBtn(scope.row,'firstForm')" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
 						        </el-tooltip>
@@ -54,17 +56,16 @@
 						</el-table-column>
 					</el-table>
 				</el-main>
-				<el-footer>
-					<span style="width:40.5%;display: inline-block;"></span>
-					<el-button-group>
-						<el-button type="primary" v-model="data" @click="prev(data.prePage,10)" icon="el-icon-arrow-left">上一页</el-button>
-						<el-button type="primary" v-model="data" @click="next(data.nextPage,10)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-					</el-button-group>
+				<el-footer style="text-align:center">
+						<el-button-group>
+							<el-button type="primary" v-model="data" @click="prev(data.prePage,10)" icon="el-icon-arrow-left">上一页</el-button>
+							<el-button type="primary" v-model="data" @click="next(data.nextPage,10)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+						</el-button-group>
 				</el-footer>
 			</el-container>
 			<el-dialog title="隐患排查清单" :visible.sync="dialogFormVisible" ref="dialogForm" @closed="closedDialog('firstForm')">
 			  <el-form :model="form" label-width="120px" ref="firstForm">
-			    <el-form-item label="风险部位" prop="riskPosition">
+			    <el-form-item label="风险部位">
 			      <el-input v-model="form.riskPosition" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="风险因素">

@@ -110,6 +110,7 @@ new Vue({
 	},
 	data: function() {
 		return {
+			curRow:{},
 			firstcol: '',
 			dialogFormVisible: false,
 			checkFormVisible: false,
@@ -226,7 +227,7 @@ new Vue({
 		},
 		addcheck(type,formName,row){
 			this.$data.checks.checktype = type;
-			
+			this.$data.curRow = row;
 			this.$refs.singleTable.setCurrentRow(row);
 			this.$data.checkFormVisible = true;
 		},
@@ -379,7 +380,26 @@ new Vue({
 	    	var list = [];
 	    	this.$data.checkForm.domains.forEach(e=>{
 	    		var c = new Check(e);
-	    		c.checkMonthFk = this.$data.checkForm.id;
+	    		c.levelName = this.$data.curRow.levelName;
+	    		if(this.$data.checks.checktype == 1){
+	    			c.checkMonthFk = this.$data.checkForm.id;
+		    	}
+		    	if(this.$data.checks.checktype == 2){
+		    		c.checkWeekFk = this.$data.checkForm.id;
+		   
+		    	}
+		    	if(this.$data.checks.checktype == 3){
+		    		c.checkDayFk = this.$data.checkForm.id;
+		    	}
+		    	if(this.$data.checks.checktype == 4){
+		    		c.checkSpecialFk = this.$data.checkForm.id;
+		    	}
+		    	if(this.$data.checks.checktype == 5){
+		    		c.checkComprehensiveHolidayFk = this.$data.checkForm.id;
+		    	}
+		    	if(this.$data.checks.checktype == 6){
+		    		c.checkComprehensiveSeasonFk = this.$data.checkForm.id;
+		    	}
 	    		c.riskIdentificationListId = this.$data.curData.id;
 	    		list.push(c);
 	    	});
