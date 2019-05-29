@@ -75,6 +75,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
 //            checkSpecialRecordMapper.insert(checkSpecialRecord);
             Map map = new HashMap();
             map.put("checkSpecialFk",checkSpecialId);
+            map.put("checkSpecialRecordId",checkSpecialRecord.getId());
             List<CheckSpecialList> list = checkSpecialListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);
@@ -164,6 +165,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
             String checkSpecialId = checkSpecialRecord.getCheckSpecialId();
             Map map = new HashMap();
             map.put("checkSpecialFk",checkSpecialId);
+            map.put("checkSpecialRecordId",checkSpecialRecord.getId());
             List<CheckSpecialList> list = checkSpecialListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);

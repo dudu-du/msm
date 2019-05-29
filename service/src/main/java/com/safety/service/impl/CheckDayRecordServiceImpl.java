@@ -125,6 +125,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
             String checkDayId = checkDayRecord.getCheckDayId();
             Map map = new HashMap();
             map.put("checkDayFk",checkDayId);
+            map.put("checkDayRecordId",checkDayRecord.getId());
             List<CheckDayList> list = checkDayListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);
@@ -168,6 +169,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
 //            checkDayRecordMapper.insert(checkDayRecord);
             Map map = new HashMap();
             map.put("checkDayFk",checkDayId);
+            map.put("checkDayRecordId",checkDayRecord.getId());
             List<CheckDayList> list = checkDayListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);

@@ -139,6 +139,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
 //            checkWeekRecordMapper.insert(checkWeekRecord);
             Map map = new HashMap();
             map.put("checkWeekFk",checkWeekId);
+            map.put("checkWeekRecordId",checkWeekRecord.getId());
             List<CheckWeekList> list = checkWeekListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);
@@ -164,6 +165,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
             String checkWeekId = checkWeekRecord.getCheckWeekId();
             Map map = new HashMap();
             map.put("checkWeekFk",checkWeekId);
+            map.put("checkWeekRecordId",checkWeekRecord.getId());
             List<CheckWeekList> list = checkWeekListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);
