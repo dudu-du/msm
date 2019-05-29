@@ -24,12 +24,18 @@
 			<el-container>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
-						<el-table-column type="index" label="序号" width="285" align="center"></el-table-column>
-						<el-table-column prop="checkContent" label="检查内容" width="616">
+						<el-table-column type="index" label="序号" width="230" align="center"></el-table-column>
+						<el-table-column prop="checkType" label="来源" width="240">
 						</el-table-column>
-						<el-table-column prop="createTime" label="创建时间" width="405" align="center">
+						<el-table-column prop="content" label="内容" width="240" align="center">
 						</el-table-column>
-						<el-table-column label="操作" width="355" align="center">
+						<el-table-column prop="levelName" label="风险等级名称" width="240" align="center">
+						</el-table-column>
+						<el-table-column prop="levelNum" label="风险等级" width="240" align="center">
+						</el-table-column>
+						<el-table-column prop="createTime" label="创建时间" width="240" align="center">
+						</el-table-column>
+						<el-table-column label="操作" width="232" align="center">
 							<el-button @click="" type="primary" size="mini" icon="el-icon-search" circle></el-button>
 						</el-table-column>
 					</el-table>
