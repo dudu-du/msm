@@ -162,7 +162,13 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
             checkDayRecord.setOrgFk(orgId);
             checkDayRecord.setCreateTime(LocalDateTime.now());
             checkDayRecordMapper.insert(checkDayRecord);
-            checkDayRecord.setCheckDayList(new ArrayList<>());
+            Map map = new HashMap();
+            map.put("checkDayFk",checkDayId);
+            List<CheckDayList> list = checkDayListMapper.selectByParam(map);
+            if (list.size()>0){
+                sortList(list);
+            }
+            checkDayRecord.setCheckDayList(list);
         }
         return checkDayRecord;
     }

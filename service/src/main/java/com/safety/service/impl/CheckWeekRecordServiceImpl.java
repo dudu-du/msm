@@ -133,7 +133,13 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
             checkWeekRecord.setOrgFk(orgId);
             checkWeekRecord.setCreateTime(LocalDateTime.now());
             checkWeekRecordMapper.insert(checkWeekRecord);
-            checkWeekRecord.setCheckWeekList(new ArrayList<>());
+            Map map = new HashMap();
+            map.put("checkWeekFk",checkWeekId);
+            List<CheckWeekList> list = checkWeekListMapper.selectByParam(map);
+            if (list.size()>0){
+                sortList(list);
+            }
+            checkWeekRecord.setCheckWeekList(list);
         }
         return checkWeekRecord;
     }

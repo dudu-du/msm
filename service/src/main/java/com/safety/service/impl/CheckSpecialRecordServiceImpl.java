@@ -75,7 +75,13 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
             checkSpecialRecord.setOrgFk(orgId);
             checkSpecialRecord.setCreateTime(LocalDateTime.now());
             checkSpecialRecordMapper.insert(checkSpecialRecord);
-            checkSpecialRecord.setCheckSpecialList(new ArrayList<>());
+            Map map = new HashMap();
+            map.put("checkSpecialFk",checkSpecialId);
+            List<CheckSpecialList> list = checkSpecialListMapper.selectByParam(map);
+            if (list.size()>0){
+                sortList(list);
+            }
+            checkSpecialRecord.setCheckSpecialList(list);
         }
         return checkSpecialRecord;
     }

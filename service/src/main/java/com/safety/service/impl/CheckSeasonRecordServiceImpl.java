@@ -130,7 +130,10 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
             checkSeasonRecord.setOrgFk(orgId);
             checkSeasonRecord.setCreateTime(LocalDateTime.now());
             checkSeasonRecordMapper.insert(checkSeasonRecord);
-            checkSeasonRecord.setCheckComprehensiveSeasonList(new ArrayList<>());
+            Map map = new HashMap();
+            map.put("checkComprehensiveSeasonFk",checkSeasonId);
+            List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
+            checkSeasonRecord.setCheckComprehensiveSeasonList(list);
         }
         return checkSeasonRecord;
     }

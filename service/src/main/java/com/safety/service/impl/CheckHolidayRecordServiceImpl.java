@@ -129,8 +129,10 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
             checkHolidayRecord.setId(UUIDUtil.getUUID());
             checkHolidayRecord.setOrgFk(orgId);
             checkHolidayRecord.setCreateTime(LocalDateTime.now());
-            checkHolidayRecordMapper.insert(checkHolidayRecord);
-            checkHolidayRecord.setCheckComprehensiveHolidayList(new ArrayList<>());
+            checkHolidayRecordMapper.insert(checkHolidayRecord);Map map = new HashMap();
+            map.put("checkComprehensiveHolidayFk",checkHolidayId);
+            List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
+            checkHolidayRecord.setCheckComprehensiveHolidayList(list);
         }
         return checkHolidayRecord;
     }
