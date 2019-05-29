@@ -10,12 +10,10 @@ import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -51,45 +49,52 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
-        CheckMonthRecord checkMonthRecord = checkMonthRecordMapper.selectByParam(param);
-        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
-        if (checkMonthRecord!=null){
-            String checkMonthId = checkMonthRecord.getCheckMonthId();
-            Map map = new HashMap();
-            map.put("checkMonthFk",checkMonthId);
-            List<CheckMonthList> list = checkMonthListMapper.selectByParam(map);
-            if (list.size()>0){
-                sortList(list);
-            }
-            checkMonthRecord.setCheckMonthList(list);
-        }else {
+//        CheckMonthRecord checkMonthRecord = checkMonthRecordMapper.selectByParam(param);
+//        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
+//        if (checkMonthRecord!=null){
+//            String checkMonthId = checkMonthRecord.getCheckMonthId();
+//            Map map = new HashMap();
+//            map.put("checkMonthFk",checkMonthId);
+//            List<CheckMonthList> list = checkMonthListMapper.selectByParam(map);
+//            if (list.size()>0){
+//                sortList(list);
+//            }
+//            checkMonthRecord.setCheckMonthList(list);
+//        }else {
             //先获取是否已经添加好模板
             CheckMonth checkMonth = checkMonthMapper.selectByParam(param);
             if (checkMonth==null){
                 return null;
             }
             String checkMonthId = checkMonth.getId();
-            checkMonthRecord = new CheckMonthRecord();
+            CheckMonthRecord checkMonthRecord = new CheckMonthRecord();
             checkMonthRecord.setCheckMonthId(checkMonthId);
             checkMonthRecord.setId(UUIDUtil.getUUID());
             checkMonthRecord.setOrgFk(orgId);
-            checkMonthRecord.setCreateTime(LocalDateTime.now());
-            checkMonthRecordMapper.insert(checkMonthRecord);
+//            checkMonthRecord.setCreateTime(LocalDateTime.now());
+//            checkMonthRecordMapper.insert(checkMonthRecord);
             Map map = new HashMap();
             map.put("checkMonthFk",checkMonthId);
+            map.put("checkMonthRecordId",checkMonthRecord.getId());
             List<CheckMonthList> list = checkMonthListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);
             }
             checkMonthRecord.setCheckMonthList(list);
-        }
+//        }
         return checkMonthRecord;
     }
 
     @Override
     public boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
         List<CheckMonthList> checkMonthLists = checkMonthRecord.getCheckMonthList();
-        checkMonthRecordMapper.updateById(checkMonthRecord);
+        //先将list置位null 方便保存
+        checkMonthRecord.setCheckMonthList(null);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String date = df.format(new Date());
+        checkMonthRecord.setCheckContent(checkMonthRecord.getCheckPersonName()+" 于 "+date+" 填写");
+        checkMonthRecord.setCreateTime(LocalDateTime.now());
+        checkMonthRecordMapper.insert(checkMonthRecord);
         String checkMonthRecordId = checkMonthRecord.getId();
         if (checkMonthLists.size()>0){
             for (CheckMonthList checkMonthList:checkMonthLists){
@@ -160,6 +165,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
             String checkMonthId = checkMonthRecord.getCheckMonthId();
             Map map = new HashMap();
             map.put("checkMonthFk",checkMonthId);
+            map.put("checkMonthRecordId",checkMonthRecord.getId());
             List<CheckMonthList> list = checkMonthListMapper.selectByParam(map);
             if (list.size()>0){
                 sortList(list);

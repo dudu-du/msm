@@ -50,7 +50,6 @@ public class CheckMonthRecord extends Model<CheckMonthRecord> {
      * 创建时间
      */
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;
 
     /**

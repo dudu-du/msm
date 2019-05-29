@@ -12,12 +12,10 @@ import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -57,7 +55,12 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
     @Override
     public boolean addCheckDayRecord(CheckDayRecord checkDayRecord) {
         List<CheckDayList> checkDayLists = checkDayRecord.getCheckDayList();
-        checkDayRecordMapper.updateById(checkDayRecord);
+        checkDayRecord.setCheckDayList(null);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String date = df.format(new Date());
+        checkDayRecord.setCheckContent(checkDayRecord.getCheckPersonName()+" 于 "+date+" 填写");
+        checkDayRecord.setCreateTime(LocalDateTime.now());
+        checkDayRecordMapper.insert(checkDayRecord);
         String checkDayRecordId = checkDayRecord.getId();
         if (checkDayLists.size()>0){
             for (CheckDayList checkDayList:checkDayLists){
@@ -138,30 +141,30 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
-        CheckDayRecord checkDayRecord = checkDayRecordMapper.selectByParam(param);
-        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
-        if (checkDayRecord!=null){
-            String checkDayId = checkDayRecord.getCheckDayId();
-            Map map = new HashMap();
-            map.put("checkDayFk",checkDayId);
-            List<CheckDayList> list = checkDayListMapper.selectByParam(map);
-            if (list.size()>0){
-                sortList(list);
-            }
-            checkDayRecord.setCheckDayList(list);
-        }else {
+//        CheckDayRecord checkDayRecord = checkDayRecordMapper.selectByParam(param);
+//        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
+//        if (checkDayRecord!=null){
+//            String checkDayId = checkDayRecord.getCheckDayId();
+//            Map map = new HashMap();
+//            map.put("checkDayFk",checkDayId);
+//            List<CheckDayList> list = checkDayListMapper.selectByParam(map);
+//            if (list.size()>0){
+//                sortList(list);
+//            }
+//            checkDayRecord.setCheckDayList(list);
+//        }else {
             //先获取是否已经添加好模板
             CheckDay checkDay = checkDayMapper.selectByParam(param);
             if (checkDay==null){
                 return null;
             }
             String checkDayId = checkDay.getId();
-            checkDayRecord = new CheckDayRecord();
+            CheckDayRecord checkDayRecord = new CheckDayRecord();
             checkDayRecord.setCheckDayId(checkDayId);
             checkDayRecord.setId(UUIDUtil.getUUID());
             checkDayRecord.setOrgFk(orgId);
-            checkDayRecord.setCreateTime(LocalDateTime.now());
-            checkDayRecordMapper.insert(checkDayRecord);
+//            checkDayRecord.setCreateTime(LocalDateTime.now());
+//            checkDayRecordMapper.insert(checkDayRecord);
             Map map = new HashMap();
             map.put("checkDayFk",checkDayId);
             List<CheckDayList> list = checkDayListMapper.selectByParam(map);
@@ -169,7 +172,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                 sortList(list);
             }
             checkDayRecord.setCheckDayList(list);
-        }
+//        }
         return checkDayRecord;
     }
 

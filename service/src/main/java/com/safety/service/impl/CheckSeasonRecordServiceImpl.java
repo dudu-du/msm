@@ -10,12 +10,10 @@ import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -46,7 +44,12 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
     @Override
     public boolean addCheckSeasonRecord(CheckSeasonRecord checkSeasonRecord) {
         List<CheckComprehensiveSeasonList> checkComprehensiveSeasonLists = checkSeasonRecord.getCheckComprehensiveSeasonList();
-        checkSeasonRecordMapper.updateById(checkSeasonRecord);
+        checkSeasonRecord.setCheckComprehensiveSeasonList(null);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String date = df.format(new Date());
+        checkSeasonRecord.setCheckContent(checkSeasonRecord.getCheckPersonName()+" 于 "+date+" 填写");
+        checkSeasonRecord.setCreateTime(LocalDateTime.now());
+        checkSeasonRecordMapper.insert(checkSeasonRecord);
         String checkSeasonRecordId = checkSeasonRecord.getId();
         if (checkComprehensiveSeasonLists.size()>0){
             for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:checkComprehensiveSeasonLists){
@@ -109,32 +112,32 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
-        CheckSeasonRecord checkSeasonRecord = checkSeasonRecordMapper.selectByParam(param);
-        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
-        if (checkSeasonRecord!=null){
-            String checkSeasonId = checkSeasonRecord.getCheckSeasonId();
-            Map map = new HashMap();
-            map.put("checkComprehensiveSeasonFk",checkSeasonId);
-            List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
-            checkSeasonRecord.setCheckComprehensiveSeasonList(list);
-        }else {
+//        CheckSeasonRecord checkSeasonRecord = checkSeasonRecordMapper.selectByParam(param);
+//        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
+//        if (checkSeasonRecord!=null){
+//            String checkSeasonId = checkSeasonRecord.getCheckSeasonId();
+//            Map map = new HashMap();
+//            map.put("checkComprehensiveSeasonFk",checkSeasonId);
+//            List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
+//            checkSeasonRecord.setCheckComprehensiveSeasonList(list);
+//        }else {
             //先获取是否已经添加好模板
             CheckComprehensiveSeason checkComprehensiveSeason = checkComprehensiveSeasonMapper.selectByParam(param);
             if (checkComprehensiveSeason==null){
                 return null;
             }
             String checkSeasonId = checkComprehensiveSeason.getId();
-            checkSeasonRecord = new CheckSeasonRecord();
+            CheckSeasonRecord checkSeasonRecord = new CheckSeasonRecord();
             checkSeasonRecord.setCheckSeasonId(checkSeasonId);
             checkSeasonRecord.setId(UUIDUtil.getUUID());
             checkSeasonRecord.setOrgFk(orgId);
-            checkSeasonRecord.setCreateTime(LocalDateTime.now());
-            checkSeasonRecordMapper.insert(checkSeasonRecord);
+//            checkSeasonRecord.setCreateTime(LocalDateTime.now());
+//            checkSeasonRecordMapper.insert(checkSeasonRecord);
             Map map = new HashMap();
             map.put("checkComprehensiveSeasonFk",checkSeasonId);
             List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
             checkSeasonRecord.setCheckComprehensiveSeasonList(list);
-        }
+//        }
         return checkSeasonRecord;
     }
 
