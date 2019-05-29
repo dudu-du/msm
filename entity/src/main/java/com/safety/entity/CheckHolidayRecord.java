@@ -1,6 +1,7 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -48,6 +49,8 @@ public class CheckHolidayRecord extends Model<CheckHolidayRecord> {
     /**
      * 创建时间
      */
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;
 
     /**
