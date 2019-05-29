@@ -142,6 +142,8 @@
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
 						that.$data.inputValue = that.$data.data.checkPersonName;
+						that.$data.dateValue = [];
+						that.$data.tableData = [];
 						if(that.$data.data.checkStartTime){
 							that.$data.dateValue.push(new Date(that.$data.data.checkStartTime));
 						}

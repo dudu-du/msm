@@ -112,6 +112,8 @@
 				that.$data.tableData = [];
 				axios.get('/safety/checkSpecialRecord/checkSpecialRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
+
+						that.$data.tableData = [];
 						response.data.data.checkSpecialList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
