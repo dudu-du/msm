@@ -13,7 +13,8 @@ new Vue({
     },
     data:function(){
         return {
-            data: []
+            data: [],
+            dialogAddVisible: false
         }
     },
     methods:{
