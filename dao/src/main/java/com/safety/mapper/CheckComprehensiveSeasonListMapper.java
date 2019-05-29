@@ -2,6 +2,7 @@ package com.safety.mapper;
 
 import com.safety.entity.CheckComprehensiveSeasonList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.CheckSeasonRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ import java.util.Map;
 public interface CheckComprehensiveSeasonListMapper extends BaseMapper<CheckComprehensiveSeasonList> {
 
     List<CheckComprehensiveSeasonList> selectByPid(Map map);
+
+    List<CheckComprehensiveSeasonList> selectByParam(Map map);
 }

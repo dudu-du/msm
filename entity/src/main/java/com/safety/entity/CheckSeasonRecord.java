@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -75,6 +76,11 @@ public class CheckSeasonRecord extends Model<CheckSeasonRecord> {
      * 排查人名称
      */
     private String checkPersonName;
+
+    /**
+     *
+     */
+    private List<CheckComprehensiveSeasonList> checkComprehensiveSeasonList;
 
     public String getId() {
         return id;
@@ -161,6 +167,14 @@ public class CheckSeasonRecord extends Model<CheckSeasonRecord> {
 
     public void setCheckPersonName(String checkPersonName) {
         this.checkPersonName = checkPersonName;
+    }
+
+    public List<CheckComprehensiveSeasonList> getCheckComprehensiveSeasonList() {
+        return checkComprehensiveSeasonList;
+    }
+
+    public void setCheckComprehensiveSeasonList(List<CheckComprehensiveSeasonList> checkComprehensiveSeasonList) {
+        this.checkComprehensiveSeasonList = checkComprehensiveSeasonList;
     }
 
     @Override

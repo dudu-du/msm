@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckSeasonRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckSeasonRecordService extends IService<CheckSeasonRecord> {
 
+    boolean addCheckSeasonRecord(CheckSeasonRecord checkSeasonRecord);
+
+    CheckSeasonRecord getByParam(String orgId, String year);
+
+    PageInfo<CheckSeasonRecord> getByPage(Integer currentPage, Integer pageSize);
+
+    CheckSeasonRecord getById(String id);
 }

@@ -19,4 +19,8 @@
     <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
         select * from check_comprehensive_season_list where check_comprehensive_season_fk = #{checkComprehensiveSeasonFk};
     </select>
+    <select id="selectByParam" resultType="com.safety.entity.CheckComprehensiveSeasonList">
+        select cml.*,cmrl.result from check_comprehensive_season_list cml LEFT join check_season_record_list cmrl on cml.id = cmrl.check_season_list_id
+        where check_omprehensive_season_fk = #{checkComprehensiveSeasonFk} order by create_time;
+    </select>
 </mapper>

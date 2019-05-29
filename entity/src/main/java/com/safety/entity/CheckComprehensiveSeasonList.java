@@ -66,6 +66,22 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
      */
     private String checkComprehensiveSeasonFk;
 
+    /**
+     * 位置标记
+     * @return
+     */
+    private Integer index;
+
+    /**
+     * 个数标记
+     */
+    private Integer union;
+
+    /**
+     * 填写结果
+     */
+    private String result;
+
     public String getId() {
         return id;
     }
@@ -141,6 +157,30 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
 
     public void setCheckComprehensiveSeasonFk(String checkComprehensiveSeasonFk) {
         this.checkComprehensiveSeasonFk = checkComprehensiveSeasonFk;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public Integer getUnion() {
+        return union;
+    }
+
+    public void setUnion(Integer union) {
+        this.union = union;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     @Override

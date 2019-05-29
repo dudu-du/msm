@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckSeasonRecord;
 import com.safety.service.ICheckSeasonRecordService;
 import com.safety.tools.BaseController;
@@ -36,12 +37,9 @@ public class CheckSeasonRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckSeasonRecord(@RequestBody CheckSeasonRecord checkSeasonRecord){
-        String id = UUIDUtil.getUUID();
-        checkSeasonRecord.setId(id);
-        checkSeasonRecord.setCreateTime(LocalDateTime.now());
-        boolean result = iCheckSeasonRecordService.save(checkSeasonRecord);
+        boolean result = iCheckSeasonRecordService.addCheckSeasonRecord(checkSeasonRecord);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,16 +80,51 @@ public class CheckSeasonRecordController extends BaseController {
     }
 
     /**
-     * 通过ID查询
+     * 通过ID查询b'
+     *
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkSeasonRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkSeasonRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckSeasonRecordById(String id){
         CheckSeasonRecord checkSeasonRecord = iCheckSeasonRecordService.getById(id);
         if(checkSeasonRecord!=null){
             return renderSuccess("查询成功",checkSeasonRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecord",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckSeasonRecordByParam(String orgId, String year){
+        CheckSeasonRecord checkSeasonRecord = iCheckSeasonRecordService.getByParam(orgId,year);
+        if(checkSeasonRecord!=null){
+            return renderSuccess("查询成功",checkSeasonRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckSeasonRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckSeasonRecord> page = iCheckSeasonRecordService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }

@@ -16,5 +16,45 @@
         <result column="check_person_fk" property="checkPersonFk" />
         <result column="check_person_name" property="checkPersonName" />
     </resultMap>
+    <update id="updateById">
+        update check_season_record
+        <set>
+            <if test="checkSeasonId!=null">
+                check_season_id = #{checkSeasonId},
+            </if>
+            <if test="checkContent!=null">
+                check_content = #{checkContent},
+            </if>
+            <if test="checkStartTime!=null">
+                check_start_time = #{checkStartTime},
+            </if>
+            <if test="checkEndTime!=null">
+                check_end_time = #{checkEndTime},
+            </if>
+            <if test="checkPersonName!=null">
+                check_person_name = #{checkPersonName},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="selectByParam" resultType="com.safety.entity.CheckSeasonRecord">
+        select * from check_season_record
+        <where>
+            <if test="orgFk!=null">
+                and org_fk = #{orgFk}
+            </if>
+            <if test="createTime!=null">
+                and create_time =#{createTime}
+            </if>
+            <if test="id!=null">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
+    <select id="selectAll" resultType="com.safety.entity.CheckSeasonRecord">
+        select *  from check_season_record order by create_time desc
+    </select>
 
 </mapper>
