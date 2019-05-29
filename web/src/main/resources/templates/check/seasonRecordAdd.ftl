@@ -142,7 +142,7 @@
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
 						that.$data.tableData = [];
-						response.data.data.checkSeasonList.forEach(e=>{
+						response.data.data.checkComprehensiveSeasonList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
 					}else{
