@@ -6,7 +6,7 @@ new Vue({
     components: {axios},
     created:function(){
         var that = this;
-        axios.get('http://127.0.0.1:8080/safety/checkMonthRecord/checkMonthRecordByPage',{params:{currentPage:1,pageSize:1}}).then(function(res){
+        axios.get('/safety/checkMonthRecord/checkMonthRecordByPage',{params:{currentPage:1,pageSize:1}}).then(function(res){
             that.data = res.data.data;
             that.data.list.forEach(function(data,index){
                 that.data.list[index].createTime=that.data.list[index].createTime[0]+"年"+that.data.list[index].createTime[1]+that.data.list[index].createTime[2]+"月";
@@ -24,7 +24,7 @@ new Vue({
     methods:{
         next(currentPage,pageSize){
             var that = this;
-            axios.get('http://127.0.0.1:8080/safety/checkMonthRecord/checkMonthRecordByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
+            axios.get('/safety/checkMonthRecord/checkMonthRecordByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
                 that.data = res.data.data;
                 that.data.list.forEach(function(data,index){
                     that.data.list[index].createTime=that.data.list[index].createTime[0]+"年"+that.data.list[index].createTime[1]+that.data.list[index].createTime[2]+"月";
@@ -34,7 +34,7 @@ new Vue({
         });
         },prev(currentPage,pageSize){
             var that = this;
-            axios.get('http://127.0.0.1:8080/safety/checkMonthRecord/checkMonthRecordByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
+            axios.get('/safety/checkMonthRecord/checkMonthRecordByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
                 that.data = res.data.data;
                 that.data.list.forEach(function(data,index){
                     that.data.list[index].createTime=that.data.list[index].createTime[0]+"年"+that.data.list[index].createTime[1]+that.data.list[index].createTime[2]+"月";
