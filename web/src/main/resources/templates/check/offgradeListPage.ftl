@@ -22,10 +22,13 @@
 	<body>
 		<div id="app">
 			<el-container>
+				<el-header>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">未合格项记录列表</el-col><el-col :span="8">&nbsp;</el-col>
+				</el-header>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
 						<el-table-column type="index" label="序号" width="230" align="center"></el-table-column>
-						<el-table-column prop="checkType" label="来源" width="240">
+						<el-table-column prop="checkType" label="来源" width="240" align="center">
 						</el-table-column>
 						<el-table-column prop="content" label="内容" width="240" align="center">
 						</el-table-column>

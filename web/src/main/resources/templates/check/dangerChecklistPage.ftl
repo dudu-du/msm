@@ -48,7 +48,7 @@
 				<el-dialog title="新增排查清单" :visible.sync="dialogAddVisible">
 					<el-form lable-width="110px;">
 						<el-form-item lable="风险部位">
-							
+
 						</el-form-item>
 					</el-form>
 				</el-dialog>
