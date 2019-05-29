@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckHolidayRecord;
 import com.safety.service.ICheckHolidayRecordService;
 import com.safety.tools.BaseController;
@@ -36,12 +37,9 @@ public class CheckHolidayRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckHolidayRecord(@RequestBody CheckHolidayRecord checkHolidayRecord){
-        String id = UUIDUtil.getUUID();
-        checkHolidayRecord.setId(id);
-        checkHolidayRecord.setCreateTime(LocalDateTime.now());
-        boolean result = iCheckHolidayRecordService.save(checkHolidayRecord);
+        boolean result = iCheckHolidayRecordService.addCheckHolidayRecord(checkHolidayRecord);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -82,16 +80,51 @@ public class CheckHolidayRecordController extends BaseController {
     }
 
     /**
-     * 通过ID查询
+     * 通过ID查询b'
+     *
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkHolidayRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkHolidayRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckHolidayRecordById(String id){
         CheckHolidayRecord checkHolidayRecord = iCheckHolidayRecordService.getById(id);
         if(checkHolidayRecord!=null){
             return renderSuccess("查询成功",checkHolidayRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkHolidayRecord",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckHolidayRecordByParam(String orgId, String year){
+        CheckHolidayRecord checkHolidayRecord = iCheckHolidayRecordService.getByParam(orgId,year);
+        if(checkHolidayRecord!=null){
+            return renderSuccess("查询成功",checkHolidayRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkHolidayRecordByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckHolidayRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckHolidayRecord> page = iCheckHolidayRecordService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }

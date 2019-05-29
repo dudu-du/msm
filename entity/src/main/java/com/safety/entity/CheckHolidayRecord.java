@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -75,6 +76,8 @@ public class CheckHolidayRecord extends Model<CheckHolidayRecord> {
      * 排查人名称
      */
     private String checkPersonName;
+
+    private List<CheckComprehensiveHolidayList> checkComprehensiveHolidayList;
 
     public String getId() {
         return id;
@@ -161,6 +164,14 @@ public class CheckHolidayRecord extends Model<CheckHolidayRecord> {
 
     public void setCheckPersonName(String checkPersonName) {
         this.checkPersonName = checkPersonName;
+    }
+
+    public List<CheckComprehensiveHolidayList> getCheckComprehensiveHolidayList() {
+        return checkComprehensiveHolidayList;
+    }
+
+    public void setCheckComprehensiveHolidayList(List<CheckComprehensiveHolidayList> checkComprehensiveHolidayList) {
+        this.checkComprehensiveHolidayList = checkComprehensiveHolidayList;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
 
     private final String YES = "1";
     private final String NO = "0";
-    private final String CHECK_TYPE = "月排查记录";
+    private final String CHECK_TYPE = "周排查记录";
     
     @Override
     public boolean addCheckWeekRecord(CheckWeekRecord checkWeekRecord) {

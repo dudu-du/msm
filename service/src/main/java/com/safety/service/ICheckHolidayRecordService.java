@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckHolidayRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckHolidayRecordService extends IService<CheckHolidayRecord> {
 
+    boolean addCheckHolidayRecord(CheckHolidayRecord checkHolidayRecord);
+
+    CheckHolidayRecord getByParam(String orgId, String year);
+
+    PageInfo<CheckHolidayRecord> getByPage(Integer currentPage, Integer pageSize);
+
+    CheckHolidayRecord getById(String id);
 }
