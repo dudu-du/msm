@@ -44,6 +44,6 @@
 			</el-container>
 		</div>
 	</body>
-<script type="text/javascript" src="/Public/js/check/specialRecordPage.js" ></script>
+<script type="text/javascript" src="/Public/js/check/holidayRecordPage.js" ></script>
 
 </html>
