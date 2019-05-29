@@ -106,7 +106,7 @@ public class CheckRectificationReceiptController extends BaseController {
     @RequestMapping(value = "/checkRectificationReceiptAdd",method = RequestMethod.GET)
     public BaseModelAndView getCheckRectificationReceiptAdd(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/checkRectificationReceiptAdd");
+        modelAndView.setViewName("check/rectificationReceiptAdd");
         return modelAndView;
     }
 
@@ -117,7 +117,7 @@ public class CheckRectificationReceiptController extends BaseController {
     @RequestMapping(value = "/checkRectificationReceiptUpdate",method = RequestMethod.GET)
     public BaseModelAndView getCheckRectificationReceiptUpdate(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/checkRectificationReceiptUpdate");
+        modelAndView.setViewName("check/rectificationReceiptUpdate");
         return modelAndView;
     }
 
@@ -128,7 +128,7 @@ public class CheckRectificationReceiptController extends BaseController {
     @RequestMapping(value = "/checkRectificationReceiptPage",method = RequestMethod.GET)
     public BaseModelAndView getCheckRectificationReceiptPage(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/checkRectificationReceiptPage");
+        modelAndView.setViewName("check/rectificationReceiptPage");
         return modelAndView;
     }
 
