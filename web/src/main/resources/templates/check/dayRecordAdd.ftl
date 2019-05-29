@@ -70,11 +70,9 @@
 						
 						</div>
 					</div>
-					--!>
+					-->
 					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
-							<el-table-column prop="checkTypeName" label="类型" v-show="false">
-							</el-table-column>
 							<el-table-column type="index">
 							</el-table-column>
 							<el-table-column prop="checkContent" label="内容">
@@ -194,7 +192,10 @@
 				console.log(row);
 			},
 			submitForm(){
-				this.$data.data.checkDayList = this.$data.tableData;
+				this.$data.data.checkStartTime = this.getDate(this.$data.dateValue[0]);
+				this.$data.data.checkEndTime = this.getDate(this.$data.dateValue[1]);
+				this.$data.data.checkPersonName = this.$data.inputValue;
+				this.$data.data.checkMonthList = this.$data.tableData;
 				var notify = false;
 				for(var i=0;i<this.$data.tableData.length;i++){
 					if(this.$data.tableData[i].result == 0){
@@ -218,6 +219,17 @@
 				}).catch(err=>{
 					this.$message.error('服务器异常，请稍后再试！');
 				});
+			},getDate(date){
+				var year = date.getFullYear();
+				var month = date.getMonth()+1;
+				var day = date.getDate();
+				if(month < 10){
+					month = '0'+month;
+				}
+				if(day<10){
+					day = '0' + day;
+				}
+				return year + '-' + month + '-' + day;
 			}
 		}
 	});

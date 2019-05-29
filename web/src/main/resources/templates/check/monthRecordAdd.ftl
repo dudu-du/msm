@@ -70,7 +70,7 @@
 						
 						</div>
 					</div>
-					--!>
+					-->
 					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
 							<el-table-column prop="checkTypeName" label="类型" v-show="false">
@@ -203,6 +203,7 @@
 				console.log(row);
 			},
 			submitForm(){
+				console.log(this);
 				this.$data.data.checkStartTime = this.getDate(this.$data.dateValue[0]);
 				this.$data.data.checkEndTime = this.getDate(this.$data.dateValue[1]);
 				this.$data.data.checkPersonName = this.$data.inputValue;

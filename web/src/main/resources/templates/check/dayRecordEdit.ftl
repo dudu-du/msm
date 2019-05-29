@@ -49,8 +49,6 @@
 					</el-row>
 					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
-							<el-table-column prop="checkTypeName" label="类型" v-show="false">
-							</el-table-column>
 							<el-table-column type="index">
 							</el-table-column>
 							<el-table-column prop="checkContent" label="内容">
