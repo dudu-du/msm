@@ -32,9 +32,9 @@
 						</el-table-column>
 						<el-table-column prop="content" label="内容" width="240" align="center">
 						</el-table-column>
-						<el-table-column prop="levelName" label="风险等级名称" width="240" align="center">
+						<el-table-column prop="levelName" label="风险等级" width="240" align="center">
 						</el-table-column>
-						<el-table-column prop="levelNum" label="风险等级" width="240" align="center">
+						<el-table-column prop="levelNum" label="风险等级" width="240" align="center" v-if="false">
 						</el-table-column>
 						<el-table-column prop="createTime" label="创建时间" width="240" align="center">
 						</el-table-column>
