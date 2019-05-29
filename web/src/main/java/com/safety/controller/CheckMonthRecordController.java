@@ -78,7 +78,7 @@ public class CheckMonthRecordController extends BaseController {
     }
 
     /**
-     * 通过ID查询b'
+     * 通过ID查询
      *
      * @param id
      * @return

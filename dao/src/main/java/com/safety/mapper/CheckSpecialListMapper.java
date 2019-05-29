@@ -2,6 +2,7 @@ package com.safety.mapper;
 
 import com.safety.entity.CheckSpecialList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.safety.entity.CheckSpecialRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ import java.util.Map;
 public interface CheckSpecialListMapper extends BaseMapper<CheckSpecialList> {
 
     List<CheckSpecialList> selectByPid(Map map);
+
+    List<CheckSpecialList> selectByParam(Map map);
 }

@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckSpecialRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckSpecialRecordService extends IService<CheckSpecialRecord> {
 
+    CheckSpecialRecord getByParam(String orgId, String year);
+
+    boolean addCheckSpecialRecord(CheckSpecialRecord checkSpecialRecord);
+
+    PageInfo<CheckSpecialRecord> getByPage(Integer currentPage, Integer pageSize);
+
+    CheckSpecialRecord getById(String id);
 }

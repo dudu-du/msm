@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckSpecialRecord;
 import com.safety.service.ICheckSpecialRecordService;
 import com.safety.tools.BaseController;
@@ -36,12 +37,9 @@ public class CheckSpecialRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckSpecialRecord(@RequestBody CheckSpecialRecord checkSpecialRecord){
-        String id = UUIDUtil.getUUID();
-        checkSpecialRecord.setId(id);
-        checkSpecialRecord.setCreateTime(LocalDateTime.now());
-        boolean result = iCheckSpecialRecordService.save(checkSpecialRecord);
+        boolean result = iCheckSpecialRecordService.addCheckSpecialRecord(checkSpecialRecord);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -83,15 +81,50 @@ public class CheckSpecialRecordController extends BaseController {
 
     /**
      * 通过ID查询
+     *
      * @param id
      * @return
      */
-    @RequestMapping(value = "/checkSpecialRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkSpecialRecordById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getCheckSpecialRecordById(String id){
         CheckSpecialRecord checkSpecialRecord = iCheckSpecialRecordService.getById(id);
         if(checkSpecialRecord!=null){
             return renderSuccess("查询成功",checkSpecialRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 根据日期和机构名称查询
+     * @param orgId
+     * @param year
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialRecord",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckSpecialRecordByParam(String orgId, String year){
+        CheckSpecialRecord checkSpecialRecord = iCheckSpecialRecordService.getByParam(orgId,year);
+        if(checkSpecialRecord!=null){
+            return renderSuccess("查询成功",checkSpecialRecord);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialRecordByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getCheckSpecialRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<CheckSpecialRecord> page = iCheckSpecialRecordService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }

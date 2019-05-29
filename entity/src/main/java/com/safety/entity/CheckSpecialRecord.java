@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -75,6 +76,11 @@ public class CheckSpecialRecord extends Model<CheckSpecialRecord> {
      * 排查人名称
      */
     private String checkPersonName;
+
+    /**
+     *
+     */
+    private List<CheckSpecialList> checkSpecialList;
 
     public String getId() {
         return id;
@@ -161,6 +167,14 @@ public class CheckSpecialRecord extends Model<CheckSpecialRecord> {
 
     public void setCheckPersonName(String checkPersonName) {
         this.checkPersonName = checkPersonName;
+    }
+
+    public List<CheckSpecialList> getCheckSpecialList() {
+        return checkSpecialList;
+    }
+
+    public void setCheckSpecialList(List<CheckSpecialList> checkSpecialList) {
+        this.checkSpecialList = checkSpecialList;
     }
 
     @Override
