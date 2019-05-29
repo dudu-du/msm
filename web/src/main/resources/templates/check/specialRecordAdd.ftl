@@ -15,10 +15,11 @@
 		<div id="app">
 			<el-container>
 				<el-header>
-					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查治理日排查记录</el-col><el-col :span="8">&nbsp;</el-col>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">专项检查</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
 					<el-row style="margin-bottom:10px">
+					<el-col :span="20">
 						<el-select placeholder="请选择" v-model="topselect.orgs.value">
 						    <el-option
 						      v-for="item in topselect.orgs.data"
@@ -28,25 +29,48 @@
 						    </el-option>
 						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+					</el-col>
+					<el-col :span="4" style="text-align:right;">
+					   <el-button type="success" @click="submitForm">保存</el-button>
+					</el-col>
 					</el-row>
 					<el-row>
 						<el-col :span="18">
 							<span>排查时间：</span>
 							 <el-date-picker
 						      type="datetimerange"
-						      v-mode="dateValue"
+						      v-model="dateValue"
 						      range-separator="至"
-						      disabled
 						      start-placeholder="开始日期"
 						      end-placeholder="结束日期">
 						    </el-date-picker>
 						</el-col>
 						<el-col :span="6">
-						<el-input placeholder="请输入内容" disabled>
+						<el-input placeholder="请输入内容" v-model="inputValue">
 						    <template slot="prepend">排查人员：</template>
 						  </el-input>
 						</el-col>
 					</el-row>
+					<!--
+					<div style="width:100%" class="el-table el-table--fit el-table--border el-table--group el-table--enable-row-hover el-table--enable-row-transition">
+						<div class="el-table__header-wrapper">
+							<table class="el-table__header" style="width:100%;">
+								<thead class="is-group has-gutter">
+							        <tr>
+							          <th rowspan="2" colspan="3" class="is-leaf">检查项目及相关要求</th>
+							          <th rowspan="2" class="is-leaf">检查方法</th>
+							          <th colspan="2" class="is-leaf">符合性</th>
+							        </tr>
+							        <tr>
+							          <th class="is-leaf">是</th>
+							          <th class="is-leaf">否</th>
+							        </tr>
+							      </thead>
+							</table>
+						
+						</div>
+					</div>
+					--!>
 					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
 							<el-table-column prop="checkTypeName" label="类型" v-show="false">
@@ -60,14 +84,15 @@
 						</el-table-column>
 						<el-table-column prop="levelName" label="符合性">
 							<template slot-scope="scope">
-						        <el-radio disabled v-model="scope.row.radio" label="1">是</el-radio>
-  								<el-radio disabled v-model="scope.row.radio" label="2">否</el-radio>
+							<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
+						        <el-radio label="1">是</el-radio>
+  								<el-radio label="0">否</el-radio>
+  							</el-radio-group>
 						     </template>
 						</el-table-column>
 					</el-table>
 				</el-main>
 				<el-footer>
-					<div style="width:100%;height:100%">
 						注：月排查由主要负责人组织并实施。
 					</div>
 				</el-footer>
@@ -87,7 +112,9 @@
 					}
 				},
 				tableData:[],
-				dateValue:''
+				data:{},
+				dateValue:'',
+				inputValue:''
 			};
 		},
 		created:function(){
@@ -111,10 +138,10 @@
 				var date = new Date();
 				var year = date.getFullYear();
 				var that = this;
-				that.$data.tableData = [];
-				axios.get('/safety/checkDayRecord/checkDayRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
+				axios.get('/safety/checkSpecialRecord/checkSpecialRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
-						response.data.data.checkDayList.forEach(e=>{
+						that.$data.data = response.data.data;
+						response.data.data.checkSpecialList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
 					}else{
@@ -146,7 +173,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		        	axios.delete('/safety/checkDayRecord/checkDayRecord',{params:{id:row.id}}).then(response=>{
+		        	axios.delete('/safety/checkSpecialRecord/checkSpecialRecord',{params:{id:row.id}}).then(response=>{
 		        		if(response.data.success === true){
 							this.$message.success(response.data.msg);
 							this.search();
@@ -162,6 +189,35 @@
 		            message: '已取消删除'
 		          });          
 		        });
+			},
+			change(row){
+				console.log(row);
+			},
+			submitForm(){
+				this.$data.data.checkSpecialList = this.$data.tableData;
+				var notify = false;
+				for(var i=0;i<this.$data.tableData.length;i++){
+					if(this.$data.tableData[i].result == 0){
+						notify = true;
+						break;
+					}
+				}
+				axios.post('/safety/checkSpecialRecord/checkSpecialRecord',this.$data.data).then(response=>{
+					if(response.data.success === true){
+						this.$message.success(response.data.msg);
+						if(notify){
+							this.$notify({
+					          title: '警告',
+					          message: '请去未合格检查页面填写清单台账',
+					          type: 'warning'
+					        });
+						}
+					}else{
+						this.$message.warning(response.data.msg);
+					}
+				}).catch(err=>{
+					this.$message.error('服务器异常，请稍后再试！');
+				});
 			}
 		}
 	});

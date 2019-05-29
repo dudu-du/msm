@@ -15,7 +15,7 @@
 		<div id="app">
 			<el-container>
 				<el-header>
-					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查治理日排查记录</el-col><el-col :span="8">&nbsp;</el-col>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">专项检查</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
 					<el-row style="margin-bottom:10px">
@@ -112,9 +112,9 @@
 				var year = date.getFullYear();
 				var that = this;
 				that.$data.tableData = [];
-				axios.get('/safety/checkDayRecord/checkDayRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
+				axios.get('/safety/checkSpecialRecord/checkSpecialRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
-						response.data.data.checkDayList.forEach(e=>{
+						response.data.data.checkSpecialList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
 					}else{
@@ -146,7 +146,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		        	axios.delete('/safety/checkDayRecord/checkDayRecord',{params:{id:row.id}}).then(response=>{
+		        	axios.delete('/safety/checkSpecialRecord/checkSpecialRecord',{params:{id:row.id}}).then(response=>{
 		        		if(response.data.success === true){
 							this.$message.success(response.data.msg);
 							this.search();
