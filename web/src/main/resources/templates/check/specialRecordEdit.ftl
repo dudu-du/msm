@@ -15,7 +15,7 @@
 		<div id="app">
 			<el-container>
 				<el-header>
-					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查治理月排查记录</el-col><el-col :span="8">&nbsp;</el-col>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">专项检查</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
 					<el-row style="margin-bottom:10px">
