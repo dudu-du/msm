@@ -1,6 +1,8 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -24,6 +26,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      * 排查时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime investigationTime;
 
     /**
