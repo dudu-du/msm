@@ -19,6 +19,6 @@
         <result column="state" property="state" />
     </resultMap>
     <select id="selectAll"  resultMap="BaseResultMap">
-        select *  from check_offgrade_list order by create_time desc ;
+        select *  from check_offgrade_list order by create_time desc
     </select>
 </mapper>

@@ -10,12 +10,10 @@ import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -46,7 +44,12 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
     @Override
     public boolean addCheckWeekRecord(CheckWeekRecord checkWeekRecord) {
         List<CheckWeekList> checkWeekLists = checkWeekRecord.getCheckWeekList();
-        checkWeekRecordMapper.updateById(checkWeekRecord);
+        checkWeekRecord.setCheckWeekList(null);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String date = df.format(new Date());
+        checkWeekRecord.setCheckContent(checkWeekRecord.getCheckPersonName()+" 于 "+date+" 填写");
+        checkWeekRecord.setCreateTime(LocalDateTime.now());
+        checkWeekRecordMapper.insert(checkWeekRecord);
         String checkWeekRecordId = checkWeekRecord.getId();
         if (checkWeekLists.size()>0){
             for (CheckWeekList checkWeekList:checkWeekLists){
@@ -109,30 +112,30 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
-        CheckWeekRecord checkWeekRecord = checkWeekRecordMapper.selectByParam(param);
-        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
-        if (checkWeekRecord!=null){
-            String checkWeekId = checkWeekRecord.getCheckWeekId();
-            Map map = new HashMap();
-            map.put("checkWeekFk",checkWeekId);
-            List<CheckWeekList> list = checkWeekListMapper.selectByParam(map);
-            if (list.size()>0){
-                sortList(list);
-            }
-            checkWeekRecord.setCheckWeekList(list);
-        }else {
+//        CheckWeekRecord checkWeekRecord = checkWeekRecordMapper.selectByParam(param);
+//        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
+//        if (checkWeekRecord!=null){
+//            String checkWeekId = checkWeekRecord.getCheckWeekId();
+//            Map map = new HashMap();
+//            map.put("checkWeekFk",checkWeekId);
+//            List<CheckWeekList> list = checkWeekListMapper.selectByParam(map);
+//            if (list.size()>0){
+//                sortList(list);
+//            }
+//            checkWeekRecord.setCheckWeekList(list);
+//        }else {
             //先获取是否已经添加好模板
             CheckWeek checkWeek = checkWeekMapper.selectByParam(param);
             if (checkWeek==null){
                 return null;
             }
             String checkWeekId = checkWeek.getId();
-            checkWeekRecord = new CheckWeekRecord();
+            CheckWeekRecord checkWeekRecord = new CheckWeekRecord();
             checkWeekRecord.setCheckWeekId(checkWeekId);
             checkWeekRecord.setId(UUIDUtil.getUUID());
             checkWeekRecord.setOrgFk(orgId);
-            checkWeekRecord.setCreateTime(LocalDateTime.now());
-            checkWeekRecordMapper.insert(checkWeekRecord);
+//            checkWeekRecord.setCreateTime(LocalDateTime.now());
+//            checkWeekRecordMapper.insert(checkWeekRecord);
             Map map = new HashMap();
             map.put("checkWeekFk",checkWeekId);
             List<CheckWeekList> list = checkWeekListMapper.selectByParam(map);
@@ -140,7 +143,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                 sortList(list);
             }
             checkWeekRecord.setCheckWeekList(list);
-        }
+//        }
         return checkWeekRecord;
     }
 

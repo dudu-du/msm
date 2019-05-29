@@ -10,12 +10,10 @@ import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -46,7 +44,12 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
     @Override
     public boolean addCheckHolidayRecord(CheckHolidayRecord checkHolidayRecord) {
         List<CheckComprehensiveHolidayList> checkComprehensiveHolidayLists = checkHolidayRecord.getCheckComprehensiveHolidayList();
-        checkHolidayRecordMapper.updateById(checkHolidayRecord);
+        checkHolidayRecord.setCheckComprehensiveHolidayList(null);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String date = df.format(new Date());
+        checkHolidayRecord.setCheckContent(checkHolidayRecord.getCheckPersonName()+" 于 "+date+" 填写");
+        checkHolidayRecord.setCreateTime(LocalDateTime.now());
+        checkHolidayRecordMapper.insert(checkHolidayRecord);
         String checkHolidayRecordId = checkHolidayRecord.getId();
         if (checkComprehensiveHolidayLists.size()>0){
             for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:checkComprehensiveHolidayLists){
@@ -109,31 +112,32 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
-        CheckHolidayRecord checkHolidayRecord = checkHolidayRecordMapper.selectByParam(param);
-        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
-        if (checkHolidayRecord!=null){
-            String checkHolidayId = checkHolidayRecord.getCheckHolidayId();
-            Map map = new HashMap();
-            map.put("checkComprehensiveHolidayFk",checkHolidayId);
-            List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
-            checkHolidayRecord.setCheckComprehensiveHolidayList(list);
-        }else {
+//        CheckHolidayRecord checkHolidayRecord = checkHolidayRecordMapper.selectByParam(param);
+//        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
+//        if (checkHolidayRecord!=null){
+//            String checkHolidayId = checkHolidayRecord.getCheckHolidayId();
+//            Map map = new HashMap();
+//            map.put("checkComprehensiveHolidayFk",checkHolidayId);
+//            List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
+//            checkHolidayRecord.setCheckComprehensiveHolidayList(list);
+//        }else {
             //先获取是否已经添加好模板
             CheckComprehensiveHoliday checkComprehensiveHoliday = checkComprehensiveHolidayMapper.selectByParam(param);
             if (checkComprehensiveHoliday==null){
                 return null;
             }
             String checkHolidayId = checkComprehensiveHoliday.getId();
-            checkHolidayRecord = new CheckHolidayRecord();
+            CheckHolidayRecord checkHolidayRecord = new CheckHolidayRecord();
             checkHolidayRecord.setCheckHolidayId(checkHolidayId);
             checkHolidayRecord.setId(UUIDUtil.getUUID());
             checkHolidayRecord.setOrgFk(orgId);
-            checkHolidayRecord.setCreateTime(LocalDateTime.now());
-            checkHolidayRecordMapper.insert(checkHolidayRecord);Map map = new HashMap();
+//            checkHolidayRecord.setCreateTime(LocalDateTime.now());
+//            checkHolidayRecordMapper.insert(checkHolidayRecord);
+            Map map = new HashMap();
             map.put("checkComprehensiveHolidayFk",checkHolidayId);
             List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
             checkHolidayRecord.setCheckComprehensiveHolidayList(list);
-        }
+//        }
         return checkHolidayRecord;
     }
 

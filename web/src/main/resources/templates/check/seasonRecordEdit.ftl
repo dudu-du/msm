@@ -67,9 +67,7 @@
 					</el-table>
 				</el-main>
 				<el-footer>
-					<div style="width:100%;height:100%">
-						注：月排查由主要负责人组织并实施。
-					</div>
+
 				</el-footer>
 			</el-container>
 		</div>
@@ -114,6 +112,7 @@
 				that.$data.tableData = [];
 				axios.get('/safety/checkSeasonRecord/checkSeasonRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
+						that.$data.tableData = [];
 						response.data.data.checkSeasonList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});

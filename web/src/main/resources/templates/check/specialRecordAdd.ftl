@@ -93,8 +93,7 @@
 					</el-table>
 				</el-main>
 				<el-footer>
-						注：月排查由主要负责人组织并实施。
-					</div>
+
 				</el-footer>
 			</el-container>
 		</div>
@@ -141,6 +140,7 @@
 				axios.get('/safety/checkSpecialRecord/checkSpecialRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
+						that.$data.tableData = [];
 						response.data.data.checkSpecialList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});

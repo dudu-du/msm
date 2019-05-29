@@ -20,5 +20,4 @@ public interface CheckMonthRecordMapper extends BaseMapper<CheckMonthRecord> {
 
     List<CheckMonthRecord> selectAll();
 
-    int updateById(CheckMonthRecord checkMonthRecord);
 }

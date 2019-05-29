@@ -56,8 +56,11 @@
 						        label="机构名称">
 						      </el-table-column>
 						      <el-table-column
-						        prop="create_time"
+						        prop="dateofyear"
 						        label="日期">
+						        <template slot-scope="scope">
+						        	{{getDateStr(new Date(scope.row.dateofyear))}}
+						        </template>
 						      </el-table-column>
 						      <el-table-column
 						        prop="level_name"
@@ -90,25 +93,41 @@
 	  },
 	  methods:{
 	  	render(data,data2){
-	  		this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
-	        this.gradient2 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
-	    
-	        this.gradient.addColorStop(0, 'rgba(255, 0,0, 0.5)')
-	        this.gradient.addColorStop(0.5, 'rgba(255, 0, 0, 0.25)');
-	        this.gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
+	  		this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
+	        this.gradient2 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
+	    	this.gradient3 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
+	        this.gradient4 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
+	        this.gradient.addColorStop(0, 'rgba(252,37,37, 0.5)');
+	        this.gradient.addColorStop(0.5, 'rgba(252,37,37, 0.25)');
+	        this.gradient.addColorStop(1, 'rgba(252,37,37, 0)');
 	        
-	        this.gradient2.addColorStop(0, 'rgba(0, 231, 255, 0.9)')
-	        this.gradient2.addColorStop(0.5, 'rgba(0, 231, 255, 0.25)');
-	        this.gradient2.addColorStop(1, 'rgba(0, 231, 255, 0)');
+	        this.gradient2.addColorStop(0, 'rgba(218,165,32, 0.9)');
+	        this.gradient2.addColorStop(0.5, 'rgba(218,165,32, 0.25)');
+	        this.gradient2.addColorStop(1, 'rgba(218,165,32, 0)');
+	        
+	        this.gradient3.addColorStop(0, 'rgba(255,255,0, 0.9)');
+	        this.gradient3.addColorStop(0.5, 'rgba(255,255,0, 0.25)');
+	        this.gradient3.addColorStop(1, 'rgba(255,255,0, 0)');
+	        
+	        this.gradient4.addColorStop(0, 'rgba(65,105,225, 0.9)');
+	        this.gradient4.addColorStop(0.5, 'rgba(65,105,225, 0.25)');
+	        this.gradient4.addColorStop(1, 'rgba(65,105,225, 0)');
+	   
+	        if(data2.length>=1){
+	        	data2[0].backgroundColor = this.gradient;
+	        }
+	        if(data2.length>=2){
+	        	data2[1].backgroundColor = this.gradient2;
+	        }
+	        if(data2.length>=3){
+	        	data2[2].backgroundColor = this.gradient3;
+	        }
+	        if(data2.length>=4){
+	        	data2[3].backgroundColor = this.gradient4;
+	        }
 	        if(data2.length == 1){
 	        	data2[0].label = '总表';
 	        }
-	        if(data2){
-	        	data2.forEach(e=>{
-	        		e.backgroundColor = this.gradient;
-	        	});
-	        }
-	        console.log(data2);
 		    this.renderChart({
 		      labels: data,
 		      datasets: data2
@@ -186,23 +205,17 @@
 				var labels = [];
 				var start = new Date(startDate);
 				var end = new Date(endDate);
-				for(var i = start;i<=end;){
-					var month = i.getMonth() + 1;
-					var date = i.getDate();
-					labels.push(month+'月'+date+'日');
-					i.setDate(date+1);
-				}
+				
 				var url = '';
 				if(this.$data.btn == 'info'){
 					url = '/safety/Statistics/dayChecklistResultCount';
 				}else{
 					url = '/safety/Statistics/dayCheckListLevelCount';
 				}
-				var startDate = this.$data.value[0];
-				var endDate = this.$data.value[1];
+				
 				var that = this;
 				var datasets = [];
-				var level1 = level2=level3=level4={
+				var level1 = {
 			              label: '',
 			              borderColor: '#FC2525',
 			              pointBackgroundColor: 'white',
@@ -211,36 +224,94 @@
 			              backgroundColor: '',
 			              data: []
 			            };
+			    var level2={
+			              label: '较大风险',
+			              borderColor: '#DAA520',
+			              pointBackgroundColor: 'white',
+			              borderWidth: 1,
+			              pointBorderColor: 'white',
+			              backgroundColor: '#DAA520',
+			              data: []
+			            };
+			    var level3={
+			              label: '一般风险',
+			              borderColor: '#FFFF00',
+			              pointBackgroundColor: 'white',
+			              borderWidth: 1,
+			              pointBorderColor: 'white',
+			              backgroundColor: '#FFFF00',
+			              data: []
+			            };
+			    var level4={
+			              label: '低风险',
+			              borderColor: '#4169E1',
+			              pointBackgroundColor: 'white',
+			              borderWidth: 1,
+			              pointBorderColor: 'white',
+			              backgroundColor: '',
+			              data: []
+			            };
+			    for(var i = start;i<=end;){
+					var month = i.getMonth() + 1;
+					var date = i.getDate();
+					labels.push(month+'月'+date+'日');
+					level1.data.push(0);
+					level2.data.push(0);
+					level3.data.push(0);
+					level4.data.push(0);
+					i.setDate(date+1);
+				}
+				//var labelData = {};
 				axios.get(url,{params:{orgId:this.$data.topselect.orgs.value,startTime:startDate,endTime:endDate}}).then(response=>{
 					if(response.data.success === true){
-						console.log(response.data);
 						
 						that.$data.tableData = [];
 						
 						response.data.data.forEach(e=>{
 							that.$data.tableData.push(e);
 							if(e.level_name){
+								//labelData[e.level_name] = {};
+								
 								if(level1.label == '' || level1.label == e.level_name){
+									var sdate = new Date(startDate); 
+								  　　	var now = new Date(e.dateofyear); 
+								  　　 var days = now.getTime() - sdate.getTime(); 
+								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
 									level1.label = e.level_name;
-									level1.data.push(e.count);
+									level1.data[day]=e.count;
 								}else if(level2.label == '' || level2.label == e.level_name){
 									level2.label = e.level_name;
-									level2.data.push(e.count);
-									level2.borderColor = '#05CBE1';
+									var sdate = new Date(startDate); 
+								  　　	var now = new Date(e.dateofyear); 
+								  　　 var days = now.getTime() - sdate.getTime(); 
+								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
+									level2.data[day]=e.count;
 								}else if(level3.label == '' || level3.label == e.level_name){
 									level3.label = e.level_name;
-									level3.data.push(e.count);
-									level3.borderColor = '#05CBE1';
+									var sdate = new Date(startDate); 
+								  　　	var now = new Date(e.dateofyear); 
+								  　　 var days = now.getTime() - sdate.getTime(); 
+								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
+									level3.data[day]=e.count;
 								}else if(level4.label == '' || level4.label == e.level_name){
 									level4.label = e.level_name;
-									level4.data.push(e.count);
-									level4.borderColor = '#05CBE1';
+									var sdate = new Date(startDate); 
+								  　　	var now = new Date(e.dateofyear); 
+								  　　 var days = now.getTime() - sdate.getTime(); 
+								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
+									level4.data[day]=e.count;
 								}
 							}else{
+					
 								level1.label = '总和';
-								level1.data.push(e.count);
+								var sdate = new Date(startDate); 
+							  　　	var now = new Date(e.dateofyear); 
+							  　　 var days = now.getTime() - sdate.getTime(); 
+							  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
+								level1.data[day]=e.count;
 							}
 						});
+						console.log(level1.label);
 						if(level1.label=='' || level1.label == '总和'){
 							datasets.push(level1);
 						}else{
@@ -256,7 +327,7 @@
 					}
 				}).catch(err=>{
 					this.$message.error('服务器异常，请稍后再试！');
-					that.$refs.chart.render(labels);
+					//that.$refs.chart.render(labels);
 				});
 				
 			},
@@ -287,6 +358,18 @@
 					day = '0' + day;
 				}
 				return year + '-' + month + '-' + day;
+			},
+			getDateStr(date){
+				var year = date.getFullYear();
+				var month = date.getMonth()+1;
+				var day = date.getDate();
+				if(month < 10){
+					month = '0'+month;
+				}
+				if(day<10){
+					day = '0' + day;
+				}
+				return year + '年' + month + '月' + day + '日';
 			}
 		}
 	});

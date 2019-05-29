@@ -10,12 +10,10 @@ import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -51,30 +49,30 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
-        CheckSpecialRecord checkSpecialRecord = checkSpecialRecordMapper.selectByParam(param);
-        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
-        if (checkSpecialRecord!=null){
-            String checkSpecialId = checkSpecialRecord.getCheckSpecialId();
-            Map map = new HashMap();
-            map.put("checkSpecialFk",checkSpecialId);
-            List<CheckSpecialList> list = checkSpecialListMapper.selectByParam(map);
-            if (list.size()>0){
-                sortList(list);
-            }
-            checkSpecialRecord.setCheckSpecialList(list);
-        }else {
+//        CheckSpecialRecord checkSpecialRecord = checkSpecialRecordMapper.selectByParam(param);
+//        //TODO:需要增加判断该数据是否已经填写过 若填写过则直接获取已填数据
+//        if (checkSpecialRecord!=null){
+//            String checkSpecialId = checkSpecialRecord.getCheckSpecialId();
+//            Map map = new HashMap();
+//            map.put("checkSpecialFk",checkSpecialId);
+//            List<CheckSpecialList> list = checkSpecialListMapper.selectByParam(map);
+//            if (list.size()>0){
+//                sortList(list);
+//            }
+//            checkSpecialRecord.setCheckSpecialList(list);
+//        }else {
             //先获取是否已经添加好模板
             CheckSpecial checkSpecial = checkSpecialMapper.selectByParam(param);
             if (checkSpecial==null){
                 return null;
             }
             String checkSpecialId = checkSpecial.getId();
-            checkSpecialRecord = new CheckSpecialRecord();
+            CheckSpecialRecord checkSpecialRecord = new CheckSpecialRecord();
             checkSpecialRecord.setCheckSpecialId(checkSpecialId);
             checkSpecialRecord.setId(UUIDUtil.getUUID());
             checkSpecialRecord.setOrgFk(orgId);
-            checkSpecialRecord.setCreateTime(LocalDateTime.now());
-            checkSpecialRecordMapper.insert(checkSpecialRecord);
+//            checkSpecialRecord.setCreateTime(LocalDateTime.now());
+//            checkSpecialRecordMapper.insert(checkSpecialRecord);
             Map map = new HashMap();
             map.put("checkSpecialFk",checkSpecialId);
             List<CheckSpecialList> list = checkSpecialListMapper.selectByParam(map);
@@ -82,14 +80,19 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                 sortList(list);
             }
             checkSpecialRecord.setCheckSpecialList(list);
-        }
+//        }
         return checkSpecialRecord;
     }
 
     @Override
     public boolean addCheckSpecialRecord(CheckSpecialRecord checkSpecialRecord) {
         List<CheckSpecialList> checkSpecialLists = checkSpecialRecord.getCheckSpecialList();
-        checkSpecialRecordMapper.updateById(checkSpecialRecord);
+        checkSpecialRecord.setCheckSpecialList(null);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String date = df.format(new Date());
+        checkSpecialRecord.setCheckContent(checkSpecialRecord.getCheckPersonName()+" 于 "+date+" 填写");
+        checkSpecialRecord.setCreateTime(LocalDateTime.now());
+        checkSpecialRecordMapper.insert(checkSpecialRecord);
         String checkSpecialRecordId = checkSpecialRecord.getId();
         if (checkSpecialLists.size()>0){
             for (CheckSpecialList checkSpecialList:checkSpecialLists){
