@@ -138,10 +138,10 @@
 				var date = new Date();
 				var year = date.getFullYear();
 				var that = this;
-				axios.get('/safety/checkMonthRecord/checkMonthRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
+				axios.get('/safety/checkWeekRecord/checkWeekRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
-						response.data.data.checkMonthList.forEach(e=>{
+						response.data.data.checkWeekList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
 					}else{
@@ -173,7 +173,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		        	axios.delete('/safety/checkMonthRecord/checkMonthRecord',{params:{id:row.id}}).then(response=>{
+		        	axios.delete('/safety/checkWeekRecord/checkWeekRecord',{params:{id:row.id}}).then(response=>{
 		        		if(response.data.success === true){
 							this.$message.success(response.data.msg);
 							this.search();
@@ -194,7 +194,7 @@
 				console.log(row);
 			},
 			submitForm(){
-				this.$data.data.checkMonthList = this.$data.tableData;
+				this.$data.data.checkWeekList = this.$data.tableData;
 				var notify = false;
 				for(var i=0;i<this.$data.tableData.length;i++){
 					if(this.$data.tableData[i].result == 0){
@@ -202,7 +202,7 @@
 						break;
 					}
 				}
-				axios.post('/safety/checkMonthRecord/checkMonthRecord',this.$data.data).then(response=>{
+				axios.post('/safety/checkWeekRecord/checkWeekRecord',this.$data.data).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						if(notify){
