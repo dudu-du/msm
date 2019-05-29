@@ -26,5 +26,8 @@
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
     </resultMap>
+    <select id="selectAll" resultType="com.safety.entity.CheckRectificationReceipt">
+        select *  from check_rectification_receipt order by create_time desc
+    </select>
 
 </mapper>
