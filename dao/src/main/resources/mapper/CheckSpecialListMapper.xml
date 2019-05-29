@@ -21,7 +21,8 @@
         select * from check_special_list where check_special_fk = #{checkSpecialFk} order by check_type_name;
     </select>
     <select id="selectByParam" resultType="com.safety.entity.CheckSpecialList">
-        select cml.*,cmrl.result from check_special_list cml LEFT join check_special_record_list cmrl on cml.id = cmrl.check_special_list_id
+        select cml.*,cmrl.result from check_special_list cml
+        LEFT join check_special_record_list cmrl on cml.id = cmrl.check_special_list_id and cmrl.check_special_record_id = #{checkSpecialRecordId}
         where check_special_fk = #{checkSpecialFk} order by check_type_name,create_time;
     </select>
 </mapper>

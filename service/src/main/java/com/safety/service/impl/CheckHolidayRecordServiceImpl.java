@@ -136,6 +136,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
 //            checkHolidayRecordMapper.insert(checkHolidayRecord);
             Map map = new HashMap();
             map.put("checkComprehensiveHolidayFk",checkHolidayId);
+            map.put("checkHolidayRecordId",checkHolidayRecord.getId());
             List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
             checkHolidayRecord.setCheckComprehensiveHolidayList(list);
 //        }
@@ -158,6 +159,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
             String checkHolidayId = checkHolidayRecord.getCheckHolidayId();
             Map map = new HashMap();
             map.put("checkComprehensiveHolidayFk",checkHolidayId);
+            map.put("checkHolidayRecordId",checkHolidayRecord.getId());
             List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
             checkHolidayRecord.setCheckComprehensiveHolidayList(list);
         }

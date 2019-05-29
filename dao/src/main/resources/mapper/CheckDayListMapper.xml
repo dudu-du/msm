@@ -34,7 +34,8 @@
           order by check_team_name;
     </select>
     <select id="selectByParam" resultType="com.safety.entity.CheckDayList">
-        select cml.*,cmrl.result from check_day_list cml LEFT join check_day_record_list cmrl on cml.id = cmrl.check_day_list_id
+        select cml.*,cmrl.result from check_day_list cml
+        LEFT join check_day_record_list cmrl on cml.id = cmrl.check_day_list_id and cmrl.check_day_record_id = #{checkDayRecordId}
         where check_day_fk = #{checkDayFk} order by check_type_name,create_time;
     </select>
 </mapper>

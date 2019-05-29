@@ -136,6 +136,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
 //            checkSeasonRecordMapper.insert(checkSeasonRecord);
             Map map = new HashMap();
             map.put("checkComprehensiveSeasonFk",checkSeasonId);
+            map.put("checkSeasonRecordId",checkSeasonRecord.getId());
             List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
             checkSeasonRecord.setCheckComprehensiveSeasonList(list);
 //        }
@@ -158,6 +159,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
             String checkSeasonId = checkSeasonRecord.getCheckSeasonId();
             Map map = new HashMap();
             map.put("checkComprehensiveSeasonFk",checkSeasonId);
+            map.put("checkSeasonRecordId",checkSeasonRecord.getId());
             List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
             checkSeasonRecord.setCheckComprehensiveSeasonList(list);
         }

@@ -20,7 +20,8 @@
         select * from check_comprehensive_holiday_list where check_comprehensive_holiday_fk = #{checkComprehensiveHolidayFk};
     </select>
     <select id="selectByParam" resultType="com.safety.entity.CheckComprehensiveHolidayList">
-        select cml.*,cmrl.result from check_comprehensive_holiday_list cml LEFT join check_holiday_record_list cmrl on cml.id = cmrl.check_holiday_list_id
+        select cml.*,cmrl.result from check_comprehensive_holiday_list cml
+        LEFT join check_holiday_record_list cmrl on cml.id = cmrl.check_holiday_list_id and cmrl.check_holiday_record_id = #{checkHolidayRecordId}
         where check_comprehensive_holiday_fk = #{checkComprehensiveHolidayFk} order by create_time;
     </select>
 </mapper>
