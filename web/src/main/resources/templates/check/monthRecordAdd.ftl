@@ -38,7 +38,7 @@
 						<el-col :span="18">
 							<span>排查时间：</span>
 							 <el-date-picker
-						      type="datetimerange"
+						      type="daterange"
 						      v-model="dateValue"
 						      range-separator="至"
 						      start-placeholder="开始日期"
@@ -113,7 +113,7 @@
 				},
 				tableData:[],
 				data:{},
-				dateValue:'',
+				dateValue:[],
 				inputValue:''
 			};
 		},
@@ -141,6 +141,13 @@
 				axios.get('/safety/checkMonthRecord/checkMonthRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
+						that.$data.inputValue = that.$data.data.checkPersonName;
+						if(that.$data.data.checkStartTime){
+							that.$data.dateValue.push(new Date(that.$data.data.checkStartTime));
+						}
+						if(that.$data.data.checkEndTime){
+							that.$data.dateValue.push(new Date(that.$data.data.checkEndTime));
+						}
 						response.data.data.checkMonthList.forEach(e=>{
 							that.$data.tableData.push(e);
 						});
@@ -194,7 +201,11 @@
 				console.log(row);
 			},
 			submitForm(){
+				this.$data.data.checkStartTime = this.getDate(this.$data.dateValue[0]);
+				this.$data.data.checkEndTime = this.getDate(this.$data.dateValue[1]);
+				this.$data.data.checkPersonName = this.$data.inputValue;
 				this.$data.data.checkMonthList = this.$data.tableData;
+	
 				var notify = false;
 				for(var i=0;i<this.$data.tableData.length;i++){
 					if(this.$data.tableData[i].result == 0){
@@ -202,6 +213,7 @@
 						break;
 					}
 				}
+
 				axios.post('/safety/checkMonthRecord/checkMonthRecord',this.$data.data).then(response=>{
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
@@ -218,6 +230,18 @@
 				}).catch(err=>{
 					this.$message.error('服务器异常，请稍后再试！');
 				});
+			},
+			getDate(date){
+				var year = date.getFullYear();
+				var month = date.getMonth()+1;
+				var day = date.getDate();
+				if(month < 10){
+					month = '0'+month;
+				}
+				if(day<10){
+					day = '0' + day;
+				}
+				return year + '-' + month + '-' + day;
 			}
 		}
 	});

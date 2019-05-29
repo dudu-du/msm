@@ -33,7 +33,7 @@
 						<el-col :span="18">
 							<span>排查时间：</span>
 							 <el-date-picker
-						      type="datetimerange"
+						      type="daterange"
 						      v-mode="dateValue"
 						      range-separator="至"
 						      disabled

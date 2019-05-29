@@ -38,7 +38,7 @@
 						<el-col :span="18">
 							<span>排查时间：</span>
 							 <el-date-picker
-						      type="datetimerange"
+						      type="daterange"
 						      v-model="dateValue"
 						      range-separator="至"
 						      start-placeholder="开始日期"
