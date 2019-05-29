@@ -32,16 +32,16 @@
 						</el-table-column>
 						<el-table-column prop="harmfulFactors" label="风险因素" width="150" align="center">
 						</el-table-column>
-						<el-table-column porp="measure" label="风险管控措施" width="150" align="center">
+						<el-table-column prop="measure" label="风险管控措施" width="150" align="center">
 						</el-table-column>
-						<el-table-column type="runawayPerformance" label="措施失控表现" width="150" align="center"></el-table-column>
+						<el-table-column prop="runawayPerformance" label="措施失控表现" width="150" align="center"></el-table-column>
 						<el-table-column prop="controlOrgName" label="管控部门" width="152">
 						</el-table-column>
 						<el-table-column prop="controlOrgPersonName" label="管控责任人" width="152" align="center">
 						</el-table-column>
 						<el-table-column prop="investigationOrgName" label="排查部门" width="152" align="center">
 						</el-table-column>
-						<el-table-column type="investigationOrgPersonName" label="排查责任人" width="152" align="center"></el-table-column>
+						<el-table-column prop="investigationOrgPersonName" label="排查责任人" width="152" align="center"></el-table-column>
 						<el-table-column prop="investigationCount" label="排查频次" width="150">
 						</el-table-column>
 						<el-table-column prop="remark" label="备注" width="150" align="center">
