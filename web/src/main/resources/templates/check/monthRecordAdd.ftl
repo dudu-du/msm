@@ -82,12 +82,12 @@
 						</el-table-column>
 						<el-table-column prop="checkMethod" label="检查方法">
 						</el-table-column>
-						<el-table-column prop="levelName" label="符合性">
+						<el-table-column label="符合性">
 							<template slot-scope="scope">
-							<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
-						        <el-radio label="1">是</el-radio>
-  								<el-radio label="0">否</el-radio>
-  							</el-radio-group>
+								<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
+							        <el-radio label="1">是</el-radio>
+	  								<el-radio label="0">否</el-radio>
+	  							</el-radio-group>
 						     </template>
 						</el-table-column>
 					</el-table>

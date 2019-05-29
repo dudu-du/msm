@@ -71,23 +71,17 @@
 						</div>
 					</div>
 					-->
-					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
-						<el-table-column label="检查项目及相关要求" colspan="3">
-							<el-table-column prop="checkTypeName" label="类型" v-show="false">
-							</el-table-column>
-							<el-table-column type="index">
-							</el-table-column>
-							<el-table-column prop="checkContent" label="内容">
-							</el-table-column>
+					<el-table border header-align="center" :data="tableData"  style="width: 100%" ref="singleTable" :show-header="true">
+						<el-table-column type="index">
 						</el-table-column>
-						<el-table-column prop="checkMethod" label="检查方法">
+						<el-table-column label="检查项目及相关要求" prop="content">
 						</el-table-column>
-						<el-table-column prop="levelName" label="符合性">
+						<el-table-column label="检查结果">
 							<template slot-scope="scope">
-							<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
-						        <el-radio label="1">是</el-radio>
-  								<el-radio label="0">否</el-radio>
-  							</el-radio-group>
+								<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
+							        <el-radio label="1">是</el-radio>
+	  								<el-radio label="0">否</el-radio>
+	  							</el-radio-group>
 						     </template>
 						</el-table-column>
 					</el-table>
