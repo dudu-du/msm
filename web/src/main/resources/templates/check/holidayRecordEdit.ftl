@@ -142,7 +142,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		        	axios.delete('/safety/checkHolidayRecord/checkHolidayRecord',{params:{id:row.id}}).then(response=>{
+		        	axios.delete('/safety/checkComprehensiveHoliday/checkComprehensiveHoliday',{params:{id:row.id}}).then(response=>{
 		        		if(response.data.success === true){
 							this.$message.success(response.data.msg);
 							this.search();
