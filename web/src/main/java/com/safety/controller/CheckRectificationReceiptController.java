@@ -143,7 +143,7 @@ public class CheckRectificationReceiptController extends BaseController {
      * 分页查询页面
      * @return
      */
-    @RequestMapping(value = "Edit",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkRectificationReceiptPage",method = RequestMethod.GET)
     public BaseModelAndView getCheckRectificationReceiptPage(){
         BaseModelAndView modelAndView = new BaseModelAndView();
         modelAndView.setViewName("check/rectificationReceiptPage");
