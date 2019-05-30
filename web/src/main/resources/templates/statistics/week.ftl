@@ -125,9 +125,7 @@
 	        if(data2.length>=4){
 	        	data2[3].backgroundColor = this.gradient4;
 	        }
-	        if(data2.length == 1){
-	        	data2[0].label = '总表';
-	        }
+	
 		    this.renderChart({
 		      labels: data,
 		      datasets: data2
@@ -225,7 +223,7 @@
 			              data: []
 			            };
 			    var level2={
-			              label: '较大风险',
+			              label: '',
 			              borderColor: '#DAA520',
 			              pointBackgroundColor: 'white',
 			              borderWidth: 1,
@@ -234,7 +232,7 @@
 			              data: []
 			            };
 			    var level3={
-			              label: '一般风险',
+			              label: '',
 			              borderColor: '#FFFF00',
 			              pointBackgroundColor: 'white',
 			              borderWidth: 1,
@@ -243,7 +241,7 @@
 			              data: []
 			            };
 			    var level4={
-			              label: '低风险',
+			              label: '',
 			              borderColor: '#4169E1',
 			              pointBackgroundColor: 'white',
 			              borderWidth: 1,
@@ -278,28 +276,28 @@
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
 									level1.label = e.level_name;
-									level1.data[day]=e.count;
+									level1.data[day+1]=e.count;
 								}else if(level2.label == '' || level2.label == e.level_name){
 									level2.label = e.level_name;
 									var sdate = new Date(startDate); 
 								  　　	var now = new Date(e.dateofyear); 
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-									level2.data[day]=e.count;
+									level2.data[day+1]=e.count;
 								}else if(level3.label == '' || level3.label == e.level_name){
 									level3.label = e.level_name;
 									var sdate = new Date(startDate); 
 								  　　	var now = new Date(e.dateofyear); 
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-									level3.data[day]=e.count;
+									level3.data[day+1]=e.count;
 								}else if(level4.label == '' || level4.label == e.level_name){
 									level4.label = e.level_name;
 									var sdate = new Date(startDate); 
 								  　　	var now = new Date(e.dateofyear); 
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-									level4.data[day]=e.count;
+									level4.data[day+1]=e.count;
 								}
 							}else{
 					
@@ -311,13 +309,16 @@
 								level1.data[day]=e.count;
 							}
 						});
-						console.log(level1.label);
-						if(level1.label=='' || level1.label == '总和'){
+						if(level1.label!=''){
 							datasets.push(level1);
-						}else{
-							datasets.push(level1);
+						}
+						if(level2.label!=''){
 							datasets.push(level2);
+						}
+						if(level3.label!=''){
 							datasets.push(level3);
+						}
+						if(level4.label!=''){
 							datasets.push(level4);
 						}
 						that.$refs.chart.render(labels,datasets);
