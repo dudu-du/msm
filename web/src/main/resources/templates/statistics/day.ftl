@@ -278,28 +278,28 @@
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
 									level1.label = e.level_name;
-									level1.data[day]=e.count;
+									level1.data[day+1]=e.count;
 								}else if(level2.label == '' || level2.label == e.level_name){
 									level2.label = e.level_name;
 									var sdate = new Date(startDate); 
 								  　　	var now = new Date(e.dateofyear); 
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-									level2.data[day]=e.count;
+									level2.data[day+1]=e.count;
 								}else if(level3.label == '' || level3.label == e.level_name){
 									level3.label = e.level_name;
 									var sdate = new Date(startDate); 
 								  　　	var now = new Date(e.dateofyear); 
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-									level3.data[day]=e.count;
+									level3.data[day+1]=e.count;
 								}else if(level4.label == '' || level4.label == e.level_name){
 									level4.label = e.level_name;
 									var sdate = new Date(startDate); 
 								  　　	var now = new Date(e.dateofyear); 
 								  　　 var days = now.getTime() - sdate.getTime(); 
 								  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-									level4.data[day]=e.count;
+									level4.data[day+1]=e.count;
 								}
 							}else{
 					
@@ -308,7 +308,7 @@
 							  　　	var now = new Date(e.dateofyear); 
 							  　　 var days = now.getTime() - sdate.getTime(); 
 							  　　  var day = parseInt(days / (1000 * 60 * 60 * 24));	
-								level1.data[day]=e.count;
+								level1.data[day+1]=e.count;
 							}
 						});
 						console.log(level1.label);
