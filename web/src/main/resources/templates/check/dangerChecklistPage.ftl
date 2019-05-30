@@ -27,24 +27,24 @@
 				</el-header>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data" >
-						<el-table-column type="index" label="序号" width="150" align="center"></el-table-column>
-						<el-table-column prop="riskPosition" label="风险部位" width="150">
+						<el-table-column type="index" label="序号" align="center"></el-table-column>
+						<el-table-column prop="riskPosition" label="风险部位">
 						</el-table-column>
-						<el-table-column prop="harmfulFactors" label="风险因素" width="150" align="center">
+						<el-table-column prop="harmfulFactors" label="风险因素" align="center">
 						</el-table-column>
-						<el-table-column prop="measure" label="风险管控措施" width="150" align="center">
+						<el-table-column prop="measure" label="风险管控措施" align="center">
 						</el-table-column>
-						<el-table-column prop="runawayPerformance" label="措施失控表现" width="150" align="center"></el-table-column>
-						<el-table-column prop="controlOrgName" label="管控部门" width="152">
+						<el-table-column prop="runawayPerformance" label="措施失控表现" align="center"></el-table-column>
+						<el-table-column prop="controlOrgName" label="管控部门">
 						</el-table-column>
-						<el-table-column prop="controlOrgPersonName" label="管控责任人" width="152" align="center">
+						<el-table-column prop="controlOrgPersonName" label="管控责任人" align="center">
 						</el-table-column>
-						<el-table-column prop="investigationOrgName" label="排查部门" width="152" align="center">
+						<el-table-column prop="investigationOrgName" label="排查部门" align="center">
 						</el-table-column>
-						<el-table-column prop="investigationOrgPersonName" label="排查责任人" width="152" align="center"></el-table-column>
-						<el-table-column prop="investigationCount" label="排查频次" width="150">
+						<el-table-column prop="investigationOrgPersonName" label="排查责任人" align="center"></el-table-column>
+						<el-table-column prop="investigationCount" label="排查频次">
 						</el-table-column>
-						<el-table-column prop="remark" label="备注" width="150" align="center">
+						<el-table-column prop="remark" label="备注" align="center">
 						</el-table-column>
 					</el-table>
 				</el-main>

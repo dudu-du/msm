@@ -27,12 +27,12 @@
 				</el-header>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
-						<el-table-column type="index" label="序号" width="285" align="center"></el-table-column>
-						<el-table-column prop="checkContent" label="检查内容" width="616">
+						<el-table-column type="index" label="序号" align="center"></el-table-column>
+						<el-table-column prop="checkContent" label="检查内容">
 						</el-table-column>
-						<el-table-column prop="createTime" label="创建时间" width="405" align="center">
+						<el-table-column prop="createTime" label="创建时间" align="center">
 						</el-table-column>
-						<el-table-column label="检查人" prop="checkPersonName" width="355" align="center">
+						<el-table-column label="检查人" prop="checkPersonName" align="center">
 						</el-table-column>
 					</el-table>
 				</el-main>

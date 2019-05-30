@@ -27,28 +27,28 @@
 				</el-header>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
-						<el-table-column type="index" label="序号" width="100" align="center"></el-table-column>
-						<el-table-column prop="investigationTime" label="排查时间" width="130">
+						<el-table-column type="index" label="序号" align="center"></el-table-column>
+						<el-table-column prop="investigationTime" label="排查时间">
 						</el-table-column>
-						<el-table-column prop="investigationOrgPersonName" label="排查人" width="130" align="center">
+						<el-table-column prop="investigationOrgPersonName" label="排查人" align="center">
 						</el-table-column>
-						<el-table-column porp="rectificationPosition" label="隐患部位" width="130" align="center">
+						<el-table-column porp="rectificationPosition" label="隐患部位" align="center">
 						</el-table-column>
-						<el-table-column type="rectificationName" label="隐患名称" width="130" align="center"></el-table-column>
-						<el-table-column prop="rectificationLevel" label="隐患等级" width="130">
+						<el-table-column type="rectificationName" label="隐患名称" align="center"></el-table-column>
+						<el-table-column prop="rectificationLevel" label="隐患等级">
 						</el-table-column>
-						<el-table-column prop="governmentMeasure" label="治理措施" width="130" align="center">
+						<el-table-column prop="governmentMeasure" label="治理措施" align="center">
 						</el-table-column>
-						<el-table-column prop="complateTime" label="完成时限" width="130" align="center">
+						<el-table-column prop="complateTime" label="完成时限" align="center">
 						</el-table-column>
-						<el-table-column type="controlOrgName" label="责任部门" width="130" align="center"></el-table-column>
-						<el-table-column prop="controlOrgPersonName" label="责任人" width="130">
+						<el-table-column type="controlOrgName" label="责任部门" align="center"></el-table-column>
+						<el-table-column prop="controlOrgPersonName" label="责任人">
 						</el-table-column>
-						<el-table-column prop="reviewTime" label="复查时间" width="130" align="center">
+						<el-table-column prop="reviewTime" label="复查时间" align="center">
 						</el-table-column>
-						<el-table-column prop="reviewPersonName" label="复查人" width="130" align="center">
+						<el-table-column prop="reviewPersonName" label="复查人" align="center">
 						</el-table-column>
-						<el-table-column prop="reviewResult" label="复查结果" width="130" align="center">
+						<el-table-column prop="reviewResult" label="复查结果" align="center">
 						</el-table-column>
 					</el-table>
 				</el-main>

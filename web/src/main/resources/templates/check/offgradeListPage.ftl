@@ -27,18 +27,18 @@
 				</el-header>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
-						<el-table-column type="index" label="序号" width="230" align="center"></el-table-column>
-						<el-table-column prop="checkType" label="来源" width="240" align="center">
+						<el-table-column type="index" label="序号" align="center"></el-table-column>
+						<el-table-column prop="checkType" label="来源" align="center">
 						</el-table-column>
-						<el-table-column prop="content" label="内容" width="240" align="center">
+						<el-table-column prop="content" label="内容" align="center">
 						</el-table-column>
-						<el-table-column prop="levelName" label="风险等级" width="240" align="center">
+						<el-table-column prop="levelName" label="风险等级" align="center">
 						</el-table-column>
-						<el-table-column prop="levelNum" label="风险等级" width="240" align="center" v-if="false">
+						<el-table-column prop="levelNum" label="风险等级" align="center" v-if="false">
 						</el-table-column>
-						<el-table-column prop="createTime" label="创建时间" width="240" align="center">
+						<el-table-column prop="createTime" label="创建时间" align="center">
 						</el-table-column>
-						<el-table-column label="操作" width="232" align="center">
+						<el-table-column label="操作" align="center">
 							<template slot-scope="scope">
 
 <#--								<el-button  @click="" type="primary" size="mini" icon="el-icon-search" circle></el-button>-->
