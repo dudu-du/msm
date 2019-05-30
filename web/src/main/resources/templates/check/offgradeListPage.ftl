@@ -191,6 +191,9 @@ new Vue({
             	investigationOrgPersonName:'',
             	investigationCount:'',
             	remark:''
+            },
+            dangerForm:{
+            	
             }
         }
     },
@@ -213,6 +216,7 @@ new Vue({
         addBtn(row,formName){
         	this.$data.dialogFormVisible = true;
         	this.$data.form.offgradeListFk = row.id;
+        	this.$data.form.orgFk = row.orgFk;
         	this.$data.form.checkType = row.checkType;
         },
         addDanger(row,formName){
