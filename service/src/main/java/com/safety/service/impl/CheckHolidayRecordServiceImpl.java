@@ -91,7 +91,8 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                     checkOffgradeList.setCheckListFk(checkComprehensiveHolidayList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
-                    checkOffgradeList.setOrgFk(checkComprehensiveHolidayList.getOrgFk());
+                    //TODO:机构id需从条目列表获得 暂时用模板获取
+                    checkOffgradeList.setOrgFk(checkHolidayRecord.getOrgFk());
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkComprehensiveHolidayList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
