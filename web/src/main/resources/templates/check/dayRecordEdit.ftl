@@ -15,7 +15,7 @@
 		<div id="app">
 			<el-container>
 				<el-header>
-					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查治理日排查记录</el-col><el-col :span="8">&nbsp;</el-col>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查日治理记录</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
 					<el-row style="margin-bottom:10px">
@@ -60,6 +60,11 @@
 							<template slot-scope="scope">
 						        <el-radio disabled v-model="scope.row.radio" label="1">是</el-radio>
   								<el-radio disabled v-model="scope.row.radio" label="2">否</el-radio>
+						     </template>
+						</el-table-column>
+						<el-table-column label="操作" width="100px">
+							<template slot-scope="scope">
+						         <el-button type="danger" @click="del(scope.row)" icon="el-icon-delete" circle></el-button>
 						     </template>
 						</el-table-column>
 					</el-table>
@@ -143,7 +148,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		        	axios.delete('/safety/checkDayRecord/checkDayRecord',{params:{id:row.id}}).then(response=>{
+		        	axios.delete('/safety/checkDayList/checkDayList',{params:{id:row.id}}).then(response=>{
 		        		if(response.data.success === true){
 							this.$message.success(response.data.msg);
 							this.search();

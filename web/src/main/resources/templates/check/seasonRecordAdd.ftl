@@ -51,43 +51,18 @@
 						  </el-input>
 						</el-col>
 					</el-row>
-					<!--
-					<div style="width:100%" class="el-table el-table--fit el-table--border el-table--group el-table--enable-row-hover el-table--enable-row-transition">
-						<div class="el-table__header-wrapper">
-							<table class="el-table__header" style="width:100%;">
-								<thead class="is-group has-gutter">
-							        <tr>
-							          <th rowspan="2" colspan="3" class="is-leaf">检查项目及相关要求</th>
-							          <th rowspan="2" class="is-leaf">检查方法</th>
-							          <th colspan="2" class="is-leaf">符合性</th>
-							        </tr>
-							        <tr>
-							          <th class="is-leaf">是</th>
-							          <th class="is-leaf">否</th>
-							        </tr>
-							      </thead>
-							</table>
-						
-						</div>
-					</div>
-					-->
-					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
-						<el-table-column label="检查项目及相关要求" colspan="3">
-							<el-table-column prop="checkTypeName" label="类型" v-show="false">
-							</el-table-column>
-							<el-table-column type="index">
-							</el-table-column>
-							<el-table-column prop="checkContent" label="内容">
-							</el-table-column>
+		
+					<el-table border header-align="center" :data="tableData" style="width: 100%" ref="singleTable" :show-header="true">
+						<el-table-column type="index">
 						</el-table-column>
-						<el-table-column prop="checkMethod" label="检查方法">
+						<el-table-column prop="content" label="检查项目及相关要求">
 						</el-table-column>
-						<el-table-column prop="levelName" label="符合性">
+						<el-table-column prop="checkMethod" label="检查结果">
 							<template slot-scope="scope">
-							<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
-						        <el-radio label="1">是</el-radio>
-  								<el-radio label="0">否</el-radio>
-  							</el-radio-group>
+								<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
+							        <el-radio label="1">是</el-radio>
+	  								<el-radio label="0">否</el-radio>
+	  							</el-radio-group>
 						     </template>
 						</el-table-column>
 					</el-table>

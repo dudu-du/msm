@@ -59,8 +59,8 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                 }
                 //先查询是否已填入值
                 Map map = new HashMap();
-                map.put("check_holiday_list_id",checkComprehensiveSeasonList.getId());
-                map.put("check_holiday_record_id",checkSeasonRecordId);
+                map.put("check_season_list_id",checkComprehensiveSeasonList.getId());
+                map.put("check_season_record_id",checkSeasonRecordId);
                 List<CheckSeasonRecordList> list = checkSeasonRecordListMapper.selectByMap(map);
                 CheckSeasonRecordList checkSeasonRecordList;
                 //若已经有值直接进行修改
@@ -91,7 +91,8 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                     checkOffgradeList.setCheckListFk(checkComprehensiveSeasonList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
-                    checkOffgradeList.setOrgFk(checkComprehensiveSeasonList.getOrgFk());
+                    //TODO:机构id需从条目列表获得 暂时用模板获取
+                    checkOffgradeList.setOrgFk(checkSeasonRecord.getOrgFk());
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkComprehensiveSeasonList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());

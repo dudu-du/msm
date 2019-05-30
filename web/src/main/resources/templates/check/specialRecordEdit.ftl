@@ -64,6 +64,11 @@
   								<el-radio disabled v-model="scope.row.radio" label="2">否</el-radio>
 						     </template>
 						</el-table-column>
+						<el-table-column label="操作" width="100px">
+							<template slot-scope="scope">
+						         <el-button type="danger" @click="del(scope.row)" icon="el-icon-delete" circle></el-button>
+						     </template>
+						</el-table-column>
 					</el-table>
 				</el-main>
 				<el-footer>
@@ -146,7 +151,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		        	axios.delete('/safety/checkSpecialRecord/checkSpecialRecord',{params:{id:row.id}}).then(response=>{
+		        	axios.delete('/safety/checkSpecialList/checkSpecialList',{params:{id:row.id}}).then(response=>{
 		        		if(response.data.success === true){
 							this.$message.success(response.data.msg);
 							this.search();

@@ -102,7 +102,8 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                     checkOffgradeList.setCheckListFk(checkDayList.getId());
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
-                    checkOffgradeList.setOrgFk(checkDayList.getOrgFk());
+                    //TODO:机构id需从条目列表获得 暂时用模板获取
+                    checkOffgradeList.setOrgFk(checkDayRecord.getOrgFk());
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkDayList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
