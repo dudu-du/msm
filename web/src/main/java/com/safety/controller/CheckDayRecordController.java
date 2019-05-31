@@ -166,5 +166,16 @@ public class CheckDayRecordController extends BaseController {
         return modelAndView;
     }
 
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDayRecordPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDayRecordPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dayRecordPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }

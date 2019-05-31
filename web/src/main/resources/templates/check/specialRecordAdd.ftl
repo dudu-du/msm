@@ -80,8 +80,6 @@
 							<el-table-column prop="checkContent" label="内容">
 							</el-table-column>
 						</el-table-column>
-						<el-table-column prop="checkMethod" label="检查方法">
-						</el-table-column>
 						<el-table-column prop="levelName" label="符合性">
 							<template slot-scope="scope">
 							<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
