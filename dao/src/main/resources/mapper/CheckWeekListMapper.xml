@@ -20,11 +20,11 @@
     </resultMap>
 
     <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select * from check_week_list where check_week_fk = #{checkWeekFk} order by check_type_name;
+        select * from check_week_list where check_week_fk = #{checkWeekFk} order by check_type_name
     </select>
     <select id="selectByParam" resultType="com.safety.entity.CheckWeekList">
         select cml.*,cmrl.result from check_week_list cml
         LEFT join check_week_record_list cmrl on cml.id = cmrl.check_week_list_id and cmrl.check_week_record_id = #{checkWeekRecordId}
-        where check_week_fk = #{checkWeekFk} order by check_type_name,create_time;
+        where check_week_fk = #{checkWeekFk} order by create_time,check_type_name
     </select>
 </mapper>
