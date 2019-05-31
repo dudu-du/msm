@@ -30,20 +30,20 @@
 			width: 100%;
 		}
 		.table-cont{
-			color: #909399;
-			border: 1px solid #EBEEF5;
+			color: #000;
+			border: 1px solid #000;
 			border-right: none;
 			border-bottom: none;
 			font-size: 14px;
 		}
 		.table-cont th{
-			border-bottom: 1px solid #EBEEF5;
-			border-right: 1px solid #EBEEF5;
+			border-bottom: 1px solid #000;
+			border-right: 1px solid #000;
 			line-height: 30px;
 		}
 		.table-cont td{
-			border-bottom: 1px solid #EBEEF5;
-			border-right: 1px solid #EBEEF5;
+			border-bottom: 1px solid #000;
+			border-right: 1px solid #000;
 			line-height: 40px;
 		}
 	</style>
@@ -51,18 +51,18 @@
 		<div class="main">
 			<h2 class="title">专项检查</h2>
 			<div class="content">
-				<p>检查时间：<span class="time"></span>检查范围：<span class="scope"></span>检查人员：<span class="name"></span></p>
+				<p>检查时间：<span class="time"></span>检查范围：<span class="scope"></span><span style="float: right;">检查人员：<span class="name"></span></span></p>
 				<div class="table-cont">
 					<table cellspacing="0" cellpadding="0" border="0" width="100%">
 						<thead>
 							<tr>
 								<th colspan="2" rowspan="2" width="10%">检查项目</th>
-								<th colspan="2" rowspan="2" width="60%">检查内容</th>
+								<th colspan="2" rowspan="2">检查内容</th>
 								<th colspan="2" rowspan="1">检查结果</th>
 							</tr>
 							<tr>
-								<th colspan="1" rowspan="1">合格</th>
-								<th colspan="1" rowspan="1" width="15%">不合格</th>
+								<th colspan="1" rowspan="1" width="8%">合格</th>
+								<th colspan="1" rowspan="1" width="8%">不合格</th>
 							</tr>
 						</thead>
 						<tbody style="text-align: center">
