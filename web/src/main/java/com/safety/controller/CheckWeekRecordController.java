@@ -164,5 +164,17 @@ public class CheckWeekRecordController extends BaseController {
         return modelAndView;
     }
 
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkWeekRecordPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckWeekRecordPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/weekRecordPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }

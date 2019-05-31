@@ -164,5 +164,17 @@ public class CheckHolidayRecordController extends BaseController {
         return modelAndView;
     }
 
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkHolidayRecordPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckHolidayRecordPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/holidayRecordPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }

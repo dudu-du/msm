@@ -165,5 +165,17 @@ public class CheckSeasonRecordController extends BaseController {
         return modelAndView;
     }
 
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSeasonRecordPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSeasonRecordPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/seasonRecordPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }

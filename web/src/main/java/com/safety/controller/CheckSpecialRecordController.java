@@ -164,5 +164,16 @@ public class CheckSpecialRecordController extends BaseController {
         return modelAndView;
     }
 
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkSpecialRecordPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckSpecialRecordPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/specialRecordPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }

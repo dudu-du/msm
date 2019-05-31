@@ -162,5 +162,16 @@ public class CheckMonthRecordController extends BaseController {
         return modelAndView;
     }
 
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkMonthRecordPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckMonthRecordPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/monthRecordPrint");
+        return modelAndView;
+    }
     //------------------------------------------------------------------------------------------------------------------
 }
