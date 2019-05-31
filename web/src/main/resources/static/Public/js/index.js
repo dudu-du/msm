@@ -88,7 +88,7 @@ layui.use(['element','layer'], function(){
                             if(childListItem.url){
                                 thisListUrl = childListItem.url;
                             }
-                            childMenuListHtml += '<dd><a href="javascript:;" id="" data-parent="1" lay-href="'+thisListUrl+'"><cite>'+childListItem.menuname+'</cite></a></dd>';
+                            childMenuListHtml += '<dd><a href="javascript:;" style="text-indent: 14px;" id="" data-parent="1" lay-href="'+thisListUrl+'"><cite>'+childListItem.menuname+'</cite></a></dd>';
                         });
                         childMenuListHtml += '</dl>';
                     }
