@@ -39,7 +39,7 @@ public class CheckSeasonRecordController extends BaseController {
     public JsonResult addCheckSeasonRecord(@RequestBody CheckSeasonRecord checkSeasonRecord){
         boolean result = iCheckSeasonRecordService.addCheckSeasonRecord(checkSeasonRecord);
         if (result){
-            return renderSuccess("添加成功");
+            return renderSuccess("添加成功",checkSeasonRecord);
         }else {
             return renderError("添加失败");
         }

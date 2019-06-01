@@ -86,7 +86,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     }
 
     @Override
-    public CheckMonthRecord addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
+    public boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
         List<CheckMonthList> checkMonthLists = checkMonthRecord.getCheckMonthList();
         //先将list置位null 方便保存
         checkMonthRecord.setCheckMonthList(null);
@@ -151,7 +151,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
             }
         }
         checkMonthRecord.setCheckMonthList(checkMonthLists);
-        return checkMonthRecord;
+        return true;
     }
 
     @Override

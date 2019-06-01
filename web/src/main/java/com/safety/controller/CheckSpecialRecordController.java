@@ -39,7 +39,7 @@ public class CheckSpecialRecordController extends BaseController {
     public JsonResult addCheckSpecialRecord(@RequestBody CheckSpecialRecord checkSpecialRecord){
         boolean result = iCheckSpecialRecordService.addCheckSpecialRecord(checkSpecialRecord);
         if (result){
-            return renderSuccess("添加成功");
+            return renderSuccess("添加成功",checkSpecialRecord);
         }else {
             return renderError("添加失败");
         }

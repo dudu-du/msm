@@ -16,7 +16,7 @@ public interface ICheckMonthRecordService extends IService<CheckMonthRecord> {
 
     CheckMonthRecord getByParam(String orgId, String year);
 
-    CheckMonthRecord addCheckMonthRecord(CheckMonthRecord checkMonthRecord);
+    boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord);
 
     PageInfo<CheckMonthRecord> getByPage(Integer currentPage, Integer pageSize);
 

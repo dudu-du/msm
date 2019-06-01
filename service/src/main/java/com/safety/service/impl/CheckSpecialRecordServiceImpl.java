@@ -141,12 +141,14 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                     checkOffgradeList.setLevelName(checkSpecialList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    checkSpecialList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
+        checkSpecialRecord.setCheckSpecialList(checkSpecialLists);
         return true;
     }
 

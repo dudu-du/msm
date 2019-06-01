@@ -39,7 +39,7 @@ public class CheckHolidayRecordController extends BaseController {
     public JsonResult addCheckHolidayRecord(@RequestBody CheckHolidayRecord checkHolidayRecord){
         boolean result = iCheckHolidayRecordService.addCheckHolidayRecord(checkHolidayRecord);
         if (result){
-            return renderSuccess("添加成功");
+            return renderSuccess("添加成功",checkHolidayRecord);
         }else {
             return renderError("添加失败");
         }

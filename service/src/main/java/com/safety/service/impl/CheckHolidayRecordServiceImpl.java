@@ -97,12 +97,14 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                     checkOffgradeList.setLevelName(checkComprehensiveHolidayList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    checkComprehensiveHolidayList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
+        checkHolidayRecord.setCheckComprehensiveHolidayList(checkComprehensiveHolidayLists);
         return true;
     }
 

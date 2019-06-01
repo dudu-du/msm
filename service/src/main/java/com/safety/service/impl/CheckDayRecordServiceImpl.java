@@ -108,12 +108,14 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                     checkOffgradeList.setLevelName(checkDayList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    checkDayList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
+        checkDayRecord.setCheckDayList(checkDayLists);
         return true;
     }
 
