@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.SafetyNotificationCard;
 import com.safety.service.ISafetyNotificationCardService;
 import com.safety.tools.BaseController;
@@ -89,6 +90,23 @@ public class SafetyNotificationCardController extends BaseController {
         SafetyNotificationCard safetyNotificationCard = iSafetyNotificationCardService.getById(id);
         if(safetyNotificationCard!=null){
             return renderSuccess("查询成功",safetyNotificationCard);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult safetyNotificationCardByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<SafetyNotificationCard> page = iSafetyNotificationCardService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }

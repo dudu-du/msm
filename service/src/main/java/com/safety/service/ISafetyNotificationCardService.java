@@ -1,5 +1,6 @@
 package com.safety.service;
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.SafetyNotificationCard;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -15,4 +16,6 @@ public interface ISafetyNotificationCardService extends IService<SafetyNotificat
     SafetyNotificationCard getById(String id);
 
     boolean addSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard);
+
+    PageInfo<SafetyNotificationCard> getByPage(Integer currentPage, Integer pageSize);
 }

@@ -1,5 +1,7 @@
 package com.safety.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.SafetyNotificationCard;
 import com.safety.entity.SafetyNotificationCardList;
 import com.safety.mapper.SafetyNotificationCardListMapper;
@@ -49,13 +51,25 @@ public class SafetyNotificationCardServiceImpl extends ServiceImpl<SafetyNotific
     @Override
     public boolean addSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard) {
         List<SafetyNotificationCardList> safetyNotificationCardLists = safetyNotificationCard.getSafetyNotificationCardList();
+        safetyNotificationCard.setSafetyNotificationCardList(null);
+        String id = UUIDUtil.getUUID();
+        safetyNotificationCard.setId(id);
+        safetyNotificationCardMapper.insert(safetyNotificationCard);
         if (safetyNotificationCardLists.size()>0){
             for (SafetyNotificationCardList safetyNotificationCardList:safetyNotificationCardLists){
                 safetyNotificationCardList.setId(UUIDUtil.getUUID());
                 safetyNotificationCardList.setCreateTime(LocalDateTime.now());
+                safetyNotificationCardList.setSafetyNotificationCardFk(id);
                 safetyNotificationCardListMapper.insert(safetyNotificationCardList);
             }
         }
         return true;
+    }
+
+    @Override
+    public PageInfo<SafetyNotificationCard> getByPage(Integer currentPage, Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<SafetyNotificationCard> checkMonthRecords = safetyNotificationCardMapper.selectAll();
+        return new PageInfo<>(checkMonthRecords);
     }
 }
