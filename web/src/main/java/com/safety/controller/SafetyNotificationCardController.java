@@ -131,5 +131,17 @@ public class SafetyNotificationCardController extends BaseController {
         return modelAndView;
     }
 
+
+    /**
+     * 打印页面跳转
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardPrint",method = RequestMethod.GET)
+    public BaseModelAndView getSafetyNotificationCardPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/notificationCardPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }
