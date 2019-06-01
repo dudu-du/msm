@@ -4,6 +4,7 @@ package com.safety.controller;
 import com.safety.entity.RiskDict;
 import com.safety.service.IRiskDictService;
 import com.safety.tools.BaseController;
+import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
 import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,4 +127,40 @@ public class RiskDictController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    //-----------------------------------------------------页面跳转-----------------------------------------------------
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping(value = "/riskDictAdd",method = RequestMethod.GET)
+    public BaseModelAndView getRiskDictAdd(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/dictAdd");
+        return modelAndView;
+    }
+
+    /**
+     * 修改页面
+     * @return
+     */
+    @RequestMapping(value = "/riskDictEdit",method = RequestMethod.GET)
+    public BaseModelAndView getRiskDictEdit(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/dictEdit");
+        return modelAndView;
+    }
+
+    /**
+     * 分页查询页面
+     * @return
+     */
+    @RequestMapping(value = "/riskDictPage",method = RequestMethod.GET)
+    public BaseModelAndView getRiskDictPage(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/dictPage");
+        return modelAndView;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 }
