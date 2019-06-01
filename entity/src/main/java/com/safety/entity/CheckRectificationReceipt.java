@@ -137,6 +137,16 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
      */
     private String rectificationResultUrl ;
 
+    /**
+     *填写否的记录ID
+     */
+    private String recordListFk;
+
+    /**
+     *不合格项来源
+     */
+    private String checkType;
+
     public String getRectificationContentUrl() {
         return rectificationContentUrl;
     }
@@ -279,6 +289,22 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
 
     public void setModifyTime(LocalDateTime modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getRecordListFk() {
+        return recordListFk;
+    }
+
+    public void setRecordListFk(String recordListFk) {
+        this.recordListFk = recordListFk;
+    }
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
     }
 
     @Override
