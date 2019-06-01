@@ -50,7 +50,7 @@
 						        <el-button style="margin-left:0" @click="addDanger(scope.row,'secondForm')" type="warning" size="mini" icon="el-icon-plus" circle></el-button>
 						        </el-tooltip>
 						        <el-tooltip class="item" effect="dark" content="回执" placement="top-start">
-						        <el-button style="margin-left:0" @click="del(scope.row)" type="danger" size="mini" icon="el-icon-plus" circle></el-button>
+						        <el-button style="margin-left:0" @click="addReceipt(scope.row,'threeForm')" type="danger" size="mini" icon="el-icon-plus" circle></el-button>
 						        </el-tooltip>
 						     </template>
 						</el-table-column>
@@ -102,60 +102,134 @@
 			  </div>
 			</el-dialog>
 			<el-dialog title="隐患治理信息台账" :visible.sync="dangerLedgerVisible" ref="dangerLedger" @closed="closedDialog('secondForm')">
-			  <el-form :model="form" label-width="120px" ref="secondForm">
-			    <el-form-item label="排查时间" >
+			  <el-form :model="dangerForm" label-width="120px" ref="secondForm">
+			    <el-form-item label="排查时间" prop="investigationTime">
 			      	<el-date-picker
-				  
-				      type="datetime"
+				  	  value-format="yyyy-MM-dd"
+				      type="date"
+				      v-model="dangerForm.investigationTime"
 				      placeholder="选择日期时间">
 				    </el-date-picker>
 			    </el-form-item>
-			    <el-form-item label="排查人">
-			      <el-input v-model="form.harmfulFactors" autocomplete="off"></el-input>
+			    <el-form-item label="排查人" prop="investigationOrgPersonName">
+			      <el-input v-model="dangerForm.investigationOrgPersonName" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="隐患部位">
-			      <el-input v-model="form.measure" autocomplete="off"></el-input>
-			    </el-form-item>
-			    <el-form-item label="隐患名称">
-			      <el-input v-model="form.runawayPerformance" autocomplete="off"></el-input>
-			    </el-form-item>
-			    <el-form-item label="隐患等级">
-			      <el-input v-model="form.controlOrgName" autocomplete="off"></el-input>
-			    </el-form-item>
-			    <el-form-item label="治理措施">
-			      <el-upload
-					  action="https://jsonplaceholder.typicode.com/posts/"
-					  list-type="picture-card"
-					  :auto-upload="false">
+			    <el-form-item label="隐患部位" prop="rectificationPosition">
+			    	<el-upload
+			    		v-model="dangerForm.rectificationPosition"
+			    		limit="1"
+					  action=""
+					  :auto-upload="false"
+					  :on-change="rectificationChange"
+					  list-type="picture-card">
 					  <i class="el-icon-plus"></i>
 					</el-upload>
 			    </el-form-item>
-			    <el-form-item label="完成时限">
-			      <el-input v-model="form.investigationOrgName" autocomplete="off"></el-input>
+			    <el-form-item label="隐患名称" prop="rectificationName">
+			      <el-input v-model="dangerForm.rectificationName" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="责任部门">
-			      <el-input v-model="form.investigationOrgPersonName" autocomplete="off"></el-input>
+			    <el-form-item label="隐患等级" prop="rectificationLevel">
+			    	 <el-select placeholder="请选择" v-model="dangerForm.rectificationLevel">
+					    <el-option key="1" value="一般" name="一般"></el-option>
+					    <el-option key="2" value="重大" name="重大"></el-option>
+					    <el-option key="3" value="其它" name="其它"></el-option>
+					  </el-select>
 			    </el-form-item>
-			    <el-form-item label="责任人">
-			      <el-input v-model="form.investigationCount" autocomplete="off"></el-input>
+			    <el-form-item label="治理措施" prop="governmentMeasure">
+			      <el-input v-model="dangerForm.governmentMeasure" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="复查时间">
+			    <el-form-item label="完成时限" prop="complateTime">
+			      <el-input v-model="dangerForm.complateTime" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="责任部门" prop="controlOrgName">
+			      <el-input v-model="dangerForm.controlOrgName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="责任人" prop="controlOrgPersonName">
+			      <el-input v-model="dangerForm.controlOrgPersonName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="复查时间" prop="reviewTime">
 			      	<el-date-picker
-				
-				      type="datetime"
+				      type="date"
+				      v-model="dangerForm.reviewTime"
+				      value-format="yyyy-MM-dd"
 				      placeholder="选择日期时间">
 				    </el-date-picker>
 			    </el-form-item>
-			    <el-form-item label="复查人">
-			      <el-input v-model="form.remark" autocomplete="off"></el-input>
+			    <el-form-item label="复查人" prop="reviewPersonName">
+			      <el-input v-model="dangerForm.reviewPersonName" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="复查结果">
-			      <el-input v-model="form.remark" autocomplete="off" type="textarea"></el-input>
+			    <el-form-item label="复查结果" prop="reviewResult">
+			    	<el-upload
+			    		v-model="dangerForm.reviewResult"
+			    		limit="1"
+					  action=""
+					  :on-change="reviewChange"
+					  :auto-upload="false"
+					  list-type="picture-card">
+					  <i class="el-icon-plus"></i>
+					</el-upload>
 			    </el-form-item>
 			  </el-form>
 			  <div slot="footer" class="dialog-footer">
 			    <el-button @click="dangerLedgerVisible = false">取 消</el-button>
-			    <el-button type="primary" @click="submitForm('secondForm')">确 定</el-button>
+			    <el-button type="primary" @click="submitDangerForm('secondForm')">确 定</el-button>
+			  </div>
+			</el-dialog>
+			<el-dialog title="隐患整改回执单" :visible.sync="receiptVisible" ref="receipt" @closed="closedDialog('threeForm')">
+			  <el-form :model="receiptForm" label-width="120px" ref="threeForm">
+			    <el-form-item label="受检单位名称">
+			      <el-input v-model="receiptForm.checkOrgName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="填写时间" >
+			      	<el-date-picker
+				  	  value-format="yyyy-MM-dd"
+				      type="date"
+				      v-model="receiptForm.fillTime"
+				      placeholder="选择日期时间">
+				    </el-date-picker>
+			    </el-form-item>
+			    <el-form-item label="检查人员姓名">
+			      <el-input v-model="receiptForm.checkPersonName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="检查日期">
+			      	<el-date-picker
+				      type="date"
+				      v-model="receiptForm.checkTime"
+				      value-format="yyyy-MM-dd"
+				      placeholder="选择日期时间">
+				    </el-date-picker>
+			    </el-form-item>
+			    <el-form-item label="编号">
+			      <el-input v-model="receiptForm.checkCode" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="隐患整改部门名称">
+			      <el-input v-model="receiptForm.rectificationOrgName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="整改部门负责人姓名">
+			      <el-input v-model="receiptForm.rectificationPersonName" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="隐患内容及整改要求">
+			      <el-input v-model="receiptForm.rectificationContent" autocomplete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="整改期限">
+			      	<el-date-picker
+				      type="date"
+				      v-model="receiptForm.rectificationTime"
+				      value-format="yyyy-MM-dd"
+				      placeholder="选择日期时间">
+				    </el-date-picker>
+			    </el-form-item>
+			    <el-form-item label="整改措施">
+			      <el-input v-model="receiptForm.rectificationMeasure" autocomplete="off"></el-input>
+			    </el-form-item>
+			    
+			    <el-form-item label="整改结果">
+			      <el-input v-model="receiptForm.rectificationResult" autocomplete="off"></el-input>
+			    </el-form-item>
+			  </el-form>
+			  <div slot="footer" class="dialog-footer">
+			    <el-button @click="receiptVisible = false">取 消</el-button>
+			    <el-button type="primary" @click="submitDangerForm('threeForm')">确 定</el-button>
 			  </div>
 			</el-dialog>
 		</div>
@@ -168,6 +242,8 @@ new Vue({
     el:'#app',
     components: {axios},
     created:function(){
+    	this.$data.dangerForm.investigationTime = this.getDate(new Date());
+    	this.$data.dangerForm.reviewTime = this.getDate(new Date());
         var that = this;
         axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:1,pageSize:10}}).then(function(res){
             that.data = res.data.data;
@@ -180,6 +256,7 @@ new Vue({
             data:[],
             dialogFormVisible:false,
             dangerLedgerVisible:false,
+            receiptVisible:false,
             form:{
             	riskPosition:'',
             	harmfulFactors:'',
@@ -193,7 +270,34 @@ new Vue({
             	remark:''
             },
             dangerForm:{
-            	
+            	investigationTime:'',
+            	investigationOrgPersonName:'',
+            	rectificationPosition:'',
+            	rectificationName:'',
+            	rectificationLevel:'',
+            	governmentMeasure:'',
+            	rectificationPositionUrl:'',
+            	complateTime:'',
+            	controlOrgName:'',
+            	controlOrgPersonName:'',
+            	reviewTime:'',
+            	reviewResultUrl:'',
+            	reviewPersonName:'',
+            	offgradeListFk:'',
+            	checkType:''
+            },
+            receiptForm:{
+            	checkOrgName:'',
+            	fillTime:'',
+            	checkPersonName:'',
+            	checkTime:'',
+            	checkCode:'',
+            	rectificationOrgName:'',
+            	rectificationPersonName:'',
+            	rectificationContent:'',
+            	rectificationTime:'',
+            	rectificationMeasure:'',
+            	rectificationResult:''
             }
         }
     },
@@ -221,7 +325,9 @@ new Vue({
         },
         addDanger(row,formName){
         	this.$data.dangerLedgerVisible = true;
-        	
+        	this.$data.dangerForm.orgFk = row.orgFk;
+        	this.$data.dangerForm.offgradeListFk = row.id;
+        	this.$data.dangerForm.checkType = row.checkType;
         },
         closedDialog(formName){
        
@@ -241,7 +347,58 @@ new Vue({
             }).catch(err=>{
                 this.$message.error('服务器异常，请稍后再试！');
             });
-        }
+        },
+        submitDangerForm(formName){
+        	this.$data.dangerLedgerVisible = false;
+        	this.$refs[formName].resetFields();
+        	axios.post('/safety/checkDangerLedger/checkDangerLedger',this.$data.dangerForm).then(function(response){
+				that.$data.form.offgradeListFk = '';
+        		if(response.data.success === true){
+        			that.$message.success(response.data.msg);
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+            }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
+            });
+        },
+        rectificationChange(file,fileList){
+        	var that = this;
+        	var reader = new FileReader();
+        	reader.readAsDataURL(file.raw);
+        	reader.onload = function(e){
+        		var imgCode = e.target.result;
+        		that.$data.dangerForm.rectificationPosition = imgCode;
+        	}
+        },
+        reviewChange(file,fileList){
+        	var that = this;
+        	var reader = new FileReader();
+        	reader.readAsDataURL(file.raw);
+        	reader.onload = function(e){
+        		var imgCode = e.target.result;
+        		that.$data.dangerForm.reviewResultUrl = imgCode;
+        	}
+        },
+        getDate(date){
+			var year = date.getFullYear();
+			var month = date.getMonth()+1;
+			var day = date.getDate();
+			if(month < 10){
+				month = '0'+month;
+			}
+			if(day<10){
+				day = '0' + day;
+			}
+			return year + '-' + month + '-' + day;
+		},
+		addReceipt(row,formName){
+			this.$data.receiptVisible = true;
+        	this.$data.receiptForm.orgFk = row.orgFk;
+        	this.$data.receiptForm.offgradeListFk = row.id;
+        	this.$data.receiptForm.checkType = row.checkType;
+			
+		}
     }
 
 });
