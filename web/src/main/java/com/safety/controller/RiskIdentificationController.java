@@ -128,8 +128,8 @@ public class RiskIdentificationController extends BaseController {
      */
     @RequestMapping(value = "/riskIdentification",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getRiskIdentificationByParam(String orgId, String year){
-        RiskIdentification riskIdentification = iRiskIdentificationService.getByParam(orgId,year);
+    public JsonResult getRiskIdentificationByParam(String orgId, String year,String postName,String levelName){
+        RiskIdentification riskIdentification = iRiskIdentificationService.getByParam(orgId,year,postName,levelName);
         if(riskIdentification!=null){
             return renderSuccess("查询成功",riskIdentification);
         }else {

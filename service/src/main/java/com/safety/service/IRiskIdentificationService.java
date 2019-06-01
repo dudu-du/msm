@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  */
 public interface IRiskIdentificationService extends IService<RiskIdentification> {
 
-    RiskIdentification getByParam(String orgId, String year);
+    RiskIdentification getByParam(String orgId, String year, String postName, String levelName);
 
     RiskIdentification getById(String id);
 }
