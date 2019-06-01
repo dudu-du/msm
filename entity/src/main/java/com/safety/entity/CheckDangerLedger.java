@@ -2,6 +2,7 @@ package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -93,6 +94,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      * 复查时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date reviewTime;
 
     /**
