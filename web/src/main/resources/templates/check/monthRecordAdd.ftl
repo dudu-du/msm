@@ -67,6 +67,17 @@
 							        <el-radio label="1">是</el-radio>
 	  								<el-radio label="0">否</el-radio>
 	  							</el-radio-group>
+	  							<span v-if="scope.row.result==0 && scope.row.checkOffgradeList">
+		  							<el-tooltip class="item" effect="dark" content="清单" placement="top-start">
+							        <el-button style="margin-left:0" @click="addBtn(scope.row,'firstForm')" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
+							        </el-tooltip>
+							        <el-tooltip class="item" effect="dark" content="台账" placement="top-start">
+							        <el-button style="margin-left:0" @click="addDanger(scope.row,'secondForm')" type="warning" size="mini" icon="el-icon-plus" circle></el-button>
+							        </el-tooltip>
+							        <el-tooltip class="item" effect="dark" content="回执" placement="top-start">
+							        <el-button style="margin-left:0" @click="del(scope.row)" type="danger" size="mini" icon="el-icon-plus" circle></el-button>
+							        </el-tooltip>
+	  							</span>
 						     </template>
 						</el-table-column>
 					</el-table>
@@ -121,7 +132,7 @@
 				axios.get('/safety/checkMonthRecord/checkMonthRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
-						that.$data.inputValue = that.$data.data.checkPersonName;
+				
 		
 						that.$data.tableData = [];
 						if(that.$data.data.checkStartTime){
@@ -206,6 +217,10 @@
 					          type: 'warning'
 					        });
 						}
+						this.$data.tableData = [];
+						response.data.data.checkMonthList.forEach(e=>{
+							this.$data.tableData.push(e);
+						});
 					}else{
 						this.$message.warning(response.data.msg);
 					}
