@@ -38,11 +38,9 @@
 						<el-col :span="18">
 							<span>排查时间：</span>
 							 <el-date-picker
-						      type="daterange"
+						      type="date"
 						      v-model="dateValue"
-						      range-separator="至"
-						      start-placeholder="开始日期"
-						      end-placeholder="结束日期">
+						      placeholder="选择日期">
 						    </el-date-picker>
 						</el-col>
 						<el-col :span="6">
@@ -106,8 +104,8 @@
 				},
 				tableData:[],
 				data:{},
-				dateValue:'',
-				inputValue:''
+				dateValue:new Date(),
+				inputValue:'${MEMBER_USER_REAL_NAME}'
 			};
 		},
 		created:function(){
