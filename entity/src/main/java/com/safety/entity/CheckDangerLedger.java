@@ -70,7 +70,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      * 完成时间
      */
-    private LocalDateTime complateTime;
+    private String complateTime;
 
     /**
      * 责任部门ID
@@ -205,15 +205,16 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     public void setGovernmentMeasure(String governmentMeasure) {
         this.governmentMeasure = governmentMeasure;
     }
-    public LocalDateTime getComplateTime() {
+    public String getControlOrgFk() {
+        return controlOrgFk;
+    }
+
+    public String getComplateTime() {
         return complateTime;
     }
 
-    public void setComplateTime(LocalDateTime complateTime) {
+    public void setComplateTime(String complateTime) {
         this.complateTime = complateTime;
-    }
-    public String getControlOrgFk() {
-        return controlOrgFk;
     }
 
     public void setControlOrgFk(String controlOrgFk) {
