@@ -17,4 +17,6 @@ import java.util.List;
 public interface RiskDictMapper extends BaseMapper<RiskDict> {
 
     List<RiskDict> getRiskDictListByCode(@Param("code") String code);
+
+    List<RiskDict> getRiskDictCodeList();
 }

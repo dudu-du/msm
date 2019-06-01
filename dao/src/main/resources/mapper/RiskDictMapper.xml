@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.safety.entity.RiskDict">
         <id column="id" property="id" />
         <result column="code" property="code" />
+        <result column="code_name" property="codeName" />
         <result column="name" property="name" />
         <result column="value" property="value" />
         <result column="create_time" property="createTime" />
@@ -14,5 +15,8 @@
 
     <select id="getRiskDictListByCode" resultMap="BaseResultMap" parameterType="java.util.Map">
         select * from risk_dict where code = #{code}
+    </select>
+    <select id="getRiskDictCodeList" resultType="com.safety.entity.RiskDict">
+        select distinct code,code_name from risk_dict
     </select>
 </mapper>

@@ -46,6 +46,11 @@ public class RiskDict extends Model<RiskDict> {
      */
     private LocalDateTime modifyTime;
 
+    /**
+     * 分类名称
+     */
+    private String codeName;
+
     public String getId() {
         return id;
     }
@@ -92,6 +97,14 @@ public class RiskDict extends Model<RiskDict> {
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public String getCodeName() {
+        return codeName;
+    }
+
+    public void setCodeName(String codeName) {
+        this.codeName = codeName;
     }
 
     @Override

@@ -27,4 +27,9 @@ public class RiskDictServiceImpl extends ServiceImpl<RiskDictMapper, RiskDict> i
     public List<RiskDict> getRiskDictListByCode(String code) {
        return riskDictMapper.getRiskDictListByCode(code);
     }
+
+    @Override
+    public List<RiskDict> getRiskDictCodeList() {
+        return riskDictMapper.getRiskDictCodeList();
+    }
 }

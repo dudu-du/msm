@@ -110,4 +110,20 @@ public class RiskDictController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    /**
+     * 通过code查询列表
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "/riskDictCodeList",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult getRiskDictCodeList(){
+        List<RiskDict> riskDictList = iRiskDictService.getRiskDictCodeList();
+        if(riskDictList!=null){
+            return renderSuccess("查询成功",riskDictList);
+        }else {
+            return renderError("无数据");
+        }
+    }
 }

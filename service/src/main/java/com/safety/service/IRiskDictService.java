@@ -16,4 +16,6 @@ import java.util.List;
 public interface IRiskDictService extends IService<RiskDict> {
 
     List<RiskDict> getRiskDictListByCode(String code);
+
+    List<RiskDict> getRiskDictCodeList();
 }
