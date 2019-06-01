@@ -89,6 +89,10 @@
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+	var a = "重大风险";
+	var b = "较大风险";
+	var c = "一般风险";
+	var d = "低风险";
 	$.ajax({
 		type:"GET",
 		url:"/safety/riskIdentification/riskIdentification",
@@ -116,7 +120,7 @@
 							"<td colspan='1'>"+item.numE+"</td>" +
 							"<td colspan='1'>"+item.numC+"</td>" +
 							"<td colspan='1'>"+item.numD+"</td>" +
-							"<td colspan='1'>"+item.levelName+"</td>" +
+							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td>" +
 							"</tr>"
 				}
 				else{
@@ -133,7 +137,7 @@
 							"<td colspan='1'>"+item.numE+"</td>" +
 							"<td colspan='1'>"+item.numC+"</td>" +
 							"<td colspan='1'>"+item.numD+"</td>" +
-							"<td colspan='1'>"+item.levelName+"</td></tr>"
+							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td></tr>"
 				}
 			});
 			$("tbody").html(trHt);
