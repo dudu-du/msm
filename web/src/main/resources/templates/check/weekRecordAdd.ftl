@@ -40,6 +40,7 @@
 							 <el-date-picker
 						      type="date"
 						      v-model="dateValue"
+						      value-format="yyyy-MM-dd"
 						      placeholder="选择日期">
 						    </el-date-picker>
 						</el-col>
@@ -112,11 +113,12 @@
 				},
 				tableData:[],
 				data:{},
-				dateValue:new Date(),
+				dateValue:'',
 				inputValue:'${MEMBER_USER_REAL_NAME}'
 			};
 		},
 		created:function(){
+			this.$data.dateValue = this.getDate(new Date());
 			var that = this;
 			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
 				if(response.data.success === true){
@@ -195,8 +197,7 @@
 				console.log(row);
 			},
 			submitForm(){
-				this.$data.data.checkStartTime = this.getDate(this.$data.dateValue[0]);
-				this.$data.data.checkEndTime = this.getDate(this.$data.dateValue[1]);
+				this.$data.data.checkStartTime = this.$data.dateValue;
 				this.$data.data.checkPersonName = this.$data.inputValue;
 				this.$data.data.checkMonthList = this.$data.tableData;
 				var notify = false;

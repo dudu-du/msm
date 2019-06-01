@@ -40,6 +40,7 @@
 							 <el-date-picker
 						      type="date"
 						      v-model="dateValue"
+						      value-format="yyyy-MM-dd"
 						      placeholder="选择日期">
 						    </el-date-picker>
 						</el-col>
@@ -49,26 +50,6 @@
 						  </el-input>
 						</el-col>
 					</el-row>
-					<!--
-					<div style="width:100%" class="el-table el-table--fit el-table--border el-table--group el-table--enable-row-hover el-table--enable-row-transition">
-						<div class="el-table__header-wrapper">
-							<table class="el-table__header" style="width:100%;">
-								<thead class="is-group has-gutter">
-							        <tr>
-							          <th rowspan="2" colspan="3" class="is-leaf">检查项目及相关要求</th>
-							          <th rowspan="2" class="is-leaf">检查方法</th>
-							          <th colspan="2" class="is-leaf">符合性</th>
-							        </tr>
-							        <tr>
-							          <th class="is-leaf">是</th>
-							          <th class="is-leaf">否</th>
-							        </tr>
-							      </thead>
-							</table>
-						
-						</div>
-					</div>
-					-->
 					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
 							<el-table-column type="index">
@@ -92,6 +73,17 @@
 
 				</el-footer>
 			</el-container>
+			<el-dialog
+			  title="提示"
+			  :visible.sync="centerDialogVisible"
+			  width="30%"
+			  center>
+			  <iframe></iframe>
+			  <span slot="footer" class="dialog-footer">
+			    <el-button @click="centerDialogVisible = false">取 消</el-button>
+			    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+			  </span>
+			</el-dialog>
 		</div>
 	</body>
 <script type="text/javascript" >
@@ -108,11 +100,13 @@
 				},
 				tableData:[],
 				data:{},
-				dateValue:new Date(),
-				inputValue:'${MEMBER_USER_REAL_NAME}'
+				dateValue:'',
+				inputValue:'${MEMBER_USER_REAL_NAME}',
+				centerDialogVisible:false
 			};
 		},
 		created:function(){
+			this.$data.dateValue = this.getDate(new Date());
 			var that = this;
 			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
 				if(response.data.success === true){
@@ -190,8 +184,8 @@
 				console.log(row);
 			},
 			submitForm(){
-				this.$data.data.checkStartTime = this.getDate(this.$data.dateValue[0]);
-				this.$data.data.checkEndTime = this.getDate(this.$data.dateValue[1]);
+	 
+				this.$data.data.checkStartTime = this.$data.dateValue;
 				this.$data.data.checkPersonName = this.$data.inputValue;
 				this.$data.data.checkMonthList = this.$data.tableData;
 				var notify = false;
