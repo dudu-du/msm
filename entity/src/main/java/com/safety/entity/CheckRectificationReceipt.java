@@ -121,6 +121,32 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
      */
     private LocalDateTime modifyTime;
 
+    /**
+     * 隐患内容及整改要求图片
+     */
+    private String rectificationContentUrl;
+
+    /**
+     * 验收意见图片
+     */
+    private String rectificationResultUrl ;
+
+    public String getRectificationContentUrl() {
+        return rectificationContentUrl;
+    }
+
+    public void setRectificationContentUrl(String rectificationContentUrl) {
+        this.rectificationContentUrl = rectificationContentUrl;
+    }
+
+    public String getRectificationResultUrl() {
+        return rectificationResultUrl;
+    }
+
+    public void setRectificationResultUrl(String rectificationResultUrl) {
+        this.rectificationResultUrl = rectificationResultUrl;
+    }
+
     public String getId() {
         return id;
     }

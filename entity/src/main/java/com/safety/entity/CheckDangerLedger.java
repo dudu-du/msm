@@ -2,9 +2,11 @@ package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -27,7 +29,8 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
      * 排查时间
      */
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
-    private LocalDateTime investigationTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date investigationTime;
 
     /**
      * 排查人ID
@@ -67,7 +70,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      * 完成时间
      */
-    private LocalDateTime complateTime;
+    private String complateTime;
 
     /**
      * 责任部门ID
@@ -92,7 +95,8 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      * 复查时间
      */
-    private LocalDateTime reviewTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date reviewTime;
 
     /**
      * 复查人id
@@ -151,15 +155,16 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     public void setId(String id) {
         this.id = id;
     }
-    public LocalDateTime getInvestigationTime() {
+    public String getInvestigationOrgPersonFk() {
+        return investigationOrgPersonFk;
+    }
+
+    public Date getInvestigationTime() {
         return investigationTime;
     }
 
-    public void setInvestigationTime(LocalDateTime investigationTime) {
+    public void setInvestigationTime(Date investigationTime) {
         this.investigationTime = investigationTime;
-    }
-    public String getInvestigationOrgPersonFk() {
-        return investigationOrgPersonFk;
     }
 
     public void setInvestigationOrgPersonFk(String investigationOrgPersonFk) {
@@ -200,15 +205,16 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     public void setGovernmentMeasure(String governmentMeasure) {
         this.governmentMeasure = governmentMeasure;
     }
-    public LocalDateTime getComplateTime() {
+    public String getControlOrgFk() {
+        return controlOrgFk;
+    }
+
+    public String getComplateTime() {
         return complateTime;
     }
 
-    public void setComplateTime(LocalDateTime complateTime) {
+    public void setComplateTime(String complateTime) {
         this.complateTime = complateTime;
-    }
-    public String getControlOrgFk() {
-        return controlOrgFk;
     }
 
     public void setControlOrgFk(String controlOrgFk) {
@@ -235,13 +241,15 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     public void setControlOrgPersonName(String controlOrgPersonName) {
         this.controlOrgPersonName = controlOrgPersonName;
     }
-    public LocalDateTime getReviewTime() {
+
+    public Date getReviewTime() {
         return reviewTime;
     }
 
-    public void setReviewTime(LocalDateTime reviewTime) {
+    public void setReviewTime(Date reviewTime) {
         this.reviewTime = reviewTime;
     }
+
     public String getReviewPersonFk() {
         return reviewPersonFk;
     }

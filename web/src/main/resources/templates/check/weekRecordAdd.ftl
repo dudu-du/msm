@@ -50,26 +50,6 @@
 						  </el-input>
 						</el-col>
 					</el-row>
-					<!--
-					<div style="width:100%" class="el-table el-table--fit el-table--border el-table--group el-table--enable-row-hover el-table--enable-row-transition">
-						<div class="el-table__header-wrapper">
-							<table class="el-table__header" style="width:100%;">
-								<thead class="is-group has-gutter">
-							        <tr>
-							          <th rowspan="2" colspan="3" class="is-leaf">检查项目及相关要求</th>
-							          <th rowspan="2" class="is-leaf">检查方法</th>
-							          <th colspan="2" class="is-leaf">符合性</th>
-							        </tr>
-							        <tr>
-							          <th class="is-leaf">是</th>
-							          <th class="is-leaf">否</th>
-							        </tr>
-							      </thead>
-							</table>
-						
-						</div>
-					</div>
-					-->
 					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
 							<el-table-column prop="checkTypeName" label="类型" v-show="false">
@@ -97,6 +77,7 @@
 					</div>
 				</el-footer>
 			</el-container>
+			
 		</div>
 	</body>
 <script type="text/javascript" >
