@@ -54,7 +54,7 @@ public class SafetyNotificationCardController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult updateSafetyNotificationCard(@RequestBody SafetyNotificationCard safetyNotificationCard){
-        boolean result = iSafetyNotificationCardService.updateById(safetyNotificationCard);
+        boolean result = iSafetyNotificationCardService.updateSafetyNotificationCard(safetyNotificationCard);
         if (result){
             return renderSuccess("修改成功");
         }else {
