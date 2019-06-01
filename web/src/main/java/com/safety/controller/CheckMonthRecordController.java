@@ -35,12 +35,8 @@ public class CheckMonthRecordController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addCheckMonthRecord(@RequestBody CheckMonthRecord checkMonthRecord){
-        boolean result = iCheckMonthRecordService.addCheckMonthRecord(checkMonthRecord);
-        if (result){
-            return renderSuccess("添加成功");
-        }else {
-            return renderError("添加失败");
-        }
+        iCheckMonthRecordService.addCheckMonthRecord(checkMonthRecord);
+        return renderSuccess("添加成功",checkMonthRecord);
     }
 
     /**

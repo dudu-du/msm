@@ -86,7 +86,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     }
 
     @Override
-    public boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
+    public CheckMonthRecord addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
         List<CheckMonthList> checkMonthLists = checkMonthRecord.getCheckMonthList();
         //先将list置位null 方便保存
         checkMonthRecord.setCheckMonthList(null);
@@ -142,13 +142,15 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    //保存未合格项信息
+                    checkMonthList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
-        return true;
+        return checkMonthRecord;
     }
 
     @Override
