@@ -72,4 +72,24 @@ public class SafetyNotificationCardServiceImpl extends ServiceImpl<SafetyNotific
         List<SafetyNotificationCard> checkMonthRecords = safetyNotificationCardMapper.selectAll();
         return new PageInfo<>(checkMonthRecords);
     }
+
+    @Override
+    public boolean updateSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard) {
+        List<SafetyNotificationCardList> safetyNotificationCardLists = safetyNotificationCard.getSafetyNotificationCardList();
+        safetyNotificationCard.setSafetyNotificationCardList(null);
+        safetyNotificationCardMapper.updateById(safetyNotificationCard);
+        String id = safetyNotificationCard.getId();
+        Map map = new HashMap();
+        map.put("safetyNotificationCardFk",id);
+        safetyNotificationCardListMapper.deleteByMap(map);
+        if (safetyNotificationCardLists.size()>0){
+            for (SafetyNotificationCardList safetyNotificationCardList:safetyNotificationCardLists){
+                safetyNotificationCardList.setId(UUIDUtil.getUUID());
+                safetyNotificationCardList.setCreateTime(LocalDateTime.now());
+                safetyNotificationCardList.setSafetyNotificationCardFk(id);
+                safetyNotificationCardListMapper.insert(safetyNotificationCardList);
+            }
+        }
+        return true;
+    }
 }

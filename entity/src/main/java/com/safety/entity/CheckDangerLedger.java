@@ -29,7 +29,8 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
      * 排查时间
      */
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
-    private LocalDateTime investigationTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date investigationTime;
 
     /**
      * 排查人ID
@@ -154,15 +155,16 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     public void setId(String id) {
         this.id = id;
     }
-    public LocalDateTime getInvestigationTime() {
+    public String getInvestigationOrgPersonFk() {
+        return investigationOrgPersonFk;
+    }
+
+    public Date getInvestigationTime() {
         return investigationTime;
     }
 
-    public void setInvestigationTime(LocalDateTime investigationTime) {
+    public void setInvestigationTime(Date investigationTime) {
         this.investigationTime = investigationTime;
-    }
-    public String getInvestigationOrgPersonFk() {
-        return investigationOrgPersonFk;
     }
 
     public void setInvestigationOrgPersonFk(String investigationOrgPersonFk) {
