@@ -150,6 +150,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                 }
             }
         }
+        checkMonthRecord.setCheckMonthList(checkMonthLists);
         return checkMonthRecord;
     }
 
