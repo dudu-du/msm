@@ -3,6 +3,7 @@ package com.safety.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -55,6 +56,11 @@ public class SafetyNotificationCard extends Model<SafetyNotificationCard> {
      * 修改时间
      */
     private LocalDateTime modifyTime;
+
+    /**
+     * 子表列表
+     */
+    private List<SafetyNotificationCardList> safetyNotificationCardList;
 
     public String getId() {
         return id;
@@ -116,6 +122,14 @@ public class SafetyNotificationCard extends Model<SafetyNotificationCard> {
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public List<SafetyNotificationCardList> getSafetyNotificationCardList() {
+        return safetyNotificationCardList;
+    }
+
+    public void setSafetyNotificationCardList(List<SafetyNotificationCardList> safetyNotificationCardList) {
+        this.safetyNotificationCardList = safetyNotificationCardList;
     }
 
     @Override

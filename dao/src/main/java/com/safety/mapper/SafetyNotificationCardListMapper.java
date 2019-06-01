@@ -1,7 +1,11 @@
 package com.safety.mapper;
 
+import com.safety.entity.SafetyNotificationCard;
 import com.safety.entity.SafetyNotificationCardList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SafetyNotificationCardListMapper extends BaseMapper<SafetyNotificationCardList> {
 
+    List<SafetyNotificationCardList> selectByParam(Map map);
 }

@@ -86,7 +86,7 @@ public class SafetyNotificationCardController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/safetyNotificationCard",method = RequestMethod.GET)
+    @RequestMapping(value = "/safetyNotificationCardById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getSafetyNotificationCardById(String id){
         SafetyNotificationCard safetyNotificationCard = iSafetyNotificationCardService.getById(id);

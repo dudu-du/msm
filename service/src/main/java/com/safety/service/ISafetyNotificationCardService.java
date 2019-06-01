@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-05-23
  */
 public interface ISafetyNotificationCardService extends IService<SafetyNotificationCard> {
-
+    SafetyNotificationCard getById(String id);
 }
