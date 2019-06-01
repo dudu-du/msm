@@ -51,6 +51,8 @@ public class RiskIdentificationController extends BaseController {
         return modelAndView;
     }
 
+
+
     /**
      * 添加风险辨识清单
      * @param riskIdentification
@@ -135,5 +137,13 @@ public class RiskIdentificationController extends BaseController {
         }else {
             return renderError("无数据");
         }
+    }
+
+    @RequestMapping(value = "/riskIdentificationPrint",method = RequestMethod.GET)
+    public BaseModelAndView getRiskIdentificationPrint(){
+
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/incidentificationPrint");
+        return modelAndView;
     }
 }
