@@ -1,8 +1,11 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -34,7 +37,8 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
     /**
      * 填写时间
      */
-    private LocalDateTime fillTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fillTime;
 
     /**
      * 检查人员ID
@@ -49,7 +53,8 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
     /**
      * 检查日期
      */
-    private LocalDateTime checkTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date checkTime;
 
     /**
      * 编号
@@ -84,7 +89,8 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
     /**
      * 整改期限
      */
-    private LocalDateTime rectificationTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date rectificationTime;
 
     /**
      * 整改措施
@@ -131,6 +137,16 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
      */
     private String rectificationResultUrl ;
 
+    /**
+     *填写否的记录ID
+     */
+    private String recordListFk;
+
+    /**
+     *不合格项来源
+     */
+    private String checkType;
+
     public String getRectificationContentUrl() {
         return rectificationContentUrl;
     }
@@ -168,13 +184,7 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
     public void setCheckOrgName(String checkOrgName) {
         this.checkOrgName = checkOrgName;
     }
-    public LocalDateTime getFillTime() {
-        return fillTime;
-    }
 
-    public void setFillTime(LocalDateTime fillTime) {
-        this.fillTime = fillTime;
-    }
     public String getCheckPersonFk() {
         return checkPersonFk;
     }
@@ -188,13 +198,6 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
 
     public void setCheckPersonName(String checkPersonName) {
         this.checkPersonName = checkPersonName;
-    }
-    public LocalDateTime getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(LocalDateTime checkTime) {
-        this.checkTime = checkTime;
     }
     public String getCheckCode() {
         return checkCode;
@@ -237,13 +240,6 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
 
     public void setRectificationContent(String rectificationContent) {
         this.rectificationContent = rectificationContent;
-    }
-    public LocalDateTime getRectificationTime() {
-        return rectificationTime;
-    }
-
-    public void setRectificationTime(LocalDateTime rectificationTime) {
-        this.rectificationTime = rectificationTime;
     }
     public String getRectificationMeasure() {
         return rectificationMeasure;
@@ -295,9 +291,49 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
         this.modifyTime = modifyTime;
     }
 
+    public String getRecordListFk() {
+        return recordListFk;
+    }
+
+    public void setRecordListFk(String recordListFk) {
+        this.recordListFk = recordListFk;
+    }
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public Date getFillTime() {
+        return fillTime;
+    }
+
+    public void setFillTime(Date fillTime) {
+        this.fillTime = fillTime;
+    }
+
+    public Date getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(Date checkTime) {
+        this.checkTime = checkTime;
+    }
+
+    public Date getRectificationTime() {
+        return rectificationTime;
+    }
+
+    public void setRectificationTime(Date rectificationTime) {
+        this.rectificationTime = rectificationTime;
     }
 
     @Override

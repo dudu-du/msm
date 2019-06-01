@@ -25,6 +25,10 @@
         <result column="create_person_fk" property="createPersonFk" />
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
+        <result column="record_list_fk" property="recordListFk" />
+        <result column="check_type" property="checkType" />
+        <result column="rectification_content_url" property="rectificationContentUrl" />
+        <result column="rectification_result_url" property="rectificationResultUrl" />
     </resultMap>
     <select id="selectAll" resultType="com.safety.entity.CheckRectificationReceipt">
         select *  from check_rectification_receipt order by create_time desc

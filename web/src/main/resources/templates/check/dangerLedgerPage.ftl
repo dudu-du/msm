@@ -17,6 +17,10 @@
 		/*.el-button{*/
 		/*	margin-left: 152px;*/
 		/*}*/
+		img{
+			width:50px;
+			height:50px;
+		}
 	</style>
 
 	<body>
@@ -32,16 +36,20 @@
 						</el-table-column>
 						<el-table-column prop="investigationOrgPersonName" label="排查人" align="center">
 						</el-table-column>
-						<el-table-column porp="rectificationPosition" label="隐患部位" align="center">
+						<el-table-column prop="rectificationPosition" label="隐患部位" align="center">
+							<template slot-scope="scope">
+								{{scope.row.rectificationPosition}}
+								<img :src="scope.row.rectificationPositionUrl"></img>
+							</template>
 						</el-table-column>
-						<el-table-column type="rectificationName" label="隐患名称" align="center"></el-table-column>
+						<el-table-column prop="rectificationName" label="隐患名称" align="center"></el-table-column>
 						<el-table-column prop="rectificationLevel" label="隐患等级">
 						</el-table-column>
 						<el-table-column prop="governmentMeasure" label="治理措施" align="center">
 						</el-table-column>
 						<el-table-column prop="complateTime" label="完成时限" align="center">
 						</el-table-column>
-						<el-table-column type="controlOrgName" label="责任部门" align="center"></el-table-column>
+						<el-table-column prop="controlOrgName" label="责任部门" align="center"></el-table-column>
 						<el-table-column prop="controlOrgPersonName" label="责任人">
 						</el-table-column>
 						<el-table-column prop="reviewTime" label="复查时间" align="center">
@@ -49,6 +57,10 @@
 						<el-table-column prop="reviewPersonName" label="复查人" align="center">
 						</el-table-column>
 						<el-table-column prop="reviewResult" label="复查结果" align="center">
+							<template slot-scope="scope">
+								{{scope.row.reviewResult}}
+								<img :src="scope.row.reviewResultUrl"></img>
+							</template>
 						</el-table-column>
 					</el-table>
 				</el-main>

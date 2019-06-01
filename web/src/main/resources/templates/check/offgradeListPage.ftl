@@ -115,9 +115,11 @@
 			      <el-input v-model="dangerForm.investigationOrgPersonName" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="隐患部位" prop="rectificationPosition">
+			    	<el-input v-model="dangerForm.rectificationPosition" autocomplete="off"></el-input>
 			    	<el-upload
-			    		v-model="dangerForm.rectificationPosition"
+			    		v-model="dangerForm.rectificationPositionUrl"
 			    		limit="1"
+			    		ref="rectificationPositionUrl"
 					  action=""
 					  :auto-upload="false"
 					  :on-change="rectificationChange"
@@ -159,9 +161,11 @@
 			      <el-input v-model="dangerForm.reviewPersonName" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="复查结果" prop="reviewResult">
+			    	<el-input v-model="dangerForm.reviewResult" autocomplete="off"></el-input>
 			    	<el-upload
-			    		v-model="dangerForm.reviewResult"
+			    		v-model="dangerForm.reviewResultUrl"
 			    		limit="1"
+			    		ref="reviewResultUrl"
 					  action=""
 					  :on-change="reviewChange"
 					  :auto-upload="false"
@@ -176,8 +180,8 @@
 			  </div>
 			</el-dialog>
 			<el-dialog title="隐患整改回执单" :visible.sync="receiptVisible" ref="receipt" @closed="closedDialog('threeForm')">
-			  <el-form :model="receiptForm" label-width="120px" ref="threeForm">
-			    <el-form-item label="受检单位名称">
+			  <el-form :model="receiptForm" label-width="150px" ref="threeForm">
+			    <el-form-item label="受检单位名称" prop="checkOrgName">
 			      <el-input v-model="receiptForm.checkOrgName" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="填写时间" >
@@ -188,7 +192,7 @@
 				      placeholder="选择日期时间">
 				    </el-date-picker>
 			    </el-form-item>
-			    <el-form-item label="检查人员姓名">
+			    <el-form-item label="检查人员姓名" prop="checkPersonName">
 			      <el-input v-model="receiptForm.checkPersonName" autocomplete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="检查日期">
@@ -199,19 +203,29 @@
 				      placeholder="选择日期时间">
 				    </el-date-picker>
 			    </el-form-item>
-			    <el-form-item label="编号">
+			    <el-form-item label="编号" prop="checkCode">
 			      <el-input v-model="receiptForm.checkCode" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="隐患整改部门名称">
+			    <el-form-item label="隐患整改部门名称" prop="rectificationOrgName">
 			      <el-input v-model="receiptForm.rectificationOrgName" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="整改部门负责人姓名">
+			    <el-form-item label="整改部门负责人姓名" prop="rectificationPersonName">
 			      <el-input v-model="receiptForm.rectificationPersonName" autocomplete="off"></el-input>
 			    </el-form-item>
-			    <el-form-item label="隐患内容及整改要求">
+			    <el-form-item label="隐患内容及整改要求" prop="rectificationContent">
 			      <el-input v-model="receiptForm.rectificationContent" autocomplete="off"></el-input>
+			      <el-upload
+			    		v-model="receiptForm.rectificationContentUrl"
+			    		limit="1"
+			    		ref="rectificationContentUrl"
+					  action=""
+					  :on-change="rectificationContentUrlChange"
+					  :auto-upload="false"
+					  list-type="picture-card">
+					  <i class="el-icon-plus"></i>
+					</el-upload>
 			    </el-form-item>
-			    <el-form-item label="整改期限">
+			    <el-form-item label="整改期限" prop="rectificationTime">
 			      	<el-date-picker
 				      type="date"
 				      v-model="receiptForm.rectificationTime"
@@ -219,17 +233,27 @@
 				      placeholder="选择日期时间">
 				    </el-date-picker>
 			    </el-form-item>
-			    <el-form-item label="整改措施">
+			    <el-form-item label="整改措施" prop="rectificationMeasure">
 			      <el-input v-model="receiptForm.rectificationMeasure" autocomplete="off"></el-input>
 			    </el-form-item>
 			    
-			    <el-form-item label="整改结果">
+			    <el-form-item label="整改结果" prop="rectificationResult">
 			      <el-input v-model="receiptForm.rectificationResult" autocomplete="off"></el-input>
+			      <el-upload
+			    		v-model="receiptForm.rectificationResultUrl"
+			    		limit="1"
+			    		ref="rectificationResultUrl"
+					  action=""
+					  :on-change="rectificationResultUrlChange"
+					  :auto-upload="false"
+					  list-type="picture-card">
+					  <i class="el-icon-plus"></i>
+					</el-upload>
 			    </el-form-item>
 			  </el-form>
 			  <div slot="footer" class="dialog-footer">
 			    <el-button @click="receiptVisible = false">取 消</el-button>
-			    <el-button type="primary" @click="submitDangerForm('threeForm')">确 定</el-button>
+			    <el-button type="primary" @click="submitReceiptForm('threeForm')">确 定</el-button>
 			  </div>
 			</el-dialog>
 		</div>
@@ -244,6 +268,12 @@ new Vue({
     created:function(){
     	this.$data.dangerForm.investigationTime = this.getDate(new Date());
     	this.$data.dangerForm.reviewTime = this.getDate(new Date());
+    	this.$data.dangerForm.investigationTime = this.getDate(new Date());
+
+		this.$data.receiptForm.fillTime = this.getDate(new Date());
+		this.$data.receiptForm.checkTime = this.getDate(new Date());
+		this.$data.receiptForm.rectificationTime = this.getDate(new Date());
+		
         var that = this;
         axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:1,pageSize:10}}).then(function(res){
             that.data = res.data.data;
@@ -295,9 +325,11 @@ new Vue({
             	rectificationOrgName:'',
             	rectificationPersonName:'',
             	rectificationContent:'',
+            	rectificationContentUrl:'',
             	rectificationTime:'',
             	rectificationMeasure:'',
-            	rectificationResult:''
+            	rectificationResult:'',
+            	rectificationResultUrl:''
             }
         }
     },
@@ -330,7 +362,14 @@ new Vue({
         	this.$data.dangerForm.checkType = row.checkType;
         },
         closedDialog(formName){
-       
+        	if(this.$refs['rectificationPositionUrl']){
+	       		this.$refs['rectificationPositionUrl'].clearFiles();
+	       		this.$refs['reviewResultUrl'].clearFiles();
+        	}
+        	if(this.$refs['rectificationContentUrl']){
+	       		this.$refs['rectificationContentUrl'].clearFiles();
+	       		this.$refs['rectificationResultUrl'].clearFiles();
+        	}
         	this.$refs[formName].resetFields();
         },
         submitForm(formName){
@@ -349,10 +388,28 @@ new Vue({
             });
         },
         submitDangerForm(formName){
+        	var that = this;
         	this.$data.dangerLedgerVisible = false;
-        	this.$refs[formName].resetFields();
         	axios.post('/safety/checkDangerLedger/checkDangerLedger',this.$data.dangerForm).then(function(response){
-				that.$data.form.offgradeListFk = '';
+	        	that.$refs[formName].resetFields();
+				that.$data.dangerForm.offgradeListFk = '';
+				console.log(response.data);
+        		if(response.data.success === true){
+        			that.$message.success(response.data.msg);
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+            }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
+            });
+        },
+        submitReceiptForm(formName){
+        	var that = this;
+        	this.$data.dangerLedgerVisible = false;
+        	axios.post('/safety/checkRectificationReceipt/checkRectificationReceipt',this.$data.receiptForm).then(function(response){
+	        	that.$refs[formName].resetFields();
+				that.$data.receiptForm.offgradeListFk = '';
+				that.$data.receiptVisible = false;
         		if(response.data.success === true){
         			that.$message.success(response.data.msg);
 				}else{
@@ -368,7 +425,7 @@ new Vue({
         	reader.readAsDataURL(file.raw);
         	reader.onload = function(e){
         		var imgCode = e.target.result;
-        		that.$data.dangerForm.rectificationPosition = imgCode;
+        		that.$data.dangerForm.rectificationPositionUrl = imgCode;
         	}
         },
         reviewChange(file,fileList){
@@ -378,6 +435,24 @@ new Vue({
         	reader.onload = function(e){
         		var imgCode = e.target.result;
         		that.$data.dangerForm.reviewResultUrl = imgCode;
+        	}
+        },
+        rectificationContentUrlChange(file,fileList){
+        	var that = this;
+        	var reader = new FileReader();
+        	reader.readAsDataURL(file.raw);
+        	reader.onload = function(e){
+        		var imgCode = e.target.result;
+        		that.$data.receiptForm.rectificationContentUrl = imgCode;
+        	}
+        },
+        rectificationResultUrlChange(file,fileList){
+        	var that = this;
+        	var reader = new FileReader();
+        	reader.readAsDataURL(file.raw);
+        	reader.onload = function(e){
+        		var imgCode = e.target.result;
+        		that.$data.receiptForm.rectificationResultUrl = imgCode;
         	}
         },
         getDate(date){
