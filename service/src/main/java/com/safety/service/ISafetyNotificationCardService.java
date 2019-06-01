@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISafetyNotificationCardService extends IService<SafetyNotificationCard> {
     SafetyNotificationCard getById(String id);
+
+    boolean addSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard);
 }

@@ -36,12 +36,9 @@ public class SafetyNotificationCardController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addSafetyNotificationCard(@RequestBody SafetyNotificationCard safetyNotificationCard){
-        String id = UUIDUtil.getUUID();
-        safetyNotificationCard.setId(id);
-        safetyNotificationCard.setCreateTime(LocalDateTime.now());
-        boolean result = iSafetyNotificationCardService.save(safetyNotificationCard);
+        boolean result = iSafetyNotificationCardService.addSafetyNotificationCard(safetyNotificationCard);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }

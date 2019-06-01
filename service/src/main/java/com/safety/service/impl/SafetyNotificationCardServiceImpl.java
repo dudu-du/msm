@@ -6,9 +6,11 @@ import com.safety.mapper.SafetyNotificationCardListMapper;
 import com.safety.mapper.SafetyNotificationCardMapper;
 import com.safety.service.ISafetyNotificationCardService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.safety.tools.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,5 +44,18 @@ public class SafetyNotificationCardServiceImpl extends ServiceImpl<SafetyNotific
             safetyNotificationCard.setSafetyNotificationCardList(list);
         }
         return safetyNotificationCard;
+    }
+
+    @Override
+    public boolean addSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard) {
+        List<SafetyNotificationCardList> safetyNotificationCardLists = safetyNotificationCard.getSafetyNotificationCardList();
+        if (safetyNotificationCardLists.size()>0){
+            for (SafetyNotificationCardList safetyNotificationCardList:safetyNotificationCardLists){
+                safetyNotificationCardList.setId(UUIDUtil.getUUID());
+                safetyNotificationCardList.setCreateTime(LocalDateTime.now());
+                safetyNotificationCardListMapper.insert(safetyNotificationCardList);
+            }
+        }
+        return true;
     }
 }
