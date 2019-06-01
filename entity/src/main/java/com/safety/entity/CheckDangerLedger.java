@@ -45,6 +45,11 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     private String rectificationPosition;
 
     /**
+     * 隐患部位图片路径
+     */
+    private String rectificationPositionUrl;
+
+    /**
      * 隐患名称
      */
     private String rectificationName;
@@ -103,6 +108,11 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
      * 复查结果
      */
     private String reviewResult;
+
+    /**
+     * 复查结果图片路径
+     */
+    private String reviewResultUrl;
 
     /**
      * 填写人ID
@@ -301,6 +311,22 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
 
     public void setCheckType(String checkType) {
         this.checkType = checkType;
+    }
+
+    public String getRectificationPositionUrl() {
+        return rectificationPositionUrl;
+    }
+
+    public void setRectificationPositionUrl(String rectificationPositionUrl) {
+        this.rectificationPositionUrl = rectificationPositionUrl;
+    }
+
+    public String getReviewResultUrl() {
+        return reviewResultUrl;
+    }
+
+    public void setReviewResultUrl(String reviewResultUrl) {
+        this.reviewResultUrl = reviewResultUrl;
     }
 
     @Override
