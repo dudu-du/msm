@@ -105,7 +105,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardAdd",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardAdd(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardAdd");
+        modelAndView.setViewName("safety/notificationCardAdd");
         return modelAndView;
     }
 
@@ -116,7 +116,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardEdit",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardEdit");
+        modelAndView.setViewName("safety/notificationCardEdit");
         return modelAndView;
     }
 
@@ -127,7 +127,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardPage",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardPage(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardPage");
+        modelAndView.setViewName("safety/notificationCardPage");
         return modelAndView;
     }
 
@@ -139,7 +139,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardPrint",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardPrint(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardPrint");
+        modelAndView.setViewName("safety/notificationCardPrint");
         return modelAndView;
     }
 
