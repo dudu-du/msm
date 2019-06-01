@@ -98,6 +98,7 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	var oId = window.location.href.split("?")[1];
+	var curData;
 	$.ajax({
 		type:"GET",
 		url:"/safety/safetyNotificationCard/safetyNotificationCardById",
@@ -105,7 +106,7 @@
 		dataType:"json",
 		async:false,
 		success:function(data){
-			console.log(data);
+			curData = data.data;
 			$(".jobName input").val(data.data.jobName);
 			$(".jobPosition input").val(data.data.jobPosition);
 			$(".emergencyMeasure input").val(data.data.emergencyMeasure);
@@ -114,23 +115,45 @@
 				if(index==0){
 					trHt += "<tr>" +
 							"<td colspan='1' rowspan='"+data.data.safetyNotificationCardList.length+"'>危险有害因素</td>" +
-							"<td colspan='1' rowspan='1'><input type='text' value='"+item.harmfulFactors+"' /></td>" +
+							"<td colspan='1' rowspan='1' class='factorCont'><input type='text' value='"+item.harmfulFactors+"' /></td>" +
 							"<td colspan='1' rowspan='"+data.data.safetyNotificationCardList.length+"'>事故类别</td>" +
-							"<td colspan='1' rowspan='1'><input type='text' value='"+item.troubleName+"' /></td>" +
+							"<td colspan='1' rowspan='1' class='typeCont'><input type='text' value='"+item.troubleName+"' /></td>" +
 							"<td colspan='1' rowspan='"+data.data.safetyNotificationCardList.length+"' width='10%'>管控措施</td>" +
-							"<td colspan='1' rowspan='1'><input type='text' value='"+item.controlMeasure+"' /></td>" +
+							"<td colspan='1' rowspan='1' class='measureCont'><input type='text' value='"+item.controlMeasure+"' /></td>" +
 							"</tr>"
 				}
 				else{
 					trHt += "<tr>" +
-							"<td colspan='1' rowspan='1'><input type='text' value='"+item.harmfulFactors+"' /></td>" +
-							"<td colspan='1' rowspan='1'><input type='text' value='"+item.troubleName+"' /></td>" +
-							"<td colspan='1' rowspan='1'><input type='text' value='"+item.controlMeasure+"' /></td>" +
+							"<td colspan='1' rowspan='1' class='factorCont'><input type='text' value='"+item.harmfulFactors+"' /></td>" +
+							"<td colspan='1' rowspan='1' class='typeCont'><input type='text' value='"+item.troubleName+"' /></td>" +
+							"<td colspan='1' rowspan='1' class='measureCont'><input type='text' value='"+item.controlMeasure+"' /></td>" +
 							"</tr>"
 				}
 			});
 			$("tbody").html(trHt);
 		}
+	});
+	$(".save").click(function(){
+		for(var i=0;i<$(".factorCont").length;i++){
+			curData.safetyNotificationCardList[i].controlMeasure=$(".measureCont input")[i].value;
+			curData.safetyNotificationCardList[i].harmfulFactors=$(".factorCont input")[i].value;
+			curData.safetyNotificationCardList[i].troubleName=$(".typeCont input")[i].value;
+		}
+		curData.emergencyMeasure = $(".emergencyMeasure input").val();
+		curData.jobName = $(".jobName input").val();
+		curData.jobPosition = $(".jobPosition input").val();
+		$.ajax({
+			type:"PUT",
+			url:"/safety/safetyNotificationCard/safetyNotificationCard",
+			data:JSON.stringify(curData),
+			contentType:"application/json",
+			dataType:"json",
+			async:false,
+			success:function(data){
+				console.log(data);
+				alert(data.msg);
+			}
+		});
 	});
 </script>
 </html>

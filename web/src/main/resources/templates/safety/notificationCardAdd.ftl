@@ -96,11 +96,11 @@
 				<tbody style="text-align: center">
 					<tr>
 						<td colspan="1" rowspan="1" class="factor">危险有害因素</td>
-						<td colspan="1" rowspan="1"><input type="text" value="" /><span class="add">+</span></td>
+						<td colspan="1" rowspan="1" class="factorCont"><input type="text" value="" /><span class="add">+</span></td>
 						<td colspan="1" rowspan="1" class="type">事故类别</td>
-						<td colspan="1" rowspan="1"><input type="text" value="" /></td>
+						<td colspan="1" rowspan="1" class="typeCont"><input type="text" value="" /></td>
 						<td colspan="1" rowspan="1" class="measure">管控措施</td>
-						<td colspan="1" rowspan="1"><input type="text" value="" /></td>
+						<td colspan="1" rowspan="1" class="measureCont"><input type="text" value="" /></td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -117,11 +117,33 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	$(".add").click(function(){
-		$("tbody").append("<tr class='new'><td colspan='1' rowspan='1'><input type='text' value='' /></td><td colspan='1' rowspan='1'><input type='text' value='' /></td><td colspan='1' rowspan='1'><input type='text' value='' /></td></tr>");
-		console.log($(".factor"),$(".new").length);
+		$("tbody").append("<tr class='new'><td colspan='1' rowspan='1' class='factorCont'><input type='text' value='' /></td><td colspan='1' rowspan='1' class='typeCont'><input type='text' value='' /></td><td colspan='1' rowspan='1' class='measureCont'><input type='text' value='' /></td></tr>");
 		$(".factor").attr("rowSpan",$(".new").length+1);
 		$(".type").attr("rowSpan",$(".new").length+1);
 		$(".measure").attr("rowSpan",$(".new").length+1);
+	});
+	$(".save").click(function(){
+		var list = [];
+		for(var i=0;i<$(".factorCont").length;i++){
+			list[i] = {id:""+(i+1),controlMeasure:$(".measureCont input")[i].value,harmfulFactors:$(".factorCont input")[i].value,troubleName:$(".typeCont input")[i].value}
+		}
+		var data = {
+			emergencyMeasure:$(".emergencyMeasure input").val(),
+			jobName:$(".jobName input").val(),
+			jobPosition:$(".jobPosition input").val(),
+			safetyNotificationCardList:list
+		};
+		$.ajax({
+			type:"POST",
+			url:"/safety/safetyNotificationCard/safetyNotificationCard",
+			data:JSON.stringify(data),
+			contentType:"application/json",
+			dataType:"json",
+			async:false,
+			success:function(data){
+				alert(data.msg);
+			}
+		});
 	});
 </script>
 </html>
