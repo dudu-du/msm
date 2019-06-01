@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -92,7 +93,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     /**
      * 复查时间
      */
-    private LocalDateTime reviewTime;
+    private Date reviewTime;
 
     /**
      * 复查人id
@@ -235,13 +236,15 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
     public void setControlOrgPersonName(String controlOrgPersonName) {
         this.controlOrgPersonName = controlOrgPersonName;
     }
-    public LocalDateTime getReviewTime() {
+
+    public Date getReviewTime() {
         return reviewTime;
     }
 
-    public void setReviewTime(LocalDateTime reviewTime) {
+    public void setReviewTime(Date reviewTime) {
         this.reviewTime = reviewTime;
     }
+
     public String getReviewPersonFk() {
         return reviewPersonFk;
     }
