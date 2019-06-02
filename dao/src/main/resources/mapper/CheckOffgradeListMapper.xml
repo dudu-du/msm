@@ -47,7 +47,7 @@
         select o.name,WEEK(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
         from check_offgrade_list c
         INNER JOIN org o on c.org_fk=o.id
-        INNER JOIN check_day_list dl on c.check_list_fk = dl.id
+        INNER JOIN check_week_list dl on c.check_list_fk = dl.id
         INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
         where c.check_type = #{checkType}
         and c.org_fk = #{orgId}
@@ -69,7 +69,7 @@
         select o.name,MONTH(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
         from check_offgrade_list c
         INNER JOIN org o on c.org_fk=o.id
-        INNER JOIN check_day_list dl on c.check_list_fk = dl.id
+        INNER JOIN check_month_list dl on c.check_list_fk = dl.id
         INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
         where c.check_type = #{checkType}
         and c.org_fk = #{orgId}
