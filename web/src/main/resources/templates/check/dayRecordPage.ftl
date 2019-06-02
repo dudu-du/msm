@@ -101,7 +101,7 @@ new Vue({
         			that.$data.tableData = [];
         			that.$data.page.total = response.data.data.total;
                     response.data.data.list.forEach(e=>{
-        			    e.curUrl = this.$data.printUrl[ind];
+        			    e.curUrl = that.$data.printUrl[ind];
         				that.$data.tableData.push(e);
         			});
 				}else{
@@ -110,16 +110,17 @@ new Vue({
             }).catch(err=>{
                 this.$message.error('服务器异常，请稍后再试！');
             });
-		}
+		},
+		openPrint(row){
+	        window.open(row.curUrl+"?"+row.id);
+	    }
 	},
 	watch:{
 		curPage(val){
 			this.search();
 		}
-	},
-    openPrint(row){
-        window.open(row.curUrl+"?"+row.id);
-    }
+	}
+    
 });
 </script>
 
