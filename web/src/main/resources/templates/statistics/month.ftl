@@ -271,7 +271,7 @@
 				if(day<10){
 					day = '0' + day;
 				}
-				return year + '年' + month + '月' + day + '日';
+				return year + '年' + month + '月';
 			}
 		}
 	});
