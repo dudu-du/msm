@@ -59,7 +59,7 @@
 						        prop="dateofyear"
 						        label="日期">
 						        <template slot-scope="scope">
-						        	{{getDateStr(new Date(scope.row.dateofyear))}}
+						        	{{scope.row.dateofyear}}周
 						        </template>
 						      </el-table-column>
 						      <el-table-column
@@ -241,15 +241,15 @@
 								datas.forEach(e=>{
 									s.data.push(e);
 								});
-								var now = this.getWeekOfYear(new Date(e.dateofyear)); 
+								var now = e.dateofyear; 
 							  　　  var day = now - start;
 							
 								s.data[day]=e.count;
 								datasets.push(s);
 							}else{
-								var now = this.getWeekOfYear(new Date(e.dateofyear)); 
+								var now = e.dateofyear; 
 							  　　  var day = now - start;
-								datasets[index].data[day+1]=e.count;
+								datasets[index].data[day]=e.count;
 							}
 							
 						});
