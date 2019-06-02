@@ -66,29 +66,29 @@ public class StatisticsController extends BaseController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/dayOffgrade",method = RequestMethod.GET)
-    public BaseModelAndView getDayOffgrade(){
-
-        BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("statistics/dayOffgrade");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/weekOffgrade",method = RequestMethod.GET)
-    public BaseModelAndView getWeekOffgrade(){
-
-        BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("statistics/weekOffgrade");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/monthOffgrade",method = RequestMethod.GET)
-    public BaseModelAndView getMonthOffgrade(){
-
-        BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("statistics/monthOffgrade");
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/dayOffgrade",method = RequestMethod.GET)
+//    public BaseModelAndView getDayOffgrade(){
+//
+//        BaseModelAndView modelAndView = new BaseModelAndView();
+//        modelAndView.setViewName("statistics/dayOffgrade");
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping(value = "/weekOffgrade",method = RequestMethod.GET)
+//    public BaseModelAndView getWeekOffgrade(){
+//
+//        BaseModelAndView modelAndView = new BaseModelAndView();
+//        modelAndView.setViewName("statistics/weekOffgrade");
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping(value = "/monthOffgrade",method = RequestMethod.GET)
+//    public BaseModelAndView getMonthOffgrade(){
+//
+//        BaseModelAndView modelAndView = new BaseModelAndView();
+//        modelAndView.setViewName("statistics/monthOffgrade");
+//        return modelAndView;
+//    }
     
     /**
      * 获取风险辨识安全登记数量
