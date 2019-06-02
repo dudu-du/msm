@@ -49,7 +49,8 @@
 	}
 </style>
 <body>
-<div class="main">
+<input type="button" id="print" value="打印本页" class="el-button el-button--success"/>
+<div class="main" id="printArea">
 	<h2 class="title">风险辨识清单列表</h2>
 	<div class="content">
 		<p><span class="time" style="margin-right: 15px"></span><span class="name" style="margin-right: 15px"></span><span class="postName" style="margin-right: 15px"></span><span class="levelName" style="margin-right: 15px"></span></p>
@@ -88,6 +89,7 @@
 </div>
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
+<script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
 	var a = "重大风险";
 	var b = "较大风险";
@@ -143,5 +145,10 @@
 			$("tbody").html(trHt);
 		}
 	});
+    $(document).ready(function(){
+        $("#print").click(function(){
+            $("#printArea").printArea();
+        });
+    });
 </script>
 </html>

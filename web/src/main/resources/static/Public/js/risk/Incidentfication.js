@@ -470,6 +470,8 @@ new Vue({
 	    	});
 				
 	    	
-	    }
+	    },openPrint(){
+            window.open("/safety/riskIdentification/riskIdentificationPrint?");
+        }
 	}
 });
