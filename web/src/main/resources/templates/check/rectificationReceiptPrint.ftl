@@ -53,10 +53,11 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
+	var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkRectificationReceipt/checkRectificationReceipt",
-		data:{id:"9862f1cb4f0645e88750b40a7097f695"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){
