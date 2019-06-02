@@ -14,6 +14,11 @@ new Vue({
     },
     data:function(){
         return{
+            curPage:1,
+            page:{
+                total:0,
+                pageSize:10
+            },
             data:[]
         }
     },
@@ -60,6 +65,11 @@ new Vue({
                     message: '已取消删除'
                 });
         });
+        }
+    },
+    watch:{
+        curPage(val){
+            this.search();
         }
     }
 
