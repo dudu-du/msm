@@ -80,7 +80,7 @@ public class SafetyNotificationCardServiceImpl extends ServiceImpl<SafetyNotific
         safetyNotificationCardMapper.updateById(safetyNotificationCard);
         String id = safetyNotificationCard.getId();
         Map map = new HashMap();
-        map.put("safetyNotificationCardFk",id);
+        map.put("safety_notification_card_fk",id);
         safetyNotificationCardListMapper.deleteByMap(map);
         if (safetyNotificationCardLists.size()>0){
             for (SafetyNotificationCardList safetyNotificationCardList:safetyNotificationCardLists){

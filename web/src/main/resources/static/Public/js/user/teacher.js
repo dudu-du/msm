@@ -21,7 +21,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,{field:'realname', title:'姓名',unresize: true, sort: true}
             ,{field:'sex', title:'性别'}
             ,{field:'tel', title:'手机号'}
-            ,{field:'email', title:'邮箱'}
+            ,{field:'cardNo', title:'工种'}
             ,{field:'orgName', title:'所属公司'}
             ,{field:'identityNo', title:'身份证号码'}
             ,{title:'操作', toolbar: '#barDemo',width:180}
@@ -33,7 +33,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,{field:'realname', title:'姓名',unresize: true, sort: true}
             ,{field:'sex', title:'性别'}
             ,{field:'tel', title:'手机号'}
-            ,{field:'email', title:'邮箱'}
+            ,{field:'cardNo', title:'工种'}
             ,{title:'操作', toolbar: '#barDemo',width:180}
         ]]
     }
@@ -395,9 +395,9 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
-        '<label class="layui-form-label">邮箱</label>'+
+        '<label class="layui-form-label">工种</label>'+
         '<div class="layui-input-block">'+
-        '<input type="text" name="email" autocomplete="off" placeholder="请输入邮箱" class="layui-input">'+
+        '<input type="text" name="cardNo" autocomplete="off" placeholder="请输入工种" class="layui-input">'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
@@ -477,7 +477,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                         "password":datas.password,
                         "tel": datas.tel,
                         "sex": datas.sex,
-                        "email":datas.email,
+                        "cardNo":datas.cardNo,
                         "identityNo":datas.identityNo,
                         "pic":datas.pic
                     })
@@ -505,7 +505,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                                 realname: objData.realname,
                                 password:objData.password,
                                 tel:objData.tel,
-                                email:objData.email,
+                                cardNo:objData.cardNo,
                                 identityNo:objData.identityNo,
                                 sex:objData.sex,
                                 pic:imageData
@@ -527,7 +527,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                                 realname: objData.realname,
                                 password:objData.password,
                                 tel:objData.tel,
-                                email:objData.email,
+                                cardNo:objData.cardNo,
                                 identityNo:objData.identityNo,
                                 sex:objData.sex,
                                 pic:imageData

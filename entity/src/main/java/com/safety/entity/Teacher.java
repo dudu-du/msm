@@ -13,6 +13,8 @@ public class Teacher extends BasePerson {
 
     private String orgName; //所属学校名字
 
+    private String cardNo; //工种
+
     public String getOrgName() {
         return orgName;
     }
@@ -21,6 +23,13 @@ public class Teacher extends BasePerson {
         this.orgName = orgName;
     }
 
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
     @Override
     public String toString() {
         return "Teacher{" +
