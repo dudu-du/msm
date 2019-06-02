@@ -25,6 +25,9 @@ new Vue({
             axios.get('/safety/checkRectificationReceipt/checkRectificationReceiptByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
                 that.data = res.data.data;
             });
+        },
+        openPrint(row){
+            window.open("/safety/checkRectificationReceipt/checkRectificationReceiptPrint?id="+row.id);
         }
 }
 });
