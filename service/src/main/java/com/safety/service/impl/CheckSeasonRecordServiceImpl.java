@@ -142,6 +142,12 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
             map.put("checkComprehensiveSeasonFk",checkSeasonId);
             map.put("checkSeasonRecordId",checkSeasonRecord.getId());
             List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
+        //默认未每条数据增加result为1
+            for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:list){
+            if (checkComprehensiveSeasonList.getResult()==null || checkComprehensiveSeasonList.getResult().isEmpty()){
+                checkComprehensiveSeasonList.setResult("1");
+            }
+        }
             checkSeasonRecord.setCheckComprehensiveSeasonList(list);
 //        }
         return checkSeasonRecord;

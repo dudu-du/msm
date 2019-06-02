@@ -141,6 +141,12 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
             map.put("checkComprehensiveHolidayFk",checkHolidayId);
             map.put("checkHolidayRecordId",checkHolidayRecord.getId());
             List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
+            //默认未每条数据增加result为1
+            for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:list){
+                if (checkComprehensiveHolidayList.getResult()==null || checkComprehensiveHolidayList.getResult().isEmpty()){
+                    checkComprehensiveHolidayList.setResult("1");
+                }
+            }
             checkHolidayRecord.setCheckComprehensiveHolidayList(list);
 //        }
         return checkHolidayRecord;
