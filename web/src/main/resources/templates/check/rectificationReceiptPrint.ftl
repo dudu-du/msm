@@ -5,10 +5,9 @@
 	<title></title>
 </head>
 <link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
-
-
 <body>
-<div class="main">
+<input type="button" id="print" value="打印本页"/>
+<div class="main" id="printArea">
 	<h2 class="title">隐患整改回执单</h2>
 	<div class="content">
 		<div class="table-cont">
@@ -52,6 +51,7 @@
 </div>
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
+<script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
 	$.ajax({
 		type:"GET",
@@ -72,5 +72,10 @@
 			$(".rectResult").html(data.data.rectificationResult+"<img style='float:right;width:50%;margin-right: 20%;' src='"+data.data.rectificationResultUrl+"' /><p style='position:absolute;right: 150px;bottom:60px;'>验收人（签字）：</p><p style='position:absolute;right: 150px;bottom:15px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</p>");
 		}
 	});
+    $(document).ready(function(){
+        $("#print").click(function(){
+            $("#printArea").printArea();
+        });
+    });
 </script>
 </html>

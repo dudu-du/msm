@@ -5,9 +5,9 @@
 	<title></title>
 </head>
 <link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
-
 <body>
-<div class="main">
+<input type="button" id="print" value="打印本页"/>
+<div class="main" id="printArea">
 	<h2 class="title">隐患排查治理月排查记录</h2>
 	<div class="content">
 		<p>检查时间：<span class="time"></span><span style="float: right;">排查人员：<span class="name"></span></span></p>
@@ -33,6 +33,7 @@
 </div>
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
+<script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
 	$.ajax({
 		type:"GET",
@@ -67,5 +68,10 @@
 			$("tbody").html(trHt);
 		}
 	});
+    $(document).ready(function(){
+        $("#print").click(function(){
+            $("#printArea").printArea();
+        });
+    });
 </script>
 </html>

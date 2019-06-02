@@ -5,9 +5,9 @@
 	<title></title>
 </head>
 <link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
-
 <body>
-<div class="main">
+<input type="button" id="print" value="打印本页"/>
+<div class="main" id="printArea">
 	<h2 class="title">岗位安全风险告知卡</h2>
 	<div class="content">
 		<div class="table-cont">
@@ -35,6 +35,7 @@
 </div>
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
+<script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
 	var oId = window.location.href.split("?")[1];
 	$.ajax({
@@ -70,5 +71,10 @@
 			$("tbody").html(trHt);
 		}
 	});
+    $(document).ready(function(){
+        $("#print").click(function(){
+            $("#printArea").printArea();
+        });
+    });
 </script>
 </html>
