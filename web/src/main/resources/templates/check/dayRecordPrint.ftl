@@ -4,52 +4,10 @@
 	<meta charset="utf-8" />
 	<title></title>
 </head>
-<style type="text/css">
-	*{
-		margin: 0;
-		padding: 0;
-	}
-	body{
-		margin:8px;
-	}
-	.main{
-		width: 100%;
-	}
-	.title{
-		height: 60px;
-		padding: 0 20px;
-		text-align: center;
-		font-size: 32px;
-		margin:0;
-		font-weight: normal;
-	}
-	.content{
-		padding: 20px;
-	}
-	.table-cont{
-		width: 100%;
-	}
-	.table-cont{
-		color: #000;
-		border: 1px solid #000;
-		border-right: none;
-		border-bottom: none;
-		font-size: 14px;
-	}
-	.table-cont th{
-		border-bottom: 1px solid #000;
-		border-right: 1px solid #000;
-		line-height: 40px;
-	}
-	.table-cont td{
-		border-bottom: 1px solid #000;
-		border-right: 1px solid #000;
-		line-height: 40px;
-		padding: 0 10px;
-	}
-</style>
+<link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
 <body>
-<div class="main">
+<input type="button" id="print" value="打印本页"/>
+<div class="main" id="printArea">
 	<h2 class="title">开采班组隐患排查日治理记录</h2>
 	<div class="content">
 		<p>班组起止工作时间：<span class="time"></span><span style="float: right;margin-right: 50px;">班组长：<span class="name"></span></span></p>
@@ -79,6 +37,7 @@
 </div>
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
+<script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
 	$.ajax({
 		type:"GET",
@@ -115,5 +74,10 @@
 			$("tbody").html(trHt);
 		}
 	});
+    $(document).ready(function(){
+        $("#print").click(function(){
+            $("#printArea").printArea();
+        });
+    });
 </script>
 </html>

@@ -6,7 +6,7 @@
 </head>
 <link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
 <body>
-<input type="button" id="print" value="打印本页" class="el-button el-button--success"/>
+<input type="button" id="print" value="打印本页"/>
 <div class="main" id="printArea">
 	<h2 class="title">风险辨识清单列表</h2>
 	<div class="content">
