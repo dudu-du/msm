@@ -18,5 +18,6 @@ import java.util.Map;
 public interface CheckOffgradeListMapper extends BaseMapper<CheckOffgradeList> {
 
     List<CheckOffgradeList> selectAll();
-
+    List<Map<String,Object>> selectOffgradeTroubleCountByOrg(Map map);
+    List<Map<String,Object>> selectOffgradeLevelCountByOrg(Map map);
 }
