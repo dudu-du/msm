@@ -122,7 +122,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckDayRecordListService.getChecklistResultCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckDayRecordListService.getChecklistResultCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -146,7 +147,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckDayRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckDayRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -170,7 +172,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerResultCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerResultCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -194,7 +197,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckDayRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -217,7 +221,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<CheckRectificationReceipt> result = iCheckDayRecordListService.getReceiptListByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<CheckRectificationReceipt> result = iCheckDayRecordListService.getReceiptListByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -241,7 +246,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckWeekRecordListService.getChecklistResultCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckWeekRecordListService.getChecklistResultCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -265,7 +271,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckWeekRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckWeekRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -289,7 +296,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckWeekRecordListService.getLedgerResultCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckWeekRecordListService.getLedgerResultCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -313,7 +321,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckWeekRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckWeekRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -336,7 +345,8 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<CheckRectificationReceipt> result = iCheckWeekRecordListService.getReceiptListByOrg(orgId,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<CheckRectificationReceipt> result = iCheckWeekRecordListService.getReceiptListByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -360,7 +370,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckMonthRecordListService.getChecklistResultCountByOrg(orgId,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getChecklistResultCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -384,7 +396,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckMonthRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getChecklistLevelCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -408,7 +422,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckMonthRecordListService.getLedgerResultCountByOrg(orgId,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getLedgerResultCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -432,7 +448,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckMonthRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckMonthRecordListService.getLedgerLevelCountByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -455,7 +473,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<CheckRectificationReceipt> result = iCheckMonthRecordListService.getReceiptListByOrg(orgId,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<CheckRectificationReceipt> result = iCheckMonthRecordListService.getReceiptListByOrg(orgId,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){

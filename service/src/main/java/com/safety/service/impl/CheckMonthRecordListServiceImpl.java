@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.Map;
 @Service
 public class CheckMonthRecordListServiceImpl extends ServiceImpl<CheckMonthRecordListMapper, CheckMonthRecordList> implements ICheckMonthRecordListService {
     @Override
-    public List<Map<String,Object>> getChecklistResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+    public List<Map<String,Object>> getChecklistResultCountByOrg(String orgId, LocalDate startTime, LocalDateTime endTime) throws Exception{
         if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
             throw new ProgramException("参数错误");
         }
@@ -37,7 +38,7 @@ public class CheckMonthRecordListServiceImpl extends ServiceImpl<CheckMonthRecor
     }
 
     @Override
-    public List<Map<String,Object>> getChecklistLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+    public List<Map<String,Object>> getChecklistLevelCountByOrg(String orgId, LocalDate startTime, LocalDateTime endTime) throws Exception{
         if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
             throw new ProgramException("参数错误");
         }
@@ -49,7 +50,7 @@ public class CheckMonthRecordListServiceImpl extends ServiceImpl<CheckMonthRecor
     }
 
     @Override
-    public List<Map<String,Object>> getLedgerResultCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+    public List<Map<String,Object>> getLedgerResultCountByOrg(String orgId, LocalDate startTime, LocalDateTime endTime) throws Exception{
         if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
             throw new ProgramException("参数错误");
         }
@@ -61,7 +62,7 @@ public class CheckMonthRecordListServiceImpl extends ServiceImpl<CheckMonthRecor
     }
 
     @Override
-    public List<Map<String,Object>> getLedgerLevelCountByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+    public List<Map<String,Object>> getLedgerLevelCountByOrg(String orgId, LocalDate startTime, LocalDateTime endTime) throws Exception{
         if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
             throw new ProgramException("参数错误");
         }
@@ -73,7 +74,7 @@ public class CheckMonthRecordListServiceImpl extends ServiceImpl<CheckMonthRecor
     }
 
     @Override
-    public List<CheckRectificationReceipt> getReceiptListByOrg(String orgId, LocalDate startTime, LocalDate endTime) throws Exception{
+    public List<CheckRectificationReceipt> getReceiptListByOrg(String orgId, LocalDate startTime, LocalDateTime endTime) throws Exception{
         if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
             throw new ProgramException("参数错误");
         }
