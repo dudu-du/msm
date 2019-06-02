@@ -65,7 +65,7 @@
 			data.data.riskIdentificationList.forEach(function(item,index){
 				if(item.index!=null){
 					trHt += "<tr>" +
-							"<td colspan='1' rowspan='"+item.union+"'>"+(index+1)+"</td>" +
+							"<td colspan='1' rowspan='"+item.union+"'>"+item.index+"</td>" +
 							"<td colspan='1' rowspan='"+item.union+"'>"+item.postName+"</td>" +
 							"<td colspan='1'>"+item.harmfulFactors+"</td>" +
 							"<td colspan='1'>"+item.troubleName+"</td>" +
