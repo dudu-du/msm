@@ -27,7 +27,7 @@
 		<div id="app">
 			<el-container>
 				<el-header>
-					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查清单列表</el-col><el-col :span="8">&nbsp;</el-col>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患整改回执单列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
 					<el-table border style="width: 100%" ref="singleTable" :data="data" >
