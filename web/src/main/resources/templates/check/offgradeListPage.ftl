@@ -26,7 +26,7 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">未合格项记录列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
-					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
+					<el-table border style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
 						<el-table-column prop="checkType" label="来源" align="center">
 						</el-table-column>
@@ -275,12 +275,7 @@ new Vue({
 		this.$data.receiptForm.checkTime = this.getDate(new Date());
 		this.$data.receiptForm.rectificationTime = this.getDate(new Date());
 		
-        var that = this;
-        axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:1,pageSize:10}}).then(function(res){
-            that.data = res.data.data;
-        }).catch(err=>{
-            this.$message.error('服务器异常，请稍后再试！');
-    });
+        this.search();
     },
     data:function(){
         return{
@@ -340,21 +335,23 @@ new Vue({
         }
     },
     methods:{
-        next(currentPage,pageSize){
+    	search(){
             var that = this;
-            axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
-                that.data = res.data.data;
+            axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(response){
+                if(response.data.success === true){
+        			that.$data.data = [];
+        			that.$data.page.total = response.data.data.total;
+        			response.data.data.list.forEach(e=>{
+        				that.$data.data.push(e);
+        			});
+				}else{
+					that.$message.warning(response.data.msg);
+				}
             }).catch(err=>{
                 this.$message.error('服务器异常，请稍后再试！');
-        });
-        },prev(currentPage,pageSize){
-            var that = this;
-            axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
-                that.data = res.data.data;
-            }).catch(err=>{
-                this.$message.error('服务器异常，请稍后再试！');
-        });
-        },
+        	});
+    	
+    	},
         addBtn(row,formName){
         	this.$data.dialogFormVisible = true;
         	this.$data.form.offgradeListFk = row.id;
@@ -479,13 +476,13 @@ new Vue({
         	this.$data.receiptForm.offgradeListFk = row.id;
         	this.$data.receiptForm.checkType = row.checkType;
 			
-		},
-		watch:{
-			curPage(val){
-				console.log(val);
-			}
 		}
-    }
+    },
+    watch:{
+		curPage(val){
+			this.search();
+		}
+	}
 
 });
 </script>
