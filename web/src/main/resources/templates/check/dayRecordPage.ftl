@@ -25,12 +25,12 @@
 				<el-main>
 					<el-row style="margin-bottom:10px;">
 						<el-select placeholder="请选择" v-model="checkType">
-						    <el-option key="1" label="日治理记录" value="/safety/checkDayRecord/checkDayRecordByPage"></el-option>
-						    <el-option key="2" label="周排查记录" value="/safety/checkWeekRecord/checkWeekRecordByPage"></el-option>
-						    <el-option key="3" label="月排查记录" value="/safety/checkMonthRecord/checkMonthRecordByPage"></el-option>
-						    <el-option key="4" label="专项检查" value="/safety/checkSpecialRecord/checkSpecialRecordByPage"></el-option>
-						    <el-option key="5" label="综合检查（节假日、复产前）" value="/safety/checkHolidayRecord/checkHolidayRecordByPage"></el-option>
-						    <el-option key="6" label="综合检查（季节性）" value="/safety/checkSeasonRecord/checkSeasonRecordByPage"></el-option>
+						    <el-option key="1" label="日治理记录" value="0"></el-option>
+						    <el-option key="2" label="周排查记录" value="1"></el-option>
+						    <el-option key="3" label="月排查记录" value="2"></el-option>
+						    <el-option key="4" label="专项检查" value="3"></el-option>
+						    <el-option key="5" label="综合检查（节假日、复产前）" value="4"></el-option>
+						    <el-option key="6" label="综合检查（季节性）" value="5"></el-option>
 						 </el-select>
 						 <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 					</el-row>
@@ -42,6 +42,11 @@
 						</el-table-column>
 						<el-table-column label="检查人" prop="checkPersonName" align="center">
 						</el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                            	<el-button type="primary" size="mini" @click="openPrint(scope.row)">打印</el-button>
+                            </template>
+                        </el-table-column>
 					</el-table>
 				</el-main>
 				<el-footer style="text-align:center;">
@@ -65,7 +70,23 @@ new Vue({
 				pageSize:10
 			},
 			tableData:[],
-			checkType:'/safety/checkDayRecord/checkDayRecordByPage'
+			checkType:'0',
+			searchUrl:[
+                "/safety/checkDayRecord/checkDayRecordByPage",
+                "/safety/checkWeekRecord/checkWeekRecordByPage",
+                "/safety/checkMonthRecord/checkMonthRecordByPage",
+                "/safety/checkSpecialRecord/checkSpecialRecordByPage",
+                "/safety/checkHolidayRecord/checkHolidayRecordByPage",
+                "/safety/checkSeasonRecord/checkSeasonRecordByPage"
+			],
+			printUrl:[
+                "/safety/checkDayRecord/checkDayRecordPrint",
+                "/safety/checkWeekRecord/checkWeekRecordPrint",
+                "/safety/checkMonthRecord/checkMonthRecordPrint",
+                "/safety/checkSpecialRecord/checkSpecialRecordPrint",
+                "/safety/checkHolidayRecord/checkHolidayRecordPrint",
+                "/safety/checkSeasonRecord/checkSeasonRecordPrint"
+			]
 		};
 	},
 	created:function(){
@@ -74,12 +95,13 @@ new Vue({
 	methods:{
 		search(){
 			var that = this;
-
-			axios.get(this.$data.checkType,{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(response){
+			var ind = this.$data.checkType;
+			axios.get(this.$data.searchUrl[ind],{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(response){
         		if(response.data.success === true){
         			that.$data.tableData = [];
         			that.$data.page.total = response.data.data.total;
-        			response.data.data.list.forEach(e=>{
+                    response.data.data.list.forEach(e=>{
+        			    e.curUrl = that.$data.printUrl[ind];
         				that.$data.tableData.push(e);
         			});
 				}else{
@@ -88,13 +110,17 @@ new Vue({
             }).catch(err=>{
                 this.$message.error('服务器异常，请稍后再试！');
             });
-		}
+		},
+		openPrint(row){
+	        window.open(row.curUrl+"?"+row.id);
+	    }
 	},
 	watch:{
 		curPage(val){
 			this.search();
 		}
 	}
+    
 });
 </script>
 

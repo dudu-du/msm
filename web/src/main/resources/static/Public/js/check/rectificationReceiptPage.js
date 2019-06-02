@@ -27,7 +27,7 @@ new Vue({
             });
         },
         openPrint(row){
-            window.open("/safety/checkRectificationReceipt/checkRectificationReceiptPrint?id="+row.id);
+            window.open("/safety/checkRectificationReceipt/checkRectificationReceiptPrint?"+row.id);
         }
 }
 });

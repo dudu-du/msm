@@ -96,6 +96,7 @@ public class CheckDangerLedger extends Model<CheckDangerLedger> {
      * 复查时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date reviewTime;
 
     /**
