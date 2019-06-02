@@ -6,7 +6,7 @@
 </head>
 <link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
 <body>
-<input type="button" id="print" value="打印本页" class="el-button el-button--success"/>
+<input type="button" id="print" value="打印本页"/>
 <div class="main" id="printArea">
 	<h2 class="title">风险辨识清单列表</h2>
 	<div class="content">
@@ -48,17 +48,6 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
-	function queryURL(url){
-		    var arr1 = url.split("?");
-		    var params = arr1[1].split("&");
-		    var obj = {};//声明对象
-		    for(var i=0;i<params.length;i++){
-			        var param = params[i].split("=");
-			        obj[param[0]] = param[1];//为对象赋值
-			    }
-		    return obj;
-		 }
-		 var curData = queryURL(decodeURI(decodeURI(window.location.href)));
 	var a = "重大风险";
 	var b = "较大风险";
 	var c = "一般风险";
@@ -66,7 +55,7 @@
 	$.ajax({
 		type:"GET",
 		url:"/safety/riskIdentification/riskIdentification",
-		data:curData,
+		data:{orgId:"0528160b1191413d81862615dbdd15c3",year:"2019",postName:"",levelName:""},
 		dataType:"json",
 		async:false,
 		success:function(data){
@@ -76,7 +65,7 @@
 			data.data.riskIdentificationList.forEach(function(item,index){
 				if(item.index!=null){
 					trHt += "<tr>" +
-							"<td colspan='1' rowspan='"+item.union+"'>"+(index+1)+"</td>" +
+							"<td colspan='1' rowspan='"+item.union+"'>"+item.index+"</td>" +
 							"<td colspan='1' rowspan='"+item.union+"'>"+item.postName+"</td>" +
 							"<td colspan='1'>"+item.harmfulFactors+"</td>" +
 							"<td colspan='1'>"+item.troubleName+"</td>" +

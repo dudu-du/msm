@@ -4,8 +4,49 @@
 		<meta charset="utf-8" />
 		<title></title>
 	</head>
-	<link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
-
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			margin:8px;
+		}
+		.main{
+			width: 100%;
+		}
+		.title{
+			height: 60px;
+			padding: 0 20px;
+			text-align: center;
+			font-size: 32px;
+			margin:0;
+			font-weight: normal;
+		}
+		.content{
+			padding: 20px;
+		}
+		.table-cont{
+			width: 100%;
+		}
+		.table-cont{
+			color: #000;
+			border: 1px solid #000;
+			border-right: none;
+			border-bottom: none;
+			font-size: 14px;
+		}
+		.table-cont th{
+			border-bottom: 1px solid #000;
+			border-right: 1px solid #000;
+			line-height: 30px;
+		}
+		.table-cont td{
+			border-bottom: 1px solid #000;
+			border-right: 1px solid #000;
+			line-height: 40px;
+		}
+	</style>
 	<body>
 		<div class="main">
 			<h2 class="title">专项检查</h2>
@@ -34,11 +75,10 @@
 	</body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkSpecialRecord/checkSpecialRecordById",
-		data:{id:oId},
+		data:{id:"cef5e250950841c9b2b0cbf2466671d7"},
 		dataType:"json",
 		async:false,
 		success:function(data){

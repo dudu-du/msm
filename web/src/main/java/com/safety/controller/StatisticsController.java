@@ -499,7 +499,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeLevelCountByOrg(orgId, DictConstants.CHECK_TYPE_DAY,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeLevelCountByOrg(
+                    orgId, DictConstants.CHECK_TYPE_DAY,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -522,7 +524,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(orgId,DictConstants.CHECK_TYPE_DAY,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(
+                    orgId,DictConstants.CHECK_TYPE_DAY,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -546,7 +550,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeLevelCountByOrg(orgId, DictConstants.CHECK_TYPE_WEEK,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeLevelCountByOrg(
+                    orgId, DictConstants.CHECK_TYPE_WEEK,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -569,7 +575,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(orgId,DictConstants.CHECK_TYPE_WEEK,startTime,endTime);
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(
+                    orgId,DictConstants.CHECK_TYPE_WEEK,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -593,7 +601,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeLevelCountByOrg(orgId, DictConstants.CHECK_TYPE_MONTH,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeLevelCountByOrg(orgId, DictConstants.CHECK_TYPE_MONTH,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){
@@ -616,7 +626,9 @@ public class StatisticsController extends BaseController {
             ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
             ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
         try {
-            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(orgId,DictConstants.CHECK_TYPE_MONTH,startTime,endTime);
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(orgId,DictConstants.CHECK_TYPE_MONTH,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){

@@ -38,23 +38,28 @@
 			<el-container>
 				<el-main>
 					<el-row style="margin-bottom:10px">
-						<el-select placeholder="请选择" v-model="topselect.date">
-						    <el-option
-						      key="2019"
-						      label="2019年"
-						      value="2019">
-						    </el-option>
-						 </el-select>
-						<el-select placeholder="请选择" v-model="topselect.orgs.value">
-						    <el-option
-						      v-for="item in topselect.orgs.data"
-						      :key="item.id"
-						      :label="item.name"
-						      :value="item.id">
-						    </el-option>
-						  </el-select>
-						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-                        <input type="button" id="print" value="打印" class="el-button el-button--success"/>
+						<el-col :span="12">
+							<el-select placeholder="请选择" v-model="topselect.date">
+							    <el-option
+							      key="2019"
+							      label="2019年"
+							      value="2019">
+							    </el-option>
+							 </el-select>
+							<el-select placeholder="请选择" v-model="topselect.orgs.value">
+							    <el-option
+							      v-for="item in topselect.orgs.data"
+							      :key="item.id"
+							      :label="item.name"
+							      :value="item.id">
+							    </el-option>
+							  </el-select>
+							  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+	                        <input type="button" id="print" value="打印" class="el-button el-button--success"/>
+						</el-col>
+						<el-col :span="12" style="text-align:right;">
+							<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
+						</el-col>
 					</el-row>
 					<div id="divprint">
 					<el-table border resizable :header-cell-style="headerStyle" :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
@@ -76,12 +81,7 @@
 					</el-table>
                     </div>
 				</el-main>
-				<el-footer>
-					<div style="width:100%;height:100%">
-						<span style="width:48.5%;display: inline-block;"></span>
-						<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
-					</div>
-				</el-footer>
+
 			</el-container>
 			<el-dialog title="安全风险分级管控" :visible.sync="dialogFormVisible" @open="dialogFormOpen" @close="dialogClose('validateForm')">
 			  <el-form :model="form" label-width="110px" label-position="right" ref="validateForm">

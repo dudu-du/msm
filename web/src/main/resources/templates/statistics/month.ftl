@@ -34,8 +34,7 @@
 					      range-separator="至"
 					      start-placeholder="开始日期"
 					      end-placeholder="结束日期"
-					      value-format="yyyy-MM-dd"
-					      >
+					      value-format="yyyy-MM-dd">
 					    </el-date-picker>
 				    	<el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 				    	<el-button :type="btn" @click="levelSort">按风险级别排序</el-button>
@@ -59,12 +58,16 @@
 						        prop="dateofyear"
 						        label="日期">
 						        <template slot-scope="scope">
-						        	{{scope.row.monthofyear}}月
+						        	{{getDateStr(new Date(scope.row.dateofyear))}}
 						        </template>
 						      </el-table-column>
 						      <el-table-column
 						        prop="level_name"
 						        label="风险等级" v-if="btn=='success'">
+						      </el-table-column>
+						      <el-table-column
+						        prop="trouble_name"
+						        label="事故类型" v-if="btn=='info'">
 						      </el-table-column>
 						      <el-table-column
 						        prop="count"
@@ -93,44 +96,26 @@
 	  },
 	  methods:{
 	  	render(data,data2){
-	  		this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
-	        this.gradient2 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
-	    	this.gradient3 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
-	        this.gradient4 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
-	        this.gradient.addColorStop(0, 'rgba(252,37,37, 0.5)');
-	        this.gradient.addColorStop(0.5, 'rgba(252,37,37, 0.25)');
-	        this.gradient.addColorStop(1, 'rgba(252,37,37, 0)');
-	        
-	        this.gradient2.addColorStop(0, 'rgba(218,165,32, 0.9)');
-	        this.gradient2.addColorStop(0.5, 'rgba(218,165,32, 0.25)');
-	        this.gradient2.addColorStop(1, 'rgba(218,165,32, 0)');
-	        
-	        this.gradient3.addColorStop(0, 'rgba(255,255,0, 0.9)');
-	        this.gradient3.addColorStop(0.5, 'rgba(255,255,0, 0.25)');
-	        this.gradient3.addColorStop(1, 'rgba(255,255,0, 0)');
-	        
-	        this.gradient4.addColorStop(0, 'rgba(65,105,225, 0.9)');
-	        this.gradient4.addColorStop(0.5, 'rgba(65,105,225, 0.25)');
-	        this.gradient4.addColorStop(1, 'rgba(65,105,225, 0)');
-	   
-	        if(data2.length>=1){
-	        	data2[0].backgroundColor = this.gradient;
-	        }
-	        if(data2.length>=2){
-	        	data2[1].backgroundColor = this.gradient2;
-	        }
-	        if(data2.length>=3){
-	        	data2[2].backgroundColor = this.gradient3;
-	        }
-	        if(data2.length>=4){
-	        	data2[3].backgroundColor = this.gradient4;
-	        }
-
-		    this.renderChart({
+	  		data2.forEach(e=>{
+	  			var rgb = this.getRandomColor();
+	  			var gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
+		        gradient.addColorStop(0, 'rgba('+rgb+',0.9)');
+		        gradient.addColorStop(0.5, 'rgba('+rgb+',0.25)');
+		        gradient.addColorStop(1, 'rgba('+rgb+',0)');
+		        e.backgroundColor = gradient;
+		        e.borderColor = 'rgb('+rgb+')';
+	  		});
+	  		this.renderChart({
 		      labels: data,
 		      datasets: data2
 		    }, {responsive: true, maintainAspectRatio: false});
-	  	}
+	  	},
+	  	getRandomColor(){
+		     this.r = Math.floor(Math.random()*255);
+		     this.g = Math.floor(Math.random()*255);
+		     this.b = Math.floor(Math.random()*255);
+		     return this.r +','+ this.g +','+ this.b;
+		}
 	  }
 	});
 	new Vue({
@@ -156,35 +141,7 @@
 		},
 		data:function(){
 			return {
-				labels:['重大风险', '较大风险', '一般风险', '低风险'],
 				btn:'info',
-				pickerOptions: {
-		          shortcuts: [{
-		            text: '最近一周',
-		            onClick(picker) {
-		              const end = new Date();
-		              const start = new Date();
-		              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-		              picker.$emit('pick', [start, end]);
-		            }
-		          }, {
-		            text: '最近一个月',
-		            onClick(picker) {
-		              const end = new Date();
-		              const start = new Date();
-		              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-		              picker.$emit('pick', [start, end]);
-		            }
-		          }, {
-		            text: '最近三个月',
-		            onClick(picker) {
-		              const end = new Date();
-		              const start = new Date();
-		              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-		              picker.$emit('pick', [start, end]);
-		            }
-		          }]
-		        },
 		        value: [],
 		        topselect:{
 		        	orgs:{
@@ -197,7 +154,7 @@
 		},
 		methods:{
 			search(){
-				console.log(this.$data.value);
+
 				var startDate = this.$data.value[0];
 				var endDate = this.$data.value[1];
 				var labels = [];
@@ -206,58 +163,28 @@
 				
 				var url = '';
 				if(this.$data.btn == 'info'){
-					url = '/safety/Statistics/monthChecklistResultCount';
+					url = '/safety/Statistics/dayOffgradeTroubleCount';
 				}else{
-					url = '/safety/Statistics/monthCheckListLevelCount';
+					url = '/safety/Statistics/dayOffgradeLevelCount';
 				}
 				
 				var that = this;
-				var datasets = [];
-				var level1 = {
+				var Sets = function(){
+					return {
 			              label: '',
-			              borderColor: '#FC2525',
+			              borderColor: '',
 			              pointBackgroundColor: 'white',
 			              borderWidth: 1,
 			              pointBorderColor: 'white',
 			              backgroundColor: '',
 			              data: []
 			            };
-			    var level2={
-			              label: '',
-			              borderColor: '#DAA520',
-			              pointBackgroundColor: 'white',
-			              borderWidth: 1,
-			              pointBorderColor: 'white',
-			              backgroundColor: '#DAA520',
-			              data: []
-			            };
-			    var level3={
-			              label: '',
-			              borderColor: '#FFFF00',
-			              pointBackgroundColor: 'white',
-			              borderWidth: 1,
-			              pointBorderColor: 'white',
-			              backgroundColor: '#FFFF00',
-			              data: []
-			            };
-			    var level4={
-			              label: '',
-			              borderColor: '#4169E1',
-			              pointBackgroundColor: 'white',
-			              borderWidth: 1,
-			              pointBorderColor: 'white',
-			              backgroundColor: '',
-			              data: []
-			            };
-			    for(var i = start;i<=end;){
-					var month = i.getMonth() + 1;
-					var date = i.getMonth();
-					labels.push(month+'月');
-					level1.data.push(0);
-					level2.data.push(0);
-					level3.data.push(0);
-					level4.data.push(0);
-					i.setMonth(date+1);
+				};
+			
+			    var datas = [];
+			    for(var i = start.getMonth();i<=end.getMonth();i++){
+					labels.push((i+1)+'月');
+					datas.push(0);
 				}
 				//var labelData = {};
 				axios.get(url,{params:{orgId:this.$data.topselect.orgs.value,startTime:startDate,endTime:endDate}}).then(response=>{
@@ -265,53 +192,36 @@
 						
 						that.$data.tableData = [];
 						
+						var datasets = [];
 						response.data.data.forEach(e=>{
 							that.$data.tableData.push(e);
-							if(e.level_name){
-								//labelData[e.level_name] = {};
-								
-								if(level1.label == '' || level1.label == e.level_name){
-									var sdate = new Date(startDate);
-								  　　 var day = e.monthofyear - sdate.getMonth() -1; 	
-									level1.label = e.level_name;
-									level1.data[day+1]=e.count;
-								}else if(level2.label == '' || level2.label == e.level_name){
-									level2.label = e.level_name;
-									var sdate = new Date(startDate);
-								  　　 var day = e.monthofyear - sdate.getMonth() -1; 	
-									level2.data[day+1]=e.count;
-								}else if(level3.label == '' || level3.label == e.level_name){
-									level3.label = e.level_name;
-									var sdate = new Date(startDate);
-								  　　 var day = e.monthofyear - sdate.getMonth() -1; 
-									level3.data[day+1]=e.count;
-								}else if(level4.label == '' || level4.label == e.level_name){
-									level4.label = e.level_name;
-									var sdate = new Date(startDate);
-								  　　 var day = e.monthofyear - sdate.getMonth() -1; 
-									level4.data[day+1]=e.count;
+							var index = -1;
+							for(var ii=0;ii<datasets.length;ii++){
+								if(e.level_name === datasets[ii].label || e.trouble_name === datasets[ii].label){
+									index = ii;
+									break;
 								}
-							}else{
-					
-								level1.label = '总和';
-								var sdate = new Date(startDate);
-								  　　 var day = e.monthofyear - sdate.getMonth() -1; 
-								level1.data[day]=e.count;
 							}
+							if(index < 0){
+								var s = new Sets();
+								if(e.level_name){
+									s.label = e.level_name;								
+								}else{
+									s.label = e.trouble_name;	
+								}
+								s.data = datas;
+							  　　	var now = new Date(e.dateofyear); 
+							  　　  var day = now.getMonth()-start.getMonth();
+								s.data[day]=e.count;
+								datasets.push(s);
+							}else{
+								var now = new Date(e.dateofyear); 
+							  　　  var day = now.getMonth()-start.getMonth();
+								datasets[index].data[day]=e.count;
+							}
+							
 						});
-						console.log(level1.label);
-						if(level1.label!=''){
-							datasets.push(level1);
-						}
-						if(level2.label!=''){
-							datasets.push(level2);
-						}
-						if(level3.label!=''){
-							datasets.push(level3);
-						}
-						if(level4.label!=''){
-							datasets.push(level4);
-						}
+		
 						that.$refs.chart.render(labels,datasets);
 					}else{
 						that.$message.warning(response.data.msg);
@@ -337,7 +247,7 @@
 				}else{
 					this.$data.btn = 'info';
 				}
-				
+				this.search();
 			},
 			getDate(date){
 				var year = date.getFullYear();
@@ -361,7 +271,7 @@
 				if(day<10){
 					day = '0' + day;
 				}
-				return year + '年' + month + '月' + day + '日';
+				return year + '年' + month + '月';
 			}
 		}
 	});

@@ -150,6 +150,7 @@
 			dataType:"json",
 			async:false,
 			success:function(data){
+				console.log(data);
 				alert(data.msg);
 			}
 		});

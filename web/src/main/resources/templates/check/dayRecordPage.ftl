@@ -22,6 +22,9 @@
 	<body>
 		<div id="app">
 			<el-container>
+                <el-header>
+                    <el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查记录查询</el-col><el-col :span="8">&nbsp;</el-col>
+                </el-header>
 				<el-main>
 					<el-row style="margin-bottom:10px;">
 						<el-select placeholder="请选择" v-model="checkType">

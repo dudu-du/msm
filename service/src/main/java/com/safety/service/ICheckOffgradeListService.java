@@ -6,6 +6,7 @@ import com.safety.entity.CheckDay;
 import com.safety.entity.CheckOffgradeList;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public interface ICheckOffgradeListService extends IService<CheckOffgradeList> {
      * @throws Exception
      */
     List<Map<String,Object>> getOffgradeTroubleCountByOrg(String orgId, String checkType,
-                            LocalDate startTime, LocalDate endTime) throws Exception;
+                            LocalDate startTime, LocalDateTime endTime) throws Exception;
 
     /**
      * 按风险等级统计否的检查记录
@@ -42,5 +43,5 @@ public interface ICheckOffgradeListService extends IService<CheckOffgradeList> {
      * @throws Exception
      */
     List<Map<String,Object>> getOffgradeLevelCountByOrg(String orgId, String checkType,
-                            LocalDate startTime, LocalDate endTime) throws Exception;
+                            LocalDate startTime, LocalDateTime endTime) throws Exception;
 }

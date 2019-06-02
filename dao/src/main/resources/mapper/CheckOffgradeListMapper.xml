@@ -21,7 +21,7 @@
     <select id="selectAll"  resultMap="BaseResultMap">
         select *  from check_offgrade_list order by create_time desc
     </select>
-    <select id="selectOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
+    <select id="selectDayOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
         select o.name,DATE(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
         from check_offgrade_list c
         INNER JOIN org o on c.org_fk=o.id
@@ -33,7 +33,7 @@
         GROUP BY o.name,DATE(c.create_time),i.trouble_name
         order by DATE(c.create_time)
     </select>
-    <select id="selectOffgradeLevelCountByOrg" resultType="map" parameterType="map">
+    <select id="selectDayOffgradeLevelCountByOrg" resultType="map" parameterType="map">
         select o.name,DATE(c.create_time) as dateofyear,c.level_name ,count(1) as count
         from check_offgrade_list c
         INNER JOIN org o on c.org_fk=o.id
@@ -41,6 +41,50 @@
         and c.org_fk = #{orgId}
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
         GROUP BY o.name,DATE(c.create_time),c.level_name
+        order by c.level_num
+    </select>
+    <select id="selectWeekOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_list dl on c.check_list_fk = dl.id
+        INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time),i.trouble_name
+        order by WEEK(c.create_time)
+    </select>
+    <select id="selectWeekOffgradeLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time) as dateofyear,c.level_name ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time),c.level_name
+        order by c.level_num
+    </select>
+    <select id="selectMonthOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
+        select o.name,MONTH(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_list dl on c.check_list_fk = dl.id
+        INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,MONTH(c.create_time),i.trouble_name
+        order by MONTH(c.create_time)
+    </select>
+    <select id="selectMonthOffgradeLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,MONTH(c.create_time) as dateofyear,c.level_name ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,MONTH(c.create_time),c.level_name
         order by c.level_num
     </select>
 </mapper>
