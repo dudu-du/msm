@@ -33,6 +33,9 @@ new Vue({
             }).catch(err=>{
                 this.$message.error('服务器异常，请稍后再试！');
             });
+        },
+        openPrint(row){
+            window.open("/safety/checkRectificationReceipt/checkRectificationReceiptPrint?id="+row.id);
         }
 }
 });

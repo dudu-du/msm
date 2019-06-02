@@ -61,6 +61,11 @@
 								<img :src="scope.row.rectificationResultUrl"></img>
 							</template>
 						</el-table-column>
+						<el-table-column label="操作" align="center">
+							<template slot-scope="scope">
+								<el-button type="primary" @click="openPrint(scope.row)">打印</el-button>
+							</template>
+						</el-table-column>
 					</el-table>
 				</el-main>
 				<el-footer style="text-align:center;">
