@@ -35,16 +35,17 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
+    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkMonthRecord/checkMonthRecordById",
-		data:{id:"44edc9a33cac4d3bb1275b8863d570b7"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){
 			console.log(data);
 			var trHt = "";
-			var checkTime = new Date(data.data.checkStartTime).getFullYear()+"-"+(new Date(data.data.checkStartTime).getMonth()+1)+"-"+new Date(data.data.checkStartTime).getDate()+"至"+new Date(data.data.checkEndTime).getFullYear()+"-"+(new Date(data.data.checkEndTime).getMonth()+1)+"-"+new Date(data.data.checkEndTime).getDate();
+			var checkTime = new Date(data.data.checkStartTime).getFullYear()+"-"+(new Date(data.data.checkStartTime).getMonth()+1)+"-"+new Date(data.data.checkStartTime).getDate();
 			$(".time").text(checkTime);
 			$(".name").text(data.data.checkPersonName);
 			data.data.checkMonthList.forEach(function(item,index){

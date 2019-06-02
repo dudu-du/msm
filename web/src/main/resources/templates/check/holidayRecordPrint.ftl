@@ -46,10 +46,11 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
+    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkHolidayRecord/checkHolidayRecordById",
-		data:{id:"c618041f84b7462585cd7c98b23e07ec"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){

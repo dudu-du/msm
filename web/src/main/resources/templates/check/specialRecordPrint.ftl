@@ -34,10 +34,11 @@
 	</body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkSpecialRecord/checkSpecialRecordById",
-		data:{id:"cef5e250950841c9b2b0cbf2466671d7"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){

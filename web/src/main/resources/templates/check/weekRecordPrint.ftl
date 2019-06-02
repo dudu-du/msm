@@ -34,16 +34,17 @@
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkWeekRecord/checkWeekRecordById",
-		data:{id:"3df1565edad14849966d4c07ea538291"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){
 			console.log(data);
 			var trHt = "";
-			var checkTime = new Date(data.data.checkStartTime).getFullYear()+"-"+(new Date(data.data.checkStartTime).getMonth()+1)+"-"+new Date(data.data.checkStartTime).getDate()+"至"+new Date(data.data.checkEndTime).getFullYear()+"-"+(new Date(data.data.checkEndTime).getMonth()+1)+"-"+new Date(data.data.checkEndTime).getDate();
+			var checkTime = new Date(data.data.checkStartTime).getFullYear()+"-"+(new Date(data.data.checkStartTime).getMonth()+1)+"-"+new Date(data.data.checkStartTime).getDate();
 			$(".time").text(checkTime);
 			$(".name").text(data.data.checkPersonName);
 			data.data.checkWeekList.forEach(function(item,index){

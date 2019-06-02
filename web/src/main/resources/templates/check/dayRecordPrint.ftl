@@ -8,7 +8,7 @@
 <body>
 <input type="button" id="print" value="打印本页"/>
 <div class="main" id="printArea">
-	<h2 class="title">开采班组隐患排查日治理记录</h2>
+	<h2 class="title">隐患排查日治理记录</h2>
 	<div class="content">
 		<p>班组起止工作时间：<span class="time"></span><span style="float: right;margin-right: 50px;">班组长：<span class="name"></span></span></p>
 		<div class="table-cont">
@@ -39,16 +39,16 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
+    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkDayRecord/checkDayRecordById",
-		data:{id:"a0fd82f072464550b44704acd1ef2c8d"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){
-			console.log(data);
 			var trHt = "";
-			var checkTime = (new Date(data.data.checkStartTime).getMonth()+1)+"月-"+new Date(data.data.checkStartTime).getDate()+"日 "+new Date(data.data.checkStartTime).getHours()+":"+new Date(data.data.checkStartTime).getMinutes()+"至"+new Date(data.data.checkStartTime).getHours()+":"+new Date(data.data.checkStartTime).getMinutes();
+			var checkTime = (new Date(data.data.checkStartTime).getMonth()+1)+"月-"+new Date(data.data.checkStartTime).getDate()+"日 "+new Date(data.data.checkStartTime).getHours()+":"+new Date(data.data.checkStartTime).getMinutes();
 			$(".time").text(checkTime);
 			$(".name").text(data.data.checkPersonName);
 			$(".checkTime").text(new Date(data.data.checkStartTime).getFullYear()+"-"+(new Date(data.data.checkStartTime).getMonth()+1)+"-"+new Date(data.data.checkStartTime).getDate());

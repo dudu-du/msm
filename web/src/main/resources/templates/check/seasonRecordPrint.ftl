@@ -46,10 +46,11 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
+    var oId = window.location.href.split("?")[1];
 	$.ajax({
 		type:"GET",
 		url:"/safety/checkSeasonRecord/checkSeasonRecordById",
-		data:{id:"f2b5b755610b40a98528b3a544b80c2f"},
+		data:{id:oId},
 		dataType:"json",
 		async:false,
 		success:function(data){
