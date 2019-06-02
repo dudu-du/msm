@@ -58,7 +58,7 @@
 						        prop="dateofyear"
 						        label="日期">
 						        <template slot-scope="scope">
-						        	{{getDateStr(new Date(scope.row.dateofyear))}}
+						        	{{scope.row.dateofyear}}月
 						        </template>
 						      </el-table-column>
 						      <el-table-column
@@ -163,9 +163,9 @@
 				
 				var url = '';
 				if(this.$data.btn == 'info'){
-					url = '/safety/Statistics/dayOffgradeTroubleCount';
+					url = '/safety/Statistics/monthOffgradeTroubleCount';
 				}else{
-					url = '/safety/Statistics/dayOffgradeLevelCount';
+					url = '/safety/Statistics/monthOffgradeLevelCount';
 				}
 				
 				var that = this;
@@ -186,6 +186,7 @@
 					labels.push((i+1)+'月');
 					datas.push(0);
 				}
+				
 				//var labelData = {};
 				axios.get(url,{params:{orgId:this.$data.topselect.orgs.value,startTime:startDate,endTime:endDate}}).then(response=>{
 					if(response.data.success === true){
@@ -212,13 +213,13 @@
 								datas.forEach(e=>{
 									s.data.push(e);
 								});
-							  　　	var now = new Date(e.dateofyear); 
-							  　　  var day = now.getMonth()-start.getMonth();
+							  　　	var now = e.dateofyear; 
+							  　　  var day = now-1-start.getMonth();
 								s.data[day]=e.count;
 								datasets.push(s);
 							}else{
-								var now = new Date(e.dateofyear); 
-							  　　  var day = now.getMonth()-start.getMonth();
+								var now = e.dateofyear; 
+							  　　  var day = now-1-start.getMonth();
 								datasets[index].data[day]=e.count;
 							}
 							
