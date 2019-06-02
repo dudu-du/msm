@@ -471,7 +471,16 @@ new Vue({
 				
 	    	
 	    },openPrint(){
-            window.open("/safety/riskIdentification/riskIdentificationPrint?");
+			var postName='',levelName='';
+			if(this.$data.topselect.postNames.value !== '全部'){
+				postName = this.$data.topselect.postNames.value;
+			}
+			if(this.$data.topselect.levelNames.value !== '全部'){
+				levelName = this.$data.topselect.levelNames.value;
+			}
+			var url = encodeURI("/safety/riskIdentification/riskIdentificationPrint?year="+this.$data.topselect.date+"&orgId="+this.$data.topselect.orgs.value+"&postName="+postName+"&levelName="+levelName+"");
+			var enurl = encodeURI(url);
+            window.open(enurl);
         }
 	}
 });

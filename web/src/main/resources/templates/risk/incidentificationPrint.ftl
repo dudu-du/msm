@@ -48,6 +48,17 @@
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
 <script type="text/javascript">
+	function queryURL(url){
+		    var arr1 = url.split("?");
+		    var params = arr1[1].split("&");
+		    var obj = {};//声明对象
+		    for(var i=0;i<params.length;i++){
+			        var param = params[i].split("=");
+			        obj[param[0]] = param[1];//为对象赋值
+			    }
+		    return obj;
+		 }
+		 var curData = queryURL(decodeURI(decodeURI(window.location.href)));
 	var a = "重大风险";
 	var b = "较大风险";
 	var c = "一般风险";
@@ -55,7 +66,7 @@
 	$.ajax({
 		type:"GET",
 		url:"/safety/riskIdentification/riskIdentification",
-		data:{orgId:"0528160b1191413d81862615dbdd15c3",year:"2019",postName:"",levelName:""},
+		data:curData,
 		dataType:"json",
 		async:false,
 		success:function(data){

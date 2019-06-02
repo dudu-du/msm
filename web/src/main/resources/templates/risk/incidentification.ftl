@@ -68,7 +68,7 @@
 						    </el-option>
 						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-                       		 <el-button type="primary" @click="openPrint()">打印</el-button>
+                       		 <el-button type="primary" @click="openPrint">打印</el-button>
 					</el-row>
 					<el-row style="margin:10px 0 10px 0">
 						<el-col :span="2"><span style="background-color:red;padding:8px;border-radius:6%;font-family:cursive;">重大风险：<em style="font-size:30px;">{{countMap.vb}}</em></span></el-col>

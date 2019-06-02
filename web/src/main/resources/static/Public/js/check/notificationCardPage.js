@@ -36,7 +36,7 @@ new Vue({
             window.open("/safety/safetyNotificationCard/safetyNotificationCardPrint?"+row.id);
         },edit(row){
             window.open("/safety/safetyNotificationCard/safetyNotificationCardEdit?"+row.id);
-        },add(row){
+        },add(){
             window.open("/safety/safetyNotificationCard/safetyNotificationCardAdd");
         },del(row){
             var that=this;

@@ -4,49 +4,8 @@
 	<meta charset="utf-8" />
 	<title></title>
 </head>
-<style type="text/css">
-	*{
-		margin: 0;
-		padding: 0;
-	}
-	body{
-		margin:8px;
-	}
-	.main{
-		width: 100%;
-	}
-	.title{
-		height: 60px;
-		padding: 0 20px;
-		text-align: center;
-		font-size: 32px;
-		margin:0;
-		font-weight: normal;
-	}
-	.content{
-		padding: 20px;
-	}
-	.table-cont{
-		width: 100%;
-	}
-	.table-cont{
-		color: #000;
-		border: 1px solid #000;
-		border-right: none;
-		border-bottom: none;
-		font-size: 14px;
-	}
-	.table-cont th{
-		border-bottom: 1px solid #000;
-		border-right: 1px solid #000;
-		line-height: 40px;
-	}
-	.table-cont td{
-		border-bottom: 1px solid #000;
-		border-right: 1px solid #000;
-		line-height: 40px;
-	}
-</style>
+<link href="/Public/css/print.css" rel="stylesheet" type="text/css"/>
+
 <body>
 <div class="main">
 	<h2 class="title">综合检查（节假日、复产前）</h2>
