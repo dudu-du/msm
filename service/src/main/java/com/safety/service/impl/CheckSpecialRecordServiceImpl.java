@@ -185,6 +185,9 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckSpecialList checkSpecialList = list.get(i);
+            if (checkSpecialList.getResult()==null || checkSpecialList.getResult().isEmpty()){
+                list.get(i).setResult(YES);
+            }
             if (checkTypeName.equals(checkSpecialList.getCheckTypeName())){
                 union++;
                 CheckSpecialList first = list.get(position);

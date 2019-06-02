@@ -189,6 +189,9 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckDayList checkDayList = list.get(i);
+            if (checkDayList.getResult()==null || checkDayList.getResult().isEmpty()){
+                list.get(i).setResult(YES);
+            }
             if (checkTypeName.equals(checkDayList.getCheckTypeName())){
                 union++;
                 CheckDayList first = list.get(position);

@@ -185,6 +185,9 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckWeekList checkWeekList = list.get(i);
+            if (checkWeekList.getResult()==null || checkWeekList.getResult().isEmpty()){
+                list.get(i).setResult(YES);
+            }
             if (checkTypeName.equals(checkWeekList.getCheckTypeName())){
                 union++;
                 CheckWeekList first = list.get(position);

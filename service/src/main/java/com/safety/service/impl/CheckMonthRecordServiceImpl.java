@@ -187,6 +187,9 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckMonthList checkMonthList = list.get(i);
+            if (checkMonthList.getResult()==null || checkMonthList.getResult().isEmpty()){
+                list.get(i).setResult(YES);
+            }
             if (checkTypeName.equals(checkMonthList.getCheckTypeName())){
                 union++;
                 CheckMonthList first = list.get(position);
