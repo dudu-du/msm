@@ -92,7 +92,7 @@ new Vue({
 	},
 	watch:{
 		curPage(val){
-			console.log(val);
+			this.search();
 		}
 	}
 });

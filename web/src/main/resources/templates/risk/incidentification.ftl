@@ -75,7 +75,7 @@
 						<el-col :span="2"><span style="background-color:#DAA520;padding:8px;border-radius:6%;font-family:cursive;">较大风险：<em style="font-size:30px;">{{countMap.b}}</em></span></el-col>
 						<el-col :span="2"><span style="background-color:#FFFF00;padding:8px;border-radius:6%;font-family:cursive;">一般风险：<em style="font-size:30px;">{{countMap.c}}</em></span></el-col>
 						<el-col :span="2"><span style="background-color:#4169E1;padding:8px;border-radius:6%;font-family:cursive;">低风险：<em style="font-size:30px;">{{countMap.l}}</em></span></el-col>
-						<el-col :span="16"></el-col>
+						<el-col :span="16" style="text-align:right;"><el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
 					</el-row>
 					<div id="divprint">
 					<el-table resizable	 highlight-current-row border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
@@ -133,7 +133,7 @@
 				<el-footer>
 					<div style="width:100%;height:100%">
 						<span style="width:48.5%;display: inline-block;"></span>
-						<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
+						
 					</div>
 				</el-footer>
 			</el-container>
@@ -203,7 +203,7 @@
 			    <el-button type="primary" @click="submitForm('validateForm')">确 定</el-button>
 			  </div>
 			</el-dialog>
-			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" @open="checkFormOpen">
+			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" @open="checkFormOpen" @close="dialogClose('checkForm')">
 				<el-form  :model="checkForm" ref="checkForm" label-width="66px">
 				  <el-form-item
 				    v-for="(domain, index) in checkForm.domains"
@@ -218,12 +218,12 @@
 				  </el-col>
 				  <el-col :span="10">
 				  	<el-form-item>
-				    	<el-input v-model="domain.checkContent" v-if="checks.checktype == 1 || checks.checktype == 2 || checks.checktype == 3" placeholder="检查项目及相关要求"></el-input>
+				    	<el-input v-model="domain.checkContent"  placeholder="检查项目及相关要求"></el-input>
 				  	</el-form-item>
 				  </el-col>
 				  <el-col :span="6">
 				  	<el-form-item>
-				    	<el-input v-model="domain.checkMethod" placeholder="检查方法"></el-input>
+				    	<el-input v-model="domain.checkMethod" v-if="checks.checktype == 1 || checks.checktype == 2 || checks.checktype == 3" placeholder="检查方法"></el-input>
 				    </el-form-item>
 				  </el-col>
 				  <el-col :span="4">

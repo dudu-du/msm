@@ -54,7 +54,7 @@
                         <input type="button" id="print" value="打印" class="el-button el-button--success"/>
 					</el-row>
                     <div id="divprint">
-					<el-table border highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
+					<el-table border resizable highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="60"></el-table-column>
 						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="100">
 						</el-table-column>
@@ -66,14 +66,14 @@
 							        <el-tag type="warning" disable-transitions v-for="item in scope.row.troubleNameList">{{item}}</el-tag>
 							    </template>
 							</el-table-column>
-							<el-table-column prop="cause" label="原因" show-overflow-tooltip></el-table-column>
+							<el-table-column prop="cause" label="原因"></el-table-column>
 							<el-table-column prop="consequence" label="后果"></el-table-column>
-							<el-table-column prop="incidence" label="影响范围" show-overflow-tooltip></el-table-column>
+							<el-table-column prop="incidence" label="影响范围" ></el-table-column>
 						</el-table-column>
 						<el-table-column label="安全风险分析">
-							<el-table-column prop="possibility" label="可能性" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="seriousness" label="严重性" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="measure" label="现有措施有效性" show-overflow-tooltip></el-table-column>
+							<el-table-column prop="possibility" label="可能性"></el-table-column>
+							<el-table-column prop="seriousness" label="严重性"></el-table-column>
+							<el-table-column prop="measure" label="现有措施有效性"></el-table-column>
 						</el-table-column>
 						<el-table-column label="LEC风险分析法">
 							<el-table-column prop="numL" label="事故发生的可能性(L)"></el-table-column>

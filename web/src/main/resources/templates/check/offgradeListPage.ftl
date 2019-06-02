@@ -57,10 +57,11 @@
 					</el-table>
 				</el-main>
 				<el-footer style="text-align:center">
-						<el-button-group>
-							<el-button type="primary" v-model="data" @click="prev(data.prePage,10)" icon="el-icon-arrow-left">上一页</el-button>
-							<el-button type="primary" v-model="data" @click="next(data.nextPage,10)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-						</el-button-group>
+						<el-pagination
+						  background
+						  layout="prev, pager, next"
+						  :total="page.total" :page-size="page.pageSize" :current-page.sync="curPage">
+						</el-pagination>
 				</el-footer>
 			</el-container>
 			<el-dialog title="隐患排查清单" :visible.sync="dialogFormVisible" ref="dialogForm" @closed="closedDialog('firstForm')">
@@ -283,6 +284,11 @@ new Vue({
     },
     data:function(){
         return{
+        	curPage:1,
+			page:{
+				total:0,
+				pageSize:10
+			},
             data:[],
             dialogFormVisible:false,
             dangerLedgerVisible:false,
@@ -473,6 +479,11 @@ new Vue({
         	this.$data.receiptForm.offgradeListFk = row.id;
         	this.$data.receiptForm.checkType = row.checkType;
 			
+		},
+		watch:{
+			curPage(val){
+				console.log(val);
+			}
 		}
     }
 

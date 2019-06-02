@@ -333,6 +333,7 @@ new Vue({
 		dialogClose(formName){
 			this.$data.form = new Incidentfication();
 			this.$refs[formName].resetFields();
+			this.resetCheckForm(formName);
 		},
 		changeDialogWidth(){
 			return '20%';
@@ -371,7 +372,7 @@ new Vue({
 			axios.get(url,{params:{year:new Date().getFullYear(),orgId:this.$data.topselect.orgs.value}}).then(response=>{
 				if(response.data.success === true){
 	    			that.$data.checkForm.id = response.data.data.id;
-	    			console.log(that.$data.checkForm.id);
+	    			
 				}else{
 					that.$message.warning(response.data.msg);
 					that.$data.checkFormVisible =false;
@@ -426,9 +427,11 @@ new Vue({
 		    		c.content = c.checkContent;
 		    		c.checkComprehensiveSeasonFk = this.$data.checkForm.id;
 		    	}
-	    		c.riskIdentificationListId = this.$data.curData.id;
+	    		c.riskIdentificationListId = this.$data.curRow.id;
 	    		list.push(c);
 	    	});
+	    	console.log(list);
+	    	return;
 	    	this.$refs[formName].resetFields();
 	    	var url= '';
 	    	if(this.$data.checks.checktype == 1){
