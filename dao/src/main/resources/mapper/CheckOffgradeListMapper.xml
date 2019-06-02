@@ -21,4 +21,26 @@
     <select id="selectAll"  resultMap="BaseResultMap">
         select *  from check_offgrade_list order by create_time desc
     </select>
+    <select id="selectOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
+        select o.name,DATE(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_list dl on c.check_list_fk = dl.id
+        INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DATE(c.create_time),i.trouble_name
+        order by DATE(c.create_time)
+    </select>
+    <select id="selectOffgradeLevelCountByOrg" resultType="map" parameterType="map">
+        select o.name,DATE(c.create_time) as dateofyear,c.level_name ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DATE(c.create_time),c.level_name
+        order by c.level_num
+    </select>
 </mapper>

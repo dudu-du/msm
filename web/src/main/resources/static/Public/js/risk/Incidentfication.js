@@ -430,8 +430,6 @@ new Vue({
 	    		c.riskIdentificationListId = this.$data.curRow.id;
 	    		list.push(c);
 	    	});
-	    	console.log(list);
-	    	return;
 	    	this.$refs[formName].resetFields();
 	    	var url= '';
 	    	if(this.$data.checks.checktype == 1){
