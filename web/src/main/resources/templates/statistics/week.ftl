@@ -238,7 +238,9 @@
 								}else{
 									s.label = e.trouble_name;	
 								}
-								s.data = datas;
+								datas.forEach(e=>{
+									s.data.push(e);
+								});
 								var now = this.getWeekOfYear(new Date(e.dateofyear)); 
 							  　　  var day = now - start;
 							

@@ -209,7 +209,9 @@
 								}else{
 									s.label = e.trouble_name;	
 								}
-								s.data = datas;
+								datas.forEach(e=>{
+									s.data.push(e);
+								});
 							  　　	var now = new Date(e.dateofyear); 
 							  　　  var day = now.getMonth()-start.getMonth();
 								s.data[day]=e.count;
