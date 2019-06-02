@@ -5,12 +5,7 @@ new Vue({
     el:'#app',
     components: {axios},
     created:function(){
-        var that = this;
-        axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{currentPage:1,pageSize:10}}).then(function(res){
-            that.data = res.data.data;
-        }).catch(err=>{
-            this.$message.error('服务器异常，请稍后再试！');
-    });
+        this.search();
     },
     data:function(){
         return{
@@ -64,6 +59,20 @@ new Vue({
                     type: 'info',
                     message: '已取消删除'
                 });
+        });
+        },
+        search(){
+            var that = this;
+            axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(res){
+                if(res.data.success === true){
+                    that.$data.data = [];
+                    that.data = res.data.data;
+                    that.$data.page.total = res.data.data.total;
+                }else{
+                    that.$message.warning(res.data.msg);
+                }
+            }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
         });
         }
     },
