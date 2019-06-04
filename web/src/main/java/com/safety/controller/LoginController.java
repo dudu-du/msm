@@ -129,7 +129,7 @@ public class LoginController extends BaseController {
             session.setAttribute("MEMBER_USER_KEY", person.getId());
             String role = ((ExtPerson) person).getRoleList().size()>0?((ExtPerson) person).getRoleList().get(0):"";
             session.setAttribute("MEMBER_ROLE", role);
-            String orgId = "0";
+            String orgId = person.getOrgId();
             if (role.equals("ROLE_SUPERADMIN")){
                 List<Org> orgList = orgService.getAllOrgList("0");
                 if (orgList.size()>0){
