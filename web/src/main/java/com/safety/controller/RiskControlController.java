@@ -122,4 +122,15 @@ public class RiskControlController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/riskControlPrint",method = RequestMethod.GET)
+    public BaseModelAndView getRiskControlPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/controlPrint");
+        return modelAndView;
+    }
 }
