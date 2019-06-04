@@ -17,43 +17,63 @@
 		/*.el-button{*/
 		/*	margin-left: 152px;*/
 		/*}*/
+		img{
+			width:50px;
+			height:50px;
+		}
 	</style>
 
 	<body>
 		<div id="app">
 			<el-container>
 				<el-header>
-					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患排查清单列表</el-col><el-col :span="8">&nbsp;</el-col>
+					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患整改回执单列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
-					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
-						<el-table-column type="index" label="序号" align="center"></el-table-column>
-						<el-table-column prop="riskPosition" label="风险部位">
+					<el-table border style="width: 100%" ref="singleTable" :data="data" >
+						<el-table-column type="index" label="序号" width="50px" align="center"></el-table-column>
+						<el-table-column prop="checkOrgName" label="受检单位名称">
 						</el-table-column>
-						<el-table-column prop="harmfulFactors" label="风险因素" align="center">
+						<el-table-column prop="fillTime" label="填写时间" align="center">
 						</el-table-column>
-						<el-table-column porp="measure" label="风险管控措施" align="center">
+						<el-table-column prop="checkPersonName" label="检查人员姓名" align="center">
 						</el-table-column>
-						<el-table-column type="runawayPerformance" label="措施失控表现" align="center"></el-table-column>
-						<el-table-column prop="controlOrgName" label="管控部门">
+						<el-table-column prop="checkTime" label="检查日期" align="center"></el-table-column>
+						<el-table-column prop="checkCode" label="编号">
 						</el-table-column>
-						<el-table-column prop="controlOrgPersonName" label="管控责任人" align="center">
+						<el-table-column prop="rectificationOrgName" label="隐患整改部门名称" align="center">
 						</el-table-column>
-						<el-table-column prop="investigationOrgName" label="排查部门" align="center">
+						<el-table-column prop="rectificationPersonName" label="整改部门负责人姓名" align="center">
 						</el-table-column>
-						<el-table-column type="investigationOrgPersonName" label="排查责任人" align="center"></el-table-column>
-						<el-table-column prop="investigationCount" label="排查频次">
+						<el-table-column prop="rectificationContent" label="隐患内容及整改要求" align="center">
+							<template slot-scope="scope">
+								{{scope.row.rectificationContent}}
+								<img :src="scope.row.rectificationContentUrl"></img>
+							</template>
 						</el-table-column>
-						<el-table-column prop="remark" label="备注" align="center">
+						<el-table-column prop="rectificationTime" label="整改期限">
+						</el-table-column>
+						<el-table-column prop="rectificationMeasure" label="整改措施" align="center">
+						</el-table-column>
+						<el-table-column prop="rectificationResult" label="整改结果" align="center">
+							<template slot-scope="scope">
+								{{scope.row.rectificationResult}}
+								<img :src="scope.row.rectificationResultUrl"></img>
+							</template>
+						</el-table-column>
+						<el-table-column label="操作" align="center">
+							<template slot-scope="scope">
+								<el-button type="primary" @click="openPrint(scope.row)">打印</el-button>
+							</template>
 						</el-table-column>
 					</el-table>
 				</el-main>
-				<el-footer>
-					<span style="width:40.5%;display: inline-block;"></span>
-					<el-button-group>
-						<el-button type="primary" v-model="data" @click="prev(data.prePage,10)" icon="el-icon-arrow-left">上一页</el-button>
-						<el-button type="primary" v-model="data" @click="next(data.nextPage,10)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-					</el-button-group>
+				<el-footer style="text-align:center;">
+					<el-pagination
+					  background
+					  layout="prev, pager, next"
+					  :total="page.total" :page-size="page.pageSize" :current-page.sync="curPage">
+					</el-pagination>
 				</el-footer>
 			</el-container>
 		</div>

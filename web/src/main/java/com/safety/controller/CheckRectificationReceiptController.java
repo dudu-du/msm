@@ -150,5 +150,16 @@ public class CheckRectificationReceiptController extends BaseController {
         return modelAndView;
     }
 
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkRectificationReceiptPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckRectificationReceiptPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/rectificationReceiptPrint");
+        return modelAndView;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 }

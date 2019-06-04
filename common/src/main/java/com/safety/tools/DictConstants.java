@@ -89,4 +89,12 @@ public class DictConstants {
     public static final boolean CALENDAR_TYPE_HOLIDAY = false;
     //工作日
     public static final boolean CALENDAR_TYPE_WORKDAY = true;
+
+    //检查表类型
+    public static final String CHECK_TYPE_DAY = "日治理记录";
+    public static final String CHECK_TYPE_WEEK = "周排查记录";
+    public static final String CHECK_TYPE_MONTH = "月排查记录";
+    public static final String CHECK_TYPE_SPECIAL = "专项检查";
+    public static final String CHECK_TYPE_HOLIDAY = "综合检查(节假日、复产前)";
+    public static final String CHECK_TYPE_SEASON = "综合检查(季节性)";
 }

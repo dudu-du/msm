@@ -97,6 +97,11 @@ public class CheckMonthList extends Model<CheckMonthList> {
      */
     private String result;
 
+    /**
+     * 未合格项
+     */
+    private CheckOffgradeList checkOffgradeList;
+
 
     public String getId() {
         return id;
@@ -217,6 +222,14 @@ public class CheckMonthList extends Model<CheckMonthList> {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public CheckOffgradeList getCheckOffgradeList() {
+        return checkOffgradeList;
+    }
+
+    public void setCheckOffgradeList(CheckOffgradeList checkOffgradeList) {
+        this.checkOffgradeList = checkOffgradeList;
     }
 
     @Override

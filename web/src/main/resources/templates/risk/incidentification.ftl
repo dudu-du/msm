@@ -49,30 +49,55 @@
 						      :value="item.id">
 						    </el-option>
 						  </el-select>
+						  <el-select placeholder="请选择" v-model="topselect.postNames.value" @change="orgsChange">
+						    <el-option>全部</el-option>
+						    <el-option
+						      v-for="item in topselect.postNames.data"
+						      :key="item.name"
+						      :label="item.name"
+						      :value="item.name">
+						    </el-option>
+						  </el-select>
+						  <el-select placeholder="请选择" v-model="topselect.levelNames.value" @change="orgsChange">
+						    <el-option>全部</el-option>
+						    <el-option
+						      v-for="item in topselect.levelNames.data"
+						      :key="item.id"
+						      :label="item.name"
+						      :value="item.name">
+						    </el-option>
+						  </el-select>
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-                        <input type="button" id="print" value="打印" class="el-button el-button--success"/>
+                       		 <el-button type="primary" @click="openPrint()">打印</el-button>
+					</el-row>
+					<el-row style="margin:10px 0 10px 0">
+						<el-col :span="2"><span style="background-color:red;padding:8px;border-radius:6%;font-family:cursive;">重大风险：<em style="font-size:30px;">{{countMap.vb}}</em></span></el-col>
+						<el-col :span="2"><span style="background-color:#DAA520;padding:8px;border-radius:6%;font-family:cursive;">较大风险：<em style="font-size:30px;">{{countMap.b}}</em></span></el-col>
+						<el-col :span="2"><span style="background-color:#FFFF00;padding:8px;border-radius:6%;font-family:cursive;">一般风险：<em style="font-size:30px;">{{countMap.c}}</em></span></el-col>
+						<el-col :span="2"><span style="background-color:#4169E1;padding:8px;border-radius:6%;font-family:cursive;">低风险：<em style="font-size:30px;">{{countMap.l}}</em></span></el-col>
+						<el-col :span="16" style="text-align:right;"><el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
 					</el-row>
 					<div id="divprint">
-					<el-table highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
-						<el-table-column prop="index" label="序号" width="60"></el-table-column>
-						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150">
+					<el-table resizable	 highlight-current-row border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
+						<el-table-column prop="index" label="序号" width="60" ></el-table-column>
+						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150" >
 						</el-table-column>
-						<el-table-column label="安全风险辨识">
-							<el-table-column prop="harmfulFactors" label="危险有害因素" width="120">
+						<el-table-column label="安全风险辨识" >
+							<el-table-column prop="harmfulFactors" label="危险有害因素" width="120" >
 							</el-table-column>
-							<el-table-column prop="troubleNameList" label="事故类型">
+							<el-table-column prop="troubleNameList" label="事故类型" >
 								<template slot-scope="scope">
 							        <el-tag type="warning" disable-transitions v-for="item in scope.row.troubleNameList">{{item}}</el-tag>
 							    </template>
 							</el-table-column>
-							<el-table-column prop="cause" label="原因" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="consequence" label="后果" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="incidence" label="影响范围" show-overflow-tooltip></el-table-column>
+							<el-table-column prop="cause" label="原因" ></el-table-column>
+							<el-table-column prop="consequence" label="后果" ></el-table-column>
+							<el-table-column prop="incidence" label="影响范围" ></el-table-column>
 						</el-table-column>
 						<el-table-column label="安全风险分析">
-							<el-table-column prop="possibility" label="可能性" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="seriousness" label="严重性" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="measure" label="现有措施有效性" show-overflow-tooltip></el-table-column>
+							<el-table-column prop="possibility" label="可能性"></el-table-column>
+							<el-table-column prop="seriousness" label="严重性" ></el-table-column>
+							<el-table-column prop="measure" label="现有措施有效性"></el-table-column>
 						</el-table-column>
 						<el-table-column label="LEC风险分析法">
 							<el-table-column prop="numL" label="事故发生的可能性(L)"></el-table-column>
@@ -108,7 +133,7 @@
 				<el-footer>
 					<div style="width:100%;height:100%">
 						<span style="width:48.5%;display: inline-block;"></span>
-						<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
+						
 					</div>
 				</el-footer>
 			</el-container>
@@ -117,7 +142,7 @@
 			    <el-form-item label="岗位单元" prop="postName">
 			    	<el-select v-model="form.postName" placeholder="请选择">
 					    <el-option
-					      v-for="item in post_options"
+					      v-for="item in topselect.postNames.data"
 					      :key="item.name"
 					      :label="item.name"
 					      :value="item.name">
@@ -169,7 +194,7 @@
 			    </el-form-item>
 			    <el-form-item label="安全风险评价" prop="levelName">
 				    <el-select v-model="form.levelName" placeholder="请选择风险等级">
-				      <el-option v-for="item in levels" :label="item.name" :key="item.name" :value="item.name"></el-option>
+				      <el-option v-for="item in topselect.levelNames.data" :label="item.name" :key="item.name" :value="item.name"></el-option>
 				    </el-select>
 			  	</el-form-item>
 			  </el-form>
@@ -178,7 +203,7 @@
 			    <el-button type="primary" @click="submitForm('validateForm')">确 定</el-button>
 			  </div>
 			</el-dialog>
-			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" @open="checkFormOpen">
+			<el-dialog title="隐患排查治理" :visible.sync="checkFormVisible" @open="checkFormOpen" @close="dialogClose('checkForm')">
 				<el-form  :model="checkForm" ref="checkForm" label-width="66px">
 				  <el-form-item
 				    v-for="(domain, index) in checkForm.domains"
@@ -193,12 +218,12 @@
 				  </el-col>
 				  <el-col :span="10">
 				  	<el-form-item>
-				    	<el-input v-model="domain.checkContent" v-if="checks.checktype == 1 || checks.checktype == 2 || checks.checktype == 3" placeholder="检查项目及相关要求"></el-input>
+				    	<el-input v-model="domain.checkContent"  placeholder="检查项目及相关要求"></el-input>
 				  	</el-form-item>
 				  </el-col>
 				  <el-col :span="6">
 				  	<el-form-item>
-				    	<el-input v-model="domain.checkMethod" placeholder="检查方法"></el-input>
+				    	<el-input v-model="domain.checkMethod" v-if="checks.checktype == 1 || checks.checktype == 2 || checks.checktype == 3" placeholder="检查方法"></el-input>
 				    </el-form-item>
 				  </el-col>
 				  <el-col :span="4">

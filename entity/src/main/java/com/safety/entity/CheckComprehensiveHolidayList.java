@@ -82,6 +82,19 @@ public class CheckComprehensiveHolidayList extends Model<CheckComprehensiveHolid
      */
     private String result;
 
+    /**
+     * 未合格项
+     */
+    private CheckOffgradeList checkOffgradeList;
+
+    public CheckOffgradeList getCheckOffgradeList() {
+        return checkOffgradeList;
+    }
+
+    public void setCheckOffgradeList(CheckOffgradeList checkOffgradeList) {
+        this.checkOffgradeList = checkOffgradeList;
+    }
+
     public String getId() {
         return id;
     }

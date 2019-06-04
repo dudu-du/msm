@@ -97,12 +97,15 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                     checkOffgradeList.setLevelName(checkComprehensiveSeasonList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    //保存未合格项信息
+                    checkComprehensiveSeasonList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
+        checkSeasonRecord.setCheckComprehensiveSeasonList(checkComprehensiveSeasonLists);
         return true;
     }
 
@@ -139,6 +142,12 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
             map.put("checkComprehensiveSeasonFk",checkSeasonId);
             map.put("checkSeasonRecordId",checkSeasonRecord.getId());
             List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
+        //默认未每条数据增加result为1
+            for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:list){
+            if (checkComprehensiveSeasonList.getResult()==null || checkComprehensiveSeasonList.getResult().isEmpty()){
+                checkComprehensiveSeasonList.setResult("1");
+            }
+        }
             checkSeasonRecord.setCheckComprehensiveSeasonList(list);
 //        }
         return checkSeasonRecord;

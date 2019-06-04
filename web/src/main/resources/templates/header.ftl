@@ -1,5 +1,8 @@
 <div class="layui-header">
-    <div class="layui-logo">safety为石</div>
+    <div class="layui-logo">
+        <img src="/Public/image/login/logo.jpg" style="width:30px;height:30px;position:relative;top:-3px;">
+        <span>双重预防机制</span>
+    </div>
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">

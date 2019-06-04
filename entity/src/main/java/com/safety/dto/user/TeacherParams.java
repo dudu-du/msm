@@ -15,6 +15,7 @@ public class TeacherParams {
     String orgId;               //机构ID
     List<String> orgIds;        //机构ID集合
     String sex;                 //性别
+    String cardNo;              //工种
     LocalDateTime modifyTateTime;//修改时间
     Integer page;               //当前页
     Integer start;              //开始行数
@@ -43,6 +44,14 @@ public class TeacherParams {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
     }
 
     public Integer getPage() {

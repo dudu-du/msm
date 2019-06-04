@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -52,6 +53,11 @@ public class RiskIdentification extends Model<RiskIdentification> {
      * @return
      */
     private List<RiskIdentificationList> RiskIdentificationList;
+
+    /**
+     * 数量统计
+     */
+    private Map<String ,Integer> countMap;
 
 
     public String getId() {
@@ -108,6 +114,14 @@ public class RiskIdentification extends Model<RiskIdentification> {
 
     public void setRiskIdentificationList(List<com.safety.entity.RiskIdentificationList> riskIdentificationList) {
         RiskIdentificationList = riskIdentificationList;
+    }
+
+    public Map<String, Integer> getCountMap() {
+        return countMap;
+    }
+
+    public void setCountMap(Map<String, Integer> countMap) {
+        this.countMap = countMap;
     }
 
     @Override

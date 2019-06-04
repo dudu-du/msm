@@ -33,12 +33,10 @@
 						<el-col :span="18">
 							<span>排查时间：</span>
 							 <el-date-picker
-						      type="daterange"
+						      type="date"
 						      v-mode="dateValue"
-						      range-separator="至"
 						      disabled
-						      start-placeholder="开始日期"
-						      end-placeholder="结束日期">
+						      placeholder="选择日期">
 						    </el-date-picker>
 						</el-col>
 						<el-col :span="6">

@@ -51,6 +51,8 @@ public class RiskIdentificationController extends BaseController {
         return modelAndView;
     }
 
+
+
     /**
      * 添加风险辨识清单
      * @param riskIdentification
@@ -128,12 +130,20 @@ public class RiskIdentificationController extends BaseController {
      */
     @RequestMapping(value = "/riskIdentification",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getRiskIdentificationByParam(String orgId, String year){
-        RiskIdentification riskIdentification = iRiskIdentificationService.getByParam(orgId,year);
+    public JsonResult getRiskIdentificationByParam(String orgId, String year,String postName,String levelName){
+        RiskIdentification riskIdentification = iRiskIdentificationService.getByParam(orgId,year,postName,levelName);
         if(riskIdentification!=null){
             return renderSuccess("查询成功",riskIdentification);
         }else {
             return renderError("无数据");
         }
+    }
+
+    @RequestMapping(value = "/riskIdentificationPrint",method = RequestMethod.GET)
+    public BaseModelAndView getRiskIdentificationPrint(){
+
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/incidentificationPrint");
+        return modelAndView;
     }
 }

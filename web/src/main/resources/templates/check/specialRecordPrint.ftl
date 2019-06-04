@@ -95,7 +95,7 @@
 				else{
 					trHt += "<tr><td colspan='2'>"+item.checkContent+"</td>" +
 					"<td>"+((item.result=='1')?'√':'')+"</td>" +
-					"<td>"+((item.result=='0')?'√':'')+"</td>"
+					"<td>"+((item.result=='0')?'√':'')+"</td></tr>"
 				}
 			});
 			$("tbody").html(trHt);

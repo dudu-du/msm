@@ -1,6 +1,7 @@
 package com.safety.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.safety.entity.SafetyNotificationCard;
 import com.safety.service.ISafetyNotificationCardService;
 import com.safety.tools.BaseController;
@@ -36,12 +37,9 @@ public class SafetyNotificationCardController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addSafetyNotificationCard(@RequestBody SafetyNotificationCard safetyNotificationCard){
-        String id = UUIDUtil.getUUID();
-        safetyNotificationCard.setId(id);
-        safetyNotificationCard.setCreateTime(LocalDateTime.now());
-        boolean result = iSafetyNotificationCardService.save(safetyNotificationCard);
+        boolean result = iSafetyNotificationCardService.addSafetyNotificationCard(safetyNotificationCard);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
@@ -56,7 +54,7 @@ public class SafetyNotificationCardController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult updateSafetyNotificationCard(@RequestBody SafetyNotificationCard safetyNotificationCard){
-        boolean result = iSafetyNotificationCardService.updateById(safetyNotificationCard);
+        boolean result = iSafetyNotificationCardService.updateSafetyNotificationCard(safetyNotificationCard);
         if (result){
             return renderSuccess("修改成功");
         }else {
@@ -86,12 +84,29 @@ public class SafetyNotificationCardController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/safetyNotificationCard",method = RequestMethod.GET)
+    @RequestMapping(value = "/safetyNotificationCardById",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult getSafetyNotificationCardById(String id){
         SafetyNotificationCard safetyNotificationCard = iSafetyNotificationCardService.getById(id);
         if(safetyNotificationCard!=null){
             return renderSuccess("查询成功",safetyNotificationCard);
+        }else {
+            return renderError("无数据");
+        }
+    }
+
+    /**
+     * 分页查询月记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardByPage",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult safetyNotificationCardByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
+        PageInfo<SafetyNotificationCard> page = iSafetyNotificationCardService.getByPage(currentPage, pageSize);
+        if(page!=null){
+            return renderSuccess("查询成功",page);
         }else {
             return renderError("无数据");
         }
@@ -105,7 +120,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardAdd",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardAdd(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardAdd");
+        modelAndView.setViewName("safety/notificationCardAdd");
         return modelAndView;
     }
 
@@ -116,7 +131,7 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardEdit",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardEdit(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardEdit");
+        modelAndView.setViewName("safety/notificationCardEdit");
         return modelAndView;
     }
 
@@ -127,7 +142,19 @@ public class SafetyNotificationCardController extends BaseController {
     @RequestMapping(value = "/safetyNotificationCardPage",method = RequestMethod.GET)
     public BaseModelAndView getSafetyNotificationCardPage(){
         BaseModelAndView modelAndView = new BaseModelAndView();
-        modelAndView.setViewName("check/notificationCardPage");
+        modelAndView.setViewName("safety/notificationCardPage");
+        return modelAndView;
+    }
+
+
+    /**
+     * 打印页面跳转
+     * @return
+     */
+    @RequestMapping(value = "/safetyNotificationCardPrint",method = RequestMethod.GET)
+    public BaseModelAndView getSafetyNotificationCardPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("safety/notificationCardPrint");
         return modelAndView;
     }
 

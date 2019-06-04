@@ -66,6 +66,11 @@ public class SafetyNotificationCardList extends Model<SafetyNotificationCardList
      */
     private LocalDateTime modifyTime;
 
+    /**
+     * 安全告知卡父ID
+     */
+    private String safetyNotificationCardFk;
+
     public String getId() {
         return id;
     }
@@ -140,6 +145,14 @@ public class SafetyNotificationCardList extends Model<SafetyNotificationCardList
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+    public String getSafetyNotificationCardFk() {
+        return safetyNotificationCardFk;
+    }
+
+    public void setSafetyNotificationCardFk(String safetyNotificationCardFk) {
+        this.safetyNotificationCardFk = safetyNotificationCardFk;
     }
 
     @Override

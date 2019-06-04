@@ -3,20 +3,15 @@ package com.safety.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.safety.entity.CheckDayRecord;
-import com.safety.exception.ProgramException;
 import com.safety.service.ICheckDayRecordService;
 import com.safety.tools.BaseController;
 import com.safety.tools.BaseModelAndView;
 import com.safety.tools.JsonResult;
-import com.safety.tools.UUIDUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * <p>
@@ -43,7 +38,7 @@ public class CheckDayRecordController extends BaseController {
     public JsonResult addCheckDayRecord(@RequestBody CheckDayRecord checkDayRecord){
         boolean result = iCheckDayRecordService.addCheckDayRecord(checkDayRecord);
         if (result){
-            return renderSuccess("添加成功");
+            return renderSuccess("添加成功",checkDayRecord);
         }else {
             return renderError("添加失败");
         }

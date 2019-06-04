@@ -14,6 +14,13 @@
         <result column="org_fk" property="orgFk" />
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
-    </resultMap>
+        <result column="safety_notification_card_fk" property="safetyNotificationCardFk" />
 
+    </resultMap>
+    <select id="selectByParam" resultType="com.safety.entity.SafetyNotificationCardList">
+        select * from safety_notification_card_list
+        <where>
+            safety_notification_card_fk = #{safetyNotificationCardFk}
+        </where>
+    </select>
 </mapper>

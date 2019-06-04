@@ -9,6 +9,7 @@
         <result column="investigation_org_person_fk" property="investigationOrgPersonFk" />
         <result column="investigation_org_person_name" property="investigationOrgPersonName" />
         <result column="rectification_position" property="rectificationPosition" />
+        <result column="rectification_position_url" property="rectificationPositionUrl" />
         <result column="rectification_name" property="rectificationName" />
         <result column="rectification_level" property="rectificationLevel" />
         <result column="government_measure" property="governmentMeasure" />
@@ -21,6 +22,7 @@
         <result column="review_person_fk" property="reviewPersonFk" />
         <result column="review_person_name" property="reviewPersonName" />
         <result column="review_result" property="reviewResult" />
+        <result column="review_result_url" property="reviewResultUrl" />
         <result column="create_person_fk" property="createPersonFk" />
         <result column="org_fk" property="orgFk" />
         <result column="create_time" property="createTime" />

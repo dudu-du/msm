@@ -97,12 +97,14 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                     checkOffgradeList.setLevelName(checkWeekList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    checkWeekList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
+        checkWeekRecord.setCheckWeekList(checkWeekLists);
         return true;
     }
 
@@ -183,6 +185,9 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckWeekList checkWeekList = list.get(i);
+            if (checkWeekList.getResult()==null || checkWeekList.getResult().isEmpty()){
+                list.get(i).setResult(YES);
+            }
             if (checkTypeName.equals(checkWeekList.getCheckTypeName())){
                 union++;
                 CheckWeekList first = list.get(position);

@@ -82,6 +82,11 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
      */
     private String result;
 
+    /**
+     * 未合格项
+     */
+    private CheckOffgradeList checkOffgradeList;
+
     public String getId() {
         return id;
     }
@@ -181,6 +186,14 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public CheckOffgradeList getCheckOffgradeList() {
+        return checkOffgradeList;
+    }
+
+    public void setCheckOffgradeList(CheckOffgradeList checkOffgradeList) {
+        this.checkOffgradeList = checkOffgradeList;
     }
 
     @Override

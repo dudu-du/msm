@@ -13,5 +13,16 @@
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
     </resultMap>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select * from safety_notification_card
+        <where>
+            <if test="id!=null">
+                id =#{id}
+            </if>
+        </where>
+    </select>
 
+    <select id="selectAll"  resultMap="BaseResultMap">
+        select *  from safety_notification_card order by create_time desc
+    </select>
 </mapper>

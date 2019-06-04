@@ -107,6 +107,26 @@ new Vue({
 		}).catch(err=>{
 			this.$message.error('服务器异常，请稍后再试！');
 		});
+		axios.get('/safety/riskDict/riskDictList',{params:{code:'postlist'}}).then(response=>{
+			if(response.data.success === true){
+				this.$data.topselect.postNames.data = [];
+				response.data.data.forEach(e=>this.$data.topselect.postNames.data.push(e));
+			}else{
+				this.$message.warning(response.data.msg);
+			}
+		}).catch(err=>{
+			this.$message.error('服务器异常，请稍后再试！');
+		});
+		axios.get('/safety/riskDict/riskDictList',{params:{code:'levellist'}}).then(response=>{
+			if(response.data.success === true){
+				this.$data.topselect.levelNames.data = [];
+				response.data.data.forEach(e=>this.$data.topselect.levelNames.data.push(e));
+			}else{
+				this.$message.warning(response.data.msg);
+			}
+		}).catch(err=>{
+			this.$message.error('服务器异常，请稍后再试！');
+		});
 	},
 	data: function() {
 		return {
@@ -122,12 +142,26 @@ new Vue({
 			troubles: [],
 			levels:[],
 			tableData: [],
+			countMap:{
+				vb:0,
+				b:0,
+				c:0,
+				l:0
+			},
 			topselect:{
 				orgs:{
 					value:'',
 					data:[]
 				},
-				date:'2019'
+				date:'2019',
+				postNames:{
+					data:[],
+					value:'全部'
+				},
+				levelNames:{
+					data:[],
+					value:'全部'
+				}
 			},
 			checks:{
 				checktype:0,
@@ -251,11 +285,19 @@ new Vue({
 			}
 		},
 		search(){//搜索
-			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
+			var postName='',levelName='';
+			if(this.$data.topselect.postNames.value !== '全部'){
+				postName = this.$data.topselect.postNames.value;
+			}
+			if(this.$data.topselect.levelNames.value !== '全部'){
+				levelName = this.$data.topselect.levelNames.value;
+			}
+			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value,postName:postName,levelName:levelName}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;
 					this.$data.tableData = [];
+					this.$data.countMap = response.data.data.countMap;
 					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Incidentfication(e)));
 				}else{
 					this.$message.warning(response.data.msg);
@@ -265,16 +307,7 @@ new Vue({
 			});
 		},
 		dialogFormOpen(){
-			axios.get('/safety/riskDict/riskDictList',{params:{code:'postlist'}}).then(response=>{
-				if(response.data.success === true){
-					this.$data.post_options = [];
-					response.data.data.forEach(e=>this.$data.post_options.push(e));
-				}else{
-					this.$message.warning(response.data.msg);
-				}
-			}).catch(err=>{
-				this.$message.error('服务器异常，请稍后再试！');
-			});
+			
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'harmfullist'}}).then(response=>{
 				if(response.data.success === true){
 					this.$data.facotrs = [];
@@ -295,20 +328,12 @@ new Vue({
 			}).catch(err=>{
 				this.$message.error('服务器异常，请稍后再试！');
 			});
-			axios.get('/safety/riskDict/riskDictList',{params:{code:'levellist'}}).then(response=>{
-				if(response.data.success === true){
-					this.$data.levels = [];
-					response.data.data.forEach(e=>this.$data.levels.push(e));
-				}else{
-					this.$message.warning(response.data.msg);
-				}
-			}).catch(err=>{
-				this.$message.error('服务器异常，请稍后再试！');
-			});
+			
 		},
 		dialogClose(formName){
 			this.$data.form = new Incidentfication();
 			this.$refs[formName].resetFields();
+			this.resetCheckForm(formName);
 		},
 		changeDialogWidth(){
 			return '20%';
@@ -347,7 +372,7 @@ new Vue({
 			axios.get(url,{params:{year:new Date().getFullYear(),orgId:this.$data.topselect.orgs.value}}).then(response=>{
 				if(response.data.success === true){
 	    			that.$data.checkForm.id = response.data.data.id;
-	    			console.log(that.$data.checkForm.id);
+	    			
 				}else{
 					that.$message.warning(response.data.msg);
 					that.$data.checkFormVisible =false;
@@ -402,7 +427,7 @@ new Vue({
 		    		c.content = c.checkContent;
 		    		c.checkComprehensiveSeasonFk = this.$data.checkForm.id;
 		    	}
-	    		c.riskIdentificationListId = this.$data.curData.id;
+	    		c.riskIdentificationListId = this.$data.curRow.id;
 	    		list.push(c);
 	    	});
 	    	this.$refs[formName].resetFields();
@@ -445,6 +470,8 @@ new Vue({
 	    	});
 				
 	    	
-	    }
+	    },openPrint(){
+            window.open("/safety/riskIdentification/riskIdentificationPrint?");
+        }
 	}
 });

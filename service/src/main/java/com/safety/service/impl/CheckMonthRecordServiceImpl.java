@@ -142,12 +142,15 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
+                    //保存未合格项信息
+                    checkMonthList.setCheckOffgradeList(checkOffgradeList);
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
+        checkMonthRecord.setCheckMonthList(checkMonthLists);
         return true;
     }
 
@@ -184,6 +187,9 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckMonthList checkMonthList = list.get(i);
+            if (checkMonthList.getResult()==null || checkMonthList.getResult().isEmpty()){
+                list.get(i).setResult(YES);
+            }
             if (checkTypeName.equals(checkMonthList.getCheckTypeName())){
                 union++;
                 CheckMonthList first = list.get(position);
