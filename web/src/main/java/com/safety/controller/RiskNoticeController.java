@@ -118,4 +118,15 @@ public class RiskNoticeController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/riskNoticePrint",method = RequestMethod.GET)
+    public BaseModelAndView getRiskNoticePrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/noticePrint");
+        return modelAndView;
+    }
 }

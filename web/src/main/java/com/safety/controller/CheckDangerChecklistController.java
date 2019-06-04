@@ -148,6 +148,16 @@ public class CheckDangerChecklistController extends BaseController {
         modelAndView.setViewName("check/dangerChecklistPage");
         return modelAndView;
     }
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerChecklistPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerChecklistPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dangerChecklistPrint");
+        return modelAndView;
+    }
 
     //------------------------------------------------------------------------------------------------------------------
 }

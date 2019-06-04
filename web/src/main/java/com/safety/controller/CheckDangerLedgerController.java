@@ -149,5 +149,15 @@ public class CheckDangerLedgerController extends BaseController {
         return modelAndView;
     }
 
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/checkDangerLedgerPrint",method = RequestMethod.GET)
+    public BaseModelAndView getCheckDangerLedgerPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("check/dangerLedgerPrint");
+        return modelAndView;
+    }
     //------------------------------------------------------------------------------------------------------------------
 }

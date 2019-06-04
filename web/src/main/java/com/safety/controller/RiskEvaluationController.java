@@ -118,4 +118,15 @@ public class RiskEvaluationController extends BaseController {
             return renderError("无数据");
         }
     }
+
+    /**
+     * 打印页面
+     * @return
+     */
+    @RequestMapping(value = "/riskEvaluationPrint",method = RequestMethod.GET)
+    public BaseModelAndView getRiskEvaluationPrint(){
+        BaseModelAndView modelAndView = new BaseModelAndView();
+        modelAndView.setViewName("risk/evaluationPrint");
+        return modelAndView;
+    }
 }
