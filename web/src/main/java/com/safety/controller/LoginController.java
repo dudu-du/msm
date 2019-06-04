@@ -3,6 +3,7 @@ package com.safety.controller;
 import com.safety.entity.Login;
 import com.safety.entity.Person;
 import com.safety.exception.ProgramException;
+import com.safety.extentity.ExtPerson;
 import com.safety.service.IAccessTokenService;
 import com.safety.service.ICaptchaService;
 import com.safety.service.ILoginService;
@@ -125,6 +126,8 @@ public class LoginController extends BaseController {
             session.setAttribute("MEMBER_LOGIN_KEY", login.getId());
             session.setAttribute("MEMBER_USER_REAL_NAME", login.getRealname());
             session.setAttribute("MEMBER_USER_KEY", person.getId());
+            session.setAttribute("MEMBER_ROLE", ((ExtPerson) person).getRoleList().size()>0?((ExtPerson) person).getRoleList().get(0):"");
+            session.setAttribute("MEMBER_ORGID", person.getOrgId());
             session.setAttribute("MEMBER_USER_PERSON", person);
             session.setAttribute("MEMBER_USER_LOGIN", login);
             return true;
