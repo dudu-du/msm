@@ -199,6 +199,9 @@
 			    <el-form-item label="D值" prop="numD">
 			      <el-input v-model="form.numD" type="number" step="0.01" autocomplete="off"></el-input>
 			    </el-form-item>
+				  <el-form-item label="负责人" prop="personName">
+					  <el-input v-model="form.personName" autocomplete="off"></el-input>
+				  </el-form-item>
 			    <el-form-item label="安全风险评价" prop="levelName">
 				    <el-select v-model="form.levelName" placeholder="请选择风险等级">
 				      <el-option v-for="item in topselect.levelNames.data" :label="item.name" :key="item.name" :value="item.name"></el-option>
