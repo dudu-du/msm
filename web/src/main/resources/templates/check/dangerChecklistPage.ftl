@@ -29,7 +29,7 @@
 				</el-header>
 				<el-main>
 					<el-button type="success" @click="print" style="margin-bottom: 20px">打印</el-button>
-					<div style="height: 650px;width: 1650px;">
+					<div id="divprint" style="width: 1650px;">
 						<el-scrollbar style="height:100%;width: 100%;">
 					<el-table border style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
