@@ -81,7 +81,7 @@
 					</el-row>
 					<div id="divprint" style="width: 1650px;">
 					<el-scrollbar style="height:100%;width: 100%;">
-					<el-table resizable	 highlight-current-row border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
+					<el-table resizable border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="60" ></el-table-column>
 						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150" >
 						</el-table-column>

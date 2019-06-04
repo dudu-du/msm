@@ -25,6 +25,7 @@ layui.use(['element','layer'], function(){
     var element = layui.element,
         layer = layui.layer;
     window.onload=function(){
+    	sessionStorage.setItem("noResult",0);
         var userPic;
         if($('input[name="userPic"]').val() == ''){
             userPic = '/Public/image/user/schoolAdmin.png';
@@ -158,6 +159,7 @@ layui.use(['element','layer'], function(){
             }
         }
     });
+
     element.on('nav(leftnav)', function(elem){
         var thisType = $(elem).attr('data-type');
         var parentY = $(elem).attr('data-parent');
@@ -175,34 +177,75 @@ layui.use(['element','layer'], function(){
             var h,t,mapH,nameTextC,nameTextP;
             if($(elem).attr('lay-href')){
                 h = $(elem).attr('lay-href');
-                $('#lay-iframe').attr('src',h);
-                if($(elem).parent('li').length>0 && $(elem).siblings('dl').length==0){
-                    t=1;
-                    $(elem).parents('li').addClass('layui-this');
-                    nameTextP = $(elem).find('cite').text();
-                    mapH = '<a href="#">'+nameTextP+'</a>';
+                var noResult = ~~sessionStorage.getItem("noResult");
+                if(noResult > 0){
+                	//询问框
+
+                	layer.confirm('页面中有<em>否<em>的数据还没有保存？', {
+                	  btn: ['留下','仍要离开'] //按钮
+                	}, function(){
+                		layer.msg('的确很重要', {icon: 1});
+                	}, function(){
+
+                		sessionStorage.setItem("noResult",0);
+                		$('#lay-iframe').attr('src',h);
+                		if($(elem).parent('li').length>0 && $(elem).siblings('dl').length==0){
+                			t=1;
+                			$(elem).parents('li').addClass('layui-this');
+                			nameTextP = $(elem).find('cite').text();
+                			mapH = '<a href="#">'+nameTextP+'</a>';
+                		}else{
+                			t=0;
+                			$(elem).parents('li').addClass('layui-nav-itemed');
+                			$(elem).parent('dd').addClass('layui-this');
+                			nameTextP = $(elem).parents('li').find('cite').text();
+                			nameTextC = $(elem).text();
+                			mapH = '<a href="#">'+nameTextP+'</a><a><cite>'+nameTextC+'</cite></a>';
+                		}
+                		layui.sessionData('nav',{
+                			'key':'obj',
+                			'value':{
+                				'h':h,
+                				't':t,
+                				'map':mapH,
+                				'menu':'base'
+                			}
+                		});
+                		$('.layui-breadcrumb').html('');
+                		$(mapH).appendTo('.layui-breadcrumb');
+                		element.render('breadcrumb');
+                	});
                 }else{
-                    t=0;
-                    $(elem).parents('li').addClass('layui-nav-itemed');
-                    $(elem).parent('dd').addClass('layui-this');
-                    nameTextP = $(elem).parents('li').find('cite').text();
-                    nameTextC = $(elem).text();
-                    mapH = '<a href="#">'+nameTextP+'</a><a><cite>'+nameTextC+'</cite></a>';
+                	$('#lay-iframe').attr('src',h);
+            		if($(elem).parent('li').length>0 && $(elem).siblings('dl').length==0){
+            			t=1;
+            			$(elem).parents('li').addClass('layui-this');
+            			nameTextP = $(elem).find('cite').text();
+            			mapH = '<a href="#">'+nameTextP+'</a>';
+            		}else{
+            			t=0;
+            			$(elem).parents('li').addClass('layui-nav-itemed');
+            			$(elem).parent('dd').addClass('layui-this');
+            			nameTextP = $(elem).parents('li').find('cite').text();
+            			nameTextC = $(elem).text();
+            			mapH = '<a href="#">'+nameTextP+'</a><a><cite>'+nameTextC+'</cite></a>';
+            		}
+            		layui.sessionData('nav',{
+            			'key':'obj',
+            			'value':{
+            				'h':h,
+            				't':t,
+            				'map':mapH,
+            				'menu':'base'
+            			}
+            		});
+            		$('.layui-breadcrumb').html('');
+            		$(mapH).appendTo('.layui-breadcrumb');
+            		element.render('breadcrumb');
                 }
-                layui.sessionData('nav',{
-                    'key':'obj',
-                    'value':{
-                        'h':h,
-                        't':t,
-                        'map':mapH,
-                        'menu':'base'
-                    }
-                });
-                $('.layui-breadcrumb').html('');
-                $(mapH).appendTo('.layui-breadcrumb');
-                element.render('breadcrumb');
             }
             else{
+  
                 if($(elem).parent().prop("tagName") == "LI"){
                     if($(elem).parent().hasClass("layui-nav-itemed")){
                         $(elem).parent().addClass('layui-nav-itemed');

@@ -63,19 +63,19 @@
 						</el-table-column>
 						<el-table-column prop="levelName" label="符合性">
 							<template slot-scope="scope">
-							<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
-						        <el-radio label="1">是</el-radio>
-  								<el-radio label="0">否</el-radio>
-  							</el-radio-group>
-  								<span v-if="scope.row.result==0 && scope.row.checkOffgradeList">
+								<el-radio-group v-model="scope.row.result" @change="change(scope.row)">
+							        <el-radio label="1">是</el-radio>
+	  								<el-radio label="0">否</el-radio>
+	  							</el-radio-group>
+  								<span v-if="scope.row.result==0" style="margin-left:5px;">
 		  							<el-tooltip class="item" effect="dark" content="清单" placement="top-start">
-							        <el-button style="margin-left:0" @click="addBtn(scope.row,'firstForm')" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
+							        <el-button style="margin-left:0" @click="addBtn(scope.$index,scope.row,'firstForm')" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
 							        </el-tooltip>
 							        <el-tooltip class="item" effect="dark" content="台账" placement="top-start">
-							        <el-button style="margin-left:0" @click="addDanger(scope.row,'secondForm')" type="warning" size="mini" icon="el-icon-plus" circle></el-button>
+							        <el-button style="margin-left:0" @click="addDanger(scope.$index,scope.row,'secondForm')" type="warning" size="mini" icon="el-icon-plus" circle></el-button>
 							        </el-tooltip>
 							        <el-tooltip class="item" effect="dark" content="回执" placement="top-start">
-							        <el-button style="margin-left:0" @click="addReceipt(scope.row,'threeForm')" type="danger" size="mini" icon="el-icon-plus" circle></el-button>
+							        <el-button style="margin-left:0" @click="addReceipt(scope.$index,scope.row,'threeForm')" type="danger" size="mini" icon="el-icon-plus" circle></el-button>
 							        </el-tooltip>
 	  							</span>
 						     </template>
@@ -431,7 +431,18 @@
 		        });
 			},
 			change(row){
-				console.log(row);
+				var noResult = ~~sessionStorage.getItem("noResult");
+				if(row.result==1){
+					row.checkDangerCheckList = null;
+					row.checkDangerLedger = null;
+					row.checkRectificationReceipt = null;
+					if(noResult>0){
+						noResult--;
+					}
+				}else{
+					noResult++;
+				}
+				sessionStorage.setItem("noResult", noResult);
 			},
 			submitForm(){
 	 
@@ -466,17 +477,19 @@
 					this.$message.error('服务器异常，请稍后再试！');
 				});
 			},
-			addBtn(row,formName){
+			addBtn(index,row,formName){
 	        	this.$data.dialogFormVisible = true;
 	        	this.$data.listForm.offgradeListFk = row.id;
 	        	this.$data.listForm.orgFk = row.orgFk;
 	        	this.$data.listForm.checkType = row.checkType;
+	        	this.$data.listForm.index = index;
 	        },
-	        addDanger(row,formName){
+	        addDanger(index,row,formName){
 	        	this.$data.dangerLedgerVisible = true;
 	        	this.$data.dangerForm.orgFk = row.orgFk;
 	        	this.$data.dangerForm.offgradeListFk = row.id;
 	        	this.$data.dangerForm.checkType = row.checkType;
+	        	this.$data.dangerForm.index = index;
 	        },
 	        closedDialog(formName){
 	        	if(this.$refs['rectificationPositionUrl']){
@@ -492,49 +505,25 @@
 	        submitListForm(formName){
 	        	var that = this;
 	        	this.$data.dialogFormVisible = false;
+	        	this.$data.data.checkMonthList[this.$data.listForm.index].checkDangerChecklist = JSON.parse(JSON.stringify(this.$data.listForm));
 	        	this.$refs[formName].resetFields();
-	        	axios.post('/safety/checkDangerChecklist/checkDangerChecklist',this.$data.listForm).then(function(response){
-					that.$data.listForm.offgradeListFk = '';
-	        		if(response.data.success === true){
-	        			that.$message.success(response.data.msg);
-					}else{
-						that.$message.warning(response.data.msg);
-					}
-	            }).catch(err=>{
-	                this.$message.error('服务器异常，请稍后再试！');
-	            });
+				this.$data.listForm.offgradeListFk = '';
+	        	
 	        },
 	        submitDangerForm(formName){
-	        	var that = this;
 	        	this.$data.dangerLedgerVisible = false;
-	        	axios.post('/safety/checkDangerLedger/checkDangerLedger',this.$data.dangerForm).then(function(response){
-		        	that.$refs[formName].resetFields();
-					that.$data.dangerForm.offgradeListFk = '';
-					console.log(response.data);
-	        		if(response.data.success === true){
-	        			that.$message.success(response.data.msg);
-					}else{
-						that.$message.warning(response.data.msg);
-					}
-	            }).catch(err=>{
-	                this.$message.error('服务器异常，请稍后再试！');
-	            });
+	        	this.$data.data.checkMonthList[this.$data.dangerForm.index].checkDangerLedger = JSON.parse(JSON.stringify(this.$data.dangerForm));
+		        this.$refs[formName].resetFields();
+				this.$data.dangerForm.offgradeListFk = '';
 	        },
 	        submitReceiptForm(formName){
 	        	var that = this;
 	        	this.$data.dangerLedgerVisible = false;
-	        	axios.post('/safety/checkRectificationReceipt/checkRectificationReceipt',this.$data.receiptForm).then(function(response){
-		        	that.$refs[formName].resetFields();
-					that.$data.receiptForm.offgradeListFk = '';
-					that.$data.receiptVisible = false;
-	        		if(response.data.success === true){
-	        			that.$message.success(response.data.msg);
-					}else{
-						that.$message.warning(response.data.msg);
-					}
-	            }).catch(err=>{
-	                this.$message.error('服务器异常，请稍后再试！');
-	            });
+	        	this.$data.data.checkMonthList[this.$data.receiptForm.index].checkRectificationReceipt = JSON.parse(JSON.stringify(this.$data.receiptForm));
+	        	this.$refs[formName].resetFields();
+				this.$data.receiptForm.offgradeListFk = '';
+				this.$data.receiptVisible = false;
+	        	
 	        },
 	        rectificationChange(file,fileList){
 	        	var that = this;
@@ -577,6 +566,7 @@
 	        	this.$data.receiptForm.orgFk = row.orgFk;
 	        	this.$data.receiptForm.offgradeListFk = row.id;
 	        	this.$data.receiptForm.checkType = row.checkType;
+				this.$data.receiptForm.index = index;
 				
 			},
 	        getDate(date){

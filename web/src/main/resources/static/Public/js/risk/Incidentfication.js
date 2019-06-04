@@ -264,7 +264,7 @@ new Vue({
 		addcheck(type,formName,row){
 			this.$data.checks.checktype = type;
 			this.$data.curRow = row;
-			this.$refs.singleTable.setCurrentRow(row);
+			//this.$refs.singleTable.setCurrentRow(row);
 			this.$data.checkFormVisible = true;
 		},
 		orgsChange(val){
