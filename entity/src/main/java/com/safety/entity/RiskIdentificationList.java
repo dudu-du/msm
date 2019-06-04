@@ -151,6 +151,10 @@ public class RiskIdentificationList extends Model<RiskIdentificationList> {
      * 个数标记
      */
     private Integer union;
+    /**
+     * 责任人
+     */
+    private String personName;
 
     public String getId() {
         return id;
@@ -347,6 +351,15 @@ public class RiskIdentificationList extends Model<RiskIdentificationList> {
 
     public void setUnion(Integer union) {
         this.union = union;
+    }
+
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
     @Override
