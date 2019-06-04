@@ -1,13 +1,11 @@
 package com.safety.controller;
 
 import com.safety.entity.Login;
+import com.safety.entity.Org;
 import com.safety.entity.Person;
 import com.safety.exception.ProgramException;
 import com.safety.extentity.ExtPerson;
-import com.safety.service.IAccessTokenService;
-import com.safety.service.ICaptchaService;
-import com.safety.service.ILoginService;
-import com.safety.service.IPersonService;
+import com.safety.service.*;
 import com.safety.shiro.AuthRealm;
 import com.safety.tools.*;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -43,6 +42,8 @@ public class LoginController extends BaseController {
     private ICaptchaService captchaService;
     @Autowired
     private IAccessTokenService accessTokenService;
+    @Autowired
+    private IOrgService orgService;
 
     @RequestMapping(value="login",method = RequestMethod.POST)
     @ResponseBody
@@ -126,8 +127,16 @@ public class LoginController extends BaseController {
             session.setAttribute("MEMBER_LOGIN_KEY", login.getId());
             session.setAttribute("MEMBER_USER_REAL_NAME", login.getRealname());
             session.setAttribute("MEMBER_USER_KEY", person.getId());
-            session.setAttribute("MEMBER_ROLE", ((ExtPerson) person).getRoleList().size()>0?((ExtPerson) person).getRoleList().get(0):"");
-            session.setAttribute("MEMBER_ORGID", person.getOrgId());
+            String role = ((ExtPerson) person).getRoleList().size()>0?((ExtPerson) person).getRoleList().get(0):"";
+            session.setAttribute("MEMBER_ROLE", role);
+            String orgId = "0";
+            if (role.equals("ROLE_SUPERADMIN")){
+                List<Org> orgList = orgService.getAllOrgList("0");
+                if (orgList.size()>0){
+                    orgId = orgList.get(0).getId();
+                }
+            }
+            session.setAttribute("MEMBER_ORGID", orgId);
             session.setAttribute("MEMBER_USER_PERSON", person);
             session.setAttribute("MEMBER_USER_LOGIN", login);
             return true;
