@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -52,11 +53,13 @@ public class RiskIdentification extends Model<RiskIdentification> {
      * 安全风险辨识列表
      * @return
      */
+    @TableField(exist = false)
     private List<RiskIdentificationList> RiskIdentificationList;
 
     /**
      * 数量统计
      */
+    @TableField(exist = false)
     private Map<String ,Integer> countMap;
 
 

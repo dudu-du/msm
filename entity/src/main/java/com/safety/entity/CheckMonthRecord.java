@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -82,6 +83,7 @@ public class CheckMonthRecord extends Model<CheckMonthRecord> {
     /**
      * 条目集合
      */
+    @TableField(exist = false)
     private List<CheckMonthList> checkMonthList;
 
 

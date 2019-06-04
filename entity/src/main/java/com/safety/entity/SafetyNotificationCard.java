@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -60,6 +61,7 @@ public class SafetyNotificationCard extends Model<SafetyNotificationCard> {
     /**
      * 子表列表
      */
+    @TableField(exist = false)
     private List<SafetyNotificationCardList> safetyNotificationCardList;
 
     public String getId() {

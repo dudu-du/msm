@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -65,6 +66,7 @@ public class CheckSpecial extends Model<CheckSpecial> {
     /**
      * 子表集合
      */
+    @TableField(exist = false)
     private List<CheckSpecialList> checkSpecialList;
 
     public String getId() {

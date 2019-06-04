@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -95,6 +96,7 @@ public class CheckComprehensiveHoliday extends Model<CheckComprehensiveHoliday> 
     /**
      * 子表集合
      */
+    @TableField(exist = false)
     private List<CheckComprehensiveHolidayList> checkComprehensiveHolidayList;
 
     public String getId() {

@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -84,6 +85,7 @@ public class CheckDayRecord extends Model<CheckDayRecord> {
      * 填写内容列表
      * @return
      */
+    @TableField(exist = false)
     private List<CheckDayList> checkDayList;
 
     public String getId() {

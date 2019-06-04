@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -95,6 +96,7 @@ public class CheckComprehensiveSeason extends Model<CheckComprehensiveSeason> {
     /**
      * 子表集合
      */
+    @TableField(exist = false)
     private List<CheckComprehensiveSeasonList> checkComprehensiveSeasonList;
 
     public String getId() {

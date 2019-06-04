@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -71,6 +72,7 @@ public class CheckMonth extends Model<CheckMonth> {
      * 子表集合
      * @return
      */
+    @TableField(exist = false)
     private List<CheckMonthList> checkMonthList;
 
     public String getId() {

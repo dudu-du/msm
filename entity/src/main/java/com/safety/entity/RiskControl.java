@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
@@ -47,7 +48,8 @@ public class RiskControl extends Model<RiskControl> {
      * 所属机构ID
      */
     private String orgFk;
-    
+
+    @TableField(exist = false)
     private List<RiskControlList> riskControlList;
 
     public String getId() {
