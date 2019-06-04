@@ -30,6 +30,7 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患治理信息台账列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
+					<el-button type="success" @click="print" style="margin-bottom: 20px">打印</el-button>
 					<el-table border style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
 						<el-table-column prop="investigationTime" label="排查时间">

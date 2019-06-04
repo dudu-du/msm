@@ -8,7 +8,7 @@
 <body>
 <input type="button" id="print" value="打印本页"/>
 <div class="main" id="printArea">
-	<h2 class="title">分级管控</h2>
+	<h2 class="title">公告栏</h2>
 	<div class="content">
 		<p><span class="time" style="margin-right: 15px"></span><span class="name" style="margin-right: 15px"></span><span class="postName" style="margin-right: 15px"></span><span class="levelName" style="margin-right: 15px"></span></p>
 		<div class="table-cont">
@@ -17,11 +17,20 @@
 				<tr>
 					<th colspan="1" rowspan="2">序号</th>
 					<th colspan="1" rowspan="2">岗位（设备设施/作业活动）单元</th>
-					<th colspan="1" rowspan="1" >危险有害因素</th>
-					<th colspan="1" rowspan="1">安全风险等级</th>
-					<th colspan="1" rowspan="1">现有措施有效性</th>
-					<th colspan="1" rowspan="1">责任部门</th>
-					<th colspan="1" rowspan="1">责任人</th>
+					<th colspan="5" rowspan="1">安全风险辨识</th>
+					<th colspan="1" rowspan="2">安全风险等级</th>
+					<th colspan="1" rowspan="2">现有措施有效性</th>
+					<th colspan="1" rowspan="2">应急措施</th>
+					<th colspan="1" rowspan="2">责任人</th>
+					<th colspan="1" rowspan="2">有效期</th>
+					<th colspan="1" rowspan="2">报告电话</th>
+				</tr>
+				<tr>
+					<th colspan="1" rowspan="1" width="5%">危险有害因素</th>
+					<th colspan="1" rowspan="1">事故类型</th>
+					<th colspan="1" rowspan="1">原因</th>
+					<th colspan="1" rowspan="1">后果</th>
+					<th colspan="1" rowspan="1" width="6%">影响范围</th>
 				</tr>
 				</thead>
 				<tbody style="text-align: center">
@@ -55,7 +64,7 @@
 	console.log(curData);
 	$.ajax({
 		type:"GET",
-		url:"/safety/riskControl/riskControl",
+		url:"/safety/riskNotice/riskNotice",
 		data:{orgId:curData.orgId,year:curData.year},
 		dataType:"json",
 		async:false,
@@ -63,35 +72,47 @@
 			console.log(data);
 			$(".time").text(data.data.createTime[0]+"年");
 			var trHt = "";
-			data.data.riskControlList.forEach(function(item,index){
+			data.data.riskNoticeList.forEach(function(item,index){
 				if(item.index!=null){
 					trHt += "<tr>" +
 							"<td colspan='1' rowspan='"+item.union+"'>"+item.index+"</td>" +
-							"<td colspan='1' rowspan='"+item.union+"'>"+item.postName+"</td>" +
+							"<td colspan='1' rowspan='"+item.union+"'>"+item.locationName+"</td>" +
 							"<td colspan='1'>"+item.harmfulFactors+"</td>" +
+							"<td colspan='1'>"+item.troubleName+"</td>" +
+							"<td colspan='1'>"+item.cause+"</td>" +
+							"<td colspan='1'>"+item.consequence+"</td>" +
+							"<td colspan='1'>"+item.incidence+"</td>" +
 							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td>" +
 							"<td colspan='1'>"+item.measure+"</td>" +
-							"<td colspan='1'>"+item.departmentName+"</td>" +
+							"<td colspan='1'>"+item.emergencyMeasure+"</td>" +
 							"<td colspan='1'>"+item.personName+"</td>" +
+							"<td colspan='1'>"+item.expiryDate+"</td>" +
+							"<td colspan='1'>"+item.reportPhone+"</td>" +
 							"</tr>"
 				}
 				else{
 					trHt += "<tr>" +
 							"<td colspan='1'>"+item.harmfulFactors+"</td>" +
+							"<td colspan='1'>"+item.troubleName+"</td>" +
+							"<td colspan='1'>"+item.cause+"</td>" +
+							"<td colspan='1'>"+item.consequence+"</td>" +
+							"<td colspan='1'>"+item.incidence+"</td>" +
 							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td>" +
 							"<td colspan='1'>"+item.measure+"</td>" +
-							"<td colspan='1'>"+item.departmentName+"</td>" +
+							"<td colspan='1'>"+item.emergencyMeasure+"</td>" +
 							"<td colspan='1'>"+item.personName+"</td>" +
+							"<td colspan='1'>"+item.expiryDate+"</td>" +
+							"<td colspan='1'>"+item.reportPhone+"</td>" +
 							"</tr>"
 				}
 			});
 			$("tbody").html(trHt);
 		}
 	});
-    $(document).ready(function(){
-        $("#print").click(function(){
-            $("#printArea").printArea();
-        });
-    });
+	$(document).ready(function(){
+		$("#print").click(function(){
+			$("#printArea").printArea();
+		});
+	});
 </script>
 </html>

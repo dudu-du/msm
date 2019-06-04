@@ -32,7 +32,9 @@ new Vue({
 	        }).catch(err=>{
 	              this.$message.error('服务器异常，请稍后再试！');
 	        });
-        }
+        },print(){
+			window.open("/safety/checkDangerChecklist/checkDangerChecklistPrint?currentPage="+this.$data.curPage+"&pageSize="+this.$data.page.pageSize+"");
+		}
     },
     watch:{
 		curPage(val){

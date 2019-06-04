@@ -228,6 +228,11 @@ new Vue({
 			}).catch(err=>{
 				this.$message.error('服务器异常，请稍后再试！');
 			});
+		},print(){
+			console.log(this.$data.topselect.date,this.$data.topselect.orgs.value);
+			var url = "/safety/riskEvaluation/riskEvaluationPrint?year="+this.$data.topselect.date+"&orgId="+this.$data.topselect.orgs.value+"";
+			var encodeUrl = encodeURI(encodeURI(url));
+			window.open(encodeUrl);
 		},
 		dialogFormOpen(){
 			axios.get('/safety/riskDict/riskDictList',{params:{code:'postlist'}}).then(response=>{
