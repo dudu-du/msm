@@ -55,7 +55,7 @@
 							    </el-option>
 							  </el-select>
 							  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-	                        <input type="button" id="print" value="打印" class="el-button el-button--success"/>
+							  <el-button type="success" @click="print">打印</el-button>
 						</el-col>
 						<el-col :span="12" style="text-align:right;">
 							<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
@@ -124,10 +124,10 @@
     <script src="/node_modules/jquery/jquery-3.3.1.min.js"></script>
     <script src="/node_modules/jquery/jquery.PrintArea.js"></script>
     <script>
-        $(document).ready(function(){
-            $("#print").click(function(){
-                $("#divprint").printArea();
-            });
-        });
+        // $(document).ready(function(){
+        //     $("#print").click(function(){
+        //         $("#divprint").printArea();
+        //     });
+        // });
     </script>
 </html>
