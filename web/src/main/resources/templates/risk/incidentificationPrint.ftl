@@ -52,10 +52,24 @@
 	var b = "较大风险";
 	var c = "一般风险";
 	var d = "低风险";
+	function GetRequest() {
+		var url = decodeURI(decodeURI(location.search)); //获取url中"?"符后的字串
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for(var i = 0; i < strs.length; i ++) {
+				theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+	var curData = GetRequest();
+	console.log(curData);
 	$.ajax({
 		type:"GET",
 		url:"/safety/riskIdentification/riskIdentification",
-		data:{orgId:"0528160b1191413d81862615dbdd15c3",year:"2019",postName:"",levelName:""},
+		data:{orgId:curData.orgId,year:curData.year,postName:curData.postName,levelName:curData.levelName},
 		dataType:"json",
 		async:false,
 		success:function(data){
