@@ -6,6 +6,8 @@
 		<title></title>
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_y6fcnyw4tpf.css">
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="/Public/css/common.css">
+
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>

@@ -5,6 +5,8 @@
 		<meta charset="utf-8" />
 		<title></title>
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="/Public/css/common.css">
+
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -77,7 +79,8 @@
 						<el-col :span="2"><span style="background-color:#4169E1;padding:8px;border-radius:6%;font-family:cursive;">低风险：<em style="font-size:30px;">{{countMap.l}}</em></span></el-col>
 						<el-col :span="16" style="text-align:right;"><el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
 					</el-row>
-					<div id="divprint">
+					<div id="divprint" style="height: 650px;width: 1650px;">
+					<el-scrollbar style="height:100%;width: 100%;">
 					<el-table resizable	 highlight-current-row border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="60" ></el-table-column>
 						<el-table-column prop="postName" label="岗位（设备设施/作业活动）单元" width="150" >
@@ -128,6 +131,7 @@
 						     </template>
 						</el-table-column>
 					</el-table>
+					</el-scrollbar>
                     </div>
 				</el-main>
 				<el-footer>

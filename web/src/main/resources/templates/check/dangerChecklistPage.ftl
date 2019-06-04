@@ -6,6 +6,8 @@
 		<title></title>
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_y6fcnyw4tpf.css">
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="/Public/css/common.css">
+
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -27,6 +29,8 @@
 				</el-header>
 				<el-main>
 					<el-button type="success" @click="print" style="margin-bottom: 20px">打印</el-button>
+					<div style="height: 650px;width: 1650px;">
+						<el-scrollbar style="height:100%;width: 100%;">
 					<el-table border style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
 						<el-table-column prop="riskPosition" label="风险部位">
@@ -48,6 +52,8 @@
 						<el-table-column prop="remark" label="备注" align="center">
 						</el-table-column>
 					</el-table>
+						</el-scrollbar>
+					</div>
 				</el-main>
 				<el-footer style="text-align:center;">
 					<el-pagination

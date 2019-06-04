@@ -6,6 +6,8 @@
 		<title></title>
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_y6fcnyw4tpf.css">
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="/Public/css/common.css">
+
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -58,7 +60,8 @@
 							<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
 						</el-col>
 					</el-row>
-                    <div id="divprint">
+					<div id="divprint" style="height: 650px;width: 1650px;">
+						<el-scrollbar style="height:100%;width: 100%;">
 					<el-table border resizable highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column prop="index" label="序号" width="60"></el-table-column>
 						<el-table-column prop="locationName" label="岗位（设备设施/作业活动）单元" width="100">
@@ -88,6 +91,7 @@
 						     </template>
 						</el-table-column>
 					</el-table>
+						</el-scrollbar>
 					</div>
 				</el-main>
 			</el-container>

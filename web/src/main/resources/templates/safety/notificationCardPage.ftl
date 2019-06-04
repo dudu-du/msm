@@ -6,6 +6,7 @@
 		<title></title>
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_1205992_y6fcnyw4tpf.css">
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="/Public/css/common.css">
 		<script src="/Public/js/vue.min.js"></script>
 		<script src="/Public/js/axios.min.js"></script>
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -31,6 +32,8 @@
                             <el-button @click="add" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
                         </el-tooltip>
                     </el-button-group>
+					<div style="height: 650px;width: 1650px;">
+						<el-scrollbar style="height:100%;width: 100%;">
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
 						<el-table-column type="index" label="序号" align="center" width="50px"></el-table-column>
 						<el-table-column prop="jobName" label="工作内容" align="center">
@@ -51,6 +54,8 @@
 							</template>
 						</el-table-column>
 					</el-table>
+						</el-scrollbar>
+					</div>
 				</el-main>
 				<el-footer style="text-align:center;">
                     <el-pagination
