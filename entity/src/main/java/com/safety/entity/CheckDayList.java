@@ -117,6 +117,24 @@ public class CheckDayList extends Model<CheckDayList> {
     private String result;
 
     /**
+     * 风险清单
+     */
+    @TableField(exist = false)
+    private CheckDangerChecklist checkDangerChecklist;
+
+    /**
+     * 风险台账
+     */
+    @TableField(exist = false)
+    private CheckDangerLedger checkDangerLedger;
+
+    /**
+     * 回执单
+     */
+    @TableField(exist = false)
+    private CheckRectificationReceipt checkRectificationReceipt;
+
+    /**
      * 未合格项
      */
     @TableField(exist = false)
@@ -273,6 +291,30 @@ public class CheckDayList extends Model<CheckDayList> {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public CheckDangerChecklist getCheckDangerChecklist() {
+        return checkDangerChecklist;
+    }
+
+    public void setCheckDangerChecklist(CheckDangerChecklist checkDangerChecklist) {
+        this.checkDangerChecklist = checkDangerChecklist;
+    }
+
+    public CheckDangerLedger getCheckDangerLedger() {
+        return checkDangerLedger;
+    }
+
+    public void setCheckDangerLedger(CheckDangerLedger checkDangerLedger) {
+        this.checkDangerLedger = checkDangerLedger;
+    }
+
+    public CheckRectificationReceipt getCheckRectificationReceipt() {
+        return checkRectificationReceipt;
+    }
+
+    public void setCheckRectificationReceipt(CheckRectificationReceipt checkRectificationReceipt) {
+        this.checkRectificationReceipt = checkRectificationReceipt;
     }
 
     @Override

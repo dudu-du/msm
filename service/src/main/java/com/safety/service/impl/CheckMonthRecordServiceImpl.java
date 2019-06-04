@@ -151,16 +151,22 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     CheckDangerChecklist checkDangerChecklist = checkMonthList.getCheckDangerChecklist();
                     if (checkDangerChecklist!=null){
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
+                        checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
+                        checkDangerChecklist.setCheckType(CHECK_TYPE);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkMonthList.getCheckDangerLedger();
                     if (checkDangerLedger!=null){
                         checkDangerLedger.setId(UUIDUtil.getUUID());
+                        checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
+                        checkDangerLedger.setCheckType(CHECK_TYPE);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkMonthList.getCheckRectificationReceipt();
                     if (checkRectificationReceipt!=null){
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
+                        checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
+                        checkRectificationReceipt.setCheckType(CHECK_TYPE);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){
@@ -169,7 +175,6 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                 }
             }
         }
-        checkMonthRecord.setCheckMonthList(checkMonthLists);
         return true;
     }
 

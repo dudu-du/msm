@@ -39,7 +39,7 @@ public class CheckWeekRecordController extends BaseController {
     public JsonResult addCheckWeekRecord(@RequestBody CheckWeekRecord checkWeekRecord){
         boolean result = iCheckWeekRecordService.addCheckWeekRecord(checkWeekRecord);
         if (result){
-            return renderSuccess("添加成功",checkWeekRecord);
+            return renderSuccess("添加成功",result);
         }else {
             return renderError("添加失败");
         }

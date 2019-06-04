@@ -36,6 +36,12 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
     private CheckSpecialMapper checkSpecialMapper;
     @Autowired
     private CheckOffgradeListMapper checkOffgradeListMapper;
+    @Autowired
+    private CheckDangerChecklistMapper checkDangerChecklistMapper;
+    @Autowired
+    private CheckDangerLedgerMapper checkDangerLedgerMapper;
+    @Autowired
+    private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -129,7 +135,8 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                 //之前没有值 且保存为否时 新增新值
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
-                    checkOffgradeList.setId(UUIDUtil.getUUID());
+                    String checkOffgradeListId = UUIDUtil.getUUID();
+                    checkOffgradeList.setId(checkOffgradeListId);
                     checkOffgradeList.setContent(checkSpecialList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkSpecialRecordId);
                     checkOffgradeList.setCheckListFk(checkSpecialList.getId());
@@ -141,14 +148,34 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                     checkOffgradeList.setLevelName(checkSpecialList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
-                    checkSpecialList.setCheckOffgradeList(checkOffgradeList);
+                    //获取填写的清单 台账 回执单 并保存
+                    CheckDangerChecklist checkDangerChecklist = checkSpecialList.getCheckDangerChecklist();
+                    if (checkDangerChecklist!=null){
+                        checkDangerChecklist.setId(UUIDUtil.getUUID());
+                        checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
+                        checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklistMapper.insert(checkDangerChecklist);
+                    }
+                    CheckDangerLedger checkDangerLedger = checkSpecialList.getCheckDangerLedger();
+                    if (checkDangerLedger!=null){
+                        checkDangerLedger.setId(UUIDUtil.getUUID());
+                        checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
+                        checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedgerMapper.insert(checkDangerLedger);
+                    }
+                    CheckRectificationReceipt checkRectificationReceipt = checkSpecialList.getCheckRectificationReceipt();
+                    if (checkRectificationReceipt!=null){
+                        checkRectificationReceipt.setId(UUIDUtil.getUUID());
+                        checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
+                        checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceiptMapper.insert(checkRectificationReceipt);
+                    }
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
-        checkSpecialRecord.setCheckSpecialList(checkSpecialLists);
         return true;
     }
 

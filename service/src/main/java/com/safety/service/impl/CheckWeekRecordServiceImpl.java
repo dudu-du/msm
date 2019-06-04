@@ -36,6 +36,12 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
     private CheckWeekMapper checkWeekMapper;
     @Autowired
     private CheckOffgradeListMapper checkOffgradeListMapper;
+    @Autowired
+    private CheckDangerChecklistMapper checkDangerChecklistMapper;
+    @Autowired
+    private CheckDangerLedgerMapper checkDangerLedgerMapper;
+    @Autowired
+    private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -85,7 +91,8 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                 //之前没有值 且保存为否时 新增新值
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
-                    checkOffgradeList.setId(UUIDUtil.getUUID());
+                    String checkOffgradeListId = UUIDUtil.getUUID();
+                    checkOffgradeList.setId(checkOffgradeListId);
                     checkOffgradeList.setContent(checkWeekList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkWeekRecordId);
                     checkOffgradeList.setCheckListFk(checkWeekList.getId());
@@ -97,14 +104,34 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                     checkOffgradeList.setLevelName(checkWeekList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
-                    checkWeekList.setCheckOffgradeList(checkOffgradeList);
+                    //获取填写的清单 台账 回执单 并保存
+                    CheckDangerChecklist checkDangerChecklist = checkWeekList.getCheckDangerChecklist();
+                    if (checkDangerChecklist!=null){
+                        checkDangerChecklist.setId(UUIDUtil.getUUID());
+                        checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
+                        checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklistMapper.insert(checkDangerChecklist);
+                    }
+                    CheckDangerLedger checkDangerLedger = checkWeekList.getCheckDangerLedger();
+                    if (checkDangerLedger!=null){
+                        checkDangerLedger.setId(UUIDUtil.getUUID());
+                        checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
+                        checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedgerMapper.insert(checkDangerLedger);
+                    }
+                    CheckRectificationReceipt checkRectificationReceipt = checkWeekList.getCheckRectificationReceipt();
+                    if (checkRectificationReceipt!=null){
+                        checkRectificationReceipt.setId(UUIDUtil.getUUID());
+                        checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
+                        checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceiptMapper.insert(checkRectificationReceipt);
+                    }
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
                 }
             }
         }
-        checkWeekRecord.setCheckWeekList(checkWeekLists);
         return true;
     }
 

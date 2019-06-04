@@ -38,7 +38,7 @@ public class CheckDayRecordController extends BaseController {
     public JsonResult addCheckDayRecord(@RequestBody CheckDayRecord checkDayRecord){
         boolean result = iCheckDayRecordService.addCheckDayRecord(checkDayRecord);
         if (result){
-            return renderSuccess("添加成功",checkDayRecord);
+            return renderSuccess("添加成功",result);
         }else {
             return renderError("添加失败");
         }

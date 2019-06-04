@@ -102,6 +102,24 @@ public class CheckSpecialList extends Model<CheckSpecialList> {
     @TableField(exist = false)
     private CheckOffgradeList checkOffgradeList;
 
+    /**
+     * 风险清单
+     */
+    @TableField(exist = false)
+    private CheckDangerChecklist checkDangerChecklist;
+
+    /**
+     * 风险台账
+     */
+    @TableField(exist = false)
+    private CheckDangerLedger checkDangerLedger;
+
+    /**
+     * 回执单
+     */
+    @TableField(exist = false)
+    private CheckRectificationReceipt checkRectificationReceipt;
+
     public String getId() {
         return id;
     }
@@ -222,6 +240,30 @@ public class CheckSpecialList extends Model<CheckSpecialList> {
 
     public void setCheckOffgradeList(CheckOffgradeList checkOffgradeList) {
         this.checkOffgradeList = checkOffgradeList;
+    }
+
+    public CheckDangerChecklist getCheckDangerChecklist() {
+        return checkDangerChecklist;
+    }
+
+    public void setCheckDangerChecklist(CheckDangerChecklist checkDangerChecklist) {
+        this.checkDangerChecklist = checkDangerChecklist;
+    }
+
+    public CheckDangerLedger getCheckDangerLedger() {
+        return checkDangerLedger;
+    }
+
+    public void setCheckDangerLedger(CheckDangerLedger checkDangerLedger) {
+        this.checkDangerLedger = checkDangerLedger;
+    }
+
+    public CheckRectificationReceipt getCheckRectificationReceipt() {
+        return checkRectificationReceipt;
+    }
+
+    public void setCheckRectificationReceipt(CheckRectificationReceipt checkRectificationReceipt) {
+        this.checkRectificationReceipt = checkRectificationReceipt;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.safety.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -38,6 +39,7 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
      * 填写时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date fillTime;
 
     /**
@@ -54,6 +56,7 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
      * 检查日期
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date checkTime;
 
     /**
@@ -90,6 +93,7 @@ public class CheckRectificationReceipt extends Model<CheckRectificationReceipt> 
      * 整改期限
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date rectificationTime;
 
     /**

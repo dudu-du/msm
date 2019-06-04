@@ -110,16 +110,19 @@ public class CheckMonthList extends Model<CheckMonthList> {
     /**
      * 风险清单
      */
+    @TableField(exist = false)
     private CheckDangerChecklist checkDangerChecklist;
 
     /**
      * 风险台账
      */
+    @TableField(exist = false)
     private CheckDangerLedger checkDangerLedger;
 
     /**
      * 回执单
      */
+    @TableField(exist = false)
     private CheckRectificationReceipt checkRectificationReceipt;
 
 
