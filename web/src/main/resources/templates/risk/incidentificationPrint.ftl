@@ -21,6 +21,7 @@
 					<th colspan="3" rowspan="1">安全风险分析</th>
 					<th colspan="4" rowspan="1">LEC风险分析法</th>
 					<th colspan="1" rowspan="2" width="5%">安全风险评价</th>
+					<th colspan="1" rowspan="2">负责人</th>
 				</tr>
 				<tr>
 					<th colspan="1" rowspan="1" width="5%">危险有害因素</th>
@@ -94,6 +95,7 @@
 							"<td colspan='1'>"+item.numC+"</td>" +
 							"<td colspan='1'>"+item.numD+"</td>" +
 							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td>" +
+							"<td colspan='1'>"+item.personName+"</td>" +
 							"</tr>"
 				}
 				else{
@@ -110,7 +112,9 @@
 							"<td colspan='1'>"+item.numE+"</td>" +
 							"<td colspan='1'>"+item.numC+"</td>" +
 							"<td colspan='1'>"+item.numD+"</td>" +
-							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td></tr>"
+							"<td colspan='1' style='background:"+((item.levelName)==a?'#FF0000':(item.levelName)==b?'#DAA520':(item.levelName)==c?'#FFFF00':'#4169E1')+"'>"+item.levelName+"</td>" +
+							"<td colspan='1'>"+item.personName+"</td>" +
+							"</tr>"
 				}
 			});
 			$("tbody").html(trHt);

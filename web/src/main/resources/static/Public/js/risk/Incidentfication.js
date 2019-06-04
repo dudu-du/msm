@@ -15,6 +15,7 @@ var Incidentfication = function(obj) {
 		this.numC = '';
 		this.numD = '';
 		this.levelName = '';
+		this.personName = '';
 	}else{
 		if(obj.index){
 			this.index = obj.index;
@@ -36,6 +37,7 @@ var Incidentfication = function(obj) {
 		this.numC = obj.numC;
 		this.numD = obj.numD;
 		this.levelName = obj.levelName;
+		this.personName = obj.personName;
 		this.riskIdentificationFk = obj.riskIdentificationFk;
 		this.orgFk = obj.orgFk;
 		this.troubleNameList = obj.troubleNameList;

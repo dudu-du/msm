@@ -111,6 +111,9 @@
 						<el-table-column prop="levelName" label="安全风险评价">
 							
 						</el-table-column>
+						<el-table-column prop="personName" label="负责人">
+
+						</el-table-column>
 						<el-table-column label="操作" width="140px" v-if="curData.state==1">
 							<template slot-scope="scope">
 								<el-popover
