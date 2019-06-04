@@ -17,7 +17,7 @@
 		<div id="app">
 			<el-container>
 				<el-header>
-				<el-select placeholder="请选择" v-model="topselect.orgs.value">
+				<el-select placeholder="请选择" v-model="topselect.orgs.value" v-if="role=='ROLE_SUPERADMIN'">
 								    <el-option
 								      v-for="item in topselect.orgs.data"
 								      :key="item.id"
@@ -46,6 +46,7 @@
 						      :data="tableData"
 						      style="width: 100%"
 						      center
+						      max-height="250"
 						      >
 						      <el-table-column
 						        type="index"
@@ -124,20 +125,20 @@
 		created:function(){
 			var that = this;
 			this.value = this.defaultDate();
-			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
-				if(response.data.success === true){
-					if(response.data.data.length>0){
-						that.$data.topselect.orgs.value = response.data.data[0].id;
+			if(this.$data.role == 'ROLE_SUPERADMIN'){
+				axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+					if(response.data.success === true){
+						response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
+						that.search();
+					}else{
+						that.$message.warning(response.data.msg);
 					}
-					response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
-					that.search();
-
-				}else{
-					that.$message.warning(response.data.msg);
-				}
-			}).catch(err=>{
-				this.$message.error('服务器异常，请稍后再试！');
-			});
+				}).catch(err=>{
+					this.$message.error('服务器异常，请稍后再试！');
+				});
+			}else{
+				this.search();
+			}
 			
 		},
 		data:function(){
@@ -172,9 +173,10 @@
 		          }]
 		        },
 		        value: [],
+		        role:'${MEMBER_ROLE}',
 		        topselect:{
 		        	orgs:{
-		        		value:'',
+		        		value:'${MEMBER_ORGID}',
 		        		data:[]
 		        	}
 		        },

@@ -66,6 +66,7 @@ new Vue({
 	data: function() {
 		return {
 			dialogFormVisible: false,
+			role:'${MEMBER_ROLE}',
 			curData:{},
 			activeNames:['1'],
 			form: new Control(),

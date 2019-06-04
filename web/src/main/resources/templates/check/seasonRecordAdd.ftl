@@ -22,7 +22,7 @@
 				<el-main>
 					<el-row style="margin-bottom:10px">
 					<el-col :span="20">
-						<el-select placeholder="请选择" v-model="topselect.orgs.value">
+						<el-select placeholder="请选择" v-model="topselect.orgs.value" v-if="role=='ROLE_SUPERADMIN'">
 						    <el-option
 						      v-for="item in topselect.orgs.data"
 						      :key="item.id"
@@ -30,7 +30,7 @@
 						      :value="item.id">
 						    </el-option>
 						  </el-select>
-						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+						  <el-button type="primary" icon="el-icon-search" @click="search" v-if="role=='ROLE_SUPERADMIN'">搜索</el-button>&nbsp;
 					</el-col>
 					<el-col :span="4" style="text-align:right;">
 					   <el-button type="success" @click="submitForm">保存</el-button>
@@ -77,7 +77,7 @@
 	  							</span>
 						     </template>
 						</el-table-column>
-						<el-table-column label="操作" width="100px">
+						<el-table-column label="操作" width="100px" v-if="role=='ROLE_SUPERADMIN'">
 							<template slot-scope="scope">
 						         <el-button type="danger" @click="del(scope.row)" icon="el-icon-delete" circle></el-button>
 						     </template>
@@ -288,10 +288,11 @@
 		el:"#app",
 		data:function(){
 			return {
+				role:'${MEMBER_ROLE}',
 				curData:{state:1},
 				topselect:{
 					orgs:{
-						value:'',
+						value:'${MEMBER_ORGID}',
 						data:[]
 					}
 				},
@@ -359,19 +360,20 @@
 			
 			this.$data.dateValue = this.getDate(new Date());
 			var that = this;
-			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
-				if(response.data.success === true){
-					if(response.data.data.length>0){
-						that.$data.topselect.orgs.value = response.data.data[0].id;
+			if(this.$data.role == 'ROLE_SUPERADMIN'){
+				axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+					if(response.data.success === true){
+						response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
+						that.search();
+					}else{
+						that.$message.warning(response.data.msg);
 					}
-					response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
-					that.search();
-				}else{
-					that.$message.warning(response.data.msg);
-				}
-			}).catch(err=>{
-				this.$message.error('服务器异常，请稍后再试！');
-			});
+				}).catch(err=>{
+					this.$message.error('服务器异常，请稍后再试！');
+				});
+			}else{
+				this.search();
+			}
 		},
 		methods:{
 			search(){
