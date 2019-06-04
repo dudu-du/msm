@@ -37,7 +37,7 @@ public class CheckMonthRecordController extends BaseController {
     public JsonResult addCheckMonthRecord(@RequestBody CheckMonthRecord checkMonthRecord){
         boolean result = iCheckMonthRecordService.addCheckMonthRecord(checkMonthRecord);
         if (result){
-            return renderSuccess("添加成功",checkMonthRecord);
+            return renderSuccess("添加成功",result);
         }else {
             return renderError("添加失败");
         }

@@ -36,6 +36,12 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     private CheckMonthMapper checkMonthMapper;
     @Autowired
     private CheckOffgradeListMapper checkOffgradeListMapper;
+    @Autowired
+    private CheckDangerChecklistMapper checkDangerChecklistMapper;
+    @Autowired
+    private CheckDangerLedgerMapper checkDangerLedgerMapper;
+    @Autowired
+    private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -88,8 +94,6 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     @Override
     public boolean addCheckMonthRecord(CheckMonthRecord checkMonthRecord) {
         List<CheckMonthList> checkMonthLists = checkMonthRecord.getCheckMonthList();
-        //先将list置位null 方便保存
-        checkMonthRecord.setCheckMonthList(null);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         String date = df.format(new Date());
         checkMonthRecord.setCheckContent(checkMonthRecord.getCheckPersonName()+" 于 "+date+" 填写");
@@ -130,7 +134,8 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                 //之前没有值 且保存为否时 新增新值
                 if (NO.equals(result)&&list1.size()<1){
                     CheckOffgradeList checkOffgradeList = new CheckOffgradeList();
-                    checkOffgradeList.setId(UUIDUtil.getUUID());
+                    String checkOffgradeListId = UUIDUtil.getUUID();
+                    checkOffgradeList.setId(checkOffgradeListId);
                     checkOffgradeList.setContent(checkMonthList.getCheckContent());
                     checkOffgradeList.setCheckFk(checkMonthRecordId);
                     checkOffgradeList.setCheckListFk(checkMonthList.getId());
@@ -142,8 +147,22 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
-                    //保存未合格项信息
-                    checkMonthList.setCheckOffgradeList(checkOffgradeList);
+                    //获取填写的清单 台账 回执单 并保存
+                    CheckDangerChecklist checkDangerChecklist = checkMonthList.getCheckDangerChecklist();
+                    if (checkDangerChecklist!=null){
+                        checkDangerChecklist.setId(UUIDUtil.getUUID());
+                        checkDangerChecklistMapper.insert(checkDangerChecklist);
+                    }
+                    CheckDangerLedger checkDangerLedger = checkMonthList.getCheckDangerLedger();
+                    if (checkDangerLedger!=null){
+                        checkDangerLedger.setId(UUIDUtil.getUUID());
+                        checkDangerLedgerMapper.insert(checkDangerLedger);
+                    }
+                    CheckRectificationReceipt checkRectificationReceipt = checkMonthList.getCheckRectificationReceipt();
+                    if (checkRectificationReceipt!=null){
+                        checkRectificationReceipt.setId(UUIDUtil.getUUID());
+                        checkRectificationReceiptMapper.insert(checkRectificationReceipt);
+                    }
                 }else if (YES.equals(result)&&list1.size()>0){
                     //之前有值 且保存为是时 删掉旧的值
                     checkOffgradeListMapper.deleteById(list1.get(0).getId());
