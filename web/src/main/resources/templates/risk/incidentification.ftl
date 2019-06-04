@@ -112,7 +112,7 @@
 						<el-table-column prop="personName" label="负责人">
 
 						</el-table-column>
-						<el-table-column label="操作" width="140px" v-if="curData.state==1">
+						<el-table-column label="操作" width="140px" v-if="curData.state==1 && role=='ROLE_SUPERADMIN'">
 							<template slot-scope="scope">
 								<el-popover
 								  placement="top"
