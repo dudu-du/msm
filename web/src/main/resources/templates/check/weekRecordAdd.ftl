@@ -82,6 +82,11 @@
 	  							</span>
 						     </template>
 						</el-table-column>
+						<el-table-column label="操作" width="100px">
+							<template slot-scope="scope">
+						         <el-button type="danger" @click="del(scope.row)" icon="el-icon-delete" circle></el-button>
+						     </template>
+						</el-table-column>
 					</el-table>
 				</el-main>
 				<el-footer>
