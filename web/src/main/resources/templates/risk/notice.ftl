@@ -82,7 +82,7 @@
 						<el-table-column prop="personName" label="责任人"></el-table-column>
 						<el-table-column prop="expiryDate" label="有效期"></el-table-column>
 						<el-table-column prop="reportPhone" label="报告电话"></el-table-column>
-						<el-table-column label="操作" width="140px" v-if="curData.state==1 && role=='ROLE_SUPERADMIN'">
+						<el-table-column label="操作" width="140px" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'">
 							<template slot-scope="scope">
 						        <el-button @click="edit(scope.row,'validateForm')" type="primary" size="mini" icon="el-icon-edit" circle></el-button>
 						        <el-button style="margin-left:0" @click="del(scope.row)" type="danger" size="mini" icon="el-icon-delete" circle></el-button>

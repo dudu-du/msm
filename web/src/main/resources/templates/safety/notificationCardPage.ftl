@@ -27,7 +27,7 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">安全风险告知卡</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
-                    <el-button-group style="float: right;margin-bottom: 10px;" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'">
+                    <el-button-group style="float: right;margin-bottom: 10px;" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'|| '${MEMBER_ROLE}'=='ROLE_ORGADMIN'">
                         <el-tooltip class="item" effect="dark" content="新增" placement="top-start">
                             <el-button @click="add" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
                         </el-tooltip>
@@ -44,10 +44,10 @@
 						</el-table-column>
 						<el-table-column label="操作" width="200px">
 							<template slot-scope="scope">
-                                <el-tooltip class="item" effect="dark" content="修改" placement="top-start" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'">
+                                <el-tooltip class="item" effect="dark" content="修改" placement="top-start" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'|| '${MEMBER_ROLE}'=='ROLE_ORGADMIN'">
                                     <el-button @click="edit(scope.row)" type="primary" size="mini" icon="el-icon-edit" circle></el-button>
                                 </el-tooltip>
-                                <el-tooltip class="item" effect="dark" content="删除" placement="top-start" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'">
+                                <el-tooltip class="item" effect="dark" content="删除" placement="top-start" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'|| '${MEMBER_ROLE}'=='ROLE_ORGADMIN'">
                                     <el-button style="margin-left:0" @click="del(scope.row)" type="danger" size="mini" icon="el-icon-delete" circle></el-button>
                                 </el-tooltip>
                                 <el-button type="primary" size="mini" @click="openPrint(scope.row)">打印</el-button>

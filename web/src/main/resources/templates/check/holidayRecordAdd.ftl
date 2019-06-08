@@ -76,7 +76,7 @@
 	  							</span>
 						     </template>
 						</el-table-column>
-						<el-table-column label="操作" width="100px" v-if="role=='ROLE_SUPERADMIN'">
+						<el-table-column label="操作" width="100px" v-if="role=='ROLE_SUPERADMIN'  || role=='ROLE_ORGADMIN'">
 							<template slot-scope="scope">
 						         <el-button type="danger" @click="del(scope.row)" icon="el-icon-delete" circle></el-button>
 						     </template>

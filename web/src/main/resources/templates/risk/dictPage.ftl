@@ -78,6 +78,7 @@ new Vue({
 	data:function(){
 		return {
 			dialogFormVisible:false,
+			role:'${MEMBER_ROLE}',
 			form:{
 				name:'',
 				code:'',
