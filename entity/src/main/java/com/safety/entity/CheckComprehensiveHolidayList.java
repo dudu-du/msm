@@ -109,12 +109,26 @@ public class CheckComprehensiveHolidayList extends Model<CheckComprehensiveHolid
     @TableField(exist = false)
     private CheckRectificationReceipt checkRectificationReceipt;
 
+    /**
+     * 风险辨识
+     */
+    @TableField(exist = false)
+    private RiskIdentificationList riskIdentificationList;
+
     public CheckOffgradeList getCheckOffgradeList() {
         return checkOffgradeList;
     }
 
     public void setCheckOffgradeList(CheckOffgradeList checkOffgradeList) {
         this.checkOffgradeList = checkOffgradeList;
+    }
+
+    public RiskIdentificationList getRiskIdentificationList() {
+        return riskIdentificationList;
+    }
+
+    public void setRiskIdentificationList(RiskIdentificationList riskIdentificationList) {
+        this.riskIdentificationList = riskIdentificationList;
     }
 
     public String getId() {

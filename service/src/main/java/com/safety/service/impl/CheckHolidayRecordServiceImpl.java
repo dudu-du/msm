@@ -42,6 +42,8 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Autowired
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
+    @Autowired
+    private RiskIdentificationListMapper riskIdentificationListMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -168,6 +170,11 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
             map.put("checkComprehensiveHolidayFk",checkHolidayId);
             map.put("checkHolidayRecordId",checkHolidayRecord.getId());
             List<CheckComprehensiveHolidayList> list = checkComprehensiveHolidayListMapper.selectByParam(map);
+            for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:list){
+                String riskIdentificationListId = checkComprehensiveHolidayList.getRiskIdentificationListId();
+                RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+                checkComprehensiveHolidayList.setRiskIdentificationList(riskIdentificationList);
+            }
             //默认未每条数据增加result为1
             for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:list){
                 if (checkComprehensiveHolidayList.getResult()==null || checkComprehensiveHolidayList.getResult().isEmpty()){

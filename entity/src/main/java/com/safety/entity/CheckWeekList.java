@@ -125,6 +125,21 @@ public class CheckWeekList extends Model<CheckWeekList> {
     @TableField(exist = false)
     private CheckRectificationReceipt checkRectificationReceipt;
 
+
+    /**
+     * 风险辨识
+     */
+    @TableField(exist = false)
+    private RiskIdentificationList riskIdentificationList;
+
+    public RiskIdentificationList getRiskIdentificationList() {
+        return riskIdentificationList;
+    }
+
+    public void setRiskIdentificationList(RiskIdentificationList riskIdentificationList) {
+        this.riskIdentificationList = riskIdentificationList;
+    }
+
     public CheckOffgradeList getCheckOffgradeList() {
         return checkOffgradeList;
     }

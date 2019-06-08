@@ -42,6 +42,8 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Autowired
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
+    @Autowired
+    private RiskIdentificationListMapper riskIdentificationListMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -211,6 +213,9 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckMonthList checkMonthList = list.get(i);
+            String riskIdentificationListId = checkMonthList.getRiskIdentificationListId();
+            RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+            checkMonthList.setRiskIdentificationList(riskIdentificationList);
             if (checkMonthList.getResult()==null || checkMonthList.getResult().isEmpty()){
                 list.get(i).setResult(YES);
             }

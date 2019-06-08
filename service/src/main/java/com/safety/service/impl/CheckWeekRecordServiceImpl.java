@@ -42,7 +42,8 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Autowired
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
-
+    @Autowired
+    private RiskIdentificationListMapper riskIdentificationListMapper;
     private final String YES = "1";
     private final String NO = "0";
     private final String CHECK_TYPE = "周排查记录";
@@ -212,6 +213,9 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckWeekList checkWeekList = list.get(i);
+            String riskIdentificationListId = checkWeekList.getRiskIdentificationListId();
+            RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+            checkWeekList.setRiskIdentificationList(riskIdentificationList);
             if (checkWeekList.getResult()==null || checkWeekList.getResult().isEmpty()){
                 list.get(i).setResult(YES);
             }

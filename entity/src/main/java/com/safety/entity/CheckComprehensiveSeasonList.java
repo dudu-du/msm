@@ -110,6 +110,21 @@ public class CheckComprehensiveSeasonList extends Model<CheckComprehensiveSeason
     @TableField(exist = false)
     private CheckRectificationReceipt checkRectificationReceipt;
 
+
+    /**
+     * 风险辨识
+     */
+    @TableField(exist = false)
+    private RiskIdentificationList riskIdentificationList;
+
+    public RiskIdentificationList getRiskIdentificationList() {
+        return riskIdentificationList;
+    }
+
+    public void setRiskIdentificationList(RiskIdentificationList riskIdentificationList) {
+        this.riskIdentificationList = riskIdentificationList;
+    }
+
     public String getId() {
         return id;
     }

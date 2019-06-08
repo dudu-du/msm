@@ -42,6 +42,8 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Autowired
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
+    @Autowired
+    private RiskIdentificationListMapper riskIdentificationListMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -168,6 +170,11 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
             map.put("checkComprehensiveSeasonFk",checkSeasonId);
             map.put("checkSeasonRecordId",checkSeasonRecord.getId());
             List<CheckComprehensiveSeasonList> list = checkComprehensiveSeasonListMapper.selectByParam(map);
+            for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:list){
+                String riskIdentificationListId = checkComprehensiveSeasonList.getRiskIdentificationListId();
+                RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+                checkComprehensiveSeasonList.setRiskIdentificationList(riskIdentificationList);
+            }
         //默认未每条数据增加result为1
             for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:list){
             if (checkComprehensiveSeasonList.getResult()==null || checkComprehensiveSeasonList.getResult().isEmpty()){

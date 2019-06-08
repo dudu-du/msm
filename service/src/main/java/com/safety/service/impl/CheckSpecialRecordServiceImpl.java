@@ -42,6 +42,8 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Autowired
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
+    @Autowired
+    private RiskIdentificationListMapper riskIdentificationListMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -212,6 +214,9 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckSpecialList checkSpecialList = list.get(i);
+            String riskIdentificationListId = checkSpecialList.getRiskIdentificationListId();
+            RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+            checkSpecialList.setRiskIdentificationList(riskIdentificationList);
             if (checkSpecialList.getResult()==null || checkSpecialList.getResult().isEmpty()){
                 list.get(i).setResult(YES);
             }
