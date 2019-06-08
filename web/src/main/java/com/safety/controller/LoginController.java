@@ -130,13 +130,17 @@ public class LoginController extends BaseController {
             String role = ((ExtPerson) person).getRoleList().size()>0?((ExtPerson) person).getRoleList().get(0):"";
             session.setAttribute("MEMBER_ROLE", role);
             String orgId = person.getOrgId();
+            Org org = orgService.getOrgById(orgId);
+            String orgName = org.getName();
             if (role.equals("ROLE_SUPERADMIN")){
                 List<Org> orgList = orgService.getAllOrgList("0");
                 if (orgList.size()>0){
                     orgId = orgList.get(0).getId();
+                    orgName = orgList.get(0).getName();
                 }
             }
             session.setAttribute("MEMBER_ORGID", orgId);
+            session.setAttribute("MEMBER_ORGNAME", orgName);
             session.setAttribute("MEMBER_USER_PERSON", person);
             session.setAttribute("MEMBER_USER_LOGIN", login);
             return true;
