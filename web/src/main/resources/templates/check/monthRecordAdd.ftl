@@ -462,7 +462,6 @@
 					          type: 'warning'
 					        });
 						}
-						this.$message.success(response.data.msg);
 						this.search();
 					}else{
 						this.$message.warning(response.data.msg);

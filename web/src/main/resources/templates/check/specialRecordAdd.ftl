@@ -471,6 +471,7 @@
 					          type: 'warning'
 					        });
 						}
+						this.search();
 					}else{
 						this.$message.warning(response.data.msg);
 					}

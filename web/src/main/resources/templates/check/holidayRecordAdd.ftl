@@ -467,10 +467,7 @@
 					          type: 'warning'
 					        });
 						}
-						this.$data.tableData = [];
-						response.data.data.checkComprehensiveHolidayList.forEach(e=>{
-							this.$data.tableData.push(e);
-						});
+						this.search();
 					}else{
 						this.$message.warning(response.data.msg);
 					}

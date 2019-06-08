@@ -206,6 +206,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             });
         }
     });
+    
 	var addOfficeHtml = '<div class="lay-mask-box">' +
             '<input type="hidden" name="id">'+
             '<input type="hidden" name="loginId">'+
@@ -222,18 +223,63 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	        '</div>'+
 	        '</div>'+
 	        '</div>';
+	var sele = [];
+    
+    
+    $.ajax({
+        url: "/View/allOrgList?parentId=0",
+        type: "GET",
+        success: function (data) {
+            if(data.success){
+            	sele.push('<div class="layui-form-item">');
+                sele.push('<label class="layui-form-label">机构</label>');
+                sele.push('<div class="layui-input-block">');
+                sele.push('<select name="orgId" lay-verify="required">');
+            	data.data.forEach(e=>{
+            		sele.push('<option value="'+e.id+'">'+e.name+'</option>');
+            	});
+                    
+              sele.push('</select>');
+              sele.push('</div>');
+              sele.push('</div>');
+              
+            }else{
+                
+            }
+        }
+    });
 	    function addMaskOffice(tag,data){
 	        var title;
+	        var html = '';
 	        if(tag == 'add'){
-	            title = '添加管理员'
+	            title = '添加管理员';
+	            html = '<div class="lay-mask-box">' +
+	              '<input type="hidden" name="id">'+
+	              '<input type="hidden" name="loginId">'+
+	  	        '<div class="layui-form-item">'+
+	  	        '<label class="layui-form-label">用户名</label>'+
+	  	        '<div class="layui-input-block">'+
+	  	        '<input type="text" name="loginName" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input"><span class="must">*</span>'+
+	  	        '</div>'+
+	  	        '</div>'+
+	  	        '<div class="layui-form-item">'+
+	  	        '<label class="layui-form-label">姓名</label>'+
+	  	        '<div class="layui-input-block">'+
+	  	        '<input type="text" name="realname" lay-verify="name" autocomplete="off" placeholder="请输入姓名" class="layui-input"><span class="must">*</span>'+
+	  	        '</div>'+
+	  	        '</div>'+
+	  	        sele.join('')+
+	  	        '</div>';
 	        }else{
-	            title = '编辑管理员'
+	            title = '编辑管理员';
+	            html = addOfficeHtml;
 	        }
+	 
 	        layer.open({
 	            type:1,
 	            area:'484px',
 	            title:title,
-	            content:addOfficeHtml,
+	            content:html,
 	            btn:['确定','取消'],
 	            success:function(layero, index){
 	                $('.lay-mask-box .layui-form-hide').show();
@@ -268,6 +314,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	            yes:function(){
 	                form.on('submit(fromContent)', function (data) {
                         var objData = data.field;
+                        
                         if(tag == 'edit'){
                             $.ajax({
                                 url: origin + '/View/officeAdmin',
@@ -289,6 +336,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                                 }
                             })
                         }else{
+
                             $.post(origin + '/View/officeAdmin',
                                 {
                                     loginName: objData.loginName,
