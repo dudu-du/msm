@@ -312,34 +312,35 @@
 	            	harmfulFactors:'',
 	            	measure:'',
 	            	runawayPerformance:'',
-	            	controlOrgName:'',
+	            	controlOrgName:'${MEMBER_ORGNAME}',
 	            	controlOrgPersonName:'',
-	            	investigationOrgName:'',
-	            	investigationOrgPersonName:'',
+	            	investigationOrgName:'${MEMBER_ORGNAME}',
+	            	investigationOrgPersonName:'${Session.MEMBER_USER_PERSON.realname}',
 	            	investigationCount:'',
 	            	remark:''
 	            },
 	            dangerForm:{
 	            	investigationTime:'',
-	            	investigationOrgPersonName:'',
+	            	investigationOrgPersonName:'${Session.MEMBER_USER_PERSON.realname}',
 	            	rectificationPosition:'',
 	            	rectificationName:'',
 	            	rectificationLevel:'',
 	            	governmentMeasure:'',
 	            	rectificationPositionUrl:'',
 	            	complateTime:'',
-	            	controlOrgName:'',
+	            	controlOrgName:'${MEMBER_ORGNAME}',
 	            	controlOrgPersonName:'',
 	            	reviewTime:'',
 	            	reviewResultUrl:'',
-	            	reviewPersonName:'',
+	            	reviewPersonName:'${Session.MEMBER_USER_PERSON.realname}',
 	            	offgradeListFk:'',
-	            	checkType:''
+	            	checkType:'',
+	            	reviewResult:''
 	            },
 	            receiptForm:{
-	            	checkOrgName:'',
+	            	checkOrgName:'${MEMBER_ORGNAME}',
 	            	fillTime:'',
-	            	checkPersonName:'',
+	            	checkPersonName:'${Session.MEMBER_USER_PERSON.realname}',
 	            	checkTime:'',
 	            	checkCode:'',
 	            	rectificationOrgName:'',
@@ -381,10 +382,18 @@
 		},
 		methods:{
 			search(){
+				const loading = this.$loading({
+		          lock: true,
+		          text: 'Loading',
+		          spinner: 'el-icon-loading',
+		          background: 'rgba(0, 0, 0, 0.7)'
+		        });
 				var date = new Date();
 				var year = date.getFullYear();
 				var that = this;
 				axios.get('/safety/checkDayRecord/checkDayRecord',{params:{year:year,orgId:this.topselect.orgs.value}}).then(response=>{
+					loading.close();
+					sessionStorage.setItem("noResult", 0);
 					if(response.data.success === true){
 						that.$data.data = response.data.data;
 						that.$data.tableData=[];
@@ -393,8 +402,9 @@
 						});
 					}else{
 						that.$message.warning(response.data.msg);
-					}
+					};
 				}).catch(err=>{
+					loading.close();
 					this.$message.error('服务器异常，请稍后再试！');
 				});
 			},
@@ -452,10 +462,15 @@
 				sessionStorage.setItem("noResult", noResult);
 			},
 			submitForm(){
-	 
+	 			const loading = this.$loading({
+		          lock: true,
+		          text: 'Loading',
+		          spinner: 'el-icon-loading',
+		          background: 'rgba(0, 0, 0, 0.7)'
+		        });
 				this.$data.data.checkStartTime = this.$data.dateValue;
 				this.$data.data.checkPersonName = this.$data.inputValue;
-				this.$data.data.checkMonthList = this.$data.tableData;
+				
 				var notify = false;
 				for(var i=0;i<this.$data.tableData.length;i++){
 					if(this.$data.tableData[i].result == 0){
@@ -464,6 +479,7 @@
 					}
 				}
 				axios.post('/safety/checkDayRecord/checkDayRecord',this.$data.data).then(response=>{
+					loading.close();
 					if(response.data.success === true){
 						this.$message.success(response.data.msg);
 						if(notify){
@@ -478,6 +494,7 @@
 						this.$message.warning(response.data.msg);
 					}
 				}).catch(err=>{
+					loading.close();
 					this.$message.error('服务器异常，请稍后再试！');
 				});
 			},
@@ -487,6 +504,11 @@
 	        	this.$data.listForm.orgFk = row.orgFk;
 	        	this.$data.listForm.checkType = row.checkType;
 	        	this.$data.listForm.index = index;
+	        	this.$data.listForm.harmfulFactors = row.riskIdentificationList.harmfulFactors;
+	        	this.$data.listForm.measure = row.riskIdentificationList.measure;
+	        	this.$data.listForm.riskPosition = row.riskIdentificationList.incidence;
+	        	this.$data.listForm.runawayPerformance = row.riskIdentificationList.consequence;
+	        	this.$data.listForm.controlOrgPersonName = row.riskIdentificationList.personName;
 	        },
 	        addDanger(index,row,formName){
 	        	this.$data.dangerLedgerVisible = true;
@@ -494,6 +516,9 @@
 	        	this.$data.dangerForm.offgradeListFk = row.id;
 	        	this.$data.dangerForm.checkType = row.checkType;
 	        	this.$data.dangerForm.index = index;
+	        	this.$data.dangerForm.rectificationPosition = row.riskIdentificationList.incidence;
+	        	this.$data.dangerForm.governmentMeasure = row.riskIdentificationList.measure;
+	        	this.$data.dangerForm.controlOrgPersonName = row.riskIdentificationList.personName;
 	        },
 	        closedDialog(formName){
 	        	if(this.$refs['rectificationPositionUrl']){
@@ -507,23 +532,22 @@
 	        	this.$refs[formName].resetFields();
 	        },
 	        submitListForm(formName){
-	        	var that = this;
 	        	this.$data.dialogFormVisible = false;
-	        	this.$data.data.checkMonthList[this.$data.listForm.index].checkDangerChecklist = JSON.parse(JSON.stringify(this.$data.listForm));
+	        	this.$data.data.checkDayList[this.$data.listForm.index].checkDangerChecklist = JSON.parse(JSON.stringify(this.$data.listForm));
 	        	this.$refs[formName].resetFields();
 				this.$data.listForm.offgradeListFk = '';
 	        	
 	        },
 	        submitDangerForm(formName){
 	        	this.$data.dangerLedgerVisible = false;
-	        	this.$data.data.checkMonthList[this.$data.dangerForm.index].checkDangerLedger = JSON.parse(JSON.stringify(this.$data.dangerForm));
+	        	this.$data.data.checkDayList[this.$data.dangerForm.index].checkDangerLedger = JSON.parse(JSON.stringify(this.$data.dangerForm));
 		        this.$refs[formName].resetFields();
 				this.$data.dangerForm.offgradeListFk = '';
 	        },
 	        submitReceiptForm(formName){
 	        	var that = this;
 	        	this.$data.dangerLedgerVisible = false;
-	        	this.$data.data.checkMonthList[this.$data.receiptForm.index].checkRectificationReceipt = JSON.parse(JSON.stringify(this.$data.receiptForm));
+	        	this.$data.data.checkDayList[this.$data.receiptForm.index].checkRectificationReceipt = JSON.parse(JSON.stringify(this.$data.receiptForm));
 	        	this.$refs[formName].resetFields();
 				this.$data.receiptForm.offgradeListFk = '';
 				this.$data.receiptVisible = false;
@@ -565,7 +589,7 @@
 	        		that.$data.receiptForm.rectificationResultUrl = imgCode;
 	        	}
 	        },
-			addReceipt(row,formName){
+			addReceipt(index,row,formName){
 				this.$data.receiptVisible = true;
 	        	this.$data.receiptForm.orgFk = row.orgFk;
 	        	this.$data.receiptForm.offgradeListFk = row.id;
