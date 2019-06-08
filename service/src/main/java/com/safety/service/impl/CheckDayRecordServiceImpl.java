@@ -44,6 +44,8 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Autowired
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
+    @Autowired
+    private RiskIdentificationListMapper riskIdentificationListMapper;
 
     private final String YES = "1";
     private final String NO = "0";
@@ -214,6 +216,10 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
         int position = 0;
         for (int i=0;i<list.size();i++){
             CheckDayList checkDayList = list.get(i);
+            //获取风险辨识数据
+            String riskIdentificationListId = checkDayList.getRiskIdentificationListId();
+            RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+            list.get(i).setRiskIdentificationList(riskIdentificationList);
             if (checkDayList.getResult()==null || checkDayList.getResult().isEmpty()){
                 list.get(i).setResult(YES);
             }
