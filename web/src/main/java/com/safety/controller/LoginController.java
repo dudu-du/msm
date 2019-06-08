@@ -131,7 +131,7 @@ public class LoginController extends BaseController {
             session.setAttribute("MEMBER_ROLE", role);
             String orgId = person.getOrgId();
             Org org = orgService.getOrgById(orgId);
-            String orgName = org.getName();
+            String orgName = org==null?"":org.getName();
             if (role.equals("ROLE_SUPERADMIN")){
                 List<Org> orgList = orgService.getAllOrgList("0");
                 if (orgList.size()>0){
