@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/node_modules/layui-src/dist/css/layui.css">
     <link rel="stylesheet" href="/Public/css/public-yun.css">
     <link rel="stylesheet" href="/Public/css/public-color.css">
-    <link rel="stylesheet" href="/Public/css/user/officeAdmin.css">
+    <link rel="stylesheet" href="/Public/css/user/orgAdmin.css">
 </head>
 <body>
 <!-- 内容主体区域 -->
@@ -19,7 +19,7 @@
                 <script type="text/html" id="toolbarDemo">
                     <div class="layui-btn-container">
                         <div class="table-btns-box">
-                            <button class="layui-btn layui-btn-sm  layui-btn-normal" lay-event="addOffice"><i class="iconfont icon-renyuanzengjia"></i>添加管理员</button>
+                            <button class="layui-btn layui-btn-sm  layui-btn-normal" lay-event="addOrg"><i class="iconfont icon-renyuanzengjia"></i>添加管理员</button>
                         </div>
                         <div class="table-btns-num">
                             <span class="table-cho-num"></span>
@@ -48,6 +48,6 @@
 <script src="/node_modules/jquery/jquery-3.3.1.min.js"></script>
 <script src="/node_modules/layui-src/dist/layui.js"></script>
 <script src="/Public/js/public-base.js"></script>
-<script src="/Public/js/user/office.js"></script>
+<script src="/Public/js/user/orgAdmin.js"></script>
 </body>
 </html>

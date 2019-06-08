@@ -65,8 +65,8 @@ public class DictConstants {
     //登录人的login_id
     public static final String MEMBER_LOGIN_KEY = "MEMBER_LOGIN_KEY";
 
-    //校级管理员
-    public static final String ROLE_SHCOOLADMIN = "ROLE_SHCOOLADMIN";
+    //普通工作人员
+    public static final String ROLE_WORKER = "ROLE_WORKER";
     //超级管理员
     public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
     //机构管理员
@@ -82,8 +82,6 @@ public class DictConstants {
     //对外接口机构范围标识(全部)
     public static final String FLAG_ORG = "all";
 
-    //家长关系父节点
-    public static final String PATRIARCH_RELATION ="WE_RELATION";
 
     //假期
     public static final boolean CALENDAR_TYPE_HOLIDAY = false;

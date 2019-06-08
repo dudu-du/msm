@@ -109,7 +109,7 @@ public class SchoolAdminController extends BaseController {
             schoolAdmin.setCreatedatetime(LocalDateTime.now());
             schoolAdmin.setModifydatetime(LocalDateTime.now());
             List<String> roleList = new ArrayList<>();
-            roleList.add(DictConstants.ROLE_SHCOOLADMIN);
+            roleList.add("111");
             schoolAdmin.setRoleList(roleList);
             if(personService.saveEntity(schoolAdmin)){
                 return renderSuccess();

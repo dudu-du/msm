@@ -4,7 +4,7 @@ import com.safety.tools.DictConstants;
 
 import java.util.List;
 
-public class OfficeAdminParams {
+public class OrgAdminParams {
     final String userType = DictConstants.PERSON_OFFICEADMIN;
     String id;                  //用户ID
     String loginId;             //登录ID

@@ -1,7 +1,7 @@
 package com.safety.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.safety.dto.user.OfficeAdminParams;
+import com.safety.dto.user.OrgAdminParams;
 import com.safety.dto.user.SchoolAdminParams;
 import com.safety.dto.user.TeacherParams;
 import com.safety.entity.Person;
@@ -90,12 +90,12 @@ public interface IPersonService extends IService<Person> {
     public boolean deleteRoleByUser(String userId) throws Exception;
 
     /**
-     * 获取局管理员列表
+     * 获取机构管理员列表
      *
-     * @param officeAdminParams
+     * @param orgAdminParams
      * @return
      */
-    PageData getOfficeAdminListByScope(OfficeAdminParams officeAdminParams) throws ProgramException;
+    PageData getOrgAdminListByScope(OrgAdminParams orgAdminParams) throws ProgramException;
 
     /**
      * 获取校管理员列表

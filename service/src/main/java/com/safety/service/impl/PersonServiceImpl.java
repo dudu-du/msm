@@ -2,7 +2,7 @@ package com.safety.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.safety.dto.user.OfficeAdminParams;
+import com.safety.dto.user.OrgAdminParams;
 import com.safety.dto.user.SchoolAdminParams;
 import com.safety.dto.user.TeacherParams;
 import com.safety.entity.*;
@@ -16,8 +16,6 @@ import com.safety.tools.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -138,18 +136,18 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     }
 
     @Override
-    public PageData getOfficeAdminListByScope(OfficeAdminParams officeAdminParams) throws ProgramException {
-        Integer page = officeAdminParams.getPage();
-        Integer pageSize = officeAdminParams.getPageSize();
+    public PageData getOrgAdminListByScope(OrgAdminParams orgAdminParams) throws ProgramException {
+        Integer page = orgAdminParams.getPage();
+        Integer pageSize = orgAdminParams.getPageSize();
         if (page == null || pageSize == null) {
             throw new ProgramException("分页参数异常:page[" + page
                     + "],pageSize[" + pageSize + "]");
         }
-        int count = baseMapper.getOfficeAdminCount(officeAdminParams);
+        int count = baseMapper.getOrgAdminCount(orgAdminParams);
         //从第几个开始
         int start = PageData.calcFirstItemIndexOfPage(page, pageSize, count);
-        officeAdminParams.setStart(start);
-        List<OfficeAdmin> list = baseMapper.getOfficeAdminList(officeAdminParams);
+        orgAdminParams.setStart(start);
+        List<OfficeAdmin> list = baseMapper.getOrgAdminList(orgAdminParams);
         return new PageData(page, count, pageSize, list);
     }
 

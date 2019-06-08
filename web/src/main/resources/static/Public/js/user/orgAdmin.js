@@ -12,7 +12,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     if(device.id){
         confirm('请不要使用ie浏览器查看');
     }
-    var url = origin + '/View/listOfficeAdminInfo';
+    var url = origin + '/View/listOrgAdminInfo';
     var getData = {};
     tableLoad(url,getData);
     //表格加载
@@ -77,8 +77,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     table.on('toolbar(test)', function(obj){
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event){
-            case 'addOffice':
-                addMaskOffice('add');
+            case 'addOrg':
+                addOrgAdmin('add');
                 break;
             case 'del':
                 var checkStatus = table.checkStatus('table')
@@ -88,7 +88,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 }).join(',');
                 layer.confirm('确认要删除该数据吗？',function(index){
                     $.ajax({
-                        url: origin + "/View/officeAdmin?id="+checkedData,
+                        url: origin + "/View/orgAdmin?id="+checkedData,
                         type: "DELETE",
                         success: function(data){
                             if(data.success){
@@ -132,7 +132,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         if(obj.event === 'del'){
             layer.confirm('确认要删除该数据吗？', function(index){
                 $.ajax({
-                    url: origin + "/View/officeAdmin?id="+data.id,
+                    url: origin + "/View/orgAdmin?id="+data.id,
                     type: "DELETE",
                     success: function (data) {
                         if(data.success){
@@ -152,7 +152,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 })
             });
         } else if(obj.event === 'edit'){
-            addMaskOffice('edit',data);
+            addOrgAdmin('edit',data);
         }else if(obj.event === 'password'){
             layer.confirm('确定重置密码吗？', function(index){
                 $.ajax({
@@ -207,7 +207,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         }
     });
     
-	var addOfficeHtml = '<div class="lay-mask-box">' +
+	var addOrgAdminHtml = '<div class="lay-mask-box">' +
             '<input type="hidden" name="id">'+
             '<input type="hidden" name="loginId">'+
 	        '<div class="layui-form-item">'+
@@ -248,7 +248,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             }
         }
     });
-	    function addMaskOffice(tag,data){
+	    function addOrgAdmin(tag,data){
 	        var title;
 	        var html = '';
 	        if(tag == 'add'){
@@ -272,7 +272,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	  	        '</div>';
 	        }else{
 	            title = '编辑管理员';
-	            html = addOfficeHtml;
+	            html = addOrgAdminHtml;
 	        }
 	 
 	        layer.open({
@@ -317,7 +317,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                         
                         if(tag == 'edit'){
                             $.ajax({
-                                url: origin + '/View/officeAdmin',
+                                url: origin + '/View/orgAdmin',
                                 type: 'PUT',
                                 data: {
                                     id: objData.id,
@@ -337,7 +337,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                             })
                         }else{
 
-                            $.post(origin + '/View/officeAdmin',
+                            $.post(origin + '/View/orgAdmin',
                                 {
                                     loginName: objData.loginName,
                                     orgId: objData.orgId,
