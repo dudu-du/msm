@@ -9,7 +9,7 @@ package com.safety.entity;
  * @author welsee
  * @since 2018-11-07
  */
-public class Teacher extends BasePerson {
+public class Worker extends BasePerson {
 
     private String orgName; //所属学校名字
 

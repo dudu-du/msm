@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.safety.dto.user.OrgAdminParams;
 import com.safety.dto.user.SchoolAdminParams;
-import com.safety.dto.user.TeacherParams;
+import com.safety.dto.user.WorkerParams;
 import com.safety.entity.*;
 import com.safety.exception.ProgramException;
 import com.safety.extentity.*;
@@ -168,26 +168,26 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     }
 
     @Override
-    public PageData getTeahcherListByScope(TeacherParams teacherParams) throws ProgramException {
-        Integer page = teacherParams.getPage();
-        Integer pageSize = teacherParams.getPageSize();
+    public PageData getWorkerListByScope(WorkerParams workerParams) throws ProgramException {
+        Integer page = workerParams.getPage();
+        Integer pageSize = workerParams.getPageSize();
         if (page == null || pageSize == null) {
             throw new ProgramException("分页参数异常:page[" + page
                     + "],pageSize[" + pageSize + "]");
         }
-        int count = baseMapper.getTeacherCount(teacherParams);
+        int count = baseMapper.getWorkerCount(workerParams);
         //从第几个开始
         int start = PageData.calcFirstItemIndexOfPage(page, pageSize, count);
-        teacherParams.setStart(start);
-        List<Teacher> list = baseMapper.getTeacherList(teacherParams);
+        workerParams.setStart(start);
+        List<Worker> list = baseMapper.getWorkerList(workerParams);
         return new PageData(page, count, pageSize, list);
     }
 
     @Override
-    public List<Teacher> getTeacherListNoPage(TeacherParams teacherParams) throws ProgramException {
-        if (teacherParams.getOrgId() == null || "".equals(teacherParams.getOrgId())) {
+    public List<Worker> getWorkerListNoPage(WorkerParams workerParams) throws ProgramException {
+        if (workerParams.getOrgId() == null || "".equals(workerParams.getOrgId())) {
             throw new ProgramException("学校ID不能为空");
         }
-        return baseMapper.getTeacherList(teacherParams);
+        return baseMapper.getWorkerList(workerParams);
     }
 }

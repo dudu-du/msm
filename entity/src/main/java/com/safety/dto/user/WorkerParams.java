@@ -5,10 +5,11 @@ import com.safety.tools.DictConstants;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class TeacherParams {
-    final String userType = DictConstants.PERSON_TEACHER;
+public class WorkerParams {
+    final String userType = DictConstants.PERSON_WORKER;
     String id;                  //用户ID
     String loginId;             //登录ID
+    String loginName;
     String realName;            //用户姓名
     String orgName;             //机构名称
     String orgCode;             //机构CODE
@@ -88,6 +89,14 @@ public class TeacherParams {
 
     public void setLoginId(String loginId) {
         this.loginId = loginId;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
     public String getOrgId() {

@@ -3,10 +3,10 @@ package com.safety.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.safety.dto.user.OrgAdminParams;
 import com.safety.dto.user.SchoolAdminParams;
-import com.safety.dto.user.TeacherParams;
+import com.safety.dto.user.WorkerParams;
 import com.safety.entity.OfficeAdmin;
 import com.safety.entity.Person;
-import com.safety.entity.Teacher;
+import com.safety.entity.Worker;
 import com.safety.extentity.ExtPerson;
 import com.safety.extentity.ExtPersonDepartment;
 import org.apache.ibatis.annotations.Param;
@@ -86,23 +86,23 @@ public interface PersonMapper extends BaseMapper<Person> {
      */
     void deleteRoleByUser(@Param("userId") String userId);
 
-    /**
-     * 修改班主任
-     *
-     * @param teacherId
-     * @param classId
-     * @return
-     */
-    int updateMaster(@Param("teacherId") String teacherId, @Param("classId") String classId,
-                     @Param("modifydatetime") LocalDateTime localDateTime);
+//    /**
+//     * 修改班主任
+//     *
+//     * @param teacherId
+//     * @param classId
+//     * @return
+//     */
+//    int updateMaster(@Param("teacherId") String teacherId, @Param("classId") String classId,
+//                     @Param("modifydatetime") LocalDateTime localDateTime);
 
-    /**
-     * 移除班主任，支持批量
-     *
-     * @param teacherId 多个由','号分隔
-     * @return
-     */
-    boolean removeMaster(@Param("id") String teacherId, @Param("modifydatetime") LocalDateTime localDateTime);
+//    /**
+//     * 移除班主任，支持批量
+//     *
+//     * @param teacherId 多个由','号分隔
+//     * @return
+//     */
+//    boolean removeMaster(@Param("id") String teacherId, @Param("modifydatetime") LocalDateTime localDateTime);
 
     /**
      * 获取人员信息
@@ -128,25 +128,25 @@ public interface PersonMapper extends BaseMapper<Person> {
      */
     List<String> getDepartmentAllByDepartmentId(@Param("departmentId") String departmentId);
 
-    /**
-     * 获取人员数量(含机构)
-     *
-     * @param orgId 机构ID
-     * @return
-     */
-    int getUserWithDepartmentCount(@Param("orgId") String orgId);
+//    /**
+//     * 获取人员数量(含机构)
+//     *
+//     * @param orgId 机构ID
+//     * @return
+//     */
+//    int getUserWithDepartmentCount(@Param("orgId") String orgId);
 
-    /**
-     * 获取人员(含机构)
-     *
-     * @param orgId
-     * @param start
-     * @param pageSize
-     * @return
-     */
-    List<ExtPersonDepartment> getUserWithDepartment(@Param("orgId") String orgId,
-                                                    @Param("start") Integer start,
-                                                    @Param("pageSize") Integer pageSize);
+//    /**
+//     * 获取人员(含机构)
+//     *
+//     * @param orgId
+//     * @param start
+//     * @param pageSize
+//     * @return
+//     */
+//    List<ExtPersonDepartment> getUserWithDepartment(@Param("orgId") String orgId,
+//                                                    @Param("start") Integer start,
+//                                                    @Param("pageSize") Integer pageSize);
 
     /**
      * 获取人员数量
@@ -234,22 +234,22 @@ public interface PersonMapper extends BaseMapper<Person> {
      * @return
      */
     boolean removeOrgDepartmentUser(@Param("orgId") String orgId);
+//
+//    /**
+//     * 检查用户是否为班主任
+//     *
+//     * @param userId
+//     * @return
+//     */
+//    int isMaster(@Param("userId") String userId);
 
-    /**
-     * 检查用户是否为班主任
-     *
-     * @param userId
-     * @return
-     */
-    int isMaster(@Param("userId") String userId);
-
-    /**
-     * 检查用户做为班主任所带的班级
-     *
-     * @param userId
-     * @return
-     */
-    List<Class> getClassByMaster(@Param("userId") String userId);
+//    /**
+//     * 检查用户做为班主任所带的班级
+//     *
+//     * @param userId
+//     * @return
+//     */
+//    List<Class> getClassByMaster(@Param("userId") String userId);
 
     /**
      * 获取学生的ID
@@ -270,14 +270,14 @@ public interface PersonMapper extends BaseMapper<Person> {
     List<ExtPerson> getStudentListByClassNoPage(@Param("schoolId") String schoolId,
                                                 @Param("classNumber") String classNumber,
                                                 @Param("studentName") String studentName);
-
-    /**
-     * 获取班主任
-     *
-     * @param userId 用户id,多个逗号分隔
-     * @return
-     */
-    List<ExtPerson> getMasterByUserId(@Param("userId") String userId);
+//
+//    /**
+//     * 获取班主任
+//     *
+//     * @param userId 用户id,多个逗号分隔
+//     * @return
+//     */
+//    List<ExtPerson> getMasterByUserId(@Param("userId") String userId);
 
     /**
      * 获取用户信息
@@ -314,10 +314,10 @@ public interface PersonMapper extends BaseMapper<Person> {
     /**
      * 教师列表
      *
-     * @param teacherParams
+     * @param workerParams
      * @return
      */
-    int getTeacherCount(TeacherParams teacherParams);
+    int getWorkerCount(WorkerParams workerParams);
 
-    List<Teacher> getTeacherList(TeacherParams teacherParams);
+    List<Worker> getWorkerList(WorkerParams workerParams);
 }

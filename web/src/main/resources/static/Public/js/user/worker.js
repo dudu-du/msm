@@ -12,15 +12,40 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     if(device.id){
         confirm('请不要使用ie浏览器查看');
     }
-    getSearchSchool(form,'OT_SCHOOL');
+    var schoolcol,tableWidthS = '';
+    if(org_id == '0'){
+        $('.schoolSelects').removeClass('layui-hide');
+        schoolcol = [[
+            {type: 'checkbox'}
+            ,{field:'loginName', title:'用户名',sort: true}
+            ,{field:'realname', title:'姓名',unresize: true, sort: true}
+            ,{field:'sex', title:'性别'}
+            ,{field:'tel', title:'手机号'}
+            ,{field:'cardNo', title:'工种'}
+            ,{field:'orgName', title:'所属公司'}
+            ,{field:'identityNo', title:'身份证号码'}
+            ,{title:'操作', toolbar: '#barDemo',width:180}
+        ]]
+    }else{
+        schoolcol = [[
+            {type: 'checkbox'}
+            ,{field:'loginName', title:'用户名',sort: true}
+            ,{field:'realname', title:'姓名',unresize: true, sort: true}
+            ,{field:'sex', title:'性别'}
+            ,{field:'tel', title:'手机号'}
+            ,{field:'cardNo', title:'工种'}
+            ,{title:'操作', toolbar: '#barDemo',width:180}
+        ]]
+    }
+    getSearchSchool(form,'OT_BUREAU');
     tableLoad();
     function tableLoad(data){
-        var url = origin + '/View/listTeacherInfo';
+        var url = origin + '/View/listWorkerInfo';
         if(data){
             console.log("data==="+data);
             url = url +"?realName="+data+"&orgId="+org_id;
         }else{
-            url = origin + '/View/listTeacherInfo?orgId='+org_id;
+            url = origin + '/View/listWorkerInfo?orgId='+org_id;
         }
         table.render({
             elem: '#test'
@@ -38,7 +63,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,response: {
                 statusCode: '200'
             }
-            ,parseData: function (res) {
+            ,parseData: function(res){
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.msg, //解析提示文本
@@ -46,60 +71,21 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     "data": res.data.items //解析数据列表
                 };
             }
-            ,cols: [[
-                {type: 'checkbox'}
-                ,{field:'loginName', title:'用户名',sort: true}
-                ,{field:'realname', title:'姓名',unresize: true, sort: true}
-                ,{field:'sex', title:'性别'}
-                ,{field:'tel', title:'手机号'}
-                ,{field:'email', title:'邮箱'}
-                ,{field:'orgName', title:'所属学校'}
-                ,{title:'操作', toolbar: '#barDemo',width:230}
-            ]]
-            ,text: {
-                none: '暂无相关数据'
-            },
+            ,cols: schoolcol,
             done: function(res, page, count){
                 $('.table-btns-box').show();
                 $('.table-btns-num').hide();
-                upload.render({
-                    elem: '#uploadExcel'
-                    ,url: origin + '/View/uploadTeacher'
-                    ,accept: 'file' //普通文件
-                    ,done: function(res){
-                        console.log(res);
-                        if(res.status == 200){
-                            var datas = res.data;
-                            var msg = "";
-                            if(datas.anomalousCauseList.length==0){
-                                layer.msg('教师导入成功');
-                            }else{
-                                msg = msg +"导入["+datas.count+"]条,成功["+datas.succeedCount+"]条！";
-                                if(datas.anomalousCauseList.length>0){
-                                    $.each(datas.anomalousCauseList,function (i,item) {
-                                        msg = msg+item.cause+"["+item.detail+"] "
-                                    })
-                                }
-                                layer.open({
-                                    type: 1,
-                                    content: msg, //这里content是一个普通的String
-                                    btn: ['确定'],
-                                    yes:function () {
-                                        layer.closeAll();
-                                        tableLoad();
-                                    }
-                                });
-                            }
-                        }else{
-                            layer.msg(res.msg);
-                        }
-                    }
-                });
             },
             // ,page: true
             page: {
-                limit: 10,
-                limits: [10, 20, 30, 40,50,60,70,80,90,100],
+                limit: 30,
+                limits: [30, 50, 100, 200]
+            }
+        });
+        //点击回车搜索
+        $('.table-search-box input').keydown(function(e){
+            if (event.keyCode == "13") {//keyCode=13是回车键
+                $('i[lay-event="search"]').trigger('click');
             }
         });
     }
@@ -107,135 +93,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     table.on('toolbar(test)', function(obj){
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event){
-            case 'addTeacher':
-                addMaskTeacher('add');
-                break;
-            case 'download':
-                layer.open({
-                    type:1,
-                    area:'484px',
-                    title:'下载教师模板',
-                    content:downLoadTemplate,
-                    btn:['确定','取消'],
-                    success:function(layero, index){
-                        $('.lay-mask-box .layui-form-hide').show();
-                        layero.addClass('layui-form').attr('lay-filter','fromInput');
-                        layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
-                        if(org_id && org_id!='0'){
-                            $.ajax({
-                                url: origin + '/View/org?orgId='+org_id,
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.success) {
-                                        var orgDatas = data.data;
-                                        $('select[name="orgId"] option').remove();
-                                        if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_SCHOOL'){
-                                            $("#orgId").append("<option value="+orgDatas.id+" selected='selected'>"+orgDatas.name+"</option>");
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    } else {
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                        }else{
-                            $.ajax({
-                                url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.success) {
-                                        var orgDatas = data.data;
-                                        if(data.status == 200 && orgDatas.length>0){
-                                            $('select[name="orgId"] option').remove();
-                                            $.each(orgDatas,function (index,val) {
-                                                $("#orgId").append("<option value="+val.id+">"+val.name+"</option>");
-                                            })
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    } else {
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                        }
-                        form.render();
-                    },
-                    yes:function () {
-                        form.on('submit(fromContent)', function (data) {
-                            var objData = data.field;
-                            window.open(origin + '/View/teacherTemplate?orgId='+objData.orgId);
-                            layer.closeAll();
-                        })
-
-                    }
-                });
-                break;
-            case 'import':
-                layer.msg( '导入');
-                break;
-            case 'export':
-                layer.open({
-                    type:1,
-                    area:'484px',
-                    title:'导出教师',
-                    content:downLoadTemplate,
-                    btn:['确定','取消'],
-                    success:function(layero, index){
-                        $('.lay-mask-box .layui-form-hide').show();
-                        layero.addClass('layui-form').attr('lay-filter','fromInput');
-                        layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
-                        if(org_id && org_id!='0'){
-                            $.ajax({
-                                url: origin + '/View/org?orgId='+org_id,
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.success) {
-                                        var orgDatas = data.data;
-                                        $('select[name="orgId"] option').remove();
-                                        if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_SCHOOL'){
-                                            $("#orgId").append("<option value="+orgDatas.id+" selected='selected'>"+orgDatas.name+"</option>");
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    } else {
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                        }else{
-                            $.ajax({
-                                url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
-                                type: 'GET',
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.success) {
-                                        var orgDatas = data.data;
-                                        if(data.status == 200 && orgDatas.length>0){
-                                            $('select[name="orgId"] option').remove();
-                                            $.each(orgDatas,function (index,val) {
-                                                $("#orgId").append("<option value="+val.id+">"+val.name+"</option>");
-                                            })
-                                        }
-                                        form.render();//这里需要重新渲染一次，不然下拉框没有效果
-                                    } else {
-                                        console.log(data.msg)
-                                    }
-                                }
-                            });
-                        }
-                        form.render();
-                    },
-                    yes:function () {
-                        form.on('submit(fromContent)', function (data) {
-                            var objData = data.field;
-                            window.open(origin + '/View/exportExcel?orgId='+objData.orgId);
-                            layer.closeAll();
-                        })
-
-                    }
-                });
+            case 'addWorker':
+                addWorker('add');
                 break;
             case 'del':
                 var checkStatus = table.checkStatus('table')
@@ -244,18 +103,17 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     return data[elem].id;
                 }).join(',');
                 layer.confirm('确认要删除该数据吗？', function(index){
-
                     console.log("removeByIdStr:"+checkedData);
                     $.ajax({
-                        url: origin + "/View/teacher?id="+checkedData,
+                        url: origin + "/View/worker?id="+checkedData,
                         type: "DELETE",
                         success: function (data) {
                             if(data.success){
                                 layer.close(index);
-                                tableLoad();
+                                table.reload('table');
                             }else{
                                 layer.close(index);
-                                tableLoad();
+                                table.reload('table');
                                 layer.msg(data.msg);
                             }
 
@@ -265,12 +123,16 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 break;
             case 'search':
                 var searchVal = $('.table-search-box input').val();
+                searchText = searchVal;
                 tableLoad(searchVal);
                 // layer.msg('搜索'+searchVal);
                 break;
             case 'screenON':
                 $('.safety-table').removeClass('layui-col-md12').addClass('layui-col-md9');
                 $('.safety-screen').show();
+                tableWidthS = $('.layui-body-main').width()-20;
+                // console.log(tableWidthS);
+                table.resize('table');
                 $(this).attr('lay-event','screenOFF');
                 break;
         };
@@ -289,10 +151,10 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         }
     });
 
-    //加载所有学校
+    //加载所有公司
     function getAllSchool(org_id,editOrgId){
         $.ajax({
-            url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
+            url: origin + '/View/allTypeOrgList?orgType=OT_BUREAU',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -316,17 +178,17 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             }
         });
     }
-    //加载当前机构的学校
+    //加载当前机构的公司
     function getCurrentSchool(org_id,editOrgId) {
         $.ajax({
             url: origin + '/View/org?orgId='+org_id,
             type: 'GET',
             dataType: 'json',
-            success: function (data) {
-                if (data.success) {
+            success: function(data){
+                if(data.success){
                     var orgDatas = data.data;
                     $('select[name="orgId"] option').remove();
-                    if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_SCHOOL' && orgDatas.id == editOrgId){
+                    if(data.status == 200 && orgDatas && orgDatas.orgType == 'OT_BUREAU' && orgDatas.id == editOrgId){
                         $("#orgId").append("<option value="+orgDatas.id+" selected='selected'>"+orgDatas.name+"</option>");
                     }
                     form.render();//这里需要重新渲染一次，不然下拉框没有效果
@@ -339,8 +201,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
     function getOrg(org_id,editOrgId){
         if(org_id && org_id!='0'){
             getCurrentSchool(org_id,editOrgId);
-        }
-        else{
+        }else{
             getAllSchool(org_id,editOrgId);
         }
     }
@@ -350,38 +211,38 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         if(obj.event === 'del'){
             layer.confirm('确认要删除该数据吗？', function(index){
                 $.ajax({
-                    url: origin + "/View/teacher?id="+data.id,
+                    url: origin + "/View/worker?id="+data.id,
                     type: "DELETE",
                     success: function (data) {
                         if(data.success){
                             console.log(data);
                             obj.del();
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                         }else{
                             console.log(data);
                             obj.del();
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                             layer.msg(data.msg)
                         }
                     }
                 })
             });
         } else if(obj.event === 'edit'){
-            addMaskTeacher('edit',data)
+            addWorker('edit',data)
         }else if(obj.event === 'password'){
-            layer.confirm('真的重置么', function(index){
+            layer.confirm('确定重置密码吗', function(index){
                 $.ajax({
                     url: origin + "/password?id="+data.loginId,
                     type: "PUT",
                     success: function (data) {
                         if(data.success){
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                         }else{
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                             layer.msg(data.msg);
                         }
                     }
@@ -395,10 +256,10 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     success: function (data) {
                         if(data.success){
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                         }else{
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                             layer.msg(data.msg);
                         }
                     }
@@ -412,10 +273,10 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     success: function (data) {
                         if(data.success){
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                         }else{
                             layer.close(index);
-                            tableLoad();
+                            table.reload('table');
                             layer.msg(data.msg);
                         }
                     }
@@ -424,26 +285,13 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         }
     });
     //筛选
-    form.on('submit(screen)',function(){
-        var orgName = $('#teacher_orgName').val();
-        var sex = $('#teacher_sex').val();
-        /*$.ajax({
-            url: origin + '/View/listTeacherInfo',
-            type: 'GET',
-            data: {
-                orgName: orgName
-            },
-            dataType: 'json',
-            success: function (data) {
-                layer.closeAll();
-                if (data.success) {
-                    tableLoad();
-                } else {
-                    layer.msg(data.msg)
-                }
-            }
-        })*/
-        var search_url =  origin + '/View/listTeacherInfo?orgName='+orgName+'&sex='+sex;
+    form.on('submit(screen)',function(data){
+        console.log(data);
+        if(org_id == 0){
+            orgName = data.field.selectSearch;
+        }
+        var sex = data.field.sex;
+        var search_url =  origin + '/View/listWorkerInfo?orgName='+orgName+'&sex='+sex;
         table.render({
             elem: '#test'
             ,url:search_url
@@ -456,9 +304,17 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,title: '用户数据表'
             ,skin:'line'
             ,id:'table'
+            // ,width:tableWidthS
             ,defaultToolbar:['']
             ,response: {
                 statusCode: '200'
+            }
+            ,text: {
+                none: '暂无相关数据'
+            }
+            ,done:function(res){
+                $('.table-btns-box').show();
+                $('.table-btns-num').hide();
             }
             ,parseData: function (res) {
                 return {
@@ -468,42 +324,21 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                     "data": res.data.items //解析数据列表
                 };
             }
-            ,cols: [[
-                {type: 'checkbox'}
-                ,{field:'loginName', title:'用户名',sort: true}
-                ,{field:'realname', title:'姓名',unresize: true, sort: true}
-                ,{field:'sex', title:'性别'}
-                ,{field:'tel', title:'手机号'}
-                ,{field:'email', title:'邮箱'}
-                ,{field:'orgName', title:'所属学校'}
-                ,{title:'操作', toolbar: '#barDemo',width:210}
-            ]],
+            ,cols: schoolcol,
             done: function(res, page, count){
-                //所属学校显示中文名称
-                /*$("[data-field='orgId']").children().each(function(){
-                    if($(this).text()=='JG00002'){
-                        $(this).text("复兴路小学")
-                    }else if($(this).text()=='2'){
-                        $(this).text("机构")
-                    }else if($(this).text()=='3'){
-                        $(this).text("财务")
-                    }else if($(this).text()=='4'){
-                        $(this).text("业务")
-                    }
-                })*/
             },
             // ,page: true
             page: {
-                limit: 5,
-                limits: [2, 5, 10, 20],
+                limit: 30,
+                limits: [30, 50, 100, 200]
             }
         });
 
     });
     //重置
     form.on('submit(reload)',function(){
-        $('#teacher_orgName').val("");
-        $('#teacher_sex').val("");
+        $('select,input').val("");
+        form.render();
         tableLoad();
     });
     //取消
@@ -511,14 +346,17 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         $('.safety-table').removeClass('layui-col-md9').addClass('layui-col-md12');
         $('.safety-screen').hide();
         $('.layui-inline[lay-event="screenOFF"]').attr('lay-event','screenON');
+        table.resize('table');
     });
-
-    var addTeacherHtml = '<div class="lay-mask-box">' +
+    if(org_id != '0'){
+        var stuHide = 'layui-hide';
+    }
+    var addWorkerHtml = '<div class="lay-mask-box">' +
         '<input type="hidden" name="id">'+
         '<input type="hidden" name="loginId">'+
         '<input type="hidden" name="pic" id="person_pic">'+
-        '<div class="layui-form-item layui-form-hide">'+
-        '<label class="layui-form-label">所属学校</label>'+
+        '<div class="layui-form-item layui-form-hide '+stuHide+'">'+
+        '<label class="layui-form-label">所属公司</label>'+
         '<div class="layui-input-block">'+
         '<select id ="orgId" name="orgId" lay-filter="orgId_name" lay-verify="school" lay-search="">'+
         '<option value=""></option>'+
@@ -528,7 +366,13 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         '<div class="layui-form-item">'+
         '<label class="layui-form-label">用户名</label>'+
         '<div class="layui-input-block">'+
-        '<input type="text" name="loginName" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">'+
+        '<input type="text" name="loginName" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input"><span class="must">*</span>'+
+        '</div>'+
+        '</div>'+
+        '<div class="layui-form-item">'+
+        '<label class="layui-form-label">密码</label>'+
+        '<div class="layui-input-block">'+
+        '<input type="new-password" name="password" lay-verify="password" autocomplete="new-password" placeholder="不填写则为默认密码" class="layui-input">'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
@@ -547,44 +391,34 @@ layui.use(['element','table','layer','form', 'upload'], function(){
         '<div class="layui-form-item">'+
         '<label class="layui-form-label">手机号</label>'+
         '<div class="layui-input-block">'+
-        '<input type="text" name="tel" lay-verify="phone" autocomplete="off" placeholder="请输入手机号" class="layui-input">'+
+        '<input type="text" name="tel" autocomplete="off" placeholder="请输入手机号" class="layui-input">'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
-        '<label class="layui-form-label">邮箱</label>'+
+        '<label class="layui-form-label">工种</label>'+
         '<div class="layui-input-block">'+
-        '<input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="请输入邮箱" class="layui-input">'+
+        '<input type="text" name="cardNo" autocomplete="off" placeholder="请输入工种" class="layui-input">'+
         '</div>'+
         '</div>'+
         '<div class="layui-form-item">'+
         '<label class="layui-form-label">身份证号</label>'+
         '<div class="layui-input-block">'+
-        '<input type="text" name="identityNo" lay-verify="identity" autocomplete="off" placeholder="请输入身份证号" class="layui-input">'+
+        '<input type="text" name="identityNo" autocomplete="off" placeholder="请输入身份证号" class="layui-input">'+
         '</div>'+
         '</div>'+
         '</div>';
-    var downLoadTemplate = '<div class="lay-mask-box">' +
-        '<div class="layui-form-item layui-form-hide">'+
-        '<label class="layui-form-label">所属学校</label>'+
-        '<div class="layui-input-block">'+
-        '<select id ="orgId" name="orgId" lay-filter="orgId_name" lay-verify="school" lay-search="">'+
-        '<option value=""></option>'+
-        '</select>'+
-        '</div>'+
-        '</div>'+
-        '</div>';
-    function addMaskTeacher(tag,datas){
+    function addWorker(tag,datas){
         var title;
         if(tag == 'add'){
-            title = '添加教师'
+            title = '添加工作人员'
         }else{
-            title = '编辑教师'
+            title = '编辑工作人员'
         }
         layer.open({
             type:1,
             area:'484px',
             title:title,
-            content:addTeacherHtml,
+            content:addWorkerHtml,
             btn:['确定','取消'],
             success:function(layero, index){
                 $('.lay-mask-box .layui-form-hide').show();
@@ -592,8 +426,9 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                 layero.find('.layui-layer-btn0').attr('lay-filter', 'fromContent').attr('lay-submit', '');
                 form.render();
                 $.ajax({
-                    url: origin + '/View/allTypeOrgList?orgType=OT_SCHOOL',
+                    url: origin + '/View/allTypeOrgList?orgType=OT_BUREAU',
                     type: 'GET',
+                    async:false,
                     dataType: 'json',
                     success: function (data) {
                         if (data.success) {
@@ -610,42 +445,19 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                         }
                     }
                 });
-                form.verify({
-                    school:function(value){
-                        if(value == ''){
-                            return '请选择所属学校'
+                if(org_id == '0'){
+                    form.verify({
+                        school:function(value){
+                            if(value == ''){
+                                return '请选择所属公司'
+                            }
                         }
-                    },
+                    });
+                }
+                form.verify({
                     username:function(value){
                         if(value == ''){
                             return '用户名不能为空'
-                        }
-                    },
-                    phone:function(value){
-                        if(value == ''){
-                            return '手机号码不能为空'
-                        }else{
-                            if(!/^1\d{10}$/.test(value)){
-                                return '请输入正确的手机号'
-                            }
-                        }
-                    },
-                    email:function(value){
-                        if(value == ''){
-                            return '邮箱地址不能为空'
-                        }else{
-                            if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)){
-                                return '邮箱格式不正确'
-                            }
-                        }
-                    },
-                    identity:function(value){
-                        if(value == ''){
-                            return '身份证号不能为空'
-                        }else{
-                            if(!/(^\d{15}$)|(^\d{17}(x|X|\d)$)/.test(value)){
-                                return '请输入正确的身份证号'
-                            }
                         }
                     }
                 });
@@ -662,9 +474,10 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                         "loginId":datas.loginId,
                         "loginName":datas.loginName,
                         "realname": datas.realname ,
+                        "password":datas.password,
                         "tel": datas.tel,
                         "sex": datas.sex,
-                        "email":datas.email,
+                        "cardNo":datas.cardNo,
                         "identityNo":datas.identityNo,
                         "pic":datas.pic
                     })
@@ -675,19 +488,24 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             },
             yes:function(){
                 form.on('submit(fromContent)', function (data) {
-                    var objData = data.field;
+                    var objData = data.field,schoolID;
                     console.log("objData.pic="+objData.pic);
+                    if(org_id == '0'){
+                        schoolID = objData.orgId
+                    }else{
+                        schoolID = org_id;
+                    }
                     if(tag == 'edit'){
                         $.ajax({
-                            url: origin + '/View/teacher?id='+objData.id+'&loginId='+objData.loginId,
+                            url: origin + '/View/worker?id='+objData.id+'&loginId='+objData.loginId,
                             type: 'PUT',
                             data: {
                                 loginName: objData.loginName,
-                                orgId: objData.orgId,
+                                orgId: schoolID,
                                 realname: objData.realname,
                                 password:objData.password,
                                 tel:objData.tel,
-                                email:objData.email,
+                                cardNo:objData.cardNo,
                                 identityNo:objData.identityNo,
                                 sex:objData.sex,
                                 pic:imageData
@@ -696,20 +514,20 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                             success: function (data) {
                                 layer.closeAll();
                                 if (data.success) {
-                                    tableLoad();
+                                    table.reload('table');
                                 } else {
                                     layer.msg(data.msg)
                                 }
                             }
                         })
                     }else{
-                        $.post(origin + '/View/teacher',
+                        $.post(origin + '/View/worker',
                             {	loginName: objData.loginName,
-                                orgId: objData.orgId,
+                                orgId: schoolID,
                                 realname: objData.realname,
                                 password:objData.password,
                                 tel:objData.tel,
-                                email:objData.email,
+                                cardNo:objData.cardNo,
                                 identityNo:objData.identityNo,
                                 sex:objData.sex,
                                 pic:imageData
@@ -717,7 +535,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                             function (data) {
                                 if (data.success) {
                                     layer.closeAll();
-                                    tableLoad();
+                                    table.reload('table');
                                 } else {
                                     return layer.msg(data.msg);
                                 }

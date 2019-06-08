@@ -56,8 +56,10 @@ public class DictConstants {
     public static final String PERSON_PATRIARCH = "PT_PATRIARCH";
     //人员类型-学生
     public static final String PERSON_STUDENT = "PT_STUDENT";
-    //人员类型-局管理员
+    //人员类型-机构管理员
     public static final String PERSON_OFFICEADMIN = "PT_OFFICEADMIN";
+    //人员类型-普通工作人员
+    public static final String PERSON_WORKER = "PT_WORKER";
 
     //session-人员
     public static final String MEMBER_USER_PERSON = "MEMBER_USER_PERSON";

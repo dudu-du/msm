@@ -30,16 +30,15 @@
         <result column="loginName" property="loginName"/>
     </resultMap>
 
-    <!--校管理员列表结果集-->
-    <resultMap id="SchoolAdminResultMap" type="com.safety.entity.SchoolAdmin" extends="BaseResultMap">
+    <!--机构管理员列表结果集-->
+    <resultMap id="OrgAdminResultMap" type="com.safety.entity.SchoolAdmin" extends="BaseResultMap">
         <result column="orgName" property="orgName"/>
         <result column="disable" property="disable" />
         <result column="loginName" property="loginName"/>
     </resultMap>
 
-    <!--教师列表结果集-->
-    <resultMap id="TeacherResultMap" type="com.safety.entity.Teacher" extends="BaseResultMap">
-
+    <!--普通员工列表结果集-->
+    <resultMap id="WorkerResultMap" type="com.safety.entity.Worker" extends="BaseResultMap">
         <result column="orgName" property="orgName"/>
         <result column="disable" property="disable" />
         <result column="loginName" property="loginName"/>
@@ -260,71 +259,71 @@
             </if>
         </trim>
     </select>
-    <select id="isMaster" resultType="integer">
-        SELECT count(*) from class where teacher = #{userId} and del = 0
-    </select>
+    <!--<select id="isMaster" resultType="integer">-->
+        <!--SELECT count(*) from class where teacher = #{userId} and del = 0-->
+    <!--</select>-->
 
-    <select id="getUserWithDepartmentCount" resultType="java.lang.Integer" parameterType="java.util.Map">
-        SELECT
-            COUNT(1)
-        FROM
-            person t1
-        LEFT JOIN org t2 ON t1.org_id = t2.id
-        where
-        t1.del = 0
-        and t1.org_id=#{orgId}
-        AND t1.person_type = 'PT_TEACHER'
-        AND NOT EXISTS (
-            SELECT
-                t1.uid
-            FROM
-                user_role t1
-            LEFT JOIN dict t2 ON t1.role_id = t2.id
-            WHERE
-                t2. CODE = 'ROLE_SHCOOLADMIN'
-            AND uid = t1.id
-        )
-    </select>
-    <select id="getUserWithDepartment" resultType="com.safety.extentity.ExtPersonDepartment">
-        SELECT
-            t1.*, IFNULL(t2.del, 1) AS DISABLE,
-            t3.loginName1 AS loginName,
-            t2. NAME AS orgName,
-            t2. CODE AS orgCode,
-            t2.org_type AS orgType,
-            '0' AS isDepartment,
-            GROUP_CONCAT(
-              t5.name
-            ) departmentName,
-            GROUP_CONCAT(
-              t5.id
-            ) departmentId
-        FROM
-        person t1
-        LEFT JOIN org t2 ON t1.org_id = t2.id
-        LEFT JOIN login t3 ON t1.login_id = t3.id
-        LEFT JOIN department_user t4 ON t1.id = t4.uid
-        LEFT JOIN org t5 on t4.department_id = t5.id
-        where
-          t1.del = 0
-        and t1.org_id=#{orgId}
-        AND t1.person_type = 'PT_TEACHER'
-        AND NOT EXISTS (
-            SELECT
-            t1.uid
-            FROM
-            user_role t1
-            LEFT JOIN dict t2 ON t1.role_id = t2.id
-            WHERE
-            t2. CODE = 'ROLE_SHCOOLADMIN'
-            AND uid = t1.id
-        )
-        GROUP BY
-        t1.id
-        <if test="start !=null and pageSize !=null">
-            limit #{start} , #{pageSize}
-        </if>
-    </select>
+    <!--<select id="getUserWithDepartmentCount" resultType="java.lang.Integer" parameterType="java.util.Map">-->
+        <!--SELECT-->
+            <!--COUNT(1)-->
+        <!--FROM-->
+            <!--person t1-->
+        <!--LEFT JOIN org t2 ON t1.org_id = t2.id-->
+        <!--where-->
+        <!--t1.del = 0-->
+        <!--and t1.org_id=#{orgId}-->
+        <!--AND t1.person_type = 'PT_TEACHER'-->
+        <!--AND NOT EXISTS (-->
+            <!--SELECT-->
+                <!--t1.uid-->
+            <!--FROM-->
+                <!--user_role t1-->
+            <!--LEFT JOIN dict t2 ON t1.role_id = t2.id-->
+            <!--WHERE-->
+                <!--t2. CODE = 'ROLE_SHCOOLADMIN'-->
+            <!--AND uid = t1.id-->
+        <!--)-->
+    <!--</select>-->
+    <!--<select id="getUserWithDepartment" resultType="com.safety.extentity.ExtPersonDepartment">-->
+        <!--SELECT-->
+            <!--t1.*, IFNULL(t2.del, 1) AS DISABLE,-->
+            <!--t3.loginName1 AS loginName,-->
+            <!--t2. NAME AS orgName,-->
+            <!--t2. CODE AS orgCode,-->
+            <!--t2.org_type AS orgType,-->
+            <!--'0' AS isDepartment,-->
+            <!--GROUP_CONCAT(-->
+              <!--t5.name-->
+            <!--) departmentName,-->
+            <!--GROUP_CONCAT(-->
+              <!--t5.id-->
+            <!--) departmentId-->
+        <!--FROM-->
+        <!--person t1-->
+        <!--LEFT JOIN org t2 ON t1.org_id = t2.id-->
+        <!--LEFT JOIN login t3 ON t1.login_id = t3.id-->
+        <!--LEFT JOIN department_user t4 ON t1.id = t4.uid-->
+        <!--LEFT JOIN org t5 on t4.department_id = t5.id-->
+        <!--where-->
+          <!--t1.del = 0-->
+        <!--and t1.org_id=#{orgId}-->
+        <!--AND t1.person_type = 'PT_TEACHER'-->
+        <!--AND NOT EXISTS (-->
+            <!--SELECT-->
+            <!--t1.uid-->
+            <!--FROM-->
+            <!--user_role t1-->
+            <!--LEFT JOIN dict t2 ON t1.role_id = t2.id-->
+            <!--WHERE-->
+            <!--t2. CODE = 'ROLE_SHCOOLADMIN'-->
+            <!--AND uid = t1.id-->
+        <!--)-->
+        <!--GROUP BY-->
+        <!--t1.id-->
+        <!--<if test="start !=null and pageSize !=null">-->
+            <!--limit #{start} , #{pageSize}-->
+        <!--</if>-->
+    <!--</select>-->
     <select id="getPersonCountByDepartmentId" resultType="java.lang.Integer">
         select count(*) from department_user where department_id=#{departmentId}
     </select>
@@ -368,27 +367,27 @@
             t2.id IS NOT NULL
     </select>
 
-    <select id="getMasterByUserId" resultType="com.safety.extentity.ExtPerson">
-        SELECT
-            DISTINCT t2.id,t2.realname
-        FROM
-            class t1
-        LEFT JOIN person t2 ON t1.teacher = t2.id and t2.del =0
-        WHERE
-            t2.id IS NOT NULL
-            and t1.del = 0
-            <choose>
-                <when test="userId.split(',').length==1">
-                    and t1.teacher = #{userId}
-                </when>
-                <otherwise>
-                    and t1.teacher in
-                    <foreach item="item" index="index" collection="userId.split(',')"  open="(" separator="," close=")">
-                        '${item}'
-                    </foreach>
-                </otherwise>
-            </choose>
-    </select>
+    <!--<select id="getMasterByUserId" resultType="com.safety.extentity.ExtPerson">-->
+        <!--SELECT-->
+            <!--DISTINCT t2.id,t2.realname-->
+        <!--FROM-->
+            <!--class t1-->
+        <!--LEFT JOIN person t2 ON t1.teacher = t2.id and t2.del =0-->
+        <!--WHERE-->
+            <!--t2.id IS NOT NULL-->
+            <!--and t1.del = 0-->
+            <!--<choose>-->
+                <!--<when test="userId.split(',').length==1">-->
+                    <!--and t1.teacher = #{userId}-->
+                <!--</when>-->
+                <!--<otherwise>-->
+                    <!--and t1.teacher in-->
+                    <!--<foreach item="item" index="index" collection="userId.split(',')"  open="(" separator="," close=")">-->
+                        <!--'${item}'-->
+                    <!--</foreach>-->
+                <!--</otherwise>-->
+            <!--</choose>-->
+    <!--</select>-->
     <select id="getUserInfo" resultType="java.util.Map">
         SELECT
             t1.id,
@@ -579,27 +578,27 @@
         </choose>
     </delete>
     
-    <update id="updateMaster" parameterType="java.util.Map">
-        UPDATE class set teacher = #{teacherId} ,modifydatetime = #{modifydatetime} where id = #{classId} and del ='0'
-    </update>
+    <!--<update id="updateMaster" parameterType="java.util.Map">-->
+        <!--UPDATE class set teacher = #{teacherId} ,modifydatetime = #{modifydatetime} where id = #{classId} and del ='0'-->
+    <!--</update>-->
 
-    <delete id="removeMaster" parameterType="java.util.Map">
-        UPDATE
-          class
-        set teacher = '' ,modifydatetime = #{modifydatetime}
-        where del = 0
-        <choose>
-            <when test="id.split(',').length==1">
-                and id = #{id}
-            </when>
-            <otherwise>
-                and id in
-                <foreach item="item" index="index" collection="id.split(',')"  open="(" separator="," close=")">
-                    '${item}'
-                </foreach>
-            </otherwise>
-        </choose>
-    </delete>
+    <!--<delete id="removeMaster" parameterType="java.util.Map">-->
+        <!--UPDATE-->
+          <!--class-->
+        <!--set teacher = '' ,modifydatetime = #{modifydatetime}-->
+        <!--where del = 0-->
+        <!--<choose>-->
+            <!--<when test="id.split(',').length==1">-->
+                <!--and id = #{id}-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--and id in-->
+                <!--<foreach item="item" index="index" collection="id.split(',')"  open="(" separator="," close=")">-->
+                    <!--'${item}'-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+    <!--</delete>-->
     <delete id="removeDepartmentUser" parameterType="java.util.Map">
       DELETE  from department_user
         <trim prefix="where" prefixOverrides="and">
@@ -687,7 +686,7 @@
         </if>
     </select>
 
-    <select id="getOrgAdminList" resultMap="SchoolAdminResultMap" parameterType="com.safety.dto.user.SchoolAdminParams">
+    <select id="getOrgAdminList" resultMap="OrgAdminResultMap" parameterType="com.safety.dto.user.SchoolAdminParams">
         select
         t1.*,
         IFNULL(t2.del,1) as disable,
@@ -767,7 +766,7 @@
         </if>
     </select>
 
-    <select id="getSchoolAdminList" resultMap="SchoolAdminResultMap" parameterType="com.safety.dto.user.SchoolAdminParams">
+    <select id="getSchoolAdminList" resultMap="OrgAdminResultMap" parameterType="com.safety.dto.user.SchoolAdminParams">
         select
         t1.*,
         IFNULL(t2.del,1) as disable,
@@ -810,49 +809,47 @@
         </if>
     </select>
 
-    <select id="getTeacherCount" resultType="java.lang.Integer" parameterType="com.safety.dto.user.TeacherParams">
-        select count(1)
-        from person t1
-        inner join  org t2 on
-        t1.org_id=t2.id
-        <if test="isPublic == false" >and t1.del = 0</if>
-        <if test="loginId != null and loginId.length()>0"> AND login_id=#{loginId}</if>
-        <if test="orgCode != null and orgCode.length()> 0 "> AND t2.code = #{orgCode}</if>
-        <if test="orgId != null and orgId.length()>0"> AND org_id=#{orgId}</if>
-        <if test="modifyTateTime != null ">AND t1.modifydatetime > #{modifyTateTime}</if>
-        <if test="userType != null and userType.length()>0"> AND person_type=#{userType}</if>
-        <if test="sex != null and sex.length()>0"> AND sex=#{sex}</if>
+    <select id="getWorkerCount" resultType="java.lang.Integer" parameterType="com.safety.dto.user.WorkerParams">
+        select
+        count(1)
+        from person t1 inner join org t3
+        on t1.org_id = t3.id and t1.del = 0
+        <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
+        <if test="orgId != null and orgId.length()>0"> AND t1.org_id=#{orgId}</if>
+        <if test="userType != null and userType.length()>0"> AND t1.person_type=#{userType}</if>
+        <if test="sex != null and sex.length()>0"> AND t1.sex=#{sex}</if>
+        <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
+        <if test="orgName != null and orgName.length()>0"> AND t3.name=#{orgName}</if>
         <if test="orgIds !=null and orgIds.size()>0">
-            AND org_id IN
+            AND t1.org_id IN
             <foreach item="item" index="index" collection="orgIds"
                      open="(" separator="," close=")">
                 #{item}
             </foreach>
-
         </if>
-        inner join login t3 on t3.id = t1.login_id
+        left join login t2 on t1.login_id = t2.id
         WHERE
-        not EXISTS (
+        EXISTS (
         SELECT
         t1.uid
         FROM
         user_role t1
         LEFT JOIN dict t2 ON t1.role_id = t2.id
         WHERE
-        t2. CODE = 'ROLE_SHCOOLADMIN'
+        t2.CODE = 'ROLE_WORKER'
         AND uid = t1.id
         )
         <if test="realName != null and realName.length()>0">
             AND (t1.realname like CONCAT('%',#{realName},'%')
-            or t3.loginName1 like CONCAT('%',#{realName},'%')
-            or t3.loginName2 like CONCAT('%',#{realName},'%')
-            or t3.loginName3 like CONCAT('%',#{realName},'%')
-            or t3.loginName4 like CONCAT('%',#{realName},'%')
+            or t2.loginName1 like CONCAT('%',#{realName},'%')
+            or t2.loginName2 like CONCAT('%',#{realName},'%')
+            or t2.loginName3 like CONCAT('%',#{realName},'%')
+            or t2.loginName4 like CONCAT('%',#{realName},'%')
             )
         </if>
     </select>
 
-    <select id="getTeacherList" resultMap="TeacherResultMap" parameterType="com.safety.dto.user.TeacherParams">
+    <select id="getWorkerList" resultMap="WorkerResultMap" parameterType="com.safety.dto.user.WorkerParams">
         select
         t1.*,
         IFNULL(t2.del,1) as disable,
@@ -861,13 +858,13 @@
         t3.code as orgCode,
         t3.org_type as orgType
         from person t1 inner join org t3
-        on t1.org_id = t3.id <if test="isPublic == false" >and t1.del = 0</if>
+        on t1.org_id = t3.id
         <if test="loginId != null and loginId.length()>0"> AND t1.login_id=#{loginId}</if>
-        <if test="orgCode != null and orgCode.length()> 0 "> AND t3.code = #{orgCode}</if>
         <if test="orgId != null and orgId.length()>0"> AND t1.org_id=#{orgId}</if>
         <if test="modifyTateTime != null">AND t1.modifydatetime > #{modifyTateTime}</if>
         <if test="userType != null and userType.length()>0"> AND t1.person_type=#{userType}</if>
         <if test="sex != null and sex.length()>0"> AND t1.sex=#{sex}</if>
+        <if test="orgName != null and orgName.length()>0"> AND t3.name=#{orgName}</if>
         <if test="orgIds !=null and orgIds.size()>0">
             AND t1.org_id IN
             <foreach item="item" index="index" collection="orgIds"
@@ -875,16 +872,16 @@
                 #{item}
             </foreach>
         </if>
-        inner join login t2 on t1.login_id = t2.id
+        left join login t2 on t1.login_id = t2.id
         WHERE
-        not EXISTS (
+        EXISTS (
         SELECT
         t1.uid
         FROM
         user_role t1
         LEFT JOIN dict t2 ON t1.role_id = t2.id
         WHERE
-        t2. CODE = 'ROLE_SHCOOLADMIN'
+        t2.CODE = 'ROLE_WORKER'
         AND uid = t1.id
         )
         <if test="realName != null and realName.length()>0">

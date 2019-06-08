@@ -3,9 +3,9 @@ package com.safety.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.safety.dto.user.OrgAdminParams;
 import com.safety.dto.user.SchoolAdminParams;
-import com.safety.dto.user.TeacherParams;
+import com.safety.dto.user.WorkerParams;
 import com.safety.entity.Person;
-import com.safety.entity.Teacher;
+import com.safety.entity.Worker;
 import com.safety.exception.ProgramException;
 import com.safety.extentity.ExtPerson;
 import com.safety.tools.PageData;
@@ -108,19 +108,19 @@ public interface IPersonService extends IService<Person> {
     /**
      * 获取教师列表
      *
-     * @param teacherParams
+     * @param workerParams
      * @return
      */
-    PageData getTeahcherListByScope(TeacherParams teacherParams) throws ProgramException;
+    PageData getWorkerListByScope(WorkerParams workerParams) throws ProgramException;
 
     /**
      * 获取教师列表(不带分页)
      *
-     * @param teacherParams
+     * @param workerParams
      * @return
      * @throws ProgramException
      */
-    List<Teacher> getTeacherListNoPage(TeacherParams teacherParams) throws ProgramException;
+    List<Worker> getWorkerListNoPage(WorkerParams workerParams) throws ProgramException;
 
     /**
      * 获取当前用户信息
