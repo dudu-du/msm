@@ -28,6 +28,19 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">未合格项记录列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
+					<el-row style="margin-bottom:10px">
+					<el-col :span="24" >
+						<el-select placeholder="请选择" v-model="topselect.orgs.value" v-if="role=='ROLE_SUPERADMIN'">
+						    <el-option
+						      v-for="item in topselect.orgs.data"
+						      :key="item.id"
+						      :label="item.name"
+						      :value="item.id">
+						    </el-option>
+						  </el-select>
+						  <el-button type="primary" icon="el-icon-search" @click="search" v-if="role=='ROLE_SUPERADMIN'">搜索</el-button>&nbsp;
+					</el-col>
+					</el-row>
 					<el-table border :max-height="tableHeight" style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
 						<el-table-column prop="checkType" label="来源" align="center">
@@ -277,10 +290,31 @@ new Vue({
 		this.$data.receiptForm.checkTime = this.getDate(new Date());
 		this.$data.receiptForm.rectificationTime = this.getDate(new Date());
 		
-        this.search();
+        var that = this;
+		if(this.$data.role == 'ROLE_SUPERADMIN'){
+			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+				if(response.data.success === true){
+					response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
+					that.search();
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		}else{
+			this.search();
+		}
     },
     data:function(){
         return{
+        	role:'${MEMBER_ROLE}',
+        	topselect:{
+				orgs:{
+					value:'${MEMBER_ORGID}',
+					data:[]
+				}
+			},
         	curPage:1,
 			page:{
 				total:0,
@@ -347,7 +381,7 @@ new Vue({
 	          background: 'rgba(0, 0, 0, 0.7)'
 	        });
             var that = this;
-            axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(response){
+            axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize,orgId:this.topselect.orgs.value}}).then(function(response){
                 loading.close();
                 if(response.data.success === true){
         			that.$data.data = [];
