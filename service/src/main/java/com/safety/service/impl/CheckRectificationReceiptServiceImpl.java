@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -26,9 +28,11 @@ public class CheckRectificationReceiptServiceImpl extends ServiceImpl<CheckRecti
     private CheckRectificationReceiptMapper checkRectificationReceiptMapper;
 
     @Override
-    public PageInfo<CheckRectificationReceipt> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckRectificationReceipt> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckRectificationReceipt> checkMonthRecords = checkRectificationReceiptMapper.selectAll();
-        return new PageInfo<>(checkMonthRecords);
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckRectificationReceipt> CheckRectificationReceipts = checkRectificationReceiptMapper.selectByParam(map);
+        return new PageInfo<>(CheckRectificationReceipts);
     }
 }

@@ -29,4 +29,13 @@
     <select id="selectAll"  resultMap="BaseResultMap">
         select *  from check_danger_checklist order by create_time desc
     </select>
+    <select id="selectByParam" resultType="com.safety.entity.CheckDangerChecklist">
+        select *  from check_danger_checklist
+         <where>
+             <if test="orgFk!='' and orgFk != null">
+                 org_fk = #{orgFk}
+             </if>
+         </where>
+         order by create_time desc
+    </select>
 </mapper>

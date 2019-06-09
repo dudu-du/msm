@@ -106,8 +106,8 @@ public class CheckDangerLedgerController extends BaseController {
      */
     @RequestMapping(value = "/checkDangerLedgerByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckDangerLedgerByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckDangerLedger> page = iCheckDangerLedgerService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckDangerLedgerByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="") String orgId){
+        PageInfo<CheckDangerLedger> page = iCheckDangerLedgerService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

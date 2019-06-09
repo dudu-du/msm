@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,9 +27,11 @@ public class CheckDangerLedgerServiceImpl extends ServiceImpl<CheckDangerLedgerM
     @Autowired
     private CheckDangerLedgerMapper checkDangerLedgerMapper;
     @Override
-    public PageInfo<CheckDangerLedger> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckDangerLedger> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckDangerLedger> checkMonthRecords = checkDangerLedgerMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckDangerLedger> checkMonthRecords = checkDangerLedgerMapper.selectByParam(map);
         return new PageInfo<>(checkMonthRecords);
     }
 }

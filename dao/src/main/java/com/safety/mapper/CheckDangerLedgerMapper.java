@@ -4,6 +4,7 @@ import com.safety.entity.CheckDangerLedger;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,4 +18,5 @@ public interface CheckDangerLedgerMapper extends BaseMapper<CheckDangerLedger> {
 
     List<CheckDangerLedger> selectAll();
 
+    List<CheckDangerLedger> selectByParam(Map map);
 }

@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckDangerLedgerService extends IService<CheckDangerLedger> {
 
-    PageInfo<CheckDangerLedger> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckDangerLedger> getByPage(Integer currentPage, Integer pageSize, String orgId );
 }

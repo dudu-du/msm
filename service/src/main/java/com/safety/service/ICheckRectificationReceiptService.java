@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckRectificationReceiptService extends IService<CheckRectificationReceipt> {
 
-    PageInfo<CheckRectificationReceipt> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckRectificationReceipt> getByPage(Integer currentPage, Integer pageSize, String orgId);
 }

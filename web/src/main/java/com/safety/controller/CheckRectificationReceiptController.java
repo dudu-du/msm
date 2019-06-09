@@ -106,8 +106,8 @@ public class CheckRectificationReceiptController extends BaseController {
      */
     @RequestMapping(value = "/checkRectificationReceiptByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckRectificationReceiptByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckRectificationReceipt> page = iCheckRectificationReceiptService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckRectificationReceiptByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="") String orgId){
+        PageInfo<CheckRectificationReceipt> page = iCheckRectificationReceiptService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

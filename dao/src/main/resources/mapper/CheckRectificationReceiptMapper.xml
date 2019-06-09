@@ -33,5 +33,14 @@
     <select id="selectAll" resultType="com.safety.entity.CheckRectificationReceipt">
         select *  from check_rectification_receipt order by create_time desc
     </select>
+    <select id="selectByParam" resultType="com.safety.entity.CheckRectificationReceipt">
+        select *  from check_rectification_receipt
+        <where>
+            <if test="orgFk!='' and orgFk != null">
+                org_fk = #{orgFk}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 
 </mapper>

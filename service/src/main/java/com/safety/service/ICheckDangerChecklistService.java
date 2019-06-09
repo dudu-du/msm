@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckDangerChecklistService extends IService<CheckDangerChecklist> {
 
-    PageInfo<CheckDangerChecklist> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckDangerChecklist> getByPage(Integer currentPage, Integer pageSize, String orgId);
 }

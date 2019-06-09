@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,9 +27,11 @@ public class CheckDangerChecklistServiceImpl extends ServiceImpl<CheckDangerChec
     @Autowired
     private CheckDangerChecklistMapper checkDangerChecklistMapper;
     @Override
-    public PageInfo<CheckDangerChecklist> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckDangerChecklist> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckDangerChecklist> checkMonthRecords = checkDangerChecklistMapper.selectAll();
-        return new PageInfo<>(checkMonthRecords);
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckDangerChecklist> CheckDangerChecklists = checkDangerChecklistMapper.selectByParam(map);
+        return new PageInfo<>(CheckDangerChecklists);
     }
 }

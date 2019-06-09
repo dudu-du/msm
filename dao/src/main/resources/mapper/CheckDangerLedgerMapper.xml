@@ -33,4 +33,13 @@
     <select id="selectAll"  resultMap="BaseResultMap">
         select *  from check_danger_ledger order by create_time desc
     </select>
+    <select id="selectByParam" resultType="com.safety.entity.CheckDangerLedger">
+        select *  from check_danger_ledger
+        <where>
+            <if test="orgFk!='' and orgFk != null">
+                org_fk = #{orgFk}
+            </if>
+        </where>
+         order by create_time desc
+    </select>
 </mapper>

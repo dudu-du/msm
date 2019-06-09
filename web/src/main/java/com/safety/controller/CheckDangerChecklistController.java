@@ -106,8 +106,8 @@ public class CheckDangerChecklistController extends BaseController {
      */
     @RequestMapping(value = "/checkDangerChecklistByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckDangerChecklistByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckDangerChecklist> page = iCheckDangerChecklistService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckDangerChecklistByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckDangerChecklist> page = iCheckDangerChecklistService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {
