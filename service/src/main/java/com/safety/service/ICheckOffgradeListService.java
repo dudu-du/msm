@@ -19,7 +19,7 @@ import java.util.Map;
  * @since 2019-05-23
  */
 public interface ICheckOffgradeListService extends IService<CheckOffgradeList> {
-    PageInfo<CheckOffgradeList> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckOffgradeList> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     /**
      * 按事故类型统计否的检查记录

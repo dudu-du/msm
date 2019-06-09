@@ -24,4 +24,6 @@ public interface CheckOffgradeListMapper extends BaseMapper<CheckOffgradeList> {
     List<Map<String,Object>> selectWeekOffgradeLevelCountByOrg(Map map);
     List<Map<String,Object>> selectMonthOffgradeTroubleCountByOrg(Map map);
     List<Map<String,Object>> selectMonthOffgradeLevelCountByOrg(Map map);
+
+    List<CheckOffgradeList> selectByParam(Map map);
 }

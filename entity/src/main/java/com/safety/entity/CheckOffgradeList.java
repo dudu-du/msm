@@ -1,5 +1,6 @@
 package com.safety.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -86,7 +87,17 @@ public class CheckOffgradeList extends Model<CheckOffgradeList> {
      */
     private String state;
 
+    @TableField(exist = false)
+    private RiskIdentificationList riskIdentificationList;
 
+
+    public RiskIdentificationList getRiskIdentificationList() {
+        return riskIdentificationList;
+    }
+
+    public void setRiskIdentificationList(RiskIdentificationList riskIdentificationList) {
+        this.riskIdentificationList = riskIdentificationList;
+    }
 
     @Override
     protected Serializable pkVal() {

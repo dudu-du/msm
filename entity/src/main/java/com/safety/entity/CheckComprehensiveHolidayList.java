@@ -77,6 +77,7 @@ public class CheckComprehensiveHolidayList extends Model<CheckComprehensiveHolid
     /**
      * 个数标记
      */
+    @TableField(exist = false)
     private Integer union;
 
     /**

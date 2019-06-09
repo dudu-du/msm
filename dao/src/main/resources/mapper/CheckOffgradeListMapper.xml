@@ -87,4 +87,13 @@
         GROUP BY o.name,MONTH(c.create_time),c.level_name
         order by c.level_num
     </select>
+    <select id="selectByParam" resultType="com.safety.entity.CheckOffgradeList">
+        select * from check_offgrade_list
+        <where>
+            <if test="orgFk!='' and orgFk != null">
+                org_fk = #{orgFk}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 </mapper>

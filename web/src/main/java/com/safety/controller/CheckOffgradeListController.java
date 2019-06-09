@@ -35,8 +35,8 @@ public class CheckOffgradeListController extends BaseController {
      */
     @RequestMapping(value = "/checkOffgradeListByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckOffgradeListByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckOffgradeList> page = iCheckOffgradeListService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckOffgradeListByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckOffgradeList> page = iCheckOffgradeListService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {
