@@ -16,9 +16,7 @@
 .el-table thead{
     color: #666;
 }
-.el-scrollbar__wrap {
-    overflow-x: hidden;
-}
+
 @media screen and (min-width:1200px){
     #divprint{
         height: 650px;
