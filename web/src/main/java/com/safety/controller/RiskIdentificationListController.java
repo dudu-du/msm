@@ -57,7 +57,7 @@ public class RiskIdentificationListController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult updateRiskIdentificationList(@RequestBody RiskIdentificationList riskIdentificationList){
-        boolean result = iRiskIdentificationListService.updateById(riskIdentificationList);
+        boolean result = iRiskIdentificationListService.updateRiskIdentificationList(riskIdentificationList);
         if (result){
             return renderSuccess("修改成功");
         }else {

@@ -48,4 +48,14 @@ public class RiskIdentificationListServiceImpl extends ServiceImpl<RiskIdentific
         baseMapper.insert(riskIdentificationList);
         return true;
     }
+
+    @Override
+    public boolean updateRiskIdentificationList(RiskIdentificationList riskIdentificationList) {
+        String levelFk = riskIdentificationList.getLevelFk();
+        RiskDict riskDict = riskDictMapper.selectById(levelFk);
+        riskIdentificationList.setLevelName(riskDict.getName());
+        riskIdentificationList.setLevelNum(riskDict.getValue());
+        baseMapper.updateById(riskIdentificationList);
+        return true;
+    }
 }
