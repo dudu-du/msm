@@ -193,8 +193,8 @@
 					  <el-input v-model="form.personName" autocomplete="off"></el-input>
 				  </el-form-item>
 			    <el-form-item label="安全风险评价" prop="levelName">
-				    <el-select v-model="form.levelName" placeholder="请选择风险等级">
-				      <el-option v-for="item in topselect.levelNames.data" :label="item.name" :key="item.name" :value="item.name"></el-option>
+				    <el-select v-model="form.levelFk" placeholder="请选择风险等级">
+				      <el-option v-for="item in topselect.levelNames.data" :label="item.name" :key="item.id" :value="item.id"></el-option>
 				    </el-select>
 			  	</el-form-item>
 			  </el-form>
@@ -258,6 +258,7 @@ var Incidentfication = function(obj) {
 		this.numD = '';
 		this.levelName = '';
 		this.personName = '';
+		this.levelFk = '';
 	}else{
 		if(obj.index){
 			this.index = obj.index;
@@ -279,6 +280,7 @@ var Incidentfication = function(obj) {
 		this.numC = obj.numC;
 		this.numD = obj.numD;
 		this.levelName = obj.levelName;
+		this.levelFk = obj.levelFk;
 		this.personName = obj.personName;
 		this.riskIdentificationFk = obj.riskIdentificationFk;
 		this.orgFk = obj.orgFk;
