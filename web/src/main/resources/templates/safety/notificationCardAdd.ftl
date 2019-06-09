@@ -116,6 +116,19 @@
 </body>
 <script src="/node_modules/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+	function GetRequest() {
+		var url = decodeURI(decodeURI(location.search)); //获取url中"?"符后的字串
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for(var i = 0; i < strs.length; i ++) {
+				theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+	var curData = GetRequest();
 	$(".add").click(function(){
 		$("tbody").append("<tr class='new'><td colspan='1' rowspan='1' class='factorCont'><input type='text' value='' /></td><td colspan='1' rowspan='1' class='typeCont'><input type='text' value='' /></td><td colspan='1' rowspan='1' class='measureCont'><input type='text' value='' /></td></tr>");
 		$(".factor").attr("rowSpan",$(".new").length+1);
@@ -131,7 +144,9 @@
 			emergencyMeasure:$(".emergencyMeasure input").val(),
 			jobName:$(".jobName input").val(),
 			jobPosition:$(".jobPosition input").val(),
-			safetyNotificationCardList:list
+			safetyNotificationCardList:list,
+			orgFk:curData.orgId,
+			year:curData.year
 		};
 		$.ajax({
 			type:"POST",
