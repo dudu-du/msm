@@ -27,11 +27,30 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">安全风险告知卡</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
-                    <el-button-group style="float: right;margin-bottom: 10px;" v-if="'${MEMBER_ROLE}'=='ROLE_SUPERADMIN'|| '${MEMBER_ROLE}'=='ROLE_ORGADMIN'">
-                        <el-tooltip class="item" effect="dark" content="新增" placement="top-start">
-                            <el-button @click="add" type="primary" size="mini" icon="el-icon-plus" circle></el-button>
-                        </el-tooltip>
-                    </el-button-group>
+					<el-row style="margin-bottom:10px">
+						<el-col :span="12">
+							<el-select placeholder="请选择" v-model="topselect.date">
+							    <el-option
+							      key="2019"
+							      label="2019年"
+							      value="2019">
+							    </el-option>
+							 </el-select>
+							<el-select placeholder="请选择" v-model="topselect.orgs.value" v-if="role=='ROLE_SUPERADMIN'">
+							    <el-option
+							      v-for="item in topselect.orgs.data"
+							      :key="item.id"
+							      :label="item.name"
+							      :value="item.id">
+							    </el-option>
+							  </el-select>
+							  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+							<el-button type="primary" @click="print">打印</el-button>
+						</el-col>
+						<el-col :span="12" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN'">
+							<el-button circle type="success" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'" icon="el-icon-plus" @click="add"></el-button>
+						</el-col>
+					</el-row>
 					<div id="divprint" style="width: 1650px;">
 						<el-scrollbar style="height:100%;width: 100%;">
 					<el-table border style="width: 100%" ref="singleTable" :data="data.list" >
@@ -67,6 +86,114 @@
 			</el-container>
 		</div>
 	</body>
-<script type="text/javascript" src="/Public/js/check/notificationCardPage.js" ></script>
+<script type="text/javascript">
+
+
+
+new Vue({
+    el:'#app',
+    components: {axios},
+    created:function(){
+        var that = this;
+		if(this.$data.role == 'ROLE_SUPERADMIN'){
+			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+				if(response.data.success === true){
+					response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
+					that.search();
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		}else{
+			this.search();
+		}
+    },
+    data:function(){
+        return{
+        	role:'${MEMBER_ROLE}',
+            curPage:1,
+            page:{
+                total:0,
+                pageSize:10
+            },
+            data:[],
+            topselect:{
+				orgs:{
+					value:'${MEMBER_ORGID}',
+					data:[]
+				},
+				date:'2019'
+			}
+        }
+    },
+    methods:{
+        next(currentPage,pageSize){
+            var that = this;
+            axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
+                that.data = res.data.data;
+            }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
+        });
+        },prev(currentPage,pageSize){
+            var that = this;
+            axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
+                that.data = res.data.data;
+            }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
+        });
+        },openPrint(row){
+            window.open("/safety/safetyNotificationCard/safetyNotificationCardPrint?"+row.id);
+        },edit(row){
+            window.open("/safety/safetyNotificationCard/safetyNotificationCardEdit?"+row.id);
+        },add(row){
+            window.open("/safety/safetyNotificationCard/safetyNotificationCardAdd");
+        },del(row){
+            var that=this;
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.delete('/safety/safetyNotificationCard/safetyNotificationCard',{params:{id:row.id}}).then(response=>{
+                    if(response.data.success === true){
+                        this.$message.success(response.data.msg);
+            }else{
+                this.$message.warning(response.data.msg);
+            }
+        }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
+        });
+        }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+        });
+        },
+        search(){
+            var that = this;
+            axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{year:this.$data.topselect.date,currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize,orgId:this.$data.topselect.orgs.value}}).then(function(res){
+                if(res.data.success === true){
+                    that.$data.data = [];
+                    that.data = res.data.data;
+                    that.$data.page.total = res.data.data.total;
+                }else{
+                    that.$message.warning(res.data.msg);
+                }
+            }).catch(err=>{
+                this.$message.error('服务器异常，请稍后再试！');
+        });
+        }
+    },
+    watch:{
+        curPage(val){
+            this.search();
+        }
+    }
+
+});
+</script>
 
 </html>

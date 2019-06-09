@@ -52,7 +52,7 @@
 						  </el-input>
 						</el-col>
 					</el-row>
-					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
+					<el-table border :max-height="tableHeight" header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
 							<el-table-column prop="checkTypeName" label="类型" v-show="false">
 							</el-table-column>
@@ -303,6 +303,7 @@
 						data:[]
 					}
 				},
+				tableHeight: window.innerHeight - 270,
 				tableData:[],
 				data:{},
 				dateValue:'',

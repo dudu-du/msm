@@ -53,7 +53,7 @@
 						</el-col>
 					</el-row>
 		
-					<el-table border header-align="center" :data="tableData" style="width: 100%" ref="singleTable" :show-header="true">
+					<el-table border :max-height="tableHeight" header-align="center" :data="tableData" style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column type="index">
 						</el-table-column>
 						<el-table-column prop="content" label="检查项目及相关要求">
@@ -84,9 +84,6 @@
 						</el-table-column>
 					</el-table>
 				</el-main>
-				<el-footer>
-
-				</el-footer>
 			</el-container>
 			<el-dialog title="隐患排查清单" :visible.sync="dialogFormVisible" ref="dialogForm" @closed="closedDialog('firstForm')">
 			  <el-form :model="listForm" label-width="120px" ref="firstForm">
@@ -296,6 +293,7 @@
 						data:[]
 					}
 				},
+				tableHeight: window.innerHeight - 210,
 				tableData:[],
 				data:{},
 				dateValue:'',

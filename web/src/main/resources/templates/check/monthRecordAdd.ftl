@@ -52,7 +52,7 @@
 						  </el-input>
 						</el-col>
 					</el-row>
-					<el-table border header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
+					<el-table border :max-height="tableHeight" header-align="center" :data="tableData" :span-method="arraySpanMethod"  style="width: 100%" ref="singleTable" :show-header="true">
 						<el-table-column label="检查项目及相关要求" colspan="3">
 							<el-table-column prop="checkTypeName" label="类型" v-show="false">
 							</el-table-column>
@@ -91,7 +91,6 @@
 				</el-main>
 				<el-footer>
 						注：月排查由主要负责人组织并实施。
-					
 				</el-footer>
 			</el-container>
 			<el-dialog title="隐患排查清单" :visible.sync="dialogFormVisible" ref="dialogForm" @closed="closedDialog('firstForm')">
@@ -302,6 +301,7 @@
 						data:[]
 					}
 				},
+				tableHeight: window.innerHeight - 270,
 				tableData:[],
 				data:{},
 				dateValue:'',
