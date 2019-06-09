@@ -26,6 +26,9 @@
 					<el-table border :data="tableData" style="width: 100%" ref="singleTable">
 						<el-table-column type="index" label="序号" width="60"></el-table-column>
 						<el-table-column prop="name" label="文件名" width="150">
+							<template slot-scope="scope">
+								<el-link :href="'/file/'+scope.row.name" target="_blank">{{scope.row.name}}</el-link>
+							</template>
 						</el-table-column>
 						<el-table-column prop="createTime" label="创建时间">
 							<template slot-scope="scope">
@@ -38,7 +41,7 @@
 						     </template>
 						</el-table-column>
 						<el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-						<el-table-column label="操作" width="140px">
+						<el-table-column label="操作" width="140px" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'">
 							<template slot-scope="scope">
 						        <el-button style="margin-left:0" @click="del(scope.row)" type="danger" size="mini" icon="el-icon-delete" circle></el-button>
 						     </template>
@@ -58,6 +61,7 @@
 		data:function(){
 			return {
 				curType:${fileType},
+				role:'${MEMBER_ROLE}',
 				tableData:[]
 			};
 		},
