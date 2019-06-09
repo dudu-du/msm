@@ -115,7 +115,7 @@ public class RiskIdentificationList extends Model<RiskIdentificationList> {
     /**
      * 安全风险等级序号（排序使用）
      */
-    private byte[] levelNum;
+    private String levelNum;
 
     /**
      * 关联ID
@@ -292,13 +292,15 @@ public class RiskIdentificationList extends Model<RiskIdentificationList> {
     public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
-    public byte[] getLevelNum() {
+
+    public String getLevelNum() {
         return levelNum;
     }
 
-    public void setLevelNum(byte[] levelNum) {
+    public void setLevelNum(String levelNum) {
         this.levelNum = levelNum;
     }
+
     public String getRiskIdentificationFk() {
         return riskIdentificationFk;
     }

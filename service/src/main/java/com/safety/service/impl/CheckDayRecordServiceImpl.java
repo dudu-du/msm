@@ -115,7 +115,10 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                     //TODO:机构id需从条目列表获得 暂时用模板获取
                     checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
-                    checkOffgradeList.setLevelName(checkDayList.getLevelName());
+                    String riskIdentificationListId = checkDayList.getRiskIdentificationListId();
+                    RiskIdentificationList riskIdentificationList = riskIdentificationListMapper.selectById(riskIdentificationListId);
+                    checkOffgradeList.setLevelName(riskIdentificationList.getLevelName());
+                    checkOffgradeList.setLevelNum(riskIdentificationList.getLevelNum());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
                     checkOffgradeListMapper.insert(checkOffgradeList);
                     //获取填写的清单 台账 回执单 并保存

@@ -21,4 +21,6 @@ public interface IRiskIdentificationListService extends IService<RiskIdentificat
      * @return
      */
     List<Map<String,Object>> getLevelCountByOrgId(String orgId);
+
+    boolean addRiskIdentificationList(RiskIdentificationList riskIdentificationList);
 }

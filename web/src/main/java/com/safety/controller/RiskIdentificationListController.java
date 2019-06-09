@@ -40,12 +40,9 @@ public class RiskIdentificationListController extends BaseController {
     @ResponseBody
     @CrossOrigin
     public JsonResult addRiskIdentificationList(@RequestBody RiskIdentificationList riskIdentificationList){
-        String id = UUIDUtil.getUUID();
-        riskIdentificationList.setId(id);
-        riskIdentificationList.setCreateTime(LocalDateTime.now());
-        boolean result = iRiskIdentificationListService.save(riskIdentificationList);
+        boolean result = iRiskIdentificationListService.addRiskIdentificationList(riskIdentificationList);
         if (result){
-            return renderSuccess("添加成功", id);
+            return renderSuccess("添加成功");
         }else {
             return renderError("添加失败");
         }
