@@ -47,7 +47,7 @@
 							  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
 							<el-button type="primary" @click="print">打印</el-button>
 						</el-col>
-						<el-col :span="12" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN'">
+						<el-col :span="12" style="text-align:right;">
 							<el-button circle type="success" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'" icon="el-icon-plus" @click="add"></el-button>
 						</el-col>
 					</el-row>
@@ -129,26 +129,12 @@ new Vue({
         }
     },
     methods:{
-        next(currentPage,pageSize){
-            var that = this;
-            axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
-                that.data = res.data.data;
-            }).catch(err=>{
-                this.$message.error('服务器异常，请稍后再试！');
-        });
-        },prev(currentPage,pageSize){
-            var that = this;
-            axios.get('/safety/safetyNotificationCard/safetyNotificationCardByPage',{params:{currentPage:currentPage,pageSize:pageSize}}).then(function(res){
-                that.data = res.data.data;
-            }).catch(err=>{
-                this.$message.error('服务器异常，请稍后再试！');
-        });
-        },openPrint(row){
+        openPrint(row){
             window.open("/safety/safetyNotificationCard/safetyNotificationCardPrint?"+row.id);
         },edit(row){
             window.open("/safety/safetyNotificationCard/safetyNotificationCardEdit?"+row.id);
         },add(row){
-            window.open("/safety/safetyNotificationCard/safetyNotificationCardAdd");
+            window.open("/safety/safetyNotificationCard/safetyNotificationCardAdd?orgId="+this.$data.topselect.orgs.value+'&year='+this.$data.topselect.date);
         },del(row){
             var that=this;
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
