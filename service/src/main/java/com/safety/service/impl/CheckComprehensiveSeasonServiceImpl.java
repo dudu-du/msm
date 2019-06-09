@@ -62,10 +62,12 @@ public class CheckComprehensiveSeasonServiceImpl extends ServiceImpl<CheckCompre
     @Override
     public boolean addCheckComprehensiveSeason(CheckComprehensiveSeason checkComprehensiveSeason) {
         List<CheckComprehensiveSeasonList> checkComprehensiveSeasonLists = checkComprehensiveSeason.getCheckComprehensiveSeasonList();
+        String orgId = checkComprehensiveSeason.getOrgFk();
         if (checkComprehensiveSeasonLists.size()>0){
             for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:checkComprehensiveSeasonLists){
                 checkComprehensiveSeasonList.setId(UUIDUtil.getUUID());
                 checkComprehensiveSeason.setCreateTime(LocalDateTime.now());
+                checkComprehensiveSeason.setOrgFk(orgId);
                 checkComprehensiveSeasonListMapper.insert(checkComprehensiveSeasonList);
             }
         }

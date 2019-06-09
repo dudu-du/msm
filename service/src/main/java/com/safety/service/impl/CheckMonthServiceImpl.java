@@ -66,10 +66,12 @@ public class CheckMonthServiceImpl extends ServiceImpl<CheckMonthMapper, CheckMo
     @Override
     public boolean addCheckMonth(CheckMonth checkMonth) {
         List<CheckMonthList> checkMonthLists = checkMonth.getCheckMonthList();
+        String orgId = checkMonth.getOrgFk();
         if (checkMonthLists.size()>0){
             for (CheckMonthList checkWeekList:checkMonthLists){
                 checkWeekList.setId(UUIDUtil.getUUID());
                 checkWeekList.setCreateTime(LocalDateTime.now());
+                checkWeekList.setOrgFk(orgId);
                 checkMonthListMapper.insert(checkWeekList);
             }
         }

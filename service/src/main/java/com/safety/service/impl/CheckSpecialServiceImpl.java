@@ -65,10 +65,12 @@ public class CheckSpecialServiceImpl extends ServiceImpl<CheckSpecialMapper, Che
     @Override
     public boolean addCheckSpecial(CheckSpecial checkSpecial) {
         List<CheckSpecialList> checkSpecialLists = checkSpecial.getCheckSpecialList();
+        String orgId = checkSpecial.getOrgFk();
         if (checkSpecialLists.size()>0){
             for (CheckSpecialList checkSpecialList:checkSpecialLists){
                 checkSpecialList.setId(UUIDUtil.getUUID());
                 checkSpecialList.setCreateTime(LocalDateTime.now());
+                checkSpecialList.setOrgFk(orgId);
                 checkSpecialListMapper.insert(checkSpecialList);
             }
         }

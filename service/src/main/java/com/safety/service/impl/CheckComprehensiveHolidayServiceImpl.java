@@ -62,10 +62,12 @@ public class CheckComprehensiveHolidayServiceImpl extends ServiceImpl<CheckCompr
     @Override
     public boolean addCheckComprehensiveHoliday(CheckComprehensiveHoliday checkComprehensiveHoliday) {
         List<CheckComprehensiveHolidayList> checkComprehensiveHolidayLists = checkComprehensiveHoliday.getCheckComprehensiveHolidayList();
+        String orgId = checkComprehensiveHoliday.getOrgFk();
         if (checkComprehensiveHolidayLists.size()>0){
             for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:checkComprehensiveHolidayLists){
                 checkComprehensiveHolidayList.setId(UUIDUtil.getUUID());
                 checkComprehensiveHolidayList.setCreateTime(LocalDateTime.now());
+                checkComprehensiveHolidayList.setOrgFk(orgId);
                 checkComprehensiveHolidayListMapper.insert(checkComprehensiveHolidayList);
             }
         }

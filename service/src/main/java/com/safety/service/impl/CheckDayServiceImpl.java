@@ -67,10 +67,12 @@ public class CheckDayServiceImpl extends ServiceImpl<CheckDayMapper, CheckDay> i
     @Override
     public boolean addCheckDay(CheckDay checkDay) {
         List<CheckDayList> checkDayLists = checkDay.getCheckDayList();
+        String orgId = checkDay.getOrgFk();
         if (checkDayLists.size()>0){
             for (CheckDayList checkDayList:checkDayLists){
                 checkDayList.setId(UUIDUtil.getUUID());
                 checkDayList.setCreateTime(LocalDateTime.now());
+                checkDayList.setOrgFk(orgId);
                 checkDayListMapper.insert(checkDayList);
             }
         }
