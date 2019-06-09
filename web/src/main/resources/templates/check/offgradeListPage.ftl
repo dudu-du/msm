@@ -320,7 +320,7 @@ new Vue({
 				total:0,
 				pageSize:10
 			},
-			tableHeight: window.innerHeight - 200,
+			tableHeight: window.innerHeight - 240,
             data:[],
             dialogFormVisible:false,
             dangerLedgerVisible:false,
