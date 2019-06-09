@@ -53,6 +53,7 @@ public class SafetyNotificationCardServiceImpl extends ServiceImpl<SafetyNotific
         List<SafetyNotificationCardList> safetyNotificationCardLists = safetyNotificationCard.getSafetyNotificationCardList();
         safetyNotificationCard.setSafetyNotificationCardList(null);
         String id = UUIDUtil.getUUID();
+        safetyNotificationCard.setCreateTime(LocalDateTime.now());
         safetyNotificationCard.setId(id);
         safetyNotificationCardMapper.insert(safetyNotificationCard);
         if (safetyNotificationCardLists.size()>0){
