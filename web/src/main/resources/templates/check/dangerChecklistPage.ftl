@@ -41,7 +41,7 @@
 						  <el-button type="primary" icon="el-icon-search" @click="search" v-if="role=='ROLE_SUPERADMIN'">搜索</el-button>&nbsp;
 					</el-col>
 					<el-col :span="4" style="text-align:right;">
-						<el-button type="success" @click="print">打印</el-button>
+						<el-button type="primary" @click="print">打印</el-button>
 					</el-col>
 					</el-row>
 					<el-table border :max-height="tableHeight" style="width: 100%" ref="singleTable" :data="data" >
@@ -117,8 +117,15 @@ new Vue({
     },
     methods:{
         search(){
+        	const loading = this.$loading({
+	          lock: true,
+	          text: 'Loading',
+	          spinner: 'el-icon-loading',
+	          background: 'rgba(0, 0, 0, 0.7)'
+	        });
         	var that = this;
             axios.get('/safety/checkDangerChecklist/checkDangerChecklistByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize,orgId:this.topselect.orgs.value}}).then(function(res){
+            	loading.close();
             	if(res.data.success === true){
             		that.$data.data = [];
             		that.$data.page.total = res.data.data.total;
@@ -129,7 +136,8 @@ new Vue({
                 	that.$message.warning(res.data.msg);
                 }
 	        }).catch(err=>{
-	              this.$message.error('服务器异常，请稍后再试！');
+	        	loading.close();
+	            this.$message.error('服务器异常，请稍后再试！');
 	        });
         },print(){
 			window.open("/safety/checkDangerChecklist/checkDangerChecklistPrint?currentPage="+this.$data.curPage+"&pageSize="+this.$data.page.pageSize+"");

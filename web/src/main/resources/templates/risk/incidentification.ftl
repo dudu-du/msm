@@ -77,7 +77,7 @@
 						<el-col :span="2"><span style="background-color:#DAA520;padding:8px;border-radius:6%;font-family:cursive;">较大风险：{{countMap.b}}</span></el-col>
 						<el-col :span="2"><span style="background-color:#FFFF00;padding:8px;border-radius:6%;font-family:cursive;">一般风险：{{countMap.c}}</span></el-col>
 						<el-col :span="2"><span style="background-color:#4169E1;padding:8px;border-radius:6%;font-family:cursive;">低风险：{{countMap.l}}</span></el-col>
-						<el-col :span="16" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN'"><el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
+						<el-col :span="16" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'"><el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
 					</el-row>
 					<el-table :max-height="tableHeight" resizable border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column fixed prop="index" label="序号" width="60" ></el-table-column>

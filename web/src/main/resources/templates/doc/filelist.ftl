@@ -17,7 +17,7 @@
 				<el-main>
 					<el-row style="margin-bottom:10px">
 						<el-col :span="22">&nbsp;</el-col>
-						<el-col :span="2" style="padding-left:58px">
+						<el-col :span="2" style="padding-left:58px" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'">
 							<el-upload :show-file-list="false" action="/safety/file/upload" :data="{type:${fileType}}" :on-success="uploadSuccess" :on-error="uploadError">
 							  <el-button size="small" type="primary">点击上传</el-button>
 							</el-upload>
