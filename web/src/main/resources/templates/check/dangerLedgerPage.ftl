@@ -32,10 +32,23 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">隐患治理信息台账列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
-					<el-button type="success" @click="print" style="margin-bottom: 20px">打印</el-button>
-					<div id="divprint" style="width: 1650px;">
-						<el-scrollbar style="height:100%;width: 100%;">
-					<el-table border style="width: 100%" ref="singleTable" :data="data" >
+					<el-row style="margin-bottom:10px">
+					<el-col :span="20" >
+						<el-select placeholder="请选择" v-model="topselect.orgs.value" v-if="role=='ROLE_SUPERADMIN'">
+						    <el-option
+						      v-for="item in topselect.orgs.data"
+						      :key="item.id"
+						      :label="item.name"
+						      :value="item.id">
+						    </el-option>
+						  </el-select>
+						  <el-button type="primary" icon="el-icon-search" @click="search" v-if="role=='ROLE_SUPERADMIN'">搜索</el-button>&nbsp;
+					</el-col>
+					<el-col :span="4" style="text-align:right;">
+						<el-button type="primary" @click="print">打印</el-button>
+					</el-col>
+					</el-row>
+					<el-table border :max-height="tableHeight" style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
 						<el-table-column prop="investigationTime" label="排查时间">
 						</el-table-column>
@@ -44,7 +57,7 @@
 						<el-table-column prop="rectificationPosition" label="隐患部位" align="center">
 							<template slot-scope="scope">
 								{{scope.row.rectificationPosition}}
-								<img :src="scope.row.rectificationPositionUrl"></img>
+								<img :src="scope.row.rectificationPositionUrl" v-if="scope.row.rectificationPositionUrl && scope.row.rectificationPositionUrl !== ''"></img>
 							</template>
 						</el-table-column>
 						<el-table-column prop="rectificationName" label="隐患名称" align="center"></el-table-column>
@@ -64,12 +77,10 @@
 						<el-table-column prop="reviewResult" label="复查结果" align="center">
 							<template slot-scope="scope">
 								{{scope.row.reviewResult}}
-								<img :src="scope.row.reviewResultUrl"></img>
+								<img :src="scope.row.reviewResultUrl" v-if="scope.row.reviewResultUrl && scope.row.reviewResultUrl !== ''"></img>
 							</template>
 						</el-table-column>
 					</el-table>
-						</el-scrollbar>
-					</div>
 				</el-main>
 				<el-footer style="text-align:center;">
 					<el-pagination
@@ -81,5 +92,81 @@
 			</el-container>
 		</div>
 	</body>
-<script type="text/javascript" src="/Public/js/check/dangerLedgerPage.js" ></script>
+<script type="text/javascript" >
+
+
+new Vue({
+    el:'#app',
+    components: {axios},
+    created:function(){
+        var that = this;
+		if(this.$data.role == 'ROLE_SUPERADMIN'){
+			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+				if(response.data.success === true){
+					response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
+					that.search();
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		}else{
+			this.search();
+		}
+    },
+    data:function(){
+        return {
+        	role:'${MEMBER_ROLE}',
+        	topselect:{
+				orgs:{
+					value:'${MEMBER_ORGID}',
+					data:[]
+				}
+			},
+        	curPage:1,
+			page:{
+				total:0,
+				pageSize:10
+			},
+            data: [],
+            tableHeight: window.innerHeight - 230
+        }
+    },
+    methods:{
+        search(){
+        	const loading = this.$loading({
+	          lock: true,
+	          text: 'Loading',
+	          spinner: 'el-icon-loading',
+	          background: 'rgba(0, 0, 0, 0.7)'
+	        });
+        	var that = this;
+
+			axios.get('/safety/checkDangerLedger/checkDangerLedgerByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize,orgId:this.topselect.orgs.value}}).then(function(response){
+        		loading.close();
+        		if(response.data.success === true){
+        			that.$data.data = [];
+        			that.$data.page.total = response.data.data.total;
+        			response.data.data.list.forEach(e=>{
+        				that.$data.data.push(e);
+        			});
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+            }).catch(err=>{
+            	loading.close();
+                this.$message.error('服务器异常，请稍后再试！');
+            });
+        },print(){
+            window.open("/safety/checkDangerLedger/checkDangerLedgerPrint?currentPage="+this.$data.curPage+"&pageSize="+this.$data.page.pageSize+"");
+        }
+	},
+    watch:{
+		curPage(val){
+			this.search();
+		}
+	}
+});
+</script>
 </html>

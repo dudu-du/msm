@@ -54,10 +54,10 @@
 							    </el-option>
 							  </el-select>
 							  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-							<el-button type="success" @click="print">打印</el-button>
+							<el-button type="primary" @click="print">打印</el-button>
 						</el-col>
 						<el-col :span="12" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN'">
-							<el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
+							<el-button circle type="success" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
 						</el-col>
 					</el-row>
 					<el-table :max-height="tableHeight" border resizable highlight-current-row :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">

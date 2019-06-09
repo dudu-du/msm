@@ -28,9 +28,7 @@
 					<el-col :span="8">&nbsp;</el-col><el-col :span="8" style="text-align:center;font-size:32px;">未合格项记录列表</el-col><el-col :span="8">&nbsp;</el-col>
 				</el-header>
 				<el-main>
-					<div id="divprint" style="width: 1650px;">
-						<el-scrollbar style="height:100%;width: 100%;">
-					<el-table border style="width: 100%" ref="singleTable" :data="data" >
+					<el-table border :max-height="tableHeight" style="width: 100%" ref="singleTable" :data="data" >
 						<el-table-column type="index" label="序号" align="center"></el-table-column>
 						<el-table-column prop="checkType" label="来源" align="center">
 						</el-table-column>
@@ -59,8 +57,6 @@
 						     </template>
 						</el-table-column>
 					</el-table>
-						</el-scrollbar>
-					</div>
 				</el-main>
 				<el-footer style="text-align:center">
 						<el-pagination
@@ -290,6 +286,7 @@ new Vue({
 				total:0,
 				pageSize:10
 			},
+			tableHeight: window.innerHeight - 200,
             data:[],
             dialogFormVisible:false,
             dangerLedgerVisible:false,
@@ -299,34 +296,35 @@ new Vue({
             	harmfulFactors:'',
             	measure:'',
             	runawayPerformance:'',
-            	controlOrgName:'',
+            	controlOrgName:'${MEMBER_ORGNAME}',
             	controlOrgPersonName:'',
-            	investigationOrgName:'',
-            	investigationOrgPersonName:'',
+            	investigationOrgName:'${MEMBER_ORGNAME}',
+            	investigationOrgPersonName:'${Session.MEMBER_USER_PERSON.realname}',
             	investigationCount:'',
             	remark:''
             },
             dangerForm:{
             	investigationTime:'',
-            	investigationOrgPersonName:'',
+            	investigationOrgPersonName:'${Session.MEMBER_USER_PERSON.realname}',
             	rectificationPosition:'',
             	rectificationName:'',
             	rectificationLevel:'',
             	governmentMeasure:'',
             	rectificationPositionUrl:'',
             	complateTime:'',
-            	controlOrgName:'',
+            	controlOrgName:'${MEMBER_ORGNAME}',
             	controlOrgPersonName:'',
             	reviewTime:'',
             	reviewResultUrl:'',
-            	reviewPersonName:'',
+            	reviewPersonName:'${Session.MEMBER_USER_PERSON.realname}',
             	offgradeListFk:'',
-            	checkType:''
+            	checkType:'',
+            	reviewResult:''
             },
             receiptForm:{
-            	checkOrgName:'',
+            	checkOrgName:'${MEMBER_ORGNAME}',
             	fillTime:'',
-            	checkPersonName:'',
+            	checkPersonName:'${Session.MEMBER_USER_PERSON.realname}',
             	checkTime:'',
             	checkCode:'',
             	rectificationOrgName:'',
@@ -342,8 +340,15 @@ new Vue({
     },
     methods:{
     	search(){
+    		const loading = this.$loading({
+	          lock: true,
+	          text: 'Loading',
+	          spinner: 'el-icon-loading',
+	          background: 'rgba(0, 0, 0, 0.7)'
+	        });
             var that = this;
             axios.get('/safety/checkOffgradeList/checkOffgradeListByPage',{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(response){
+                loading.close();
                 if(response.data.success === true){
         			that.$data.data = [];
         			that.$data.page.total = response.data.data.total;
@@ -354,6 +359,7 @@ new Vue({
 					that.$message.warning(response.data.msg);
 				}
             }).catch(err=>{
+            	loading.close();
                 this.$message.error('服务器异常，请稍后再试！');
         	});
     	
@@ -363,12 +369,20 @@ new Vue({
         	this.$data.form.offgradeListFk = row.id;
         	this.$data.form.orgFk = row.orgFk;
         	this.$data.form.checkType = row.checkType;
+        	this.$data.form.harmfulFactors = row.riskIdentificationList.harmfulFactors;
+        	this.$data.form.measure = row.riskIdentificationList.measure;
+        	this.$data.form.riskPosition = row.riskIdentificationList.incidence;
+        	this.$data.form.runawayPerformance = row.riskIdentificationList.consequence;
+        	this.$data.form.controlOrgPersonName = row.riskIdentificationList.personName;
         },
         addDanger(row,formName){
         	this.$data.dangerLedgerVisible = true;
         	this.$data.dangerForm.orgFk = row.orgFk;
         	this.$data.dangerForm.offgradeListFk = row.id;
         	this.$data.dangerForm.checkType = row.checkType;
+        	this.$data.dangerForm.rectificationPosition = row.riskIdentificationList.incidence;
+        	this.$data.dangerForm.governmentMeasure = row.riskIdentificationList.measure;
+        	this.$data.dangerForm.controlOrgPersonName = row.riskIdentificationList.personName;
         },
         closedDialog(formName){
         	if(this.$refs['rectificationPositionUrl']){

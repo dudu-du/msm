@@ -29,6 +29,14 @@
                 </el-header>
 				<el-main>
 					<el-row style="margin-bottom:10px;">
+						<el-select placeholder="请选择" v-model="topselect.orgs.value" v-if="role=='ROLE_SUPERADMIN'">
+						    <el-option
+						      v-for="item in topselect.orgs.data"
+						      :key="item.id"
+						      :label="item.name"
+						      :value="item.id">
+						    </el-option>
+						  </el-select>
 						<el-select placeholder="请选择" v-model="checkType">
 						    <el-option key="1" label="日治理记录" value="0"></el-option>
 						    <el-option key="2" label="周排查记录" value="1"></el-option>
@@ -69,6 +77,13 @@ new Vue({
 	el:'#app',
 	data:function(){
 		return {
+			role:'${MEMBER_ROLE}',
+        	topselect:{
+				orgs:{
+					value:'${MEMBER_ORGID}',
+					data:[]
+				}
+			},
 			curPage:1,
 			page:{
 				total:0,
@@ -95,13 +110,27 @@ new Vue({
 		};
 	},
 	created:function(){
-		this.search();
+		var that = this;
+		if(this.$data.role == 'ROLE_SUPERADMIN'){
+			axios.get('/View/allOrgList',{params:{parentId:'0'}}).then(response=>{
+				if(response.data.success === true){
+					response.data.data.forEach(e=>that.$data.topselect.orgs.data.push(e));
+					that.search();
+				}else{
+					that.$message.warning(response.data.msg);
+				}
+			}).catch(err=>{
+				this.$message.error('服务器异常，请稍后再试！');
+			});
+		}else{
+			this.search();
+		}
 	},
 	methods:{
 		search(){
 			var that = this;
 			var ind = this.$data.checkType;
-			axios.get(this.$data.searchUrl[ind],{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize}}).then(function(response){
+			axios.get(this.$data.searchUrl[ind],{params:{currentPage:this.$data.curPage,pageSize:this.$data.page.pageSize,orgId:this.topselect.orgs.value}}).then(function(response){
         		if(response.data.success === true){
         			that.$data.tableData = [];
         			that.$data.page.total = response.data.data.total;
