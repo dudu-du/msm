@@ -191,9 +191,11 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
     }
 
     @Override
-    public PageInfo<CheckSpecialRecord> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckSpecialRecord> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckSpecialRecord> checkSpecialRecords = checkSpecialRecordMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckSpecialRecord> checkSpecialRecords = checkSpecialRecordMapper.selectAll(map);
         return new PageInfo<>(checkSpecialRecords);
     }
 

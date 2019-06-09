@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface ICheckDayRecordService extends IService<CheckDayRecord> {
 
-    PageInfo<CheckDayRecord> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckDayRecord> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     boolean addCheckDayRecord(CheckDayRecord checkDayRecord);
 

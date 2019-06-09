@@ -121,8 +121,8 @@ public class CheckSeasonRecordController extends BaseController {
      */
     @RequestMapping(value = "/checkSeasonRecordByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckSeasonRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckSeasonRecord> page = iCheckSeasonRecordService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckSeasonRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckSeasonRecord> page = iCheckSeasonRecordService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

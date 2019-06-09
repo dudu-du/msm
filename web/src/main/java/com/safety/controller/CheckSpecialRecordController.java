@@ -121,8 +121,8 @@ public class CheckSpecialRecordController extends BaseController {
      */
     @RequestMapping(value = "/checkSpecialRecordByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckSpecialRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckSpecialRecord> page = iCheckSpecialRecordService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckSpecialRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckSpecialRecord> page = iCheckSpecialRecordService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

@@ -190,9 +190,11 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
     }
 
     @Override
-    public PageInfo<CheckMonthRecord> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckMonthRecord> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckMonthRecord> checkMonthRecords = checkMonthRecordMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckMonthRecord> checkMonthRecords = checkMonthRecordMapper.selectAll(map);
         return new PageInfo<>(checkMonthRecords);
     }
 

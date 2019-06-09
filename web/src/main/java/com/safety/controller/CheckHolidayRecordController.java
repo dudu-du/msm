@@ -121,8 +121,8 @@ public class CheckHolidayRecordController extends BaseController {
      */
     @RequestMapping(value = "/checkHolidayRecordByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckHolidayRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckHolidayRecord> page = iCheckHolidayRecordService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckHolidayRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckHolidayRecord> page = iCheckHolidayRecordService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

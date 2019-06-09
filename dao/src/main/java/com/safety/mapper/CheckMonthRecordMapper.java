@@ -18,6 +18,6 @@ public interface CheckMonthRecordMapper extends BaseMapper<CheckMonthRecord> {
 
     CheckMonthRecord selectByParam(Map param);
 
-    List<CheckMonthRecord> selectAll();
+    List<CheckMonthRecord> selectAll(Map map);
 
 }

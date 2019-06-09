@@ -42,7 +42,13 @@
         where c.id = #{id}
     </select>
     <select id="selectAll" resultType="com.safety.entity.CheckDayRecord">
-        select *  from check_day_record order by create_time desc
+        select *  from check_day_record
+        <where>
+            <if test="orgFk!=null and orgFk != ''">
+                and org_fk = #{orgFk}
+            </if>
+        </where>
+         order by create_time desc
     </select>
     <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
         select * from check_day_record

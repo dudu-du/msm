@@ -18,7 +18,7 @@ public interface ICheckSeasonRecordService extends IService<CheckSeasonRecord> {
 
     CheckSeasonRecord getByParam(String orgId, String year);
 
-    PageInfo<CheckSeasonRecord> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckSeasonRecord> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     CheckSeasonRecord getById(String id);
 }

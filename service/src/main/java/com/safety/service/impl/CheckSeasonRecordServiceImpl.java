@@ -196,9 +196,11 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
     }
 
     @Override
-    public PageInfo<CheckSeasonRecord> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckSeasonRecord> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckSeasonRecord> checkSeasonRecords = checkSeasonRecordMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckSeasonRecord> checkSeasonRecords = checkSeasonRecordMapper.selectAll(map);
         return new PageInfo<>(checkSeasonRecords);
     }
 

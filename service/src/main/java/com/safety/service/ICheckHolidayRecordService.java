@@ -18,7 +18,7 @@ public interface ICheckHolidayRecordService extends IService<CheckHolidayRecord>
 
     CheckHolidayRecord getByParam(String orgId, String year);
 
-    PageInfo<CheckHolidayRecord> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckHolidayRecord> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     CheckHolidayRecord getById(String id);
 }

@@ -18,7 +18,7 @@ public interface CheckHolidayRecordMapper extends BaseMapper<CheckHolidayRecord>
 
     CheckHolidayRecord selectByParam(Map param);
 
-    List<CheckHolidayRecord> selectAll();
+    List<CheckHolidayRecord> selectAll(Map map);
 
     int updateById(CheckHolidayRecord checkMonthRecord);
 }

@@ -18,7 +18,7 @@ public interface CheckSpecialRecordMapper extends BaseMapper<CheckSpecialRecord>
 
     CheckSpecialRecord selectByParam(Map param);
 
-    List<CheckSpecialRecord> selectAll();
+    List<CheckSpecialRecord> selectAll(Map map);
 
     int updateById(CheckSpecialRecord checkMonthRecord);
 

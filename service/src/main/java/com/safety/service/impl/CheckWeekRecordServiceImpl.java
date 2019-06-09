@@ -190,9 +190,11 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
     }
 
     @Override
-    public PageInfo<CheckWeekRecord> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckWeekRecord> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckWeekRecord> checkWeekRecords = checkWeekRecordMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckWeekRecord> checkWeekRecords = checkWeekRecordMapper.selectAll(map);
         return new PageInfo<>(checkWeekRecords);
     }
 

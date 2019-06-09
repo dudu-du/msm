@@ -31,7 +31,13 @@
         </where>
     </select>
     <select id="selectAll"  resultMap="BaseResultMap">
-        select *  from check_week_record order by create_time desc
+        select *  from check_week_record
+        <where>
+            <if test="orgFk!=null and orgFk != ''">
+                and org_fk = #{orgFk}
+            </if>
+        </where>
+         order by create_time desc
     </select>
     <update id="updateById" parameterType="com.safety.entity.CheckWeekRecord">
         update check_week_record

@@ -18,7 +18,7 @@ public interface ICheckSpecialRecordService extends IService<CheckSpecialRecord>
 
     boolean addCheckSpecialRecord(CheckSpecialRecord checkSpecialRecord);
 
-    PageInfo<CheckSpecialRecord> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckSpecialRecord> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     CheckSpecialRecord getById(String id);
 }

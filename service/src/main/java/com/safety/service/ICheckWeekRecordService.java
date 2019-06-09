@@ -18,7 +18,7 @@ public interface ICheckWeekRecordService extends IService<CheckWeekRecord> {
 
     CheckWeekRecord getByParam(String orgId, String year);
 
-    PageInfo<CheckWeekRecord> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<CheckWeekRecord> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     CheckWeekRecord getById(String id);
 }

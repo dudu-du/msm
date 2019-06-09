@@ -196,9 +196,11 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
     }
 
     @Override
-    public PageInfo<CheckHolidayRecord> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckHolidayRecord> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckHolidayRecord> checkHolidayRecords = checkHolidayRecordMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckHolidayRecord> checkHolidayRecords = checkHolidayRecordMapper.selectAll(map);
         return new PageInfo<>(checkHolidayRecords);
     }
 

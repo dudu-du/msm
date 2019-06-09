@@ -18,7 +18,7 @@ public interface CheckWeekRecordMapper extends BaseMapper<CheckWeekRecord> {
 
     CheckWeekRecord selectByParam(Map param);
 
-    List<CheckWeekRecord> selectAll();
+    List<CheckWeekRecord> selectAll(Map map);
 
     int updateById(CheckWeekRecord checkWeekRecord);
 }

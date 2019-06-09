@@ -121,8 +121,8 @@ public class CheckWeekRecordController extends BaseController {
      */
     @RequestMapping(value = "/checkWeekRecordByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckWeekRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckWeekRecord> page = iCheckWeekRecordService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckWeekRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckWeekRecord> page = iCheckWeekRecordService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

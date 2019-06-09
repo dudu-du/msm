@@ -54,7 +54,13 @@
         </where>
     </select>
     <select id="selectAll" resultType="com.safety.entity.CheckHolidayRecord">
-        select *  from check_holiday_record order by create_time desc
+        select *  from check_holiday_record
+        <where>
+            <if test="orgFk!=null and orgFk != ''">
+                and org_fk = #{orgFk}
+            </if>
+        </where>
+         order by create_time desc
     </select>
 
 </mapper>

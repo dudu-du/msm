@@ -119,8 +119,8 @@ public class CheckMonthRecordController extends BaseController {
      */
     @RequestMapping(value = "/checkMonthRecordByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckMonthRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckMonthRecord> page = iCheckMonthRecordService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckMonthRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckMonthRecord> page = iCheckMonthRecordService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

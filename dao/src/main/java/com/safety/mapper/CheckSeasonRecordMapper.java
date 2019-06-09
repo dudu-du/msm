@@ -18,7 +18,7 @@ public interface CheckSeasonRecordMapper extends BaseMapper<CheckSeasonRecord> {
 
     CheckSeasonRecord selectByParam(Map param);
 
-    List<CheckSeasonRecord> selectAll();
+    List<CheckSeasonRecord> selectAll(Map map);
 
     int updateById(CheckSeasonRecord checkSeasonRecord);
 }

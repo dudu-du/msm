@@ -118,8 +118,8 @@ public class CheckDayRecordController extends BaseController {
      */
     @RequestMapping(value = "/checkDayRecordByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult getCheckDayRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<CheckDayRecord> page = iCheckDayRecordService.getByPage(currentPage, pageSize);
+    public JsonResult getCheckDayRecordByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<CheckDayRecord> page = iCheckDayRecordService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

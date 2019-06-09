@@ -53,9 +53,11 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
 
 
     @Override
-    public PageInfo<CheckDayRecord> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<CheckDayRecord> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CheckDayRecord> checkMonthRecords = baseMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<CheckDayRecord> checkMonthRecords = baseMapper.selectAll(map);
         return new PageInfo<>(checkMonthRecords);
     }
 
