@@ -103,8 +103,8 @@ public class SafetyNotificationCardController extends BaseController {
      */
     @RequestMapping(value = "/safetyNotificationCardByPage",method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult safetyNotificationCardByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize){
-        PageInfo<SafetyNotificationCard> page = iSafetyNotificationCardService.getByPage(currentPage, pageSize);
+    public JsonResult safetyNotificationCardByPage(@RequestParam(defaultValue="1")Integer currentPage,@RequestParam(defaultValue="10")Integer pageSize,@RequestParam(defaultValue="")String orgId){
+        PageInfo<SafetyNotificationCard> page = iSafetyNotificationCardService.getByPage(currentPage, pageSize, orgId);
         if(page!=null){
             return renderSuccess("查询成功",page);
         }else {

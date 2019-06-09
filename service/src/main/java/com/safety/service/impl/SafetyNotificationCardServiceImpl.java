@@ -67,9 +67,11 @@ public class SafetyNotificationCardServiceImpl extends ServiceImpl<SafetyNotific
     }
 
     @Override
-    public PageInfo<SafetyNotificationCard> getByPage(Integer currentPage, Integer pageSize) {
+    public PageInfo<SafetyNotificationCard> getByPage(Integer currentPage, Integer pageSize, String orgId) {
         PageHelper.startPage(currentPage, pageSize);
-        List<SafetyNotificationCard> checkMonthRecords = safetyNotificationCardMapper.selectAll();
+        Map map = new HashMap();
+        map.put("orgFk",orgId);
+        List<SafetyNotificationCard> checkMonthRecords = safetyNotificationCardMapper.selectAll(map);
         return new PageInfo<>(checkMonthRecords);
     }
 

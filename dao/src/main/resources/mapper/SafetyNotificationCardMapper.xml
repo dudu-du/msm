@@ -23,6 +23,12 @@
     </select>
 
     <select id="selectAll"  resultMap="BaseResultMap">
-        select *  from safety_notification_card order by create_time desc
+        select *  from safety_notification_card
+        <where>
+            <if test="orgFk !=null and orgFk != '' ">
+                org_fk =#{orgFk}
+            </if>
+        </where>
+         order by create_time desc
     </select>
 </mapper>

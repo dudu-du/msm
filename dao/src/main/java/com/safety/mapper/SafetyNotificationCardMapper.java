@@ -18,5 +18,5 @@ public interface SafetyNotificationCardMapper extends BaseMapper<SafetyNotificat
 
     SafetyNotificationCard selectByParam(Map param);
 
-    List<SafetyNotificationCard> selectAll();
+    List<SafetyNotificationCard> selectAll(Map map);
 }

@@ -17,7 +17,7 @@ public interface ISafetyNotificationCardService extends IService<SafetyNotificat
 
     boolean addSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard);
 
-    PageInfo<SafetyNotificationCard> getByPage(Integer currentPage, Integer pageSize);
+    PageInfo<SafetyNotificationCard> getByPage(Integer currentPage, Integer pageSize, String orgId);
 
     boolean updateSafetyNotificationCard(SafetyNotificationCard safetyNotificationCard);
 }
