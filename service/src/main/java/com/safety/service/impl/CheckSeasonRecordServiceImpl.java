@@ -59,6 +59,8 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
         checkSeasonRecord.setCreateTime(LocalDateTime.now());
         checkSeasonRecordMapper.insert(checkSeasonRecord);
         String checkSeasonRecordId = checkSeasonRecord.getId();
+        //获取机构ID
+        String orgId = checkSeasonRecord.getOrgFk();
         if (checkComprehensiveSeasonLists.size()>0){
             for (CheckComprehensiveSeasonList checkComprehensiveSeasonList:checkComprehensiveSeasonLists){
                 //判断是否填写值
@@ -82,6 +84,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                     checkSeasonRecordList.setCheckSeasonRecordId(checkSeasonRecordId);
                     checkSeasonRecordList.setResult(checkComprehensiveSeasonList.getResult());
                     checkSeasonRecordList.setCreateTime(LocalDateTime.now());
+                    checkSeasonRecordList.setOrgFk(orgId);
                     checkSeasonRecordListMapper.insert(checkSeasonRecordList);
                 }
                 String result = checkSeasonRecordList.getResult();
@@ -101,7 +104,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
                     //TODO:机构id需从条目列表获得 暂时用模板获取
-                    checkOffgradeList.setOrgFk(checkSeasonRecord.getOrgFk());
+                    checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkComprehensiveSeasonList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
@@ -112,6 +115,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
                         checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
                         checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklist.setOrgFk(orgId);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkComprehensiveSeasonList.getCheckDangerLedger();
@@ -119,6 +123,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                         checkDangerLedger.setId(UUIDUtil.getUUID());
                         checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
                         checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedger.setOrgFk(orgId);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkComprehensiveSeasonList.getCheckRectificationReceipt();
@@ -126,6 +131,7 @@ public class CheckSeasonRecordServiceImpl extends ServiceImpl<CheckSeasonRecordM
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
                         checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
                         checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceipt.setOrgFk(orgId);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){

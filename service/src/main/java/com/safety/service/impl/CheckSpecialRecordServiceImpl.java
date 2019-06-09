@@ -103,6 +103,8 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
         checkSpecialRecord.setCreateTime(LocalDateTime.now());
         checkSpecialRecordMapper.insert(checkSpecialRecord);
         String checkSpecialRecordId = checkSpecialRecord.getId();
+        //获取机构ID
+        String orgId = checkSpecialRecord.getOrgFk();
         if (checkSpecialLists.size()>0){
             for (CheckSpecialList checkSpecialList:checkSpecialLists){
                 //判断是否填写值
@@ -126,6 +128,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                     checkSpecialRecordList.setCheckSpecialRecordId(checkSpecialRecordId);
                     checkSpecialRecordList.setResult(checkSpecialList.getResult());
                     checkSpecialRecordList.setCreateTime(LocalDateTime.now());
+                    checkSpecialRecordList.setOrgFk(orgId);
                     checkSpecialRecordListMapper.insert(checkSpecialRecordList);
                 }
                 String result = checkSpecialRecordList.getResult();
@@ -145,7 +148,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
                     //TODO:机构id需从条目列表获得 暂时用模板获取
-                    checkOffgradeList.setOrgFk(checkSpecialRecord.getOrgFk());
+                    checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkSpecialList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
@@ -156,6 +159,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
                         checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
                         checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklist.setOrgFk(orgId);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkSpecialList.getCheckDangerLedger();
@@ -163,6 +167,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                         checkDangerLedger.setId(UUIDUtil.getUUID());
                         checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
                         checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedger.setOrgFk(orgId);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkSpecialList.getCheckRectificationReceipt();
@@ -170,6 +175,7 @@ public class CheckSpecialRecordServiceImpl extends ServiceImpl<CheckSpecialRecor
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
                         checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
                         checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceipt.setOrgFk(orgId);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){

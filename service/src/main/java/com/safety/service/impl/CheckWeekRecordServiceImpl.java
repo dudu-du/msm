@@ -58,6 +58,8 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
         checkWeekRecord.setCreateTime(LocalDateTime.now());
         checkWeekRecordMapper.insert(checkWeekRecord);
         String checkWeekRecordId = checkWeekRecord.getId();
+        //获取机构ID
+        String orgId = checkWeekRecord.getOrgFk();
         if (checkWeekLists.size()>0){
             for (CheckWeekList checkWeekList:checkWeekLists){
                 //判断是否填写值
@@ -81,6 +83,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                     checkWeekRecordList.setCheckWeekRecordId(checkWeekRecordId);
                     checkWeekRecordList.setResult(checkWeekList.getResult());
                     checkWeekRecordList.setCreateTime(LocalDateTime.now());
+                    checkWeekRecordList.setOrgFk(orgId);
                     checkWeekRecordListMapper.insert(checkWeekRecordList);
                 }
                 String result = checkWeekRecordList.getResult();
@@ -100,7 +103,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
                     //TODO:机构id需从条目列表获得 暂时用模板获取
-                    checkOffgradeList.setOrgFk(checkWeekRecord.getOrgFk());
+                    checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkWeekList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
@@ -111,6 +114,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
                         checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
                         checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklist.setOrgFk(orgId);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkWeekList.getCheckDangerLedger();
@@ -118,6 +122,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                         checkDangerLedger.setId(UUIDUtil.getUUID());
                         checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
                         checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedger.setOrgFk(orgId);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkWeekList.getCheckRectificationReceipt();
@@ -125,6 +130,7 @@ public class CheckWeekRecordServiceImpl extends ServiceImpl<CheckWeekRecordMappe
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
                         checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
                         checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceipt.setOrgFk(orgId);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){

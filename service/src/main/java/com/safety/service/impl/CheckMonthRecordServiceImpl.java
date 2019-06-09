@@ -102,6 +102,8 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
         checkMonthRecord.setCreateTime(LocalDateTime.now());
         checkMonthRecordMapper.insert(checkMonthRecord);
         String checkMonthRecordId = checkMonthRecord.getId();
+        //获取机构ID
+        String orgId = checkMonthRecord.getOrgFk();
         if (checkMonthLists.size()>0){
             for (CheckMonthList checkMonthList:checkMonthLists){
                 //判断是否填写值
@@ -125,6 +127,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkMonthRecordList.setCheckMonthRecordId(checkMonthRecordId);
                     checkMonthRecordList.setResult(checkMonthList.getResult());
                     checkMonthRecordList.setCreateTime(LocalDateTime.now());
+                    checkMonthRecordList.setOrgFk(orgId);
                     checkMonthRecordListMapper.insert(checkMonthRecordList);
                 }
                 String result = checkMonthRecordList.getResult();
@@ -144,7 +147,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
                     //TODO:机构id需从条目列表获得 暂时用模板获取
-                    checkOffgradeList.setOrgFk(checkMonthRecord.getOrgFk());
+                    checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkMonthList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
@@ -155,6 +158,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
                         checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
                         checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklist.setOrgFk(orgId);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkMonthList.getCheckDangerLedger();
@@ -162,6 +166,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                         checkDangerLedger.setId(UUIDUtil.getUUID());
                         checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
                         checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedger.setOrgFk(orgId);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkMonthList.getCheckRectificationReceipt();
@@ -169,6 +174,7 @@ public class CheckMonthRecordServiceImpl extends ServiceImpl<CheckMonthRecordMap
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
                         checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
                         checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceipt.setOrgFk(orgId);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){

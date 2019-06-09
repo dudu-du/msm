@@ -68,6 +68,8 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
         checkDayRecord.setCreateTime(LocalDateTime.now());
         checkDayRecordMapper.insert(checkDayRecord);
         String checkDayRecordId = checkDayRecord.getId();
+        //获取机构ID
+        String orgId = checkDayRecord.getOrgFk();
         if (checkDayLists.size()>0){
             for (CheckDayList checkDayList:checkDayLists){
                 //判断是否填写值
@@ -91,6 +93,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                     checkDayRecordList.setCheckDayRecordId(checkDayRecordId);
                     checkDayRecordList.setResult(checkDayList.getResult());
                     checkDayRecordList.setCreateTime(LocalDateTime.now());
+                    checkDayRecordList.setOrgFk(orgId);
                     checkDayRecordListMapper.insert(checkDayRecordList);
                 }
                 String result = checkDayRecordList.getResult();
@@ -110,7 +113,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
                     //TODO:机构id需从条目列表获得 暂时用模板获取
-                    checkOffgradeList.setOrgFk(checkDayRecord.getOrgFk());
+                    checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkDayList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
@@ -121,6 +124,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
                         checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
                         checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklist.setOrgFk(orgId);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkDayList.getCheckDangerLedger();
@@ -128,6 +132,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                         checkDangerLedger.setId(UUIDUtil.getUUID());
                         checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
                         checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedger.setOrgFk(orgId);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkDayList.getCheckRectificationReceipt();
@@ -135,6 +140,7 @@ public class CheckDayRecordServiceImpl extends ServiceImpl<CheckDayRecordMapper,
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
                         checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
                         checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceipt.setOrgFk(orgId);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){

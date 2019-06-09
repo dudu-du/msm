@@ -59,6 +59,8 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
         checkHolidayRecord.setCreateTime(LocalDateTime.now());
         checkHolidayRecordMapper.insert(checkHolidayRecord);
         String checkHolidayRecordId = checkHolidayRecord.getId();
+        //获取机构ID
+        String orgId = checkHolidayRecord.getOrgFk();
         if (checkComprehensiveHolidayLists.size()>0){
             for (CheckComprehensiveHolidayList checkComprehensiveHolidayList:checkComprehensiveHolidayLists){
                 //判断是否填写值
@@ -82,6 +84,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                     checkHolidayRecordList.setCheckHolidayRecordId(checkHolidayRecordId);
                     checkHolidayRecordList.setResult(checkComprehensiveHolidayList.getResult());
                     checkHolidayRecordList.setCreateTime(LocalDateTime.now());
+                    checkHolidayRecordList.setOrgFk(orgId);
                     checkHolidayRecordListMapper.insert(checkHolidayRecordList);
                 }
                 String result = checkHolidayRecordList.getResult();
@@ -101,7 +104,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                     checkOffgradeList.setCheckType(CHECK_TYPE);
                     checkOffgradeList.setState("0");
                     //TODO:机构id需从条目列表获得 暂时用模板获取
-                    checkOffgradeList.setOrgFk(checkHolidayRecord.getOrgFk());
+                    checkOffgradeList.setOrgFk(orgId);
                     //TODO:此处只保存了安全风险等级名称
                     checkOffgradeList.setLevelName(checkComprehensiveHolidayList.getLevelName());
                     checkOffgradeList.setCreateTime(LocalDateTime.now());
@@ -112,6 +115,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                         checkDangerChecklist.setId(UUIDUtil.getUUID());
                         checkDangerChecklist.setOffgradeListFk(checkOffgradeListId);
                         checkDangerChecklist.setCheckType(CHECK_TYPE);
+                        checkDangerChecklist.setOrgFk(orgId);
                         checkDangerChecklistMapper.insert(checkDangerChecklist);
                     }
                     CheckDangerLedger checkDangerLedger = checkComprehensiveHolidayList.getCheckDangerLedger();
@@ -119,6 +123,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                         checkDangerLedger.setId(UUIDUtil.getUUID());
                         checkDangerLedger.setOffgradeListFk(checkOffgradeListId);
                         checkDangerLedger.setCheckType(CHECK_TYPE);
+                        checkDangerLedger.setOrgFk(orgId);
                         checkDangerLedgerMapper.insert(checkDangerLedger);
                     }
                     CheckRectificationReceipt checkRectificationReceipt = checkComprehensiveHolidayList.getCheckRectificationReceipt();
@@ -126,6 +131,7 @@ public class CheckHolidayRecordServiceImpl extends ServiceImpl<CheckHolidayRecor
                         checkRectificationReceipt.setId(UUIDUtil.getUUID());
                         checkRectificationReceipt.setRecordListFk(checkOffgradeListId);
                         checkRectificationReceipt.setCheckType(CHECK_TYPE);
+                        checkRectificationReceipt.setOrgFk(orgId);
                         checkRectificationReceiptMapper.insert(checkRectificationReceipt);
                     }
                 }else if (YES.equals(result)&&list1.size()>0){
