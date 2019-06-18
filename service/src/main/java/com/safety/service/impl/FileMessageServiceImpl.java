@@ -44,6 +44,9 @@ public class FileMessageServiceImpl extends ServiceImpl<FileMessageMapper, FileM
             byte[] b = f.getBytes();
             String fileName = f.getOriginalFilename();
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            if (!new File(imgPath).exists()){
+                new File(imgPath).mkdirs();
+            }
             String path = imgPath + java.io.File.separator + LocalDateTime.now().format(df)+fileName;
             stream = new BufferedOutputStream(new FileOutputStream(new java.io.File(path)));
             stream.write(b);

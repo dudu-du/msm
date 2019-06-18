@@ -27,7 +27,7 @@
 						<el-table-column type="index" label="序号" width="60"></el-table-column>
 						<el-table-column prop="name" label="文件名" width="150">
 							<template slot-scope="scope">
-								<el-link :href="'/file/'+scope.row.name" target="_blank">{{scope.row.name}}</el-link>
+								<el-link :href="'/file/fileUpload/downloadFile?fileId='+scope.row.id" target="_blank">{{scope.row.name}}</el-link>
 							</template>
 						</el-table-column>
 						<el-table-column prop="createTime" label="创建时间">
