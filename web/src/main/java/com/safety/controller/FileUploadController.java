@@ -42,7 +42,7 @@ public class FileUploadController extends BaseController {
     }
 
     @RequestMapping("/downloadFile")
-    private String downloadFile(HttpServletResponse response, String fileId) {
+    private void downloadFile(HttpServletResponse response, String fileId) {
         FileMessage fileMessage = fileMessageService.getById(fileId);
         String downloadFilePath = fileMessage.getPath();//被下载的文件在服务器中的路径,
         String fileName = fileMessage.getName();//被下载文件的名称
@@ -62,7 +62,6 @@ public class FileUploadController extends BaseController {
                     outputStream.write(buffer, 0, i);
                     i = bis.read(buffer);
                 }
-                return "下载成功";
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -82,6 +81,5 @@ public class FileUploadController extends BaseController {
                 }
             }
         }
-        return "下载失败";
     }
 }
