@@ -52,7 +52,6 @@
 		return theRequest;
 	}
 	var curData = GetRequest();
-	console.log(curData);
 	$.ajax({
 		type:"GET",
 		url:"/safety/riskControl/riskControl",

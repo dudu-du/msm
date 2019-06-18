@@ -45,7 +45,6 @@
 							    </el-option>
 							  </el-select>
 							  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-							<el-button type="primary" @click="print">打印</el-button>
 						</el-col>
 						<el-col :span="12" style="text-align:right;">
 							<el-button circle type="success" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'" icon="el-icon-plus" @click="add"></el-button>
