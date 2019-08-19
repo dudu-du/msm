@@ -47,7 +47,7 @@
 						</div>
 						<div class="layui-col-xs5">
 							<a href="javascript:;" onclick="codeC()" class="code-box">
-								<img src="https://edu.welsee.cn/captcha?uuid=${picture_uuid}" layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+								<img src="/captcha?uuid=${picture_uuid}" layadmin-user-login-codeimg" id="LAY-user-get-vercode"/>
 							</a>
 						</div>
 					</div>
