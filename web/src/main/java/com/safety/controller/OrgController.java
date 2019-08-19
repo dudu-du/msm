@@ -3,10 +3,13 @@ package com.safety.controller;
 import com.safety.entity.Dict;
 import com.safety.entity.Org;
 import com.safety.exception.ProgramException;
+import com.safety.extentity.ExtOrg;
 import com.safety.service.IDictService;
 import com.safety.service.IOrgService;
 import com.safety.tools.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,7 +55,34 @@ public class OrgController extends BaseController {
     public JsonResult getAllOrgList(String parentId) {
         try {
             //todo 字典表验证
-            List orgList = orgService.getAllOrgList(parentId);
+            Session session = SecurityUtils.getSubject().getSession();
+            List orgList = new ArrayList();
+            if(session.getAttribute("MEMBER_ROLE").equals(DictConstants.ROLE_ORGADMIN)){
+               String orgId = session.getAttribute("MEMBER_ORGID").toString();
+                Org org = orgService.getOrgById(orgId);
+                if(org != null) {
+                    ExtOrg extOrg = new ExtOrg();
+                    extOrg.setId(orgId);
+                    extOrg.setCode(org.getCode());
+                    extOrg.setOrgIds(org.getOrgIds());
+                    extOrg.setOrgType(org.getOrgType());
+                    extOrg.setName(org.getName());
+                    extOrg.setParentId(org.getParentId());
+                    extOrg.setDepartmentId(org.getDepartmentId());
+                    extOrg.setFirstPy(org.getFirstPy());
+                    extOrg.setFullPy(org.getFullPy());
+
+                    List orgChild = orgService.getAllOrgList(orgId);
+                    if (orgChild != null && !orgChild.isEmpty()) {
+                        extOrg.setChildren(orgChild);
+                    }
+                    orgList.add(extOrg);
+                }
+
+            }
+            else {
+                orgList = orgService.getAllOrgList(parentId);
+            }
             log.info("获取机构列表：" + orgList);
             return renderSuccess("机构列表成功", orgList);
         } catch (ProgramException e) {

@@ -48,9 +48,9 @@ layui.use(['element','table','layer','form', 'upload'], function(){
             ,defaultToolbar:['']
             ,cols: [[
                 {type: 'checkbox'}
-                // ,{field:'orgName', title:'所属机构'}
                 ,{field:'loginName', title:'用户名',  sort: true}
                 ,{field:'realname', title:'姓名',  unresize: true, sort: true}
+                ,{field:'orgName', title:'所属公司'}
                 // ,{field:'tel', title:'手机号'}
                 // ,{field:'email', title:'邮箱', templet: function(res){
                 //         return res.email
@@ -272,7 +272,7 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	  	        '</div>';
 	        }else{
 	            title = '编辑管理员';
-	            html = addOrgAdminHtml;
+	            html = addOrgAdminHtml+ sele.join('');
 	        }
 	 
 	        layer.open({
@@ -305,7 +305,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
 	                        "id":data.id,
                             "loginId":data.loginId,
 	                        "loginName":data.loginName,
-	                        "realname":data.realname
+	                        "realname":data.realname,
+                            "orgId": data.orgId
 	                    })
 	                }else{
                         $('#password-div').show();
@@ -323,7 +324,8 @@ layui.use(['element','table','layer','form', 'upload'], function(){
                                     id: objData.id,
                                     loginId:objData.loginId,
                                     loginName: objData.loginName,
-                                    realname: objData.realname
+                                    realname: objData.realname,
+                                    orgId:objData.orgId
                                 },
                                 dataType: 'json',
                                 success: function (data) {
