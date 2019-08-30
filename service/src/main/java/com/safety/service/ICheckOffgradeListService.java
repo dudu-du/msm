@@ -44,4 +44,16 @@ public interface ICheckOffgradeListService extends IService<CheckOffgradeList> {
      */
     List<Map<String,Object>> getOffgradeLevelCountByOrg(String orgId, String checkType,
                             LocalDate startTime, LocalDateTime endTime) throws Exception;
+
+    /**
+     * 按事故类型统计否的检查记录
+     * @param orgId
+     * @param checkType
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List<Map<String,Object>> getOffgradeHarmfulCountByOrg(String orgId, String checkType,
+                                                          LocalDate startTime, LocalDateTime endTime) throws Exception;
 }

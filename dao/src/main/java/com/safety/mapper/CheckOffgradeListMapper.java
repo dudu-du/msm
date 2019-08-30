@@ -20,10 +20,13 @@ public interface CheckOffgradeListMapper extends BaseMapper<CheckOffgradeList> {
     List<CheckOffgradeList> selectAll();
     List<Map<String,Object>> selectDayOffgradeTroubleCountByOrg(Map map);
     List<Map<String,Object>> selectDayOffgradeLevelCountByOrg(Map map);
+    List<Map<String,Object>> selectDayOffgradeHarmfulCountByOrg(Map map);
     List<Map<String,Object>> selectWeekOffgradeTroubleCountByOrg(Map map);
     List<Map<String,Object>> selectWeekOffgradeLevelCountByOrg(Map map);
+    List<Map<String,Object>> selectWeekOffgradeHarmfulCountByOrg(Map map);
     List<Map<String,Object>> selectMonthOffgradeTroubleCountByOrg(Map map);
     List<Map<String,Object>> selectMonthOffgradeLevelCountByOrg(Map map);
+    List<Map<String,Object>> selectMonthOffgradeHarmfulCountByOrg(Map map);
 
     List<CheckOffgradeList> selectByParam(Map map);
 }

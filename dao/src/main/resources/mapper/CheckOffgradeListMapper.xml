@@ -43,6 +43,18 @@
         GROUP BY o.name,DATE(c.create_time),c.level_name
         order by c.level_num
     </select>
+    <select id="selectDayOffgradeHarmfulCountByOrg" resultType="map" parameterType="map">
+        select o.name,DATE(c.create_time) as dateofyear,i.harmful_factors ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_day_list dl on c.check_list_fk = dl.id
+        INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,DATE(c.create_time),i.harmful_factors
+        order by DATE(c.create_time)
+    </select>
     <select id="selectWeekOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
         select o.name,WEEK(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
         from check_offgrade_list c
@@ -65,6 +77,18 @@
         GROUP BY o.name,WEEK(c.create_time),c.level_name
         order by c.level_num
     </select>
+    <select id="selectWeekOffgradeHarmfulCountByOrg" resultType="map" parameterType="map">
+        select o.name,WEEK(c.create_time) as dateofyear,i.harmful_factors ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_week_list dl on c.check_list_fk = dl.id
+        INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,WEEK(c.create_time),i.harmful_factors
+        order by WEEK(c.create_time)
+    </select>
     <select id="selectMonthOffgradeTroubleCountByOrg" resultType="map" parameterType="map">
         select o.name,MONTH(c.create_time) as dateofyear,i.trouble_name ,count(1) as count
         from check_offgrade_list c
@@ -86,6 +110,18 @@
         and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
         GROUP BY o.name,MONTH(c.create_time),c.level_name
         order by c.level_num
+    </select>
+    <select id="selectMonthOffgradeHarmfulCountByOrg" resultType="map" parameterType="map">
+        select o.name,MONTH(c.create_time) as dateofyear,i.harmful_factors ,count(1) as count
+        from check_offgrade_list c
+        INNER JOIN org o on c.org_fk=o.id
+        INNER JOIN check_month_list dl on c.check_list_fk = dl.id
+        INNER JOIN risk_identification_list i on dl.risk_identification_list_id = i.id
+        where c.check_type = #{checkType}
+        and c.org_fk = #{orgId}
+        and c.create_time &gt;= #{startTime} and c.create_time &lt;= #{endTime}
+        GROUP BY o.name,MONTH(c.create_time),i.harmful_factors
+        order by MONTH(c.create_time)
     </select>
     <select id="selectByParam" resultType="com.safety.entity.CheckOffgradeList">
         select * from check_offgrade_list

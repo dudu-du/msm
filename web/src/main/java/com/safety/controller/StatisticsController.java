@@ -538,6 +538,33 @@ public class StatisticsController extends BaseController {
         }
     }
 
+
+    /**
+     * 统计日检查表中否的危险因素类型个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/dayOffgradeHarmfulCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getDayOffgradeHarmfulCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeHarmfulCountByOrg(
+                    orgId,DictConstants.CHECK_TYPE_DAY,startTime,endDateTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
     /**
      * 统计周检查表中否的等级个数
      * @param
@@ -577,6 +604,33 @@ public class StatisticsController extends BaseController {
         try {
             LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
             List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(
+                    orgId,DictConstants.CHECK_TYPE_WEEK,startTime,endDateTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+
+    /**
+     * 统计周检查表中否的危险因素个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/weekOffgradeHarmfulCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getWeekOffgradeHarmfulCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            LocalDateTime endDateTime = LocalDateTime.of(endTime, LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeHarmfulCountByOrg(
                     orgId,DictConstants.CHECK_TYPE_WEEK,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
@@ -629,6 +683,32 @@ public class StatisticsController extends BaseController {
             LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
             LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
             List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeTroubleCountByOrg(orgId,DictConstants.CHECK_TYPE_MONTH,startTime,endDateTime);
+            return renderSuccess("获取成功", result);
+        }
+        catch (ProgramException e){
+            log.error("获取失败",e);
+            return renderError(e.getMessage());
+        }catch (Exception e) {
+            log.error("获取失败",e);
+            return renderError("获取失败");
+        }
+    }
+
+    /**
+     * 统计月检查表中否的危险因素个数
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/monthOffgradeHarmfulCount",method = RequestMethod.GET)
+    @ResponseBody
+    @CrossOrigin
+    public JsonResult getMonthOffgradeHarmfulCount(String orgId
+            ,@RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate startTime
+            ,@RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd" ) LocalDate endTime){
+        try {
+            LocalDate endTimeTemp = endTime.with(TemporalAdjusters.lastDayOfMonth());
+            LocalDateTime endDateTime = LocalDateTime.of(endTimeTemp,LocalTime.MAX);
+            List<Map<String,Object>> result = iCheckOffgradeListService.getOffgradeHarmfulCountByOrg(orgId,DictConstants.CHECK_TYPE_MONTH,startTime,endDateTime);
             return renderSuccess("获取成功", result);
         }
         catch (ProgramException e){

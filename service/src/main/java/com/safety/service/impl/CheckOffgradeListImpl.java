@@ -164,4 +164,29 @@ public class CheckOffgradeListImpl extends ServiceImpl<CheckOffgradeListMapper, 
         }
         return result;
     }
+
+    @Override
+    public List<Map<String, Object>> getOffgradeHarmfulCountByOrg(String orgId, String checkType, LocalDate startTime, LocalDateTime endTime) throws Exception {
+        if(StringUtils.isEmpty(orgId) || startTime == null || endTime == null){
+            throw new ProgramException("参数错误");
+        }
+        List<Map<String,Object>> result = new ArrayList<>();
+        Map<String,Object> param = new HashMap<>();
+        param.put("orgId",orgId);
+        param.put("checkType",checkType);
+        param.put("startTime",startTime);
+        param.put("endTime",endTime);
+        switch (checkType){
+            case DictConstants.CHECK_TYPE_DAY:
+                result = baseMapper.selectDayOffgradeHarmfulCountByOrg(param);
+                break;
+            case DictConstants.CHECK_TYPE_WEEK:
+                result = baseMapper.selectWeekOffgradeHarmfulCountByOrg(param);
+                break;
+            case DictConstants.CHECK_TYPE_MONTH:
+                result = baseMapper.selectMonthOffgradeHarmfulCountByOrg(param);
+                break;
+        }
+        return result;
+    }
 }
