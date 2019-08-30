@@ -57,10 +57,16 @@ public class RiskIdentification extends Model<RiskIdentification> {
     private List<RiskIdentificationList> RiskIdentificationList;
 
     /**
-     * 数量统计
+     * 风险等级数量统计
      */
     @TableField(exist = false)
     private Map<String ,Integer> countMap;
+
+    /**
+     * 危害因素数量统计
+     */
+    @TableField(exist = false)
+    private Map<String ,Integer> harmfulCountMap;
 
 
     public String getId() {
@@ -125,6 +131,14 @@ public class RiskIdentification extends Model<RiskIdentification> {
 
     public void setCountMap(Map<String, Integer> countMap) {
         this.countMap = countMap;
+    }
+
+    public Map<String, Integer> getHarmfulCountMap() {
+        return harmfulCountMap;
+    }
+
+    public void setHarmfulCountMap(Map<String, Integer> harmfulCountMap) {
+        this.harmfulCountMap = harmfulCountMap;
     }
 
     @Override

@@ -42,11 +42,16 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
         LocalDateTime year = LocalDateTime.parse(yearStr+"-01-01 00:00:00",df);
         param.put("createTime",year);
         RiskIdentification riskIdentification = riskIdentificationMapper.selectByParam(param);
-        Map<String, Integer> countMap = new HashMap<>();
-        countMap.put("vb",0);
-        countMap.put("b",0);
-        countMap.put("c",0);
-        countMap.put("l",0);
+        Map<String, Integer> riskCount = new HashMap<>();
+        riskCount.put("vb",0);
+        riskCount.put("b",0);
+        riskCount.put("c",0);
+        riskCount.put("l",0);
+        Map<String, Integer> harmfulCount = new HashMap<>();
+        harmfulCount.put("p",0);
+        harmfulCount.put("e",0);
+        harmfulCount.put("m",0);
+        harmfulCount.put("t",0);
         if (riskIdentification!=null){
             //判断时间 修改状态
             LocalDateTime localDateTime = LocalDateTime.now();
@@ -63,9 +68,12 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
             map.put("levelName",levelName);
             List<RiskIdentificationList> list = riskIdentificationListMapper.selectByPid(map);
             if (list.size()>0){
-                countMap = sortList(list);
+                Map<String, Map> countMap = sortList(list);
+                riskCount = countMap.get("risk");
+                harmfulCount = countMap.get("harmful");
             }
-            riskIdentification.setCountMap(countMap);
+            riskIdentification.setCountMap(riskCount);
+            riskIdentification.setHarmfulCountMap(harmfulCount);
             riskIdentification.setRiskIdentificationList(list);
         }else {
             riskIdentification = new RiskIdentification();
@@ -82,7 +90,8 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
                 riskIdentification.setState(0);
             }
             riskIdentification.setRiskIdentificationList(new ArrayList<>());
-            riskIdentification.setCountMap(countMap);
+            riskIdentification.setCountMap(riskCount);
+            riskIdentification.setHarmfulCountMap(harmfulCount);
         }
         return riskIdentification;
     }
@@ -104,16 +113,29 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
         return riskIdentification;
     }
 
-    private Map<String,Integer> sortList(List<RiskIdentificationList> list){
-        Map<String,Integer> count = new HashMap();
+    private Map<String,Map> sortList(List<RiskIdentificationList> list){
+        Map<String,Map> count = new HashMap<>();
+        Map<String,Integer> riskCount = new HashMap();
+        Map<String,Integer> harmfulCount = new HashMap<>();
+        //-------------------风险统计数据---------------------
         //重大风险 verybig
-        int vb = 0;
+        int verybig = 0;
         //较大风险 big
-        int b = 0;
+        int big = 0;
         //一般风险 common
-        int c = 0;
+        int common = 0;
         //低风险 low
-        int l = 0;
+        int low = 0;
+        //-------------------危险有害因素----------------------
+        //人的因素 person
+        int person = 0;
+        //环境因素 environment
+        int environment = 0;
+        //管理因素 management
+        int management = 0;
+        //物的因素 thing
+        int thing = 0;
+        //------------------------------------------------------
         //当前为第几个合并的数据
         int index = 1;
         //合并项有多少条
@@ -124,16 +146,30 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
             RiskIdentificationList riskIdentificationList = list.get(i);
             switch (riskIdentificationList.getLevelName()){
                 case "重大风险":
-                    vb++;
+                    verybig++;
                     break;
                 case "较大风险":
-                    b++;
+                    big++;
                     break;
                 case "一般风险":
-                    c++;
+                    common++;
                     break;
                 case "低风险":
-                    l++;
+                    low++;
+                    break;
+            }
+            switch (riskIdentificationList.getHarmfulFactors()){
+                case "人的因素":
+                    person++;
+                    break;
+                case "环境因素":
+                    environment++;
+                    break;
+                case "管理因素":
+                    management++;
+                    break;
+                case "物的因素":
+                    thing++;
                     break;
             }
             if (postName.equals(riskIdentificationList.getPostName())){
@@ -151,10 +187,16 @@ public class RiskIdentificationServiceImpl extends ServiceImpl<RiskIdentificatio
                 union = 1;
             }
         }
-        count.put("vb",vb);
-        count.put("b",b);
-        count.put("c",c);
-        count.put("l",l);
+        riskCount.put("vb",verybig);
+        riskCount.put("b",big);
+        riskCount.put("c",common);
+        riskCount.put("l",low);
+        harmfulCount.put("p",person);
+        harmfulCount.put("e",environment);
+        harmfulCount.put("m",management);
+        harmfulCount.put("t",thing);
+        count.put("risk",riskCount);
+        count.put("harmful",harmfulCount);
         return count;
     }
 }

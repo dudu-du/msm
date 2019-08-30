@@ -67,3 +67,11 @@ fabric.properties
 /.idea
 /.gradle
 /log
+/common/build
+/dao/build
+/entity/build
+/exception/build
+/interceptor/build
+/poi/build
+/service/build
+/shiro/build
