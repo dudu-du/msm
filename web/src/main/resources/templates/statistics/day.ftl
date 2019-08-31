@@ -38,7 +38,14 @@
 					      :picker-options="pickerOptions">
 					    </el-date-picker>
 				    	<el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-				    	<el-button :type="btn" @click="levelSort">按风险级别排序</el-button>
+				    	<el-dropdown split-button type="success" @command="levelSort">
+						 按{{btn}}排序
+						  <el-dropdown-menu slot="dropdown">
+						    <el-dropdown-item command="事故类型">按事故类型排序</el-dropdown-item>
+						    <el-dropdown-item command="风险级别">按风险级别排序</el-dropdown-item>
+						    <el-dropdown-item command="危害因素排">按危害因素排序</el-dropdown-item>
+						  </el-dropdown-menu>
+						</el-dropdown>
 				    </el-header>
 				    <el-main>
 				    	<el-row>
@@ -65,11 +72,7 @@
 						      </el-table-column>
 						      <el-table-column
 						        prop="level_name"
-						        label="风险等级" v-if="btn=='success'">
-						      </el-table-column>
-						      <el-table-column
-						        prop="trouble_name"
-						        label="事故类型" v-if="btn=='info'">
+						        :label="btn">
 						      </el-table-column>
 						      <el-table-column
 						        prop="count"
@@ -144,7 +147,7 @@
 		data:function(){
 			return {
 				labels:['重大风险', '较大风险', '一般风险', '低风险'],
-				btn:'info',
+				btn:'事故类型',
 				pickerOptions: {
 		          shortcuts: [{
 		            text: '最近一周',
@@ -193,10 +196,12 @@
 				var end = new Date(endDate);
 				
 				var url = '';
-				if(this.$data.btn == 'info'){
+				if(this.$data.btn == '事故类型'){
 					url = '/safety/Statistics/dayOffgradeTroubleCount';
-				}else{
+				}else if(this.$data.btn == '风险级别'){
 					url = '/safety/Statistics/dayOffgradeLevelCount';
+				}else{
+					url = '/safety/Statistics/dayOffgradeHarmfulCount';
 				}
 				
 				var that = this;
@@ -282,12 +287,8 @@
 	            var e = this.getDate(end);
 	            return [s, e];
 			},
-			levelSort(){
-				if(this.$data.btn == 'info'){
-					this.$data.btn = 'success';
-				}else{
-					this.$data.btn = 'info';
-				}
+			levelSort(command){
+				this.$data.btn = command;
 				this.search();
 			},
 			getDate(date){

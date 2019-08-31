@@ -311,7 +311,14 @@ new Vue({
 			}
 		},
 		search(){//搜索
+			const loading = this.$loading({
+	          lock: true,
+	          text: 'Loading',
+	          spinner: 'el-icon-loading',
+	          background: 'rgba(0, 0, 0, 0.7)'
+	        });
 			axios.get('/safety/riskControl/riskControl',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value}}).then(response=>{
+				loading.close();
 				if(response.data.success === true){
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;

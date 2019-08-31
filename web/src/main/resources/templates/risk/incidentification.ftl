@@ -72,12 +72,18 @@
 						  <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
                        		 <el-button type="primary" @click="openPrint()">打印</el-button>
 					</el-row>
-					<el-row style="margin:10px 0 10px 0">
+					<el-row style="margin:10px 0 5px 0">
 						<el-col :span="2"><span style="background-color:red;padding:8px;border-radius:6%;font-family:cursive;">重大风险：{{countMap.vb}}</span></el-col>
 						<el-col :span="2"><span style="background-color:#DAA520;padding:8px;border-radius:6%;font-family:cursive;">较大风险：{{countMap.b}}</span></el-col>
 						<el-col :span="2"><span style="background-color:#FFFF00;padding:8px;border-radius:6%;font-family:cursive;">一般风险：{{countMap.c}}</span></el-col>
 						<el-col :span="2"><span style="background-color:#4169E1;padding:8px;border-radius:6%;font-family:cursive;">低风险：{{countMap.l}}</span></el-col>
-						<el-col :span="16" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'"><el-button circle type="success" v-if="curData.state==1" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
+						<el-col :span="16" style="text-align:right;" v-if="role=='ROLE_SUPERADMIN' || role=='ROLE_ORGADMIN'"><el-button circle type="success" icon="el-icon-plus" @click="dialogFormVisible = true"></el-button></el-col>
+					</el-row>
+					<el-row style="margin:5px 0 10px 0">
+						<el-col :span="2"><span style="background-color:#B9D3EE;padding:8px;border-radius:6%;font-family:cursive;">人的因素：{{harmfulCountMap.p}}</span></el-col>
+						<el-col :span="2"><span style="background-color:#FFEFD5;padding:8px;border-radius:6%;font-family:cursive;">物的因素：{{harmfulCountMap.t}}</span></el-col>
+						<el-col :span="2"><span style="background-color:#AEEEEE;padding:8px;border-radius:6%;font-family:cursive;">管理因素：{{harmfulCountMap.m}}</span></el-col>
+						<el-col :span="2"><span style="background-color:#C1CDC1;padding:8px;border-radius:6%;font-family:cursive;">环境因素：{{harmfulCountMap.e}}</span></el-col>
 					</el-row>
 					<el-table :max-height="tableHeight" resizable border :data="tableData" style="width: 100%" :span-method="arraySpanMethod" :cell-class-name="cellClassMethod" ref="singleTable">
 						<el-table-column fixed prop="index" label="序号" width="60" ></el-table-column>
@@ -382,7 +388,7 @@ new Vue({
 			dialogFormVisible: false,
 			checkFormVisible: false,
 			role:'${MEMBER_ROLE}',
-			curData:{},
+			curData:{state:0},
 			activeNames:['1'],
 			form: new Incidentfication(),
 			post_options: [],
@@ -395,6 +401,12 @@ new Vue({
 				b:0,
 				c:0,
 				l:0
+			},
+			harmfulCountMap:{
+				p:0,
+				t:0,
+				e:0,
+				m:0
 			},
 			topselect:{
 				orgs:{
@@ -420,7 +432,7 @@ new Vue({
 	        	typeList:[],
 	        	id:''
 	        },
-	        tableHeight: window.innerHeight - 160
+	        tableHeight: window.innerHeight - 190
 		}
 	},
 	methods: {
@@ -534,6 +546,12 @@ new Vue({
 			}
 		},
 		search(){//搜索
+			const loading = this.$loading({
+	          lock: true,
+	          text: 'Loading',
+	          spinner: 'el-icon-loading',
+	          background: 'rgba(0, 0, 0, 0.7)'
+	        });
 			var postName='',levelName='';
 			if(this.$data.topselect.postNames.value !== '全部'){
 				postName = this.$data.topselect.postNames.value;
@@ -542,11 +560,13 @@ new Vue({
 				levelName = this.$data.topselect.levelNames.value;
 			}
 			axios.get('/safety/riskIdentification/riskIdentification',{params:{year:this.$data.topselect.date,orgId:this.$data.topselect.orgs.value,postName:postName,levelName:levelName}}).then(response=>{
+				loading.close();
 				if(response.data.success === true){
 					this.$data.curData.id = response.data.data.id;
 					this.$data.curData.state = response.data.data.state;
 					this.$data.tableData = [];
 					this.$data.countMap = response.data.data.countMap;
+					this.$data.harmfulCountMap = response.data.data.harmfulCountMap;
 					response.data.data.riskIdentificationList.forEach(e=>this.$data.tableData.push(new Incidentfication(e)));
 				}else{
 					this.$message.warning(response.data.msg);
