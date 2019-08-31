@@ -43,7 +43,7 @@
 						  <el-dropdown-menu slot="dropdown">
 						    <el-dropdown-item command="事故类型">按事故类型排序</el-dropdown-item>
 						    <el-dropdown-item command="风险级别">按风险级别排序</el-dropdown-item>
-						    <el-dropdown-item command="危害因素排">按危害因素排序</el-dropdown-item>
+						    <el-dropdown-item command="危害因素">按危害因素排序</el-dropdown-item>
 						  </el-dropdown-menu>
 						</el-dropdown>
 				    </el-header>
