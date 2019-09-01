@@ -73,12 +73,12 @@
 							    </template>
 							</el-table-column>
 							<el-table-column prop="cause" label="原因"></el-table-column>
-							<el-table-column prop="consequence" label="后果"></el-table-column>
-							<el-table-column prop="incidence" label="影响范围" ></el-table-column>
+							<el-table-column prop="consequence" label="后果" v-if="false"></el-table-column>
+							<el-table-column prop="incidence" label="影响范围" v-if="false"></el-table-column>
 						</el-table-column>
 						<el-table-column label="安全风险分析">
-							<el-table-column prop="possibility" label="可能性"></el-table-column>
-							<el-table-column prop="seriousness" label="严重性"></el-table-column>
+							<el-table-column prop="possibility" label="可能性" v-if="false"></el-table-column>
+							<el-table-column prop="seriousness" label="严重性" v-if="false"></el-table-column>
 							<el-table-column prop="measure" label="现有措施有效性"></el-table-column>
 						</el-table-column>
 						<el-table-column label="LEC风险分析法">
